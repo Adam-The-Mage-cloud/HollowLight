@@ -1,0 +1,170 @@
+[gd_scene load_steps=15 format=3 uid="uid://chadpnqf4f2xn"]
+
+[ext_resource type="Script" path="res://Scripts/brody.gd" id="1_1lbbp"]
+[ext_resource type="Shader" path="res://Shaders/wavy_character.gdshader" id="1_h8x7n"]
+[ext_resource type="Texture2D" uid="uid://dwsaukrqi5ql4" path="res://Artwork/Orb.png" id="1_k4lj1"]
+[ext_resource type="Texture2D" uid="uid://cabhl61w16fke" path="res://Artwork/abstract-textured-backgound.jpg" id="2_wlh3y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_smg0q"]
+shader = ExtResource("1_h8x7n")
+shader_parameter/apply = false
+shader_parameter/amount = 2.0
+shader_parameter/wave_frequency = 1.0
+shader_parameter/wave_amplitude = 0.002
+shader_parameter/wave_longitude = 0.001
+shader_parameter/wave_speed = 1.24
+shader_parameter/offset_texture = ExtResource("2_wlh3y")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqmsd"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(33, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5cts"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(57, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rw2g"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(81, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hiyv"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(9, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdrjy"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(105, 38, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lgt8o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_8rw2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5cts")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.6,
+"texture": SubResource("AtlasTexture_0hiyv")
+}, {
+"duration": 0.05,
+"texture": SubResource("AtlasTexture_vdrjy")
+}],
+"loop": true,
+"name": &"stationary",
+"speed": 0.2
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_niouw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5hne"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(57, 70, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8t6bh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5hne")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Brody" type="CharacterBody2D"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_smg0q")
+script = ExtResource("1_1lbbp")
+
+[node name="BrodySprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_lgt8o")
+animation = &"stationary"
+autoplay = "stationary"
+frame_progress = 0.42125
+
+[node name="BrodyHitbox" type="CollisionShape2D" parent="."]
+visible = false
+use_parent_material = true
+position = Vector2(-1, 4)
+scale = Vector2(0.659679, 0.659679)
+shape = SubResource("CircleShape2D_niouw")
+
+[node name="antenna" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-2, -2)
+sprite_frames = SubResource("SpriteFrames_8t6bh")

@@ -1,0 +1,118 @@
+[gd_scene load_steps=13 format=3 uid="uid://doutgnk2nj6pi"]
+
+[ext_resource type="Script" path="res://Scripts/torch.gd" id="1_dwpv8"]
+[ext_resource type="Texture2D" uid="uid://cq0xpqi7tt5pm" path="res://Artwork/Torch.png" id="1_mryve"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3giss"]
+size = Vector2(31.0517, 16.5105)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhj40"]
+atlas = ExtResource("1_mryve")
+region = Rect2(64, 70, 24, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_otn8w"]
+atlas = ExtResource("1_mryve")
+region = Rect2(16, 70, 24, 35)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tk5eq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhj40")
+}],
+"loop": true,
+"name": &"lit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_otn8w")
+}],
+"loop": true,
+"name": &"unlit",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_fp0sm"]
+offsets = PackedFloat32Array(0, 0.998195)
+colors = PackedColorArray(0.492081, 1.89515e-06, 2.40654e-07, 1, 1, 0.725456, 0.293907, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0dv5e"]
+gradient = SubResource("Gradient_fp0sm")
+
+[sub_resource type="Curve" id="Curve_hnffi"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_mhh1w"]
+curve = SubResource("Curve_hnffi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sx2py"]
+lifetime_randomness = 0.21
+particle_flag_rotate_y = true
+emission_shape_offset = Vector3(-0.65, 0, 0)
+emission_shape_scale = Vector3(2.12, 0.8, 1)
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(0, -1, 0)
+spread = 143.182
+flatness = 1.0
+radial_velocity_min = -8.00002
+radial_velocity_max = 7.99998
+gravity = Vector3(0, -20, 0)
+radial_accel_min = -15.0
+radial_accel_max = -15.0
+scale_curve = SubResource("CurveTexture_mhh1w")
+color_ramp = SubResource("GradientTexture1D_0dv5e")
+turbulence_noise_strength = 0.05
+turbulence_noise_scale = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u2fq7"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.15, 0, 0)
+emission_shape_scale = Vector3(0.7, 0.6, 1)
+emission_shape = 1
+emission_sphere_radius = 5.5
+direction = Vector3(0, -1, 0)
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, -25, 0)
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+scale_curve = SubResource("CurveTexture_mhh1w")
+color_ramp = SubResource("GradientTexture1D_0dv5e")
+
+[node name="Torch" type="Area2D"]
+texture_filter = 1
+use_parent_material = true
+script = ExtResource("1_dwpv8")
+
+[node name="TorchEnd" type="CollisionShape2D" parent="."]
+visible = false
+z_index = 1
+use_parent_material = true
+position = Vector2(6, -6)
+rotation = -0.884153
+scale = Vector2(0.47192, 0.47192)
+shape = SubResource("RectangleShape2D_3giss")
+
+[node name="TorchSprite" type="AnimatedSprite2D" parent="."]
+use_parent_material = true
+position = Vector2(14.9383, -8.55112)
+sprite_frames = SubResource("SpriteFrames_tk5eq")
+animation = &"lit"
+
+[node name="MainFlame" type="GPUParticles2D" parent="."]
+position = Vector2(23.0595, -12.5)
+rotation = -0.800334
+scale = Vector2(0.707439, 0.707439)
+amount = 265
+process_material = SubResource("ParticleProcessMaterial_sx2py")
+local_coords = true
+
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
+position = Vector2(7.01086, -0.894923)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_u2fq7")
+local_coords = true
