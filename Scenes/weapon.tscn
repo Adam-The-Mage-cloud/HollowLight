@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://orjh0mfacn4l"]
+
+[ext_resource type="Texture2D" uid="uid://qva0ec8owshp" path="res://Artwork/Weapons.png" id="1_er6cq"]
+[ext_resource type="Script" uid="uid://cr7lay2nkeg7a" path="res://Scripts/weapon.gd" id="1_qv81b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qv81b"]
+atlas = ExtResource("1_er6cq")
+region = Rect2(57, 70, 47, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e1ly8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qv81b")
+}],
+"loop": true,
+"name": &"brody_sword",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qv81b"]
+size = Vector2(5.0681973, 20)
+
+[node name="weapon" type="Area2D"]
+texture_filter = 1
+use_parent_material = true
+script = ExtResource("1_qv81b")
+
+[node name="WeaponSprite" type="AnimatedSprite2D" parent="."]
+use_parent_material = true
+position = Vector2(0.5, -3.507)
+sprite_frames = SubResource("SpriteFrames_e1ly8")
+animation = &"brody_sword"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+use_parent_material = true
+position = Vector2(4.762615, -4.849126)
+rotation = 0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_qv81b")

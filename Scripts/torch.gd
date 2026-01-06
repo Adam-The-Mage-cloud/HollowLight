@@ -1,5 +1,128 @@
 extends Area2D
 
-func _physics_process(_delta: float) -> void:
-	look_at(get_global_mouse_position())
-	rotation_degrees += 34
+var equipped = true
+var minitorch_now_on = true
+
+# All Variables Needed For Solid Torch Movement With Joystick / Mouse :
+var area_centre
+var target_position
+var direction
+var distance
+var verticality
+var vertical_smoothness
+var target_angle
+var angle_difference_to
+var heaviness
+var rotational_easer
+var left_side
+# Torch Properties Itself :
+var speed = 10.0
+var max_radius = 9.0             # Max bounds the torch can leave
+var return_speed = 8.0
+# Variables Needed For Flipping The Torch Once Axis Requirements Met :
+var flip_state := 1.0             # 1 = normal, -1 = flipped
+var flip_timer := 0.0             # Counts how long we've been in the flip zone
+var flip_delay := 0.12        # Indicates how long before flipping (tweak this)
+var flip_threshold := 0.2        # Indicates how downward before flip starts
+var flip_speed := 4.0             # Indicates how fast the flip animation happens
+
+
+func _physics_process(delta: float) -> void:
+	area_centre = %Brody.global_position
+	
+	if equipped == false :
+		return
+	# direction towards given mouse or stick indication :
+	direction = _get_aim_direction(area_centre)
+	if direction == Vector2.ZERO:
+		return
+		
+	# distance from centre :
+	distance = _get_aim_distance(area_centre, max_radius)
+	
+	# Smooths the position of the torch
+	target_position = area_centre + direction * distance
+	
+	# More smoothing when aiming vertically
+	verticality = abs(direction.y)
+	vertical_smoothness = lerp(return_speed, return_speed * 0.15, verticality)
+	global_position = global_position.lerp(target_position, delta * vertical_smoothness)
+	
+	# Makes the rotation more human, brings a level of heaviness to the torch :
+	target_angle = direction.angle()
+	angle_difference_to = abs(angle_difference(rotation, target_angle))
+	heaviness = clamp(1.0 - (angle_difference_to / PI), 0.2, 1.0)
+	
+	# This eases the rotation about to take place before it actually happens
+	rotational_easer = (1.0 - pow(0.001, delta * speed)) * heaviness
+	
+	rotation = lerp_angle(rotation + 0.8, target_angle, rotational_easer)
+	
+	# This code below creates a natural human-like flip of the wrist for carrying the torch
+	left_side = direction.x < -flip_threshold
+	# We need to count the time spent in the flip zone :
+	if left_side:
+		flip_timer += delta
+	else:
+		flip_timer = 0.0
+	# Then we trigger the flip but only once our built-in delay exists
+	if left_side and flip_timer > flip_delay:
+		flip_state = -1
+	elif not left_side:
+		flip_state = 1
+	# SNow finally rotate
+	scale.y = lerp(scale.y, flip_state, delta * flip_speed)
+	
+	# fuck me that was complicated as shite for no reason
+
+
+func _get_aim_direction(centre: Vector2) -> Vector2:
+	# Controller stick direction
+	var stick := Vector2(
+		Input.get_action_strength("aim_right") - Input.get_action_strength("aim_left"),
+		Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
+	)
+
+	# If stick is being used, prefer it
+	if stick.length() > 0.2:
+		return stick.normalized()
+
+	# Otherwise use mouse direction
+	var mouse_dir := get_global_mouse_position() - centre
+	if mouse_dir.length() < 1.0:
+		return Vector2.ZERO
+
+	return mouse_dir.normalized()
+
+
+func _get_aim_distance(centre: Vector2, max_r: float) -> float:
+	var stick := Vector2(
+		Input.get_action_strength("aim_right") - Input.get_action_strength("aim_left"),
+		Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
+	)
+
+	# If stick is active, distance = stick magnitude * radius
+	if stick.length() > 0.2:
+		return clamp(stick.length() * max_r, 0.0, max_r)
+
+	# Mouse distance
+	var mouse_dist := (get_global_mouse_position() - centre).length()
+	return clamp(mouse_dist, 0.0, max_r)
+
+func now_unequipped() :
+	equipped = false
+
+func now_equipped() :
+	equipped = true
+
+func minitorch_on() :
+	%TorchSprite.visible = false
+	%MiniTorch.visible = true
+	%MainFlameSecondary.emitting = false
+	%MainFlameSecondary.emitting = false
+	
+func minitorch_off() :
+	%MiniTorch.visible = false
+	%TorchSprite.visible = true
+	%MainFlameSecondary.emitting = true
+	%MainFlameSecondary.emitting = true

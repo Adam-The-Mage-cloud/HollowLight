@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://chadpnqf4f2xn"]
+[gd_scene load_steps=20 format=3 uid="uid://chadpnqf4f2xn"]
 
-[ext_resource type="Script" path="res://Scripts/brody.gd" id="1_1lbbp"]
-[ext_resource type="Shader" path="res://Shaders/wavy_character.gdshader" id="1_h8x7n"]
+[ext_resource type="Script" uid="uid://bwjcjoh73w2jp" path="res://Scripts/brody.gd" id="1_1lbbp"]
+[ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_h8x7n"]
 [ext_resource type="Texture2D" uid="uid://dwsaukrqi5ql4" path="res://Artwork/Orb.png" id="1_k4lj1"]
 [ext_resource type="Texture2D" uid="uid://cabhl61w16fke" path="res://Artwork/abstract-textured-backgound.jpg" id="2_wlh3y"]
 
@@ -9,11 +9,11 @@
 shader = ExtResource("1_h8x7n")
 shader_parameter/apply = false
 shader_parameter/amount = 2.0
+shader_parameter/offset_texture = ExtResource("2_wlh3y")
 shader_parameter/wave_frequency = 1.0
 shader_parameter/wave_amplitude = 0.002
 shader_parameter/wave_longitude = 0.001
 shader_parameter/wave_speed = 1.24
-shader_parameter/offset_texture = ExtResource("2_wlh3y")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jqmsd"]
 atlas = ExtResource("1_k4lj1")
@@ -143,6 +143,110 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2vdu"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(82, 62, 23, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6v4d"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(58, 62, 23, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cd0il"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(34, 62, 23, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4apm"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(106, 62, 23, 5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b4a8q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2vdu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd0il")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2vdu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd0il")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2vdu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd0il")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2vdu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd0il")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_l2vdu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd0il")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2vdu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd0il")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6v4d")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4apm")
+}],
+"loop": true,
+"name": &"stationary",
+"speed": 5.0
+}]
+
 [node name="Brody" type="CharacterBody2D"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_smg0q")
@@ -152,9 +256,8 @@ script = ExtResource("1_1lbbp")
 unique_name_in_owner = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_lgt8o")
-animation = &"stationary"
+animation = &"moving"
 autoplay = "stationary"
-frame_progress = 0.42125
 
 [node name="BrodyHitbox" type="CollisionShape2D" parent="."]
 visible = false
@@ -168,3 +271,17 @@ unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-2, -2)
 sprite_frames = SubResource("SpriteFrames_8t6bh")
+
+[node name="feet" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(1, 11)
+sprite_frames = SubResource("SpriteFrames_b4a8q")
+animation = &"moving"
+autoplay = "stationary"
+
+[node name="DashCooldown" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 1.4
+one_shot = true
+
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
