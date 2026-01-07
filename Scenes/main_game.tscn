@@ -1,23 +1,28 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=10 format=3 uid="uid://b6v1370ws5526"]
 
+[ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="PackedScene" uid="uid://dow01u60oiexx" path="res://Scenes/random_dungeon_spawner.tscn" id="1_y16yq"]
 [ext_resource type="PackedScene" uid="uid://chadpnqf4f2xn" path="res://Scenes/brody.tscn" id="2_upa5u"]
 [ext_resource type="PackedScene" uid="uid://doutgnk2nj6pi" path="res://Scenes/torch.tscn" id="3_eoier"]
+[ext_resource type="PackedScene" uid="uid://0g8pb6puuqkw" path="res://Scenes/ogre.tscn" id="4_6j5ir"]
+[ext_resource type="PackedScene" uid="uid://cdo6hvtefqe2x" path="res://Scenes/brazier.tscn" id="5_mgc0q"]
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 1
 
-[sub_resource type="Gradient" id="Gradient_hph1r"]
+[sub_resource type="Gradient" id="Gradient_mgc0q"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
 colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5iefj"]
-gradient = SubResource("Gradient_hph1r")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bb2iq"]
+gradient = SubResource("Gradient_mgc0q")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="MainGame" type="Node2D"]
+y_sort_enabled = true
 texture_filter = 1
+script = ExtResource("1_18r40")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_aqqks")
@@ -26,23 +31,25 @@ environment = SubResource("Environment_aqqks")
 
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]
 unique_name_in_owner = true
-z_index = 2
-position = Vector2(139.6853, 69.69885)
+z_index = 4
+position = Vector2(319.992, 144.03044)
 
 [node name="Torch" parent="Brody" instance=ExtResource("3_eoier")]
 unique_name_in_owner = true
+z_index = 1
 z_as_relative = false
+y_sort_enabled = true
 position = Vector2(-0.65, 3.5)
 rotation = 3.2253685
 
 [node name="PointLight2D" type="PointLight2D" parent="Brody/Torch"]
 use_parent_material = true
-position = Vector2(21.2635, -14.7921)
+position = Vector2(14.637634, -13.30919)
 color = Color(1, 0.439216, 0.172549, 1)
 energy = 1.98
 shadow_enabled = true
 shadow_item_cull_mask = 0
-texture = SubResource("GradientTexture2D_5iefj")
+texture = SubResource("GradientTexture2D_bb2iq")
 
 [node name="BrodyCam" type="Camera2D" parent="Brody"]
 z_index = 1
@@ -57,3 +64,17 @@ limit_smoothed = true
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="ogre" parent="." instance=ExtResource("4_6j5ir")]
+z_index = 4
+z_as_relative = false
+position = Vector2(223.51823, 56.9237)
+
+[node name="brazier" parent="." instance=ExtResource("5_mgc0q")]
+position = Vector2(161.34305, 25.159767)
+
+[node name="ShadowSpawnTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true
+
+[connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]

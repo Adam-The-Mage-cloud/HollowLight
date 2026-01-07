@@ -16,15 +16,15 @@ void fragment() {
     vec2 new_uv = UV;
 
 		// Apply wavy distortion (horizontal sine wave based on Y)
-    		new_uv.x += sin(new_uv.y * wave_frequency + TIME * wave_speed) * wave_amplitude;
-		new_uv.y += sin(new_uv.y * wave_frequency + TIME * wave_speed) * wave_longitude;
+    		new_uv.x += sin(new_uv.y * wave_frequency + TIME * wave_speed) * wave_amplitude * 0.25;
+		new_uv.y += sin(new_uv.y * wave_frequency + TIME * wave_speed) * wave_longitude * 0.25 ;
 
     // Sample base texture
     vec4 texture_color = texture(TEXTURE, new_uv);
     vec4 color = texture_color;
 
     if (apply) {
-		
+
 
         float adjusted_amount = amount * texture(offset_texture, new_uv).r / 100.0;
 

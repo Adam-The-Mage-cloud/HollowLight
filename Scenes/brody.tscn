@@ -248,15 +248,17 @@ animations = [{
 }]
 
 [node name="Brody" type="CharacterBody2D"]
+y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_smg0q")
 script = ExtResource("1_1lbbp")
 
 [node name="BrodySprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+y_sort_enabled = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_lgt8o")
-animation = &"moving"
+animation = &"stationary"
 autoplay = "stationary"
 
 [node name="BrodyHitbox" type="CollisionShape2D" parent="."]
@@ -268,20 +270,26 @@ shape = SubResource("CircleShape2D_niouw")
 
 [node name="antenna" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-2, -2)
 sprite_frames = SubResource("SpriteFrames_8t6bh")
 
 [node name="feet" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(1, 11)
+z_index = 1
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(-10.5, -2.004222)
 sprite_frames = SubResource("SpriteFrames_b4a8q")
 animation = &"moving"
 autoplay = "stationary"
+centered = false
+offset = Vector2(0, 10.5)
 
 [node name="DashCooldown" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 1.4
+wait_time = 0.6
 one_shot = true
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]

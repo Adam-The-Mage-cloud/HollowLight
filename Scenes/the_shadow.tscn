@@ -1,0 +1,136 @@
+[gd_scene load_steps=14 format=3 uid="uid://5dfbg6xl4s88"]
+
+[ext_resource type="Script" uid="uid://cs1n34mfd6oun" path="res://Scripts/the_shadow.gd" id="1_cfjom"]
+[ext_resource type="Texture2D" uid="uid://brcks8qsssn6j" path="res://Artwork/Dark_Shadow.png" id="1_ha8o0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ha8o0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfjom"]
+atlas = ExtResource("1_ha8o0")
+region = Rect2(33, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_veuqm"]
+atlas = ExtResource("1_ha8o0")
+region = Rect2(57, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gc5xl"]
+atlas = ExtResource("1_ha8o0")
+region = Rect2(81, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ev6nl"]
+atlas = ExtResource("1_ha8o0")
+region = Rect2(105, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ay5a5"]
+atlas = ExtResource("1_ha8o0")
+region = Rect2(129, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_waojq"]
+atlas = ExtResource("1_ha8o0")
+region = Rect2(57, 70, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hd78"]
+atlas = ExtResource("1_ha8o0")
+region = Rect2(81, 70, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i278b"]
+atlas = ExtResource("1_ha8o0")
+region = Rect2(105, 70, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f48g3"]
+atlas = ExtResource("1_ha8o0")
+region = Rect2(129, 70, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_knn1e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfjom")
+}],
+"loop": true,
+"name": &"v1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_veuqm")
+}],
+"loop": true,
+"name": &"v2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gc5xl")
+}],
+"loop": true,
+"name": &"v3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ev6nl")
+}],
+"loop": true,
+"name": &"v4",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ay5a5")
+}],
+"loop": true,
+"name": &"v5",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_waojq")
+}],
+"loop": true,
+"name": &"v6",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hd78")
+}],
+"loop": true,
+"name": &"v7",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i278b")
+}],
+"loop": true,
+"name": &"v8",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f48g3")
+}],
+"loop": true,
+"name": &"v9",
+"speed": 5.0
+}]
+
+[node name="the_shadow" type="Area2D"]
+light_mask = 0
+texture_filter = 1
+script = ExtResource("1_cfjom")
+
+[node name="ShadowCollision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-0.41679382, 5.2098637)
+rotation = 1.5707964
+scale = Vector2(0.70726776, 0.70726776)
+shape = SubResource("RectangleShape2D_ha8o0")
+
+[node name="ShadowVersion" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+light_mask = 0
+rotation = 1.5707964
+sprite_frames = SubResource("SpriteFrames_knn1e")
+animation = &"v9"
