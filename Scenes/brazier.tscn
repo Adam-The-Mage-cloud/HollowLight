@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cdo6hvtefqe2x"]
+[gd_scene load_steps=17 format=3 uid="uid://cdo6hvtefqe2x"]
 
 [ext_resource type="Script" uid="uid://bmq0q5o2lkg6u" path="res://Scripts/brazier.gd" id="1_w7syr"]
 [ext_resource type="Texture2D" uid="uid://c2atipwkmqsh1" path="res://Artwork/Beacons.png" id="1_wqvan"]
@@ -81,7 +81,7 @@ scale_curve = SubResource("CurveTexture_mhh1w")
 color_ramp = SubResource("GradientTexture1D_0dv5e")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wqvan"]
-size = Vector2(14.082422, 7.3569603)
+size = Vector2(17.062656, 9.006208)
 
 [sub_resource type="Gradient" id="Gradient_hph1r"]
 offsets = PackedFloat32Array(0.0946844, 0.63973063, 0.72727275)
@@ -91,6 +91,17 @@ colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 
 gradient = SubResource("Gradient_hph1r")
 width = 96
 height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_3rkoo"]
+offsets = PackedFloat32Array(0.12626262, 0.2138047, 1)
+colors = PackedColorArray(0, 0, 0, 0.12941177, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3rkoo"]
+gradient = SubResource("Gradient_3rkoo")
+height = 32
+use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -119,17 +130,23 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_lfrm0")
 
 [node name="BrazierCollision" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 visible = false
-position = Vector2(-0.42631435, 3.7449913)
+position = Vector2(-0.40778542, 4.5696154)
 shape = SubResource("RectangleShape2D_wqvan")
 
 [node name="BrazierLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-0.504097, 5.4626875)
 color = Color(1, 0.439216, 0.172549, 1)
-energy = 2.4
-shadow_enabled = true
-shadow_item_cull_mask = 0
+energy = 3.0
 texture = SubResource("GradientTexture2D_w7syr")
+
+[node name="OgreShadow" type="Sprite2D" parent="."]
+show_behind_parent = true
+use_parent_material = true
+position = Vector2(-0.73835754, 11.464703)
+texture = SubResource("GradientTexture2D_3rkoo")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

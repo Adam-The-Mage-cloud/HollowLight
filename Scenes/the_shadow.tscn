@@ -43,7 +43,7 @@ void fragment() {
         float noise = texture(burn_noise, uv).r;
         noise *= tex.a;
 
-        float threshold = burn_amount * 2.4 ;
+        float threshold = burn_amount * 5.0 ;
 
         // -------------------------
         // CHARCOAL CRUMBLE (smooth fade)
@@ -102,13 +102,13 @@ void fragment() {
 
             float flash_mask = texture(burn_noise, uv).r;
 
-            if (flash_mask > 0.85) {
+            if (flash_mask > 0.5) {
 
                 // dark-to-bright flash curve
                 float flash_curve = flash_amount * flash_amount;
 
                 // darker initial flash
-                vec3 dark_flash = flash_color * 0.4;
+                vec3 dark_flash = flash_color * 0.5;
 
                 // blend dark → bright
                 vec3 flash_mix = mix(dark_flash, flash_color, flash_curve);
@@ -128,17 +128,18 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_veuqm"]
 shader = SubResource("Shader_cfjom")
 shader_parameter/flash_amount = 0.0
-shader_parameter/flash_color = Vector3(1.15, 0.55, 0.09)
+shader_parameter/flash_color = Vector3(0, 0, 0)
 shader_parameter/burn_amount = 0.0
 shader_parameter/burn_noise = ExtResource("1_veuqm")
 shader_parameter/burn_edge_width = 1.0
-shader_parameter/burn_edge_color = Vector3(0.95, 0.4, 0.09)
+shader_parameter/burn_edge_color = Vector3(0.95, 0.35, 0.09)
 shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
-shader_parameter/crumble_strength = 0.35
-shader_parameter/crumble_fade = 0.85
+shader_parameter/crumble_strength = 0.2
+shader_parameter/crumble_fade = 0.2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ha8o0"]
+size = Vector2(8, 13.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cfjom"]
 atlas = ExtResource("1_ha8o0")
@@ -269,10 +270,10 @@ material = SubResource("ShaderMaterial_veuqm")
 script = ExtResource("1_cfjom")
 
 [node name="ShadowCollision" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 visible = false
-position = Vector2(-0.41679382, 5.2098637)
+position = Vector2(-6.75, 1)
 rotation = 1.5707964
-scale = Vector2(0.70726776, 0.70726776)
 shape = SubResource("RectangleShape2D_ha8o0")
 
 [node name="ShadowVersion" type="AnimatedSprite2D" parent="."]
@@ -283,7 +284,7 @@ texture_repeat = 2
 use_parent_material = true
 rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_knn1e")
-animation = &"v6"
+animation = &"v9"
 
 [node name="OnFireLight" type="PointLight2D" parent="."]
 unique_name_in_owner = true

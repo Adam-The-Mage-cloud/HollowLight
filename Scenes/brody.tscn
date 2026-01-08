@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://chadpnqf4f2xn"]
+[gd_scene load_steps=21 format=3 uid="uid://chadpnqf4f2xn"]
 
 [ext_resource type="Script" uid="uid://bwjcjoh73w2jp" path="res://Scripts/brody.gd" id="1_1lbbp"]
 [ext_resource type="Texture2D" uid="uid://dwsaukrqi5ql4" path="res://Artwork/Orb.png" id="1_k4lj1"]
@@ -274,6 +274,15 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_7kbme"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.14901961, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k1o5k"]
+gradient = SubResource("Gradient_7kbme")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="Brody" type="CharacterBody2D"]
 y_sort_enabled = true
 texture_filter = 1
@@ -318,5 +327,11 @@ offset = Vector2(0, 10.5)
 unique_name_in_owner = true
 wait_time = 0.6
 one_shot = true
+
+[node name="BrodyShadow" type="Sprite2D" parent="."]
+z_index = -2
+use_parent_material = true
+position = Vector2(-1.0723495, 8.999566)
+texture = SubResource("GradientTexture2D_k1o5k")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]

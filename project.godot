@@ -68,3 +68,8 @@ aim_right={
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
 ]
 }
+
+[rendering]
+
+rendering_device/fallback_to_vulkan=false
+rendering_device/fallback_to_d3d12=false

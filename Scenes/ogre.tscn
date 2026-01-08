@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://0g8pb6puuqkw"]
+[gd_scene load_steps=32 format=3 uid="uid://0g8pb6puuqkw"]
 
 [ext_resource type="Texture2D" uid="uid://bks8x1mw2ipnv" path="res://Artwork/Ogre.png" id="1_3blal"]
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_8jiyc"]
@@ -26,23 +26,19 @@ shader_parameter/wave_speed = 2.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7kbme"]
 atlas = ExtResource("3_t5uq8")
-region = Rect2(171, 85, 47, 31)
+region = Rect2(92, 41, 47, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uw55x"]
 atlas = ExtResource("3_t5uq8")
-region = Rect2(171, 117, 47, 31)
+region = Rect2(92, 9, 47, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n5x3l"]
 atlas = ExtResource("3_t5uq8")
-region = Rect2(123, 117, 47, 31)
+region = Rect2(44, 41, 47, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vc312"]
 atlas = ExtResource("3_t5uq8")
-region = Rect2(123, 85, 47, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ma1k"]
-atlas = ExtResource("3_t5uq8")
-region = Rect2(123, 117, 47, 31)
+region = Rect2(44, 9, 47, 28)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3xn72"]
 animations = [{
@@ -59,37 +55,55 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uw55x")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7kbme")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uw55x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7kbme")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uw55x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7kbme")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uw55x")
-}, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_n5x3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kbme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw55x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kbme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw55x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kbme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw55x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kbme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw55x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kbme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw55x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kbme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw55x")
 }],
 "loop": true,
 "name": &"angry",
 "speed": 0.6
 }, {
 "frames": [{
-"duration": 5.0,
+"duration": 4.0,
 "texture": SubResource("AtlasTexture_vc312")
 }, {
 "duration": 0.4,
-"texture": SubResource("AtlasTexture_4ma1k")
+"texture": SubResource("AtlasTexture_n5x3l")
 }],
 "loop": true,
 "name": &"unaware",
@@ -142,6 +156,16 @@ emission_shape = 3
 emission_box_extents = Vector3(2, 1, 1)
 gravity = Vector3(0, 98, 0)
 color_ramp = SubResource("GradientTexture1D_7kbme")
+
+[sub_resource type="Gradient" id="Gradient_7kbme"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uw55x"]
+gradient = SubResource("Gradient_7kbme")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xdnku"]
 size = Vector2(152.7606, 90.9104)
@@ -223,16 +247,15 @@ script = ExtResource("2_4j2he")
 
 [node name="OgreHead" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-z_index = 1
-z_as_relative = false
+z_index = 2
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_t5uq8")
 use_parent_material = true
-position = Vector2(-1, -18)
+position = Vector2(7.5, -17.284)
 sprite_frames = SubResource("SpriteFrames_3xn72")
-animation = &"unaware"
+animation = &"angry"
 autoplay = "unaware"
-frame_progress = 0.119304605
+frame_progress = 0.21414849
 
 [node name="OgreSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -241,14 +264,19 @@ use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_4j2he")
 animation = &"stationary"
 autoplay = "stationary"
-frame_progress = 0.076093666
 
 [node name="SlobberParticles" type="GPUParticles2D" parent="OgreSprite"]
 z_index = 4
-position = Vector2(-1.0429535, -9.195209)
+position = Vector2(-1.0429535, -8.518371)
 amount = 2
 amount_ratio = 0.2
 process_material = SubResource("ParticleProcessMaterial_t5uq8")
+
+[node name="OgreShadow" type="Sprite2D" parent="OgreSprite"]
+z_index = -2
+use_parent_material = true
+position = Vector2(-0.73835754, 21.166542)
+texture = SubResource("GradientTexture2D_uw55x")
 
 [node name="visibility_collision" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

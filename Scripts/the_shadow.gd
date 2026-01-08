@@ -11,10 +11,28 @@ func _ready() :
 	# Pick Random Appearance :
 	material = material.duplicate()
 	version_number = randi_range(1, 9)
-	if version_number == 6 or version_number == 7 or version_number == 9 :
+	if version_number == 1 :
+		%ShadowCollision.position = Vector2(-2, -0.5)
+	if version_number == 2 :
+		%ShadowCollision.position = Vector2(-1, 0)
+	if version_number == 3 :
+		%ShadowCollision.position = Vector2(-3.5, 0.5)
+	if version_number == 4 :
+		%ShadowCollision.position = Vector2(-4, 0)
+	if version_number == 5 :
+		%ShadowCollision.position = Vector2(-5.5, 1)
+	if version_number == 6 :
+		%ShadowCollision.position = Vector2(-6.5, 0)
+		%OnFireLight.position.x -= 3
+	if version_number == 7 :
+		%ShadowCollision.position = Vector2(-6.5, 0)
 		%OnFireLight.position.x -= 3
 	if version_number == 8 :
+		%ShadowCollision.position = Vector2(-9.25, 0)
 		%OnFireLight.position.x -= 8
+	if version_number == 9 :
+		%ShadowCollision.position = Vector2(-6.75, 1)
+		%OnFireLight.position.x -= 3
 	%ShadowVersion.play("v" + str(version_number))
 	# Deviation of how they're titled towards the player :
 	%ShadowVersion.rotation_degrees = randf_range(60, 90)
@@ -42,7 +60,7 @@ func _on_area_entered(area: Area2D) -> void:
 
 func on_fire():
 	var tween1 := create_tween()
-	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
+	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)
 	tween1.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.15)
 	
 	# Turn Light Mask on :aaaaaa

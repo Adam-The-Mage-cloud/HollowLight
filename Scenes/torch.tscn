@@ -13,7 +13,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3giss"]
-size = Vector2(39.643105, 16.5105)
+size = Vector2(15.347512, 8.834408)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hhj40"]
 atlas = ExtResource("1_mryve")
@@ -60,7 +60,7 @@ curve = SubResource("Curve_hnffi")
 lifetime_randomness = 0.21
 particle_flag_rotate_y = true
 emission_shape_offset = Vector3(-0.65, 0, 0)
-emission_shape_scale = Vector3(2.12, 0.8, 1)
+emission_shape_scale = Vector3(1.6, 0.8, 1)
 emission_shape = 1
 emission_sphere_radius = 5.0
 direction = Vector3(0, -1, 0)
@@ -167,8 +167,6 @@ use_parent_material = true
 position = Vector2(14.637634, -13.30919)
 color = Color(1, 0.439216, 0.172549, 1)
 energy = 1.98
-shadow_enabled = true
-shadow_item_cull_mask = 0
 texture = SubResource("GradientTexture2D_h1t0l")
 
 [node name="TorchEnd" type="CollisionShape2D" parent="."]
@@ -176,7 +174,7 @@ unique_name_in_owner = true
 visible = false
 z_index = 1
 use_parent_material = true
-position = Vector2(13.555834, -12.694881)
+position = Vector2(14.372684, -13.538522)
 rotation = -0.88415307
 shape = SubResource("RectangleShape2D_3giss")
 
@@ -189,7 +187,8 @@ animation = &"lit"
 
 [node name="MainFlame" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(15.35235, -13.239247)
+z_index = 1
+position = Vector2(14.657705, -12.509868)
 rotation = -0.800334
 amount = 265
 local_coords = true
@@ -197,7 +196,8 @@ process_material = SubResource("ParticleProcessMaterial_sx2py")
 
 [node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
 unique_name_in_owner = true
-position = Vector2(4.438277, -1.008402)
+z_index = 1
+position = Vector2(5.135801, -0.75641084)
 amount = 100
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_u2fq7")

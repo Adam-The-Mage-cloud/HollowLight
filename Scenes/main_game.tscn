@@ -37,7 +37,7 @@ rotation = 3.2253685
 z_index = 1
 position = Vector2(-0.62683105, 3.018978)
 scale = Vector2(2, 2)
-zoom = Vector2(6, 6)
+zoom = Vector2(5, 5)
 limit_left = 0
 limit_top = 0
 limit_right = 320
@@ -55,8 +55,18 @@ position = Vector2(223.51823, 56.9237)
 [node name="brazier" parent="." instance=ExtResource("5_mgc0q")]
 position = Vector2(161.34305, 25.159767)
 
+[node name="brazier2" parent="." instance=ExtResource("5_mgc0q")]
+position = Vector2(262.87646, 73.11618)
+
+[node name="brazier3" parent="." instance=ExtResource("5_mgc0q")]
+position = Vector2(44.870163, 46.942654)
+
+[node name="brazier4" parent="." instance=ExtResource("5_mgc0q")]
+position = Vector2(100.4091, 113.812805)
+
 [node name="ShadowSpawnTimer" type="Timer" parent="."]
 unique_name_in_owner = true
+wait_time = 2.0
 autostart = true
 
 [connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]

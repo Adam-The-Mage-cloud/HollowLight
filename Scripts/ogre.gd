@@ -56,9 +56,26 @@ func realistic_movement() :
 	%OgreSprite.play("moving")
 	%OgreHead.play("angry")
 	while in_sight == true :
-		await get_tree().create_timer(0.5).timeout
-		global_position.y += 1 
+		# HEAD AND AXE JIGGLE :
+		var head_tween = create_tween()
+		head_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		# Rotate a little left
+		head_tween.tween_property(%OgreHead, "rotation_degrees", -2, 0.15)
+		# Then rotate a little right
+		head_tween.tween_property(%OgreHead, "rotation_degrees", 2, 0.3)
+		# Return to center
+		head_tween.tween_property(%OgreHead, "rotation_degrees", 0, 0.15)
 		await get_tree().create_timer(randf_range(0.75, 1.25)).timeout
+		global_position.y += 1.5
+		var axe_tween = create_tween()
+		axe_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		# Rotate a little left
+		axe_tween.tween_property(%AxePivot, "rotation_degrees", -randf_range(2, 5), 0.15)
+		# Then rotate a little right
+		axe_tween.tween_property(%AxePivot, "rotation_degrees", randf_range(2, 5), 0.3)
+		# Return to center
+		axe_tween.tween_property(%AxePivot, "rotation_degrees", 0, 0.15)
+		await get_tree().create_timer(0.7).timeout
 		global_position.y -= 1
 	%OgreSprite.play("stationary")
 	%OgreHead.play("unaware")
