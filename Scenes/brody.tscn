@@ -1,15 +1,42 @@
-[gd_scene load_steps=20 format=3 uid="uid://chadpnqf4f2xn"]
+[gd_scene load_steps=19 format=3 uid="uid://chadpnqf4f2xn"]
 
 [ext_resource type="Script" uid="uid://bwjcjoh73w2jp" path="res://Scripts/brody.gd" id="1_1lbbp"]
-[ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_h8x7n"]
 [ext_resource type="Texture2D" uid="uid://dwsaukrqi5ql4" path="res://Artwork/Orb.png" id="1_k4lj1"]
-[ext_resource type="Texture2D" uid="uid://cabhl61w16fke" path="res://Artwork/abstract-textured-backgound.jpg" id="2_wlh3y"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_smg0q"]
-shader = ExtResource("1_h8x7n")
-shader_parameter/apply = false
-shader_parameter/amount = 2.0
-shader_parameter/offset_texture = ExtResource("2_wlh3y")
+[sub_resource type="Shader" id="Shader_vfjlh"]
+code = "shader_type canvas_item;
+
+// White flash control
+uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
+
+// Wave controls
+uniform float wave_frequency = 30.0;   // how many waves across the sprite
+uniform float wave_amplitude = 0.01;   // horizontal distortion
+uniform float wave_longitude = 0.01;   // vertical distortion
+uniform float wave_speed = 2.0;        // breathing speed
+
+void fragment() {
+    // Base UV
+    vec2 new_uv = UV;
+
+    // Breathing / wavy distortion
+    float wave = sin(new_uv.y * wave_frequency + TIME * wave_speed);
+    new_uv.x += wave * wave_amplitude * 0.25;
+    new_uv.y += wave * wave_longitude * 0.25;
+
+    // Sample base texture
+    vec4 tex = texture(TEXTURE, new_uv);
+
+    // White flash blend
+    vec4 flash_color = vec4(1.0, 1.0, 1.0, tex.a);
+    vec4 final_color = mix(tex, flash_color, flash_amount);
+
+    COLOR = final_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l2vdu"]
+shader = SubResource("Shader_vfjlh")
+shader_parameter/flash_amount = 0.0
 shader_parameter/wave_frequency = 1.0
 shader_parameter/wave_amplitude = 0.002
 shader_parameter/wave_longitude = 0.001
@@ -250,7 +277,7 @@ animations = [{
 [node name="Brody" type="CharacterBody2D"]
 y_sort_enabled = true
 texture_filter = 1
-material = SubResource("ShaderMaterial_smg0q")
+material = SubResource("ShaderMaterial_l2vdu")
 script = ExtResource("1_1lbbp")
 
 [node name="BrodySprite" type="AnimatedSprite2D" parent="."]

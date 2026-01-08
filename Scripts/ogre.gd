@@ -8,7 +8,7 @@ var target
 
 var bobbing = false
 
-var speed = 20
+var speed = 12
 
 func _ready() :
 	breathing()

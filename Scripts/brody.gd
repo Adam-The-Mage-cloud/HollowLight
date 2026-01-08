@@ -77,6 +77,7 @@ func _physics_process(delta: float) -> void:
 func dash_ability() :
 	# When player hits the button/shift :
 	if dash_available == true :
+		flash_white()
 		dash_available = false
 		%DashCooldown.start()
 		speed = 3000
@@ -130,3 +131,8 @@ func breathing() :
 			await get_tree().create_timer(0.175).timeout
 		bobbing = false
 		breathing()
+
+func flash_white():
+	var tween := create_tween()
+	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
+	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)

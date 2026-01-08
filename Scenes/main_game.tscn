@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=8 format=3 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="PackedScene" uid="uid://dow01u60oiexx" path="res://Scenes/random_dungeon_spawner.tscn" id="1_y16yq"]
@@ -9,15 +9,6 @@
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 1
-
-[sub_resource type="Gradient" id="Gradient_mgc0q"]
-offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
-colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_bb2iq"]
-gradient = SubResource("Gradient_mgc0q")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
 
 [node name="MainGame" type="Node2D"]
 y_sort_enabled = true
@@ -32,7 +23,7 @@ environment = SubResource("Environment_aqqks")
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]
 unique_name_in_owner = true
 z_index = 4
-position = Vector2(319.992, 144.03044)
+position = Vector2(150.268, 63.310646)
 
 [node name="Torch" parent="Brody" instance=ExtResource("3_eoier")]
 unique_name_in_owner = true
@@ -41,15 +32,6 @@ z_as_relative = false
 y_sort_enabled = true
 position = Vector2(-0.65, 3.5)
 rotation = 3.2253685
-
-[node name="PointLight2D" type="PointLight2D" parent="Brody/Torch"]
-use_parent_material = true
-position = Vector2(14.637634, -13.30919)
-color = Color(1, 0.439216, 0.172549, 1)
-energy = 1.98
-shadow_enabled = true
-shadow_item_cull_mask = 0
-texture = SubResource("GradientTexture2D_bb2iq")
 
 [node name="BrodyCam" type="Camera2D" parent="Brody"]
 z_index = 1

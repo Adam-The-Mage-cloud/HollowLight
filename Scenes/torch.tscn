@@ -1,7 +1,16 @@
-[gd_scene load_steps=21 format=3 uid="uid://doutgnk2nj6pi"]
+[gd_scene load_steps=23 format=3 uid="uid://doutgnk2nj6pi"]
 
 [ext_resource type="Script" uid="uid://ct4wiv06fidc0" path="res://Scripts/torch.gd" id="1_dwpv8"]
 [ext_resource type="Texture2D" uid="uid://cq0xpqi7tt5pm" path="res://Artwork/Torch.png" id="1_mryve"]
+
+[sub_resource type="Gradient" id="Gradient_mgc0q"]
+offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
+colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h1t0l"]
+gradient = SubResource("Gradient_mgc0q")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3giss"]
 size = Vector2(39.643105, 16.5105)
@@ -152,6 +161,15 @@ color_ramp = SubResource("GradientTexture1D_0dv5e")
 texture_filter = 1
 use_parent_material = true
 script = ExtResource("1_dwpv8")
+
+[node name="TorchLight" type="PointLight2D" parent="."]
+use_parent_material = true
+position = Vector2(14.637634, -13.30919)
+color = Color(1, 0.439216, 0.172549, 1)
+energy = 1.98
+shadow_enabled = true
+shadow_item_cull_mask = 0
+texture = SubResource("GradientTexture2D_h1t0l")
 
 [node name="TorchEnd" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

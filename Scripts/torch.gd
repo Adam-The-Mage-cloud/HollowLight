@@ -70,7 +70,7 @@ func _physics_process(delta: float) -> void:
 		flip_state = -1
 	elif not left_side:
 		flip_state = 1
-	# SNow finally rotate
+	# Now finally rotate
 	scale.y = lerp(scale.y, flip_state, delta * flip_speed)
 	
 	# fuck me that was complicated as shite for no reason

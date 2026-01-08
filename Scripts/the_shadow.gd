@@ -9,7 +9,12 @@ var speed = 5
 
 func _ready() :
 	# Pick Random Appearance :
+	material = material.duplicate()
 	version_number = randi_range(1, 9)
+	if version_number == 6 or version_number == 7 or version_number == 9 :
+		%OnFireLight.position.x -= 3
+	if version_number == 8 :
+		%OnFireLight.position.x -= 8
 	%ShadowVersion.play("v" + str(version_number))
 	# Deviation of how they're titled towards the player :
 	%ShadowVersion.rotation_degrees = randf_range(60, 90)
@@ -29,3 +34,28 @@ func _physics_process(delta: float) -> void:
 	# Now we have the direction to Brody we can move towards it with :
 	if global_position.distance_to(brody_position) > 10 :
 		position += delta * speed * direction
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.name == "Torch" :
+		on_fire()
+
+func on_fire():
+	var tween1 := create_tween()
+	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
+	tween1.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.15)
+	
+	# Turn Light Mask on :aaaaaa
+	$".".light_mask = 1
+	%OnFireLight.enabled = true
+	
+	var tween2 := create_tween()
+	tween2.tween_property(material, "shader_parameter/burn_amount", 1.0, 1.0)
+	
+	var lighttween = create_tween()
+	lighttween.tween_property(%OnFireLight, "texture_scale", 1.6, 0.0)
+	lighttween.tween_property(%OnFireLight, "texture_scale", 0.0, 0.45)
+	
+	# Once finished then queue_free :
+	tween2.finished.connect(func() :
+		queue_free())
