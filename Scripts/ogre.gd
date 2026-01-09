@@ -11,6 +11,7 @@ var bobbing = false
 var speed = 12
 
 func _ready() :
+	material = material.duplicate()
 	breathing()
 	randomize()
 
@@ -40,6 +41,10 @@ func slash() :
 	slash_tween.tween_property(%AxePivot, "rotation_degrees", -50, 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	# 3. Follow-through: slight bounce back
 	slash_tween.tween_property(%AxePivot, "rotation_degrees", randf_range(-4, 8), 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	await get_tree().create_timer(0.25).timeout
+	%AxeArea.monitoring = true
+	await get_tree().create_timer(0.40).timeout
+	%AxeArea.monitoring = false
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
@@ -106,3 +111,8 @@ func breathing() :
 			await get_tree().create_timer(0.175).timeout
 		bobbing = false
 		breathing()
+
+
+func _on_axe_area_body_entered(body: Node2D) -> void:
+	if body.name == "Brody" :
+		body.ogre_slashed()

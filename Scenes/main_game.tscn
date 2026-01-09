@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=11 format=3 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="PackedScene" uid="uid://dow01u60oiexx" path="res://Scenes/random_dungeon_spawner.tscn" id="1_y16yq"]
@@ -6,9 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://doutgnk2nj6pi" path="res://Scenes/torch.tscn" id="3_eoier"]
 [ext_resource type="PackedScene" uid="uid://0g8pb6puuqkw" path="res://Scenes/ogre.tscn" id="4_6j5ir"]
 [ext_resource type="PackedScene" uid="uid://cdo6hvtefqe2x" path="res://Scenes/brazier.tscn" id="5_mgc0q"]
+[ext_resource type="PackedScene" uid="uid://dpjvluijvoqyk" path="res://Scenes/torch_wraith.tscn" id="7_18r40"]
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 1
+
+[sub_resource type="Curve2D" id="Curve2D_bb2iq"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -16.081474, -22.160593, 0, 0, 0, 0, 343.1082, -20.399, 0, 0, 0, 0, 343.8688, 163.98128, 0, 0, 0, 0, -16.271622, 163.39407, 0, 0, 0, 0, -16.65192, -22.160593)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_18r40"]
 
 [node name="MainGame" type="Node2D"]
 y_sort_enabled = true
@@ -47,6 +56,22 @@ position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
+[node name="RegularRoomPath" type="Path2D" parent="Brody"]
+position = Vector2(-155.62364, -61.112957)
+scale = Vector2(1.0155747, 0.98659796)
+curve = SubResource("Curve2D_bb2iq")
+
+[node name="RegularFollowPath" type="PathFollow2D" parent="Brody/RegularRoomPath"]
+unique_name_in_owner = true
+position = Vector2(-16.081474, -22.160593)
+rotation = 0.004904313
+
+[node name="CorridorRoomPath" type="Path2D" parent="Brody"]
+position = Vector2(-150.268, -63.310646)
+curve = SubResource("Curve2D_18r40")
+
+[node name="CorridorFollowPath" type="PathFollow2D" parent="Brody/CorridorRoomPath"]
+
 [node name="ogre" parent="." instance=ExtResource("4_6j5ir")]
 z_index = 4
 z_as_relative = false
@@ -69,4 +94,13 @@ unique_name_in_owner = true
 wait_time = 2.0
 autostart = true
 
+[node name="TorchWraithChance" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 6.0
+
+[node name="torch_wraith" parent="." instance=ExtResource("7_18r40")]
+position = Vector2(87.22622, 41.356705)
+scale = Vector2(1.0155747, 0.98659796)
+
 [connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]
+[connection signal="timeout" from="TorchWraithChance" to="." method="_on_torch_wraith_chance_timeout"]

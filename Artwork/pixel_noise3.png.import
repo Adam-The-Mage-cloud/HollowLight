@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dljnv5g52rq7i"
-path="res://.godot/imported/Dungeon_Bits_&_Bobs.png-05b68d2efec748eec66f9677166f7866.ctex"
+uid="uid://dwxby3nahkswu"
+path="res://.godot/imported/pixel_noise3.png-9e49c3e7891fd17820741e3d83970a29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Artwork/Dungeon_Bits_&_Bobs.png"
-dest_files=["res://.godot/imported/Dungeon_Bits_&_Bobs.png-05b68d2efec748eec66f9677166f7866.ctex"]
+source_file="res://Artwork/pixel_noise3.png"
+dest_files=["res://.godot/imported/pixel_noise3.png-9e49c3e7891fd17820741e3d83970a29.ctex"]
 
 [params]
 

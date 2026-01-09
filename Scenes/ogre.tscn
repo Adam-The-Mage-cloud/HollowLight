@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://0g8pb6puuqkw"]
+[gd_scene load_steps=33 format=3 uid="uid://0g8pb6puuqkw"]
 
 [ext_resource type="Texture2D" uid="uid://bks8x1mw2ipnv" path="res://Artwork/Ogre.png" id="1_3blal"]
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_8jiyc"]
@@ -170,6 +170,9 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xdnku"]
 size = Vector2(152.7606, 90.9104)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t5uq8"]
+size = Vector2(14.566326, 14.594847)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_xdnku"]
 atlas = ExtResource("1_3blal")
 region = Rect2(88, 39, 50, 30)
@@ -289,6 +292,16 @@ unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(5.105667, -0.5557194)
 
+[node name="AxeArea" type="Area2D" parent="AxePivot"]
+unique_name_in_owner = true
+monitoring = false
+
+[node name="AxeHitbox" type="CollisionShape2D" parent="AxePivot/AxeArea"]
+position = Vector2(-32.575863, -2.121077)
+rotation = 0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_t5uq8")
+
 [node name="OgreAxe" type="AnimatedSprite2D" parent="AxePivot"]
 z_index = 1
 use_parent_material = true
@@ -313,11 +326,11 @@ libraries = {
 script = ExtResource("4_xdnku")
 
 [node name="slash_time_collision" type="CollisionShape2D" parent="SlashArea"]
-visible = false
 position = Vector2(-32.37897, 13.348745)
 shape = SubResource("RectangleShape2D_4j2he")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="body_entered" from="AxePivot/AxeArea" to="." method="_on_axe_area_body_entered"]
 [connection signal="body_entered" from="SlashArea" to="SlashArea" method="_on_body_entered"]
 [connection signal="body_exited" from="SlashArea" to="SlashArea" method="_on_body_exited"]

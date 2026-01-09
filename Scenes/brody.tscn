@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://chadpnqf4f2xn"]
+[gd_scene load_steps=22 format=3 uid="uid://chadpnqf4f2xn"]
 
 [ext_resource type="Script" uid="uid://bwjcjoh73w2jp" path="res://Scripts/brody.gd" id="1_1lbbp"]
 [ext_resource type="Texture2D" uid="uid://dwsaukrqi5ql4" path="res://Artwork/Orb.png" id="1_k4lj1"]
@@ -53,6 +53,10 @@ region = Rect2(57, 38, 23, 31)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8rw2g"]
 atlas = ExtResource("1_k4lj1")
 region = Rect2(81, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1o5k"]
+atlas = ExtResource("1_k4lj1")
+region = Rect2(9, 70, 23, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hiyv"]
 atlas = ExtResource("1_k4lj1")
@@ -142,6 +146,14 @@ animations = [{
 "speed": 4.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1o5k")
+}],
+"loop": true,
+"name": &"roll",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.6,
 "texture": SubResource("AtlasTexture_0hiyv")
 }, {
@@ -152,8 +164,6 @@ animations = [{
 "name": &"stationary",
 "speed": 0.2
 }]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_niouw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w5hne"]
 atlas = ExtResource("1_k4lj1")
@@ -274,6 +284,8 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_niouw"]
+
 [sub_resource type="Gradient" id="Gradient_7kbme"]
 offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
 colors = PackedColorArray(0, 0, 0, 0.14901961, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
@@ -294,24 +306,17 @@ unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_lgt8o")
-animation = &"stationary"
+animation = &"roll"
 autoplay = "stationary"
 
-[node name="BrodyHitbox" type="CollisionShape2D" parent="."]
-visible = false
-use_parent_material = true
-position = Vector2(-1, 4)
-scale = Vector2(0.659679, 0.659679)
-shape = SubResource("CircleShape2D_niouw")
-
-[node name="antenna" type="AnimatedSprite2D" parent="."]
+[node name="antenna" type="AnimatedSprite2D" parent="BrodySprite"]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-2, -2)
 sprite_frames = SubResource("SpriteFrames_8t6bh")
 
-[node name="feet" type="AnimatedSprite2D" parent="."]
+[node name="feet" type="AnimatedSprite2D" parent="BrodySprite"]
 unique_name_in_owner = true
 z_index = 1
 z_as_relative = false
@@ -322,6 +327,13 @@ animation = &"moving"
 autoplay = "stationary"
 centered = false
 offset = Vector2(0, 10.5)
+
+[node name="BrodyHitbox" type="CollisionShape2D" parent="."]
+visible = false
+use_parent_material = true
+position = Vector2(-1, 4)
+scale = Vector2(0.659679, 0.659679)
+shape = SubResource("CircleShape2D_niouw")
 
 [node name="DashCooldown" type="Timer" parent="."]
 unique_name_in_owner = true
