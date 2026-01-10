@@ -4,7 +4,7 @@ shader_type canvas_item;
 // Fire Flash (ignition burst)
 // -------------------------
 uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
-uniform vec3 flash_color = vec3(1.0, 0.75, 0.3); // bright fire flash
+uniform vec3 flash_color = vec3(1.0, 0.75, 0.3);
 
 // -------------------------
 // Burn-Away
@@ -12,11 +12,12 @@ uniform vec3 flash_color = vec3(1.0, 0.75, 0.3); // bright fire flash
 uniform float burn_amount : hint_range(0.0, 1.0) = 0.0;
 uniform sampler2D burn_noise;
 uniform float burn_edge_width = 0.15;
-uniform vec3 burn_edge_color = vec3(0.95, 0.40, 0.09); // slightly darker bright ember
+uniform vec3 burn_edge_color = vec3(0.95, 0.40, 0.09);
 
 // -------------------------
 // Charred Outline
 // -------------------------
+uniform float charcoal_amount : hint_range(0.0, 1.0) = 1.0;
 uniform float char_width = 0.08;
 uniform vec3 char_color = vec3(0.1, 0.05, 0.02);
 
@@ -36,15 +37,14 @@ void fragment() {
         float noise = texture(burn_noise, uv).r;
         noise *= tex.a;
 
-        float threshold = burn_amount * 3.0 ;
+        float threshold = burn_amount;
 
         // -------------------------
-        // CHARCOAL CRUMBLE (smooth fade)
+        // CHARCOAL CRUMBLE
         // -------------------------
         if (noise < threshold - burn_edge_width) {
 
             float crumble = texture(burn_noise, uv * 1.5 + vec2(0.0, TIME * 0.1)).r;
-
             float shift = floor(crumble * crumble_strength) / 64.0;
             vec2 crumble_uv = uv + vec2(0.0, shift);
 
@@ -56,7 +56,6 @@ void fragment() {
             fade = 1.0 - fade;
             fade *= crumble_fade;
 
-            // force fade to zero as burn completes
             fade *= (1.0 - burn_amount);
 
             out_color = vec4(ash.rgb, ash.a * fade);
@@ -74,7 +73,7 @@ void fragment() {
             out_color = vec4(glow, glow_alpha);
 
         // -------------------------
-        // CHARRED OUTLINE (fades out)
+        // CHARRED OUTLINE
         // -------------------------
         } else if (noise < threshold + char_width) {
 
@@ -82,14 +81,12 @@ void fragment() {
             char_progress = clamp(char_progress, 0.0, 1.0);
 
             float char_fade = 1.0 - smoothstep(0.0, 1.0, char_progress);
-
-            // fade out completely as burn finishes
-            char_fade *= (1.0 - burn_amount);
+            char_fade *= charcoal_amount;
 
             out_color = vec4(char_color, tex.a * char_fade);
 
         // -------------------------
-        // PATCHY FIRE FLASH (dark → bright)
+        // PATCHY FIRE FLASH
         // -------------------------
         } else {
 
@@ -97,23 +94,26 @@ void fragment() {
 
             if (flash_mask > 0.5) {
 
-                // dark-to-bright flash curve
                 float flash_curve = flash_amount * flash_amount;
 
-                // darker initial flash
                 vec3 dark_flash = flash_color * 0.5;
-
-                // blend dark → bright
                 vec3 flash_mix = mix(dark_flash, flash_color, flash_curve);
 
                 vec4 fire_flash = vec4(flash_mix, tex.a);
                 out_color = mix(tex, fire_flash, flash_curve);
 
             } else {
-                out_color = tex;
+                // FIXED: this branch must also fade with burn_amount
+                out_color = vec4(tex.rgb, tex.a * (1.0 - burn_amount));
             }
         }
     }
+
+    // -------------------------
+    // GLOBAL FINAL FADE
+    // -------------------------
+    float final_fade = 1.0 - burn_amount;
+	out_color.a *= charcoal_amount;
 
     COLOR = out_color;
 }

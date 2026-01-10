@@ -106,11 +106,14 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="brazier" type="Area2D"]
+z_index = 2
+y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_w7syr")
 
 [node name="BrazierSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_mjyeq")
 animation = &"lit"
 autoplay = "unlit"
@@ -143,7 +146,7 @@ color = Color(1, 0.439216, 0.172549, 1)
 energy = 3.0
 texture = SubResource("GradientTexture2D_w7syr")
 
-[node name="OgreShadow" type="Sprite2D" parent="."]
+[node name="BrazierShadow" type="Sprite2D" parent="."]
 show_behind_parent = true
 use_parent_material = true
 position = Vector2(-0.73835754, 11.464703)

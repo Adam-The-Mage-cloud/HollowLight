@@ -1,10 +1,11 @@
-[gd_scene load_steps=33 format=3 uid="uid://0g8pb6puuqkw"]
+[gd_scene load_steps=39 format=3 uid="uid://0g8pb6puuqkw"]
 
 [ext_resource type="Texture2D" uid="uid://bks8x1mw2ipnv" path="res://Artwork/Ogre.png" id="1_3blal"]
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_8jiyc"]
 [ext_resource type="Script" uid="uid://ertoqb7sop20" path="res://Scripts/ogre.gd" id="2_4j2he"]
 [ext_resource type="Texture2D" uid="uid://bho5bv12fgumx" path="res://Artwork/Ogre_Head.png" id="3_t5uq8"]
 [ext_resource type="Script" uid="uid://cvt4m3lbm2gv8" path="res://Scripts/slash_area.gd" id="4_xdnku"]
+[ext_resource type="Texture2D" uid="uid://b7ygaqnk23ial" path="res://Artwork/Particles/Particle_Effects_2.png" id="6_7kbme"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4j2he"]
 shader = ExtResource("1_8jiyc")
@@ -242,7 +243,43 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4j2he"]
 size = Vector2(22.603645, 28.664043)
 
+[sub_resource type="Gradient" id="Gradient_uw55x"]
+colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uw55x"]
+gradient = SubResource("Gradient_uw55x")
+
+[sub_resource type="Curve" id="Curve_n5x3l"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_n5x3l"]
+curve = SubResource("Curve_n5x3l")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7kbme"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 4, 1)
+emission_shape = 3
+emission_box_extents = Vector3(6, 8, 1)
+direction = Vector3(0, 0, 0)
+spread = 55.0
+initial_velocity_min = -100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -10.000002
+radial_accel_max = 9.999997
+scale_min = 0.79999995
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_n5x3l")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_uw55x")
+turbulence_enabled = true
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
 [node name="ogre" type="Area2D"]
+z_index = 2
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_4j2he")
@@ -265,8 +302,9 @@ unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_4j2he")
-animation = &"stationary"
+animation = &"moving"
 autoplay = "stationary"
+frame_progress = 0.019458942
 
 [node name="SlobberParticles" type="GPUParticles2D" parent="OgreSprite"]
 z_index = 4
@@ -304,6 +342,7 @@ shape = SubResource("RectangleShape2D_t5uq8")
 
 [node name="OgreAxe" type="AnimatedSprite2D" parent="AxePivot"]
 z_index = 1
+y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-20.105667, 1.5557194)
 sprite_frames = SubResource("SpriteFrames_t5uq8")
@@ -328,6 +367,38 @@ script = ExtResource("4_xdnku")
 [node name="slash_time_collision" type="CollisionShape2D" parent="SlashArea"]
 position = Vector2(-32.37897, 13.348745)
 shape = SubResource("RectangleShape2D_4j2he")
+
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(-8, 29.5)
+rotation = 3.1415927
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = ExtResource("6_7kbme")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_7kbme")
+
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(5, 29)
+rotation = 3.1415927
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = ExtResource("6_7kbme")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_7kbme")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

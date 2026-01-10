@@ -28,47 +28,54 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("up") and Input.is_action_pressed("right") :
 		direction = Vector2(1, -1)
 		if dashing == false :
+			moving()
 			%BrodySprite.play("moving")
-		%feet.play("moving")
+
 		
 	elif Input.is_action_pressed("up") and Input.is_action_pressed("left") :
 		direction = Vector2(-1, -1)
 		if dashing == false :
+			moving()
 			%BrodySprite.play("moving")
-		%feet.play("moving")
+
 		
 	elif Input.is_action_pressed("down") and Input.is_action_pressed("right") :
 		direction = Vector2(1, 1)
 		if dashing == false :
+			moving()
 			%BrodySprite.play("moving")
-		%feet.play("moving")
+
 		
 	elif Input.is_action_pressed("down") and Input.is_action_pressed("left") :
 		direction = Vector2(-1, 1)
 		if dashing == false :
+			moving()
 			%BrodySprite.play("moving")
-		%feet.play("moving")
+
 		
 	elif Input.is_action_pressed("up") :
 		direction = Vector2(0, -1)
 		if dashing == false :
+			moving()
 			%BrodySprite.play("moving")
-		%feet.play("moving")
+
 	elif Input.is_action_pressed("down") :
 		direction = Vector2(0, 1)
 		if dashing == false :
+			moving()
 			%BrodySprite.play("moving")
-		%feet.play("moving")
+
 	elif Input.is_action_pressed("right") :
 		direction = Vector2(1, 0)
 		if dashing == false :
+			moving()
 			%BrodySprite.play("moving")
-		%feet.play("moving")
+
 	elif Input.is_action_pressed("left") :
 		direction = Vector2(-1, 0)
 		if dashing == false :
+			moving()
 			%BrodySprite.play("moving")
-		%feet.play("moving")
 		
 	else :
 		direction = Vector2.ZERO
@@ -89,39 +96,39 @@ func _physics_process(delta: float) -> void:
 func dash_ability():
 	if dash_available == true:
 		#flash_white()
-
+	
 		var target_angle = velocity.angle() * 180 / PI
-
+	
 		# --- Lean Into Direction (anticipation) ---
 		var lean = create_tween()
 		lean.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		lean.tween_property(%BrodySprite, "rotation_degrees", target_angle - 20, 0.08)
-
+	
 		# --- Roll Spin ---
 		var roll_tween = create_tween()
 		roll_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-
+	
 		var current = %BrodySprite.rotation_degrees
 		var spins = 1  # number of full rotations
-
+	
 		# Compute the next clean landing angle (smooth, no snapping)
 		var target = (floor(current / 360.0) + spins) * 0 # CHANGE THIS 0 TO 360 ONCE THE ROLL ANIMATION IS ADDED IN 
-
+	
 		# Add a tiny overshoot for natural motion
 		var overshoot = target + 18
-
+	
 		# Spin with overshoot
 		roll_tween.tween_property(%BrodySprite, "rotation_degrees", overshoot, 0.22)
-
+	
 		# Ease back into the final clean angle
 		roll_tween.tween_property(%BrodySprite, "rotation_degrees", target, 0.12)
-
+	
 		# --- Squash & Stretch ---
 		var squash = create_tween()
 		squash.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		squash.tween_property(%BrodySprite, "scale", Vector2(1.3, 0.8), 0.1)
 		squash.tween_property(%BrodySprite, "scale", Vector2(1, 1), 0.2)
-
+	
 		# --- Dash Logic ---
 		dashing = true
 		dash_available = false
@@ -129,25 +136,34 @@ func dash_ability():
 		speed = 3000
 		%feet.visible = false
 		%BrodySprite.play("roll")
-
+	
 		# Acceleration phase
 		for i in range(9):
 			await get_tree().create_timer(0.005).timeout
 			speed *= 1.135
-
+	
 		# Deceleration phase
 		await get_tree().create_timer(0.18).timeout
 		for i in range(4):
 			await get_tree().create_timer(0.03).timeout
 			speed /= 2
-
+	
 		await get_tree().create_timer(0.04).timeout
 		speed = 2000
-
+		
 		# Reset state
 		dashing = false
 		%feet.visible = true
 		%BrodySprite.play("moving")
+func moving() :
+	while direction != Vector2.ZERO :
+		# Animation :
+		%feet.play("moving")
+		# Footsteps :
+		%FootStepParticlesLeft.emitting = true
+		await get_tree().create_timer(0.2).timeout
+		%FootStepParticlesRight.emitting = true
+		await get_tree().create_timer(0.2).timeout
 
 func initialise_swap_tool() :
 	if weapon_equipped == false :

@@ -56,6 +56,13 @@ func _physics_process(delta: float) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.name == "Torch" :
+		# Knockback:
+		global_position.y += randf_range(-3, 3)
+		global_position.x += randf_range(-3, 3)
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
 		on_fire()
 
 func on_fire():

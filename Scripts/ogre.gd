@@ -50,6 +50,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
 		target = body
 		in_sight = true
+		footsteps()
 		realistic_movement()
 
 func _on_body_exited(body: Node2D) -> void:
@@ -84,6 +85,13 @@ func realistic_movement() :
 		global_position.y -= 1
 	%OgreSprite.play("stationary")
 	%OgreHead.play("unaware")
+
+func footsteps() :
+	while in_sight == true :
+		%FootStepParticlesLeft.emitting = true
+		await get_tree().create_timer(0.33).timeout
+		%FootStepParticlesRight.emitting = true
+		await get_tree().create_timer(0.33).timeout
 
 # Appearance :
 func breathing() :

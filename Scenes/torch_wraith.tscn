@@ -1,9 +1,10 @@
-[gd_scene load_steps=30 format=3 uid="uid://dpjvluijvoqyk"]
+[gd_scene load_steps=33 format=3 uid="uid://dpjvluijvoqyk"]
 
 [ext_resource type="Shader" uid="uid://y1cqhns1omdc" path="res://Shaders/torch_wraith.gdshader" id="1_86bfp"]
 [ext_resource type="Script" uid="uid://c8k4dw7bvoiu3" path="res://Scripts/torch_wraith.gd" id="2_86bfp"]
 [ext_resource type="Texture2D" uid="uid://cjgbv5rwydvc7" path="res://Artwork/Torch_Wraith.png" id="2_pte6v"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_yji83"]
+[ext_resource type="Texture2D" uid="uid://dbmlvsrx3pa3c" path="res://Artwork/Particles/Particle_Effects_1.png" id="5_qcmox"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yji83"]
 shader = ExtResource("1_86bfp")
@@ -15,8 +16,8 @@ shader_parameter/burn_edge_width = 1.0
 shader_parameter/burn_edge_color = Vector3(0.05, 0.025, 0.005)
 shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
-shader_parameter/crumble_strength = 0.2
-shader_parameter/crumble_fade = 0.2
+shader_parameter/crumble_strength = 1.0
+shader_parameter/crumble_fade = 0.6
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86bfp"]
 atlas = ExtResource("2_pte6v")
@@ -43,12 +44,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1sngw"]
 size = Vector2(16.838001, 15.839331)
 
-[sub_resource type="Gradient" id="Gradient_mgc0q"]
+[sub_resource type="Gradient" id="Gradient_qcmox"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
 colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_86bfp"]
-gradient = SubResource("Gradient_mgc0q")
+gradient = SubResource("Gradient_qcmox")
 width = 16
 height = 16
 fill = 1
@@ -58,15 +59,15 @@ fill_from = Vector2(0.5, 0.5)
 offsets = PackedFloat32Array(0, 0.998195)
 colors = PackedColorArray(0.492081, 1.89515e-06, 2.40654e-07, 1, 1, 0.725456, 0.293907, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_qcmox"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1sngw"]
 gradient = SubResource("Gradient_yji83")
 
-[sub_resource type="Curve" id="Curve_qcmox"]
+[sub_resource type="Curve" id="Curve_s6v4d"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_beu3c"]
-curve = SubResource("Curve_qcmox")
+[sub_resource type="CurveTexture" id="CurveTexture_3aw1k"]
+curve = SubResource("Curve_s6v4d")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1sngw"]
 lifetime_randomness = 0.21
@@ -80,30 +81,39 @@ flatness = 1.0
 gravity = Vector3(0, -20, 0)
 radial_accel_min = -2.0000021
 radial_accel_max = 1.9999977
-scale_curve = SubResource("CurveTexture_beu3c")
-color_ramp = SubResource("GradientTexture1D_qcmox")
+scale_curve = SubResource("CurveTexture_3aw1k")
+color_ramp = SubResource("GradientTexture1D_1sngw")
 turbulence_noise_strength = 0.05
 turbulence_noise_scale = 1.0
 
 [sub_resource type="Gradient" id="Gradient_1sngw"]
-offsets = PackedFloat32Array(0, 0.3219697, 1)
-colors = PackedColorArray(0.062361687, 1.3367564e-07, 0.0010679078, 1, 0.12330537, 0.01681056, 0.023716208, 1, 0.11372549, 0.015686275, 0.019607844, 0.6862745)
+offsets = PackedFloat32Array(0, 0.5681818, 1)
+colors = PackedColorArray(0.02004836, 0.0018573243, 0.0026216914, 1, 0.062361687, 1.3367564e-07, 0.0010679078, 1, 0.11372549, 0.015686275, 0.019607844, 0.6862745)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_h1t0l"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vhqbn"]
 gradient = SubResource("Gradient_1sngw")
 
+[sub_resource type="Curve" id="Curve_qcmox"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_krxp6"]
+curve = SubResource("Curve_qcmox")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yji83"]
-emission_shape_scale = Vector3(1.6, 0.4, 1)
+emission_shape_scale = Vector3(14, 20, 10)
 emission_shape = 3
 emission_box_extents = Vector3(5, 6, 1)
-direction = Vector3(0, -1, 0)
+direction = Vector3(0, -20, 0)
 flatness = 1.0
-initial_velocity_max = 10.0
-gravity = Vector3(0, -20, 0)
-radial_accel_min = 3.9999976
-radial_accel_max = 4.9999976
-scale_curve = SubResource("CurveTexture_beu3c")
-color_ramp = SubResource("GradientTexture1D_h1t0l")
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, -40, 0)
+radial_accel_min = 39.999996
+radial_accel_max = 49.999996
+scale_curve = SubResource("CurveTexture_krxp6")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_vhqbn")
 turbulence_enabled = true
 turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
@@ -200,6 +210,7 @@ animations = [{
 }]
 
 [node name="torch_wraith" type="Area2D"]
+z_index = 2
 texture_filter = 1
 material = SubResource("ShaderMaterial_yji83")
 script = ExtResource("2_86bfp")
@@ -241,11 +252,13 @@ process_material = SubResource("ParticleProcessMaterial_1sngw")
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = 1
-position = Vector2(-0.6902027, 4.2130537)
+position = Vector2(-0.6902027, -2.9524217)
 rotation = 3.1415927
+scale = Vector2(0.1, 0.1)
 amount = 16
-preprocess = 1.3599999999999999
-randomness = 0.42
+texture = ExtResource("5_qcmox")
+preprocess = 0.5
+randomness = 0.07
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_yji83")
 

@@ -12,7 +12,6 @@ var speed = 20
 
 func _ready() :
 	material = material.duplicate()
-	target = %Brody
 	pass
 
 func _physics_process(delta: float) -> void:
@@ -103,6 +102,8 @@ func burn_away() :
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.6, 0.0)
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.0, 0.45)
 	if health <= 0:
+		var rotation_tween = create_tween()
+		rotation_tween.tween_property($".", "rotation_degrees", $".".rotation_degrees + 540, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		var scale_tween = create_tween()
 		scale_tween.tween_property($".", "scale", Vector2(0,0), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		var death_tween = create_tween()
