@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=3 uid="uid://crssqr3d5ml2q"]
+
+[ext_resource type="Script" uid="uid://wdphlyeqrkxh" path="res://Scripts/procedural_room.gd" id="1_bbfjf"]
+[ext_resource type="Texture2D" uid="uid://cywdleye4u8mm" path="res://Artwork/Gray_Dungeon_Tileset_10x10.png" id="2_a0xh1"]
+
+[sub_resource type="TileSet" id="TileSet_bbfjf"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o6v11"]
+texture = ExtResource("2_a0xh1")
+margins = Vector2i(3, 3)
+separation = Vector2i(7, 0)
+texture_region_size = Vector2i(10, 10)
+0:0/next_alternative_id = 5
+0:0/0 = 0
+0:0/1 = 1
+0:0/1/flip_h = true
+0:0/2 = 2
+0:0/2/flip_v = true
+0:0/3 = 3
+0:0/3/flip_h = true
+0:0/3/flip_v = true
+1:0/next_alternative_id = 5
+1:0/0 = 0
+1:0/1 = 1
+1:0/1/flip_h = true
+1:0/1/flip_v = true
+1:0/2 = 2
+1:0/2/flip_v = true
+1:0/3 = 3
+1:0/3/flip_h = true
+2:0/next_alternative_id = 4
+2:0/0 = 0
+2:0/1 = 1
+2:0/1/flip_h = true
+2:0/2 = 2
+2:0/2/flip_v = true
+2:0/3 = 3
+2:0/3/flip_h = true
+2:0/3/flip_v = true
+3:0/next_alternative_id = 4
+3:0/0 = 0
+3:0/1 = 1
+3:0/1/flip_h = true
+3:0/2 = 2
+3:0/2/flip_v = true
+3:0/3 = 3
+3:0/3/flip_h = true
+3:0/3/flip_v = true
+4:0/0 = 0
+5:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_a0xh1"]
+tile_size = Vector2i(10, 10)
+sources/0 = SubResource("TileSetAtlasSource_o6v11")
+
+[node name="procedural_room" type="Node2D"]
+script = ExtResource("1_bbfjf")
+
+[node name="TileMapWalls" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_bbfjf")
+
+[node name="TileMapFloor" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.25565878, 0.25565878, 0.25565878, 1)
+tile_set = SubResource("TileSet_a0xh1")
+
+[node name="TileMapDecor" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="TileMapWallCorners" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="TileMapDoors" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="MobSpawnPoints" type="Node2D" parent="."]
+
+[node name="Point1" type="Node2D" parent="MobSpawnPoints"]
+
+[node name="Point2" type="Node2D" parent="MobSpawnPoints"]
+
+[node name="Point3" type="Node2D" parent="MobSpawnPoints"]
+
+[node name="Point4" type="Node2D" parent="MobSpawnPoints"]
+
+[node name="Point5" type="Node2D" parent="MobSpawnPoints"]
+
+[node name="Point6" type="Node2D" parent="MobSpawnPoints"]
+
+[node name="Point7" type="Node2D" parent="MobSpawnPoints"]
+
+[node name="Point8" type="Node2D" parent="MobSpawnPoints"]
+
+[node name="Point9" type="Node2D" parent="MobSpawnPoints"]
+
+[node name="Point10" type="Node2D" parent="MobSpawnPoints"]

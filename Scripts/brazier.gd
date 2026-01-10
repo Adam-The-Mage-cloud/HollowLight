@@ -3,6 +3,7 @@ extends Area2D
 var lit = false
 
 func _ready() :
+	EventBus.emit_signal("beacon_spawned")
 	%BrazierSprite.play("unlit")
 	%MainFlame.emitting = false
 	%MainFlameSecondary.emitting = false
@@ -12,6 +13,8 @@ func brazier_lit() :
 	if lit == false :
 		# Create a tween for both more particles to appear over time and more light to appear overtime :
 		lit = true
+		# Let Game Know Beacon is Lit :
+		EventBus.beacon_lit.emit()
 		%BrazierSprite.play("lit")
 		%BrazierLight.enabled = true
 		%MainFlame.emitting = true

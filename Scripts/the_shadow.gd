@@ -7,6 +7,8 @@ var brody_position
 var direction
 var speed = 5
 
+var burning = false
+
 func _ready() :
 	# Pick Random Appearance :
 	material = material.duplicate()
@@ -39,19 +41,20 @@ func _ready() :
 
 func _physics_process(delta: float) -> void:
 	# Look at Brody gradually (acting like a cloud) :
-	var desired_angle = (target.global_position - global_position).angle()
-	rotation = lerp_angle(rotation, desired_angle, 0.025)
-	# Moving : )
-	brody_position = target.global_position
-	direction = (brody_position - global_position).normalized()
-	# Potentially Flip Horizontally :
-	if brody_position.x > global_position.x :
-		$".".scale.x = -1
-	else :
-		$".".scale.x = 1
-	# Now we have the direction to Brody we can move towards it with :
-	if global_position.distance_to(brody_position) > 10 :
-		position += delta * speed * direction
+	if burning == false :
+		var desired_angle = (target.global_position - global_position).angle()
+		rotation = lerp_angle(rotation, desired_angle, 0.025)
+		# Moving : )
+		brody_position = target.global_position
+		direction = (brody_position - global_position).normalized()
+		# Potentially Flip Horizontally :
+		if brody_position.x > global_position.x :
+			$".".scale.x = -1
+		else :
+			$".".scale.x = 1
+		# Now we have the direction to Brody we can move towards it with :
+		if global_position.distance_to(brody_position) > 10 :
+			position += delta * speed * direction
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -61,11 +64,16 @@ func _on_area_entered(area: Area2D) -> void:
 		global_position.x += randf_range(-3, 3)
 		var knockback_direction = (global_position - area.global_position).normalized()
 		var knockback_movement = create_tween()
-		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 		on_fire()
 
 func on_fire():
+	burning = true
+	
+	var rotation_tween_1 = create_tween()
+	rotation_tween_1.tween_property($".", "rotation_degrees", $".".rotation_degrees + randi_range(-45, 45), 1.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	
 	var tween1 := create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)
 	tween1.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.15)
@@ -73,7 +81,6 @@ func on_fire():
 	# Turn Light Mask on :aaaaaa
 	$".".light_mask = 1
 	%OnFireLight.enabled = true
-	
 	var tween2 := create_tween()
 	tween2.tween_property(material, "shader_parameter/burn_amount", 1.0, 1.0)
 	

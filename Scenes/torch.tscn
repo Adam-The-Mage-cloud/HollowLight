@@ -158,12 +158,12 @@ scale_curve = SubResource("CurveTexture_mhh1w")
 color_ramp = SubResource("GradientTexture1D_0dv5e")
 
 [node name="Torch" type="Area2D"]
-z_index = 2
 texture_filter = 1
 use_parent_material = true
 script = ExtResource("1_dwpv8")
 
 [node name="TorchLight" type="PointLight2D" parent="."]
+y_sort_enabled = true
 use_parent_material = true
 position = Vector2(14.637634, -13.30919)
 color = Color(1, 0.439216, 0.172549, 1)
@@ -181,6 +181,7 @@ shape = SubResource("RectangleShape2D_3giss")
 
 [node name="TorchSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+y_sort_enabled = true
 use_parent_material = true
 position = Vector2(8.211391, -7.5743885)
 sprite_frames = SubResource("SpriteFrames_tk5eq")
@@ -189,6 +190,7 @@ animation = &"lit"
 [node name="MainFlame" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 z_index = 1
+y_sort_enabled = true
 position = Vector2(14.657705, -12.509868)
 rotation = -0.800334
 amount = 265
@@ -206,12 +208,14 @@ process_material = SubResource("ParticleProcessMaterial_u2fq7")
 [node name="MiniTorch" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 visible = false
+y_sort_enabled = true
 use_parent_material = true
 position = Vector2(6.48217, -5.0087166)
 sprite_frames = SubResource("SpriteFrames_beu3c")
 
 [node name="MiniFlame" type="GPUParticles2D" parent="MiniTorch"]
 unique_name_in_owner = true
+y_sort_enabled = true
 position = Vector2(4.846586, -3.4693823)
 rotation = -0.800334
 scale = Vector2(0.707439, 0.707439)
@@ -222,6 +226,7 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_h1t0l")
 
 [node name="MiniFlameSecondary" type="GPUParticles2D" parent="MiniTorch/MiniFlame"]
+y_sort_enabled = true
 position = Vector2(2.7327933, 0.34712774)
 emitting = false
 amount = 80

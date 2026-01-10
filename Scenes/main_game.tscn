@@ -1,12 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=12 format=3 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="PackedScene" uid="uid://dow01u60oiexx" path="res://Scenes/random_dungeon_spawner.tscn" id="1_y16yq"]
+[ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
 [ext_resource type="PackedScene" uid="uid://chadpnqf4f2xn" path="res://Scenes/brody.tscn" id="2_upa5u"]
 [ext_resource type="PackedScene" uid="uid://doutgnk2nj6pi" path="res://Scenes/torch.tscn" id="3_eoier"]
 [ext_resource type="PackedScene" uid="uid://0g8pb6puuqkw" path="res://Scenes/ogre.tscn" id="4_6j5ir"]
 [ext_resource type="PackedScene" uid="uid://cdo6hvtefqe2x" path="res://Scenes/brazier.tscn" id="5_mgc0q"]
-[ext_resource type="PackedScene" uid="uid://cmthdr4mmds4r" path="res://Scenes/worm_bat.tscn" id="7_18r40"]
+[ext_resource type="PackedScene" uid="uid://crssqr3d5ml2q" path="res://Scenes/procedural_room.tscn" id="6_73nn6"]
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 1
@@ -24,6 +25,11 @@ y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_18r40")
 
+[node name="EventBus" type="Node" parent="."]
+script = ExtResource("2_6y7pd")
+
+[node name="procedural_room" parent="." instance=ExtResource("6_73nn6")]
+
 [node name="random_dungeon_spawner" parent="." instance=ExtResource("1_y16yq")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -35,22 +41,9 @@ position = Vector2(129.90372, 67.17283)
 
 [node name="Torch" parent="Brody" instance=ExtResource("3_eoier")]
 unique_name_in_owner = true
-z_as_relative = false
 y_sort_enabled = true
 position = Vector2(-0.65, 3.5)
 rotation = 3.2253685
-
-[node name="BrodyCam" type="Camera2D" parent="Brody"]
-z_index = 1
-zoom = Vector2(12, 12)
-limit_left = 0
-limit_top = 0
-limit_right = 256
-limit_bottom = 144
-limit_smoothed = true
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
 
 [node name="RegularRoomPath" type="Path2D" parent="Brody"]
 position = Vector2(-155.62364, -61.112957)
@@ -67,6 +60,18 @@ position = Vector2(-150.268, -63.310646)
 curve = SubResource("Curve2D_18r40")
 
 [node name="CorridorFollowPath" type="PathFollow2D" parent="Brody/CorridorRoomPath"]
+
+[node name="BrodyCam" type="Camera2D" parent="Brody"]
+z_index = 1
+zoom = Vector2(10, 10)
+limit_left = 0
+limit_top = 0
+limit_right = 320
+limit_bottom = 180
+limit_smoothed = true
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
 
 [node name="ogre" parent="." instance=ExtResource("4_6j5ir")]
 z_as_relative = false
@@ -94,8 +99,11 @@ unique_name_in_owner = true
 wait_time = 6.0
 autostart = true
 
-[node name="worm_bat" parent="." instance=ExtResource("7_18r40")]
-position = Vector2(76.81199, 83.208786)
+[node name="WormBatChance" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 4.0
+autostart = true
 
 [connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]
 [connection signal="timeout" from="TorchWraithChance" to="." method="_on_torch_wraith_chance_timeout"]
+[connection signal="timeout" from="WormBatChance" to="." method="_on_worm_bat_chance_timeout"]

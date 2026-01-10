@@ -30,4 +30,14 @@ func _on_torch_wraith_chance_timeout() -> void:
 			TorchWraith.global_position = %RegularFollowPath.global_position
 			TorchWraith.target = %Brody
 			add_child(TorchWraith)
-		
+			%TorchWraithChance.wait_time += randf_range(-1, 1)
+
+func _on_worm_bat_chance_timeout() -> void:
+	if room_finished == false :
+		%RegularFollowPath.progress_ratio = randf_range(0, 1)
+		if randi_range(1, 5) == 2 :
+			var WormBat = preload("res://Scenes/worm_bat.tscn").instantiate()
+			WormBat.global_position = %RegularFollowPath.global_position
+			WormBat.target = %Brody
+			add_child(WormBat)
+			%WormBatChance.wait_time += randf_range(-1, 1)

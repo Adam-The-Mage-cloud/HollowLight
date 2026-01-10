@@ -11,27 +11,28 @@ var max_health = 2
 var health = 2
 
 func _ready() :
-	target = %Brody
+	# target = %Brody
 	material = material.duplicate()
 	realistic_movement()
 	flapping()
 	# Deviation of how they're titled towards the player :
 
 func _physics_process(delta: float) -> void:
-	# Look at Brody gradually (acting like a cloud) :
-	var desired_angle = (target.global_position - global_position).angle() - PI/2
-	rotation = lerp_angle(rotation, desired_angle, 0.05)
-	# Moving : )
-	brody_position = target.global_position
-	direction = (brody_position - global_position).normalized()
-	# Potentially Flip Horizontally :
-	if brody_position.x > global_position.x :
-		$".".scale.x = -1
-	else :
-		$".".scale.x = 1
-	# Now we have the direction to Brody we can move towards it with :
-	if global_position.distance_to(brody_position) > 10 :
-		position += delta * speed * direction
+	if flying == true :
+		# Look at Brody gradually (acting like a cloud) :
+		var desired_angle = (target.global_position - global_position).angle() - PI/2
+		rotation = lerp_angle(rotation, desired_angle, 0.05)
+		# Moving : )
+		brody_position = target.global_position
+		direction = (brody_position - global_position).normalized()
+		# Potentially Flip Horizontally :
+		if brody_position.x > global_position.x :
+			$".".scale.x = -1
+		else :
+			$".".scale.x = 1
+		# Now we have the direction to Brody we can move towards it with :
+		if global_position.distance_to(brody_position) > 10 :
+			position += delta * speed * direction
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -104,16 +105,16 @@ func burn_away() :
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.0, 0.45)
 	if health <= 0:
 		flying = false
-		#var scale_tween = create_tween()
+		#var scale_tween = create_tween() 
 		#scale_tween.tween_property($".", "scale", Vector2(0,0), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		var rotation_tween_1 = create_tween()
-		rotation_tween_1.tween_property($".", "rotation_degrees", $".".rotation_degrees + 165, 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		rotation_tween_1.tween_property(%WormBat, "rotation_degrees", %WormBat.rotation_degrees + 165, 1.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		var death_tween = create_tween()
 		death_tween.tween_property(material, "shader_parameter/burn_amount", 1.0, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		await get_tree().create_timer(0.15).timeout
 		#var rotation_tween_2 = create_tween()
 		#rotation_tween_2.tween_property($".", "rotation_degrees", $".".rotation_degrees + 15, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-		var charcoal_tween = create_tween()
+		var charcoal_tween = create_tween() 
 		charcoal_tween.tween_property(material, "shader_parameter/charcoal_amount", 0.0, 0.4)
 		await get_tree().create_timer(0.4).timeout
 		queue_free()

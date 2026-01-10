@@ -8,9 +8,12 @@ var target
 
 var bobbing = false
 
+var lightable = false
+
 var speed = 12
 
 func _ready() :
+	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
 	material = material.duplicate()
 	breathing()
 	randomize()
@@ -120,7 +123,76 @@ func breathing() :
 		bobbing = false
 		breathing()
 
-
 func _on_axe_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
 		body.ogre_slashed()
+
+func _on_all_beacons_lit() :
+	shadow_form()
+
+func shadow_form() :
+	var first_flash = create_tween()
+	first_flash.tween_property(material, "shader_parameter/susceptible_flash_amount", 1.0, 0.1)
+	first_flash.tween_property(material, "shader_parameter/susceptible_flash_amount", 0.0, 0.2)
+	$".".monitoring = false
+	lightable = true
+	%visibility_collision.scale *= 2.4
+	in_sight = true
+	speed = 50
+	%FootStepParticlesLeft.visible = false
+	%FootStepParticlesRight.visible = false
+	%OgreShadowSprite.play("moving")
+	%OgreHeadShadow.visible = true
+	%OgreShadowSprite.visible = true
+	%OgreAxeShadow.visible = true
+	%OgreHead.visible = false
+	%OgreSprite.visible = false
+	%OgreAxe.visible = false
+
+
+func _on_axe_area_area_entered(area: Area2D) -> void:
+	if area.name == "Torch" and lightable == true :
+		# Knockback:
+		speed = -50
+		global_position.y += randf_range(-3, 3)
+		global_position.x += randf_range(-3, 3)
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		burn()
+
+
+func _on_ogre_hit_box_area_entered(area: Area2D) -> void:
+	if area.name == "Torch" and lightable == true :
+		# Knockback:
+		speed = -50
+		var rotation_tween_1 = create_tween()
+		rotation_tween_1.tween_property($".", "rotation_degrees", $".".rotation_degrees + 65, 1.2)
+		global_position.y += randf_range(-3, 3)
+		global_position.x += randf_range(-3, 3)
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		burn()
+
+
+func burn() :
+	var tween1 := create_tween()
+	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)
+	tween1.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.15)
+	
+	# Turn Light Mask on :aaaaaa
+	$".".light_mask = 1
+	%OnFireLight.enabled = true
+	
+	var tween2 := create_tween()
+	tween2.tween_property(material, "shader_parameter/burn_amount", 1.0, 1.0)
+	
+	var lighttween = create_tween()
+	lighttween.tween_property(%OnFireLight, "texture_scale", 1.6, 0.0)
+	lighttween.tween_property(%OnFireLight, "texture_scale", 0.0, 0.45)
+	
+	# Once finished then queue_free :
+	tween2.finished.connect(func() :
+		queue_free())
+		

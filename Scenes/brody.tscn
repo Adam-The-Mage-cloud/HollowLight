@@ -144,7 +144,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"moving",
-"speed": 4.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -274,7 +274,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"moving",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -341,7 +341,7 @@ unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_lgt8o")
-animation = &"roll"
+animation = &"moving"
 autoplay = "stationary"
 
 [node name="antenna" type="AnimatedSprite2D" parent="BrodySprite"]

@@ -4,7 +4,7 @@ var max_health = 5
 var health = 5
 
 var direction = Vector2.ZERO
-var speed = 2240
+var speed = 3000
 
 var weapon_equipped = false
 var torch_equipped = true
@@ -149,7 +149,7 @@ func dash_ability():
 			speed /= 2
 	
 		await get_tree().create_timer(0.04).timeout
-		speed = 2000
+		speed = 3000
 		
 		# Reset state
 		dashing = false

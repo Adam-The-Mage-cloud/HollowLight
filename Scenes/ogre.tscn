@@ -1,20 +1,44 @@
-[gd_scene load_steps=39 format=3 uid="uid://0g8pb6puuqkw"]
+[gd_scene load_steps=54 format=3 uid="uid://0g8pb6puuqkw"]
 
 [ext_resource type="Texture2D" uid="uid://bks8x1mw2ipnv" path="res://Artwork/Ogre.png" id="1_3blal"]
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_8jiyc"]
+[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_n5x3l"]
 [ext_resource type="Script" uid="uid://ertoqb7sop20" path="res://Scripts/ogre.gd" id="2_4j2he"]
+[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_4ma1k"]
 [ext_resource type="Texture2D" uid="uid://bho5bv12fgumx" path="res://Artwork/Ogre_Head.png" id="3_t5uq8"]
 [ext_resource type="Script" uid="uid://cvt4m3lbm2gv8" path="res://Scripts/slash_area.gd" id="4_xdnku"]
+[ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="5_4ma1k"]
+[ext_resource type="Texture2D" uid="uid://dqjlqpsdsjxbi" path="res://Artwork/Ogre_Shadow.png" id="5_vc312"]
 [ext_resource type="Texture2D" uid="uid://b7ygaqnk23ial" path="res://Artwork/Particles/Particle_Effects_2.png" id="6_7kbme"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4j2he"]
-shader = ExtResource("1_8jiyc")
-shader_parameter/apply = false
-shader_parameter/amount = 1.0
-shader_parameter/wave_frequency = 1.0
-shader_parameter/wave_amplitude = 0.002
-shader_parameter/wave_longitude = 0.001
-shader_parameter/wave_speed = 1.24
+shader = ExtResource("1_n5x3l")
+shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Vector3(0.95, 0.65, 0.25)
+shader_parameter/susceptible_flash_amount = 0.0
+shader_parameter/susceptible_flash_color = Vector3(0.2, 0.03, 0.03)
+shader_parameter/burn_amount = 0.0
+shader_parameter/burn_noise = ExtResource("2_4ma1k")
+shader_parameter/burn_edge_width = 1.0
+shader_parameter/burn_edge_color = Vector3(0.95, 0.4, 0.09)
+shader_parameter/char_width = 0.08
+shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
+shader_parameter/crumble_strength = 1.0
+shader_parameter/crumble_fade = 0.6
+
+[sub_resource type="Gradient" id="Gradient_mgc0q"]
+offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
+colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vc312"]
+gradient = SubResource("Gradient_mgc0q")
+width = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vc312"]
+radius = 11.092087
+height = 53.238144
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t5uq8"]
 shader = ExtResource("1_8jiyc")
@@ -111,6 +135,55 @@ animations = [{
 "speed": 1.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xn72"]
+atlas = ExtResource("5_4ma1k")
+region = Rect2(37, 5, 37, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6pwe3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xn72")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nk7xg"]
+atlas = ExtResource("5_vc312")
+region = Rect2(42, 125, 24, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejjyv"]
+atlas = ExtResource("5_vc312")
+region = Rect2(90, 125, 24, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ma1k"]
+atlas = ExtResource("5_vc312")
+region = Rect2(30, 45, 50, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h4run"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nk7xg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejjyv")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ma1k")
+}],
+"loop": true,
+"name": &"stationary",
+"speed": 5.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_4j2he"]
 atlas = ExtResource("1_3blal")
 region = Rect2(33, 102, 47, 63)
@@ -135,6 +208,11 @@ animations = [{
 "loop": true,
 "name": &"moving",
 "speed": 3.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"movingshadow",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -173,6 +251,21 @@ size = Vector2(152.7606, 90.9104)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5uq8"]
 size = Vector2(14.566326, 14.594847)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4run"]
+atlas = ExtResource("5_vc312")
+region = Rect2(88, 30, 50, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nk7xg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4run")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xdnku"]
 atlas = ExtResource("1_3blal")
@@ -285,9 +378,23 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_4j2he")
 script = ExtResource("2_4j2he")
 
+[node name="OnFireLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-1.9524307, -0.91290855)
+enabled = false
+color = Color(1, 0.4627451, 0.21960784, 0.60784316)
+energy = 2.4
+texture = SubResource("GradientTexture2D_vc312")
+
+[node name="OgreHitBox" type="Area2D" parent="."]
+
+[node name="OgreCollision" type="CollisionShape2D" parent="OgreHitBox"]
+position = Vector2(-2.7845001, 5.732807)
+shape = SubResource("CapsuleShape2D_vc312")
+
 [node name="OgreHead" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-z_index = 2
+z_index = 3
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_t5uq8")
 use_parent_material = true
@@ -295,7 +402,26 @@ position = Vector2(7.5, -17.284)
 sprite_frames = SubResource("SpriteFrames_3xn72")
 animation = &"angry"
 autoplay = "unaware"
-frame_progress = 0.21414849
+
+[node name="OgreHeadShadow" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 1
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-1.5, -14.5)
+sprite_frames = SubResource("SpriteFrames_6pwe3")
+
+[node name="OgreShadowSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-1.5, 9.5)
+sprite_frames = SubResource("SpriteFrames_h4run")
+animation = &"moving"
+autoplay = "moving"
+frame_progress = 0.73628145
 
 [node name="OgreSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -304,7 +430,6 @@ use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_4j2he")
 animation = &"moving"
 autoplay = "stationary"
-frame_progress = 0.019458942
 
 [node name="SlobberParticles" type="GPUParticles2D" parent="OgreSprite"]
 z_index = 4
@@ -340,7 +465,16 @@ rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_t5uq8")
 
+[node name="OgreAxeShadow" type="AnimatedSprite2D" parent="AxePivot"]
+unique_name_in_owner = true
+visible = false
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-21.784676, -0.6712456)
+sprite_frames = SubResource("SpriteFrames_nk7xg")
+
 [node name="OgreAxe" type="AnimatedSprite2D" parent="AxePivot"]
+unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
 use_parent_material = true
@@ -402,6 +536,8 @@ process_material = SubResource("ParticleProcessMaterial_7kbme")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="area_entered" from="OgreHitBox" to="." method="_on_ogre_hit_box_area_entered"]
+[connection signal="area_entered" from="AxePivot/AxeArea" to="." method="_on_axe_area_area_entered"]
 [connection signal="body_entered" from="AxePivot/AxeArea" to="." method="_on_axe_area_body_entered"]
 [connection signal="body_entered" from="SlashArea" to="SlashArea" method="_on_body_entered"]
 [connection signal="body_exited" from="SlashArea" to="SlashArea" method="_on_body_exited"]

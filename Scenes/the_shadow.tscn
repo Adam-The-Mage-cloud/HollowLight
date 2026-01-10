@@ -15,8 +15,8 @@ shader_parameter/burn_edge_width = 1.0
 shader_parameter/burn_edge_color = Vector3(0.95, 0.35, 0.09)
 shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
-shader_parameter/crumble_strength = 0.2
-shader_parameter/crumble_fade = 0.2
+shader_parameter/crumble_strength = 1.0
+shader_parameter/crumble_fade = 0.6
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ha8o0"]
 size = Vector2(8, 13.5)
