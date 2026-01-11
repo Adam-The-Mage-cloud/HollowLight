@@ -29,6 +29,7 @@ script = ExtResource("1_18r40")
 script = ExtResource("2_6y7pd")
 
 [node name="procedural_room" parent="." instance=ExtResource("6_73nn6")]
+z_index = 2
 
 [node name="random_dungeon_spawner" parent="." instance=ExtResource("1_y16yq")]
 
@@ -63,7 +64,7 @@ curve = SubResource("Curve2D_18r40")
 
 [node name="BrodyCam" type="Camera2D" parent="Brody"]
 z_index = 1
-zoom = Vector2(10, 10)
+zoom = Vector2(5, 5)
 limit_left = 0
 limit_top = 0
 limit_right = 320
