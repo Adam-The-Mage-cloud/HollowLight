@@ -64,7 +64,7 @@ curve = SubResource("Curve2D_18r40")
 
 [node name="BrodyCam" type="Camera2D" parent="Brody"]
 z_index = 1
-zoom = Vector2(5, 5)
+zoom = Vector2(10, 10)
 limit_left = 0
 limit_top = 0
 limit_right = 320
