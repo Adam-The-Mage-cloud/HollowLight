@@ -19,8 +19,8 @@ func _ready() :
 	randomize()
 
 func _physics_process(delta: float) -> void:
-	if in_sight == true :
-		# Moving : )
+	# Moving : )
+	if brody_position != null :
 		brody_position = target.global_position
 		direction = (brody_position - global_position).normalized()
 		# Potentially Flip Horizontally :
@@ -66,6 +66,7 @@ func realistic_movement() :
 	%OgreHead.play("angry")
 	while in_sight == true :
 		# HEAD AND AXE JIGGLE :
+		brody_position = target.global_position
 		var head_tween = create_tween()
 		head_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		# Rotate a little left

@@ -107,7 +107,9 @@ func world_to_screen(world_pos: Vector2, cam: Camera2D, viewport: Viewport) -> V
 func dash_ability():
 	if dash_available == true:
 		#flash_white()
-	
+		# Can dodge through furniture :
+		var original_mask = collision_mask
+		collision_mask = 1   # disable bit 2
 		var target_angle = velocity.angle() * 180 / PI
 	
 		# --- Lean Into Direction (anticipation) ---
@@ -163,6 +165,7 @@ func dash_ability():
 		speed = 3000
 		
 		# Reset state
+		collision_mask = original_mask
 		dashing = false
 		%feet.visible = true
 		%BrodySprite.play("moving")
