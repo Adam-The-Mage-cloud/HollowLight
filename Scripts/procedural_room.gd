@@ -6,7 +6,7 @@ extends Node2D
 
 # 3.) Base Room Sizes:
 # Room Type 1 > Basic Dungeon = 32 x 18 Tiles 
-# Room Type 2 > Basic Corridor = a x b Tiles
+# Room Type 2 > Basic Corridor = 8 x 18 Tiles
 
 # 4.) Source ID's :
 # Floor Tiles = ID 0-9
@@ -18,7 +18,7 @@ extends Node2D
 # Floor Cover (mushrooms etc) = ID 60-69
 
 var room_type = 0
-var wallrings = 8
+var wallrings = 20
 var theme = 0
 
 var floor_source_id = 0
@@ -28,16 +28,35 @@ var floorcover_source_id = 0
 var wall_source_id = 0
 var corner_source_id = 0
 
+# Directionally Useful Variables :
+var direction
+var first_room = true
+var door_origin
 var width = 32
 var height = 18
 
 func _ready() :
 	# Choose Room Size :
-	room_type = randi_range (1, 1)
-	if room_type == 1 :
-		width = 32
-		height = 18
-		
+	if room_type == 0 : # Check it hasn't already been assigned as some other room type :
+		room_type = randi_range (1, 2)
+		if room_type == 1 : # Regular Dungeon Room :
+			width = randi_range(24, 36)
+			height = randf_range(14, 22)
+	
+	elif room_type == 2 : # Corridor
+		width = randi_range(8, 10)
+		height = randf_range(8, 24)
+	
+	# Choose Direction of Room (up/down or left/right) and adjust so it fits the overall map
+	if first_room == false :
+		direction = randi_range(1, 1) # 1 = up/down , 2 = left/right
+		if direction == 1 : # It's up so we need to send the room up on the y-axis, relative to its door
+			$".".global_position.y = door_origin.y - (height * 10) + 0
+			if room_type == 1 :
+				pass
+			if room_type == 2 :
+				$".".global_position.x = door_origin.x - (width * 10) / 2
+	
 	# Choose Room Theme :
 	theme = randi_range (1, 1)
 	
@@ -46,8 +65,11 @@ func _ready() :
 	generate_obstacles()
 	generate_bitsandbobs()
 	generate_floorcover()
+	generate_underwall()
 	generate_wall()
 	generate_wall_corners()
+	
+	position_door()
 
 func generate_floor() :
 	# Generate Regular Gray Dungeon Floor
@@ -66,9 +88,9 @@ func generate_wall():
 		var atlas_y = 0
 		var max_x = width - 1
 		var max_y = height - 1
-		for ring in range(1, wallrings + 4):
+		for ring in range(1, 2):
 			# Fade order: 0,1,2,3,3,3 etc
-			var atlas_x = ring - 1
+			var atlas_x = ring -1
 			if atlas_x > 3:
 				atlas_x = 3
 			var left_x   = -ring
@@ -88,13 +110,41 @@ func generate_wall():
 			for y in range(top_y, bottom_y + 1):
 				%TileMapWalls.set_cell(Vector2i(right_x, y), wall_source_id, Vector2i(atlas_x, atlas_y), 0)
 
+func generate_underwall():
+	if theme == 1 :
+		wall_source_id = 30
+		var atlas_y = 0
+		var max_x = width - 1
+		var max_y = height - 1
+		for ring in range(2, wallrings):
+			# Fade order: 0,1,2,3,3,3 etc
+			var atlas_x = ring -1
+			if atlas_x > 3:
+				atlas_x = 3
+			var left_x   = -ring
+			var right_x  = max_x + ring
+			var top_y    = -ring
+			var bottom_y = max_y + ring
+			# TOP EDGE (alt = 3)
+			for x in range(left_x, right_x + 1):
+				%TileMapUnderWalls.set_cell(Vector2i(x, top_y), wall_source_id, Vector2i(atlas_x, atlas_y), 3)
+			# BOTTOM EDGE (alt = 2)
+			for x in range(left_x, right_x + 1):
+				%TileMapUnderWalls.set_cell(Vector2i(x, bottom_y), wall_source_id, Vector2i(atlas_x, atlas_y), 2)
+			# LEFT EDGE (alt = 1) 
+			for y in range(top_y, bottom_y + 1):
+				%TileMapUnderWalls.set_cell(Vector2i(left_x, y), wall_source_id, Vector2i(atlas_x, atlas_y), 1)
+			# RIGHT EDGE (alt = 0)
+			for y in range(top_y, bottom_y + 1):
+				%TileMapUnderWalls.set_cell(Vector2i(right_x, y), wall_source_id, Vector2i(atlas_x, atlas_y), 0)
+
 func generate_wall_corners():
 	if theme == 1 :
 		corner_source_id = 40
 		var atlas_y = 0
 		var max_x = width - 1
 		var max_y = height - 1
-		for ring in range(1, wallrings):
+		for ring in range(1, 2):
 			# Fade order: 0,1,2,3,3,3 etc
 			var atlas_x = ring - 1
 			if atlas_x > 3:
@@ -165,3 +215,19 @@ func generate_floorcover():
 				var atlas_x = randi_range(0, 3)
 				var alt = randi_range(0, 3)
 				%TileMapFloorCover.set_cell(Vector2i(x, y), floorcover_source_id, Vector2i(atlas_x, atlas_y), alt)
+
+func position_door() :
+	if direction == 1 :
+		%DoorArea.global_position.x = $".".global_position.x + randi_range(width * 2, width * 8)
+	elif direction == 2 :
+		pass
+
+func _on_door_area_body_entered(body: Node2D) -> void:
+	if body.name == "Brody" :
+		# Animate door :
+		%DoorSprite.play("DarkSteelSmashed")
+		# Spawn new random room :
+		var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
+		new_room.door_origin = %DoorArea.global_position
+		new_room.first_room = false
+		get_tree().current_scene.call_deferred("add_child", new_room)

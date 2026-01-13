@@ -93,6 +93,17 @@ func _physics_process(delta: float) -> void:
 	velocity = (direction * speed) * delta
 	move_and_slide()
 
+func world_to_screen(world_pos: Vector2, cam: Camera2D, viewport: Viewport) -> Vector2:
+	var screen_size = viewport.get_visible_rect().size
+	var cam_center = cam.get_screen_center_position()
+	var zoom = cam.zoom
+
+	var offset = (world_pos - cam_center)
+	offset /= zoom
+
+	return screen_size * 0.5 + offset
+
+
 func dash_ability():
 	if dash_available == true:
 		#flash_white()

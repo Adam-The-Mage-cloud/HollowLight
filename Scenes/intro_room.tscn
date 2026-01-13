@@ -1,28 +1,30 @@
-[gd_scene load_steps=28 format=3 uid="uid://crssqr3d5ml2q"]
+[gd_scene load_steps=19 format=4 uid="uid://bkt0d66ammics"]
 
-[ext_resource type="Script" uid="uid://wdphlyeqrkxh" path="res://Scripts/procedural_room.gd" id="1_bbfjf"]
-[ext_resource type="Texture2D" uid="uid://cywdleye4u8mm" path="res://Artwork/Gray_Dungeon_Tileset_10x10.png" id="2_a0xh1"]
-[ext_resource type="Texture2D" uid="uid://bncc1qcmom8x0" path="res://Artwork/Gray_Dungeon_Tileset_10x10_Walls.png" id="2_oguce"]
-[ext_resource type="Texture2D" uid="uid://dljnv5g52rq7i" path="res://Artwork/Dungeon_Bits_&_Bobs.png" id="3_yngn0"]
-[ext_resource type="Texture2D" uid="uid://ccte21ux3x8en" path="res://Artwork/Gray_Dungeon_Tileset_10x10_Corners.png" id="4_goocm"]
-[ext_resource type="Texture2D" uid="uid://d1ehv3e2vqgjq" path="res://Artwork/Dungeon_Obstacles_.png" id="4_yngn0"]
-[ext_resource type="Texture2D" uid="uid://dymjg44nnmi2q" path="res://Artwork/Dungeon_Floor_Cover.png" id="5_57jhf"]
-[ext_resource type="Texture2D" uid="uid://dd14ejrwjs3ma" path="res://Artwork/Dungeon_Doors.png" id="8_2vw2r"]
+[ext_resource type="Texture2D" uid="uid://bncc1qcmom8x0" path="res://Artwork/Gray_Dungeon_Tileset_10x10_Walls.png" id="1_06ki2"]
+[ext_resource type="Texture2D" uid="uid://cywdleye4u8mm" path="res://Artwork/Gray_Dungeon_Tileset_10x10.png" id="2_1gnw7"]
+[ext_resource type="Texture2D" uid="uid://ccte21ux3x8en" path="res://Artwork/Gray_Dungeon_Tileset_10x10_Corners.png" id="3_gau5b"]
+[ext_resource type="Texture2D" uid="uid://d1ehv3e2vqgjq" path="res://Artwork/Dungeon_Obstacles_.png" id="4_cxelx"]
+[ext_resource type="Texture2D" uid="uid://dljnv5g52rq7i" path="res://Artwork/Dungeon_Bits_&_Bobs.png" id="5_1yxvv"]
+[ext_resource type="Texture2D" uid="uid://dymjg44nnmi2q" path="res://Artwork/Dungeon_Floor_Cover.png" id="6_71mb1"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2vw2r"]
-texture = ExtResource("2_oguce")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n16om"]
+texture = ExtResource("1_06ki2")
 margins = Vector2i(3, 4)
 separation = Vector2i(7, 0)
 texture_region_size = Vector2i(10, 10)
 0:0/next_alternative_id = 4
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 0:0/1 = 1
 0:0/1/flip_h = true
+0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 0:0/2 = 2
 0:0/2/transpose = true
+0:0/2/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 0:0/3 = 3
 0:0/3/flip_v = true
 0:0/3/transpose = true
+0:0/3/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 1:0/next_alternative_id = 4
 1:0/0 = 0
 1:0/1 = 1
@@ -49,56 +51,13 @@ texture_region_size = Vector2i(10, 10)
 3:0/3 = 3
 3:0/3/transpose = true
 
-[sub_resource type="TileSet" id="TileSet_8s45h"]
+[sub_resource type="TileSet" id="TileSet_rtj6n"]
 tile_size = Vector2i(10, 10)
-sources/30 = SubResource("TileSetAtlasSource_2vw2r")
+physics_layer_0/collision_layer = 1
+sources/30 = SubResource("TileSetAtlasSource_n16om")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4rtng"]
-texture = ExtResource("2_oguce")
-margins = Vector2i(3, 4)
-separation = Vector2i(7, 0)
-texture_region_size = Vector2i(10, 10)
-0:0/next_alternative_id = 4
-0:0/0 = 0
-0:0/1 = 1
-0:0/1/flip_h = true
-0:0/2 = 2
-0:0/2/transpose = true
-0:0/3 = 3
-0:0/3/flip_v = true
-0:0/3/transpose = true
-1:0/next_alternative_id = 4
-1:0/0 = 0
-1:0/1 = 1
-1:0/1/flip_h = true
-1:0/2 = 2
-1:0/2/transpose = true
-1:0/3 = 3
-1:0/3/flip_v = true
-1:0/3/transpose = true
-2:0/next_alternative_id = 4
-2:0/0 = 0
-2:0/1 = 1
-2:0/1/flip_h = true
-2:0/2 = 2
-2:0/2/flip_v = true
-2:0/3 = 3
-2:0/3/transpose = true
-3:0/next_alternative_id = 4
-3:0/0 = 0
-3:0/1 = 1
-3:0/1/flip_h = true
-3:0/2 = 2
-3:0/2/flip_v = true
-3:0/3 = 3
-3:0/3/transpose = true
-
-[sub_resource type="TileSet" id="TileSet_qnclt"]
-tile_size = Vector2i(10, 10)
-sources/30 = SubResource("TileSetAtlasSource_4rtng")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o6v11"]
-texture = ExtResource("2_a0xh1")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4g5vi"]
+texture = ExtResource("2_1gnw7")
 margins = Vector2i(3, 3)
 separation = Vector2i(7, 0)
 texture_region_size = Vector2i(10, 10)
@@ -139,12 +98,12 @@ texture_region_size = Vector2i(10, 10)
 3:0/3/flip_h = true
 3:0/3/flip_v = true
 
-[sub_resource type="TileSet" id="TileSet_a0xh1"]
+[sub_resource type="TileSet" id="TileSet_pjkut"]
 tile_size = Vector2i(10, 10)
-sources/0 = SubResource("TileSetAtlasSource_o6v11")
+sources/0 = SubResource("TileSetAtlasSource_4g5vi")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8s45h"]
-texture = ExtResource("4_goocm")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1itrc"]
+texture = ExtResource("3_gau5b")
 margins = Vector2i(3, 4)
 separation = Vector2i(7, 0)
 texture_region_size = Vector2i(10, 10)
@@ -183,12 +142,12 @@ texture_region_size = Vector2i(10, 10)
 3:0/3/flip_h = true
 3:0/3/flip_v = true
 
-[sub_resource type="TileSet" id="TileSet_4rtng"]
+[sub_resource type="TileSet" id="TileSet_oumiw"]
 tile_size = Vector2i(10, 10)
-sources/40 = SubResource("TileSetAtlasSource_8s45h")
+sources/40 = SubResource("TileSetAtlasSource_1itrc")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_57jhf"]
-texture = ExtResource("4_yngn0")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8b25g"]
+texture = ExtResource("4_cxelx")
 margins = Vector2i(57, 112)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(71, 63)
@@ -198,7 +157,7 @@ texture_region_size = Vector2i(71, 63)
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.650879, -5.4550066, 13.013428, -5.639922, 13.452827, 3.5240269, 1.9857635, 10.292396, -7.635391, 3.3562145)
 1:0/next_alternative_id = 2
 1:0/0 = 0
-1:0/0/y_sort_origin = 4
+1:0/0/y_sort_origin = 10
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-26.024384, -17.800814, -20.780571, -17.787947, -20.836506, 0.3915577, -25.731524, 0.45846748)
 1:0/0/physics_layer_0/polygon_1/points = PackedVector2Array(27.716751, 0.22374725, 23.475964, 0.25259972, 23.409607, -17.73201, 27.770157, -17.681965)
 0:1/next_alternative_id = 2
@@ -211,13 +170,13 @@ texture_region_size = Vector2i(71, 63)
 1:1/0 = 0
 1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-19.549957, -1.8459187, -8.762047, 4.736241, 11.666939, 5.525614, 18.934654, -1.734045, 24.024918, -1.174676, 19.844849, 10.672329, -19.465952, 10.893353, -24.975842, -1.2306128)
 
-[sub_resource type="TileSet" id="TileSet_oguce"]
+[sub_resource type="TileSet" id="TileSet_0ktnh"]
 tile_size = Vector2i(4, 4)
 physics_layer_0/collision_layer = 1
-sources/10 = SubResource("TileSetAtlasSource_57jhf")
+sources/10 = SubResource("TileSetAtlasSource_8b25g")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oguce"]
-texture = ExtResource("3_yngn0")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_36eq2"]
+texture = ExtResource("5_1yxvv")
 margins = Vector2i(9, 38)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(23, 31)
@@ -274,13 +233,13 @@ texture_region_size = Vector2i(23, 31)
 2:1/1/flip_h = true
 2:1/1/physics_layer_0/polygon_0/points = PackedVector2Array(-0.45783615, -2.5259948, -4.4678535, 4.6099415, -1.5629578, 5.557189, 5.541401, 4.98884, 2.920681, -2.7470193)
 
-[sub_resource type="TileSet" id="TileSet_goocm"]
+[sub_resource type="TileSet" id="TileSet_yckkc"]
 tile_size = Vector2i(4, 4)
 physics_layer_0/collision_layer = 1
-sources/20 = SubResource("TileSetAtlasSource_oguce")
+sources/20 = SubResource("TileSetAtlasSource_36eq2")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_goocm"]
-texture = ExtResource("5_57jhf")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5t2e6"]
+texture = ExtResource("6_71mb1")
 margins = Vector2i(9, 38)
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(23, 31)
@@ -305,7 +264,7 @@ texture_region_size = Vector2i(23, 31)
 0:0/3/flip_v = true
 1:0/next_alternative_id = 5
 1:0/0 = 0
-1:0/0/y_sort_origin = 3
+1:0/0/y_sort_origin = 10
 1:0/1 = 1
 1:0/2 = 2
 1:0/2/flip_v = true
@@ -358,142 +317,103 @@ texture_region_size = Vector2i(23, 31)
 1:3/0 = 0
 1:3/1 = 1
 1:3/1/flip_h = true
-2:3/next_alternative_id = 2
+2:3/next_alternative_id = 4
 2:3/0 = 0
 2:3/1 = 1
 2:3/1/flip_h = true
+3:3/next_alternative_id = 2
+3:3/0 = 0
+3:3/1 = 1
+3:3/1/flip_h = true
+1:2/next_alternative_id = 4
+1:2/0 = 0
+1:2/1 = 1
+1:2/1/flip_h = true
+1:2/2 = 2
+1:2/2/flip_v = true
+1:2/3 = 3
+1:2/3/flip_h = true
+1:2/3/flip_v = true
+2:2/next_alternative_id = 4
+2:2/0 = 0
+2:2/1 = 1
+2:2/1/flip_h = true
+2:2/2 = 2
+2:2/2/flip_v = true
+2:2/3 = 3
+2:2/3/flip_h = true
+2:2/3/flip_v = true
+3:2/next_alternative_id = 4
+3:2/0 = 0
+3:2/1 = 1
+3:2/1/flip_h = true
+3:2/2 = 2
+3:2/2/flip_v = true
+3:2/3 = 3
+3:2/3/flip_h = true
+3:2/3/flip_v = true
+3:1/next_alternative_id = 4
+3:1/0 = 0
+3:1/1 = 1
+3:1/1/flip_h = true
+3:1/2 = 2
+3:1/2/flip_v = true
+3:1/3 = 3
+3:1/3/flip_h = true
+3:1/3/flip_v = true
+2:1/next_alternative_id = 4
+2:1/0 = 0
+2:1/1 = 1
+2:1/1/flip_h = true
+2:1/2 = 2
+2:1/2/flip_v = true
+2:1/3 = 3
+2:1/3/flip_h = true
+2:1/3/flip_v = true
 
-[sub_resource type="TileSet" id="TileSet_2vw2r"]
+[sub_resource type="TileSet" id="TileSet_5txr0"]
 tile_size = Vector2i(4, 4)
-sources/60 = SubResource("TileSetAtlasSource_goocm")
+sources/60 = SubResource("TileSetAtlasSource_5t2e6")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2vw2r"]
-size = Vector2(26.165543, 26.399036)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4rtng"]
-atlas = ExtResource("8_2vw2r")
-region = Rect2(2, 5, 71, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qnclt"]
-atlas = ExtResource("8_2vw2r")
-region = Rect2(2, 70, 71, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8s45h"]
-atlas = ExtResource("8_2vw2r")
-region = Rect2(74, 5, 71, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_vmobn"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4rtng")
-}],
-"loop": true,
-"name": &"DarkSteel",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qnclt")
-}],
-"loop": true,
-"name": &"DarkSteelOpened",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8s45h")
-}],
-"loop": true,
-"name": &"DarkSteelSmashed",
-"speed": 5.0
-}]
-
-[node name="procedural_room" type="Node2D"]
-y_sort_enabled = true
-texture_filter = 1
-script = ExtResource("1_bbfjf")
+[node name="room_shape" type="Node2D"]
 
 [node name="TileMapWalls" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.25490198, 0.25490198, 0.25490198, 1)
-z_index = -5
-tile_set = SubResource("TileSet_8s45h")
-
-[node name="TileMapUnderWalls" type="TileMapLayer" parent="."]
-unique_name_in_owner = true
-modulate = Color(0.25490198, 0.25490198, 0.25490198, 1)
-z_index = -6
-tile_set = SubResource("TileSet_qnclt")
+show_behind_parent = true
+y_sort_enabled = true
+tile_set = SubResource("TileSet_rtj6n")
 
 [node name="TileMapFloor" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.25565878, 0.25565878, 0.25565878, 1)
-tile_set = SubResource("TileSet_a0xh1")
+tile_map_data = PackedByteArray("AAAHABEAAAAAAAAAAAAGABEAAAAAAAAAAQAFABEAAAACAAAAAQAEABEAAAABAAAAAwADABEAAAABAAAAAAACABEAAAABAAAAAwABABEAAAAAAAAAAgAAABEAAAACAAAAAgAAABAAAAABAAAAAwAAAA8AAAACAAAAAAAAAA4AAAAAAAAAAgAAAA0AAAACAAAAAQAAAAwAAAABAAAAAwAAAAsAAAABAAAAAQAAAAoAAAAAAAAAAgAAAAkAAAACAAAAAgAAAAgAAAADAAAAAgAAAAcAAAAAAAAAAgAAAAYAAAAAAAAAAgAAAAUAAAAAAAAAAwAAAAQAAAAAAAAAAgAAAAMAAAABAAAAAQAAAAIAAAABAAAAAAAAAAEAAAADAAAAAwAHAAEAAAABAAAAAgAGAAEAAAABAAAAAQAFAAEAAAAAAAAAAgAEAAEAAAADAAAAAQADAAEAAAACAAAAAQACAAEAAAACAAAAAwABAAEAAAADAAAAAwABAAIAAAACAAAAAAABAAMAAAADAAAAAQABAAQAAAAAAAAAAwABAAUAAAACAAAAAwABAAYAAAADAAAAAgABAAcAAAADAAAAAgABAAgAAAACAAAAAQABAAkAAAACAAAAAgABAAoAAAABAAAAAAABAAsAAAADAAAAAgABAAwAAAADAAAAAAABAA0AAAABAAAAAQABAA4AAAAAAAAAAwABAA8AAAAAAAAAAAABABAAAAAAAAAAAgACABAAAAABAAAAAgACAA8AAAABAAAAAQACAA4AAAACAAAAAgACAA0AAAACAAAAAQACAAwAAAACAAAAAgACAAsAAAABAAAAAAACAAoAAAACAAAAAwACAAkAAAABAAAAAQACAAgAAAADAAAAAgACAAcAAAABAAAAAAACAAYAAAABAAAAAQACAAUAAAAAAAAAAQACAAQAAAADAAAAAgACAAMAAAADAAAAAgACAAIAAAAAAAAAAQADAAIAAAABAAAAAQADAAMAAAADAAAAAgADAAQAAAADAAAAAgADAAUAAAAAAAAAAwADAAYAAAABAAAAAgADAAcAAAACAAAAAAADAAgAAAACAAAAAQADAAkAAAADAAAAAAADAAoAAAACAAAAAgADAAsAAAAAAAAAAQADAAwAAAABAAAAAwADAA0AAAAAAAAAAAADAA4AAAABAAAAAgADAA8AAAABAAAAAQADABAAAAADAAAAAwAEABAAAAACAAAAAQAEAA8AAAABAAAAAgAEAA4AAAABAAAAAAAEAA0AAAAAAAAAAwAEAAwAAAAAAAAAAQAEAAsAAAAAAAAAAwAEAAoAAAAAAAAAAgAEAAkAAAACAAAAAgAEAAgAAAACAAAAAQAEAAcAAAAAAAAAAgAEAAYAAAABAAAAAAAEAAUAAAADAAAAAAAEAAQAAAABAAAAAwAEAAMAAAADAAAAAAAEAAIAAAADAAAAAAAFAAIAAAABAAAAAwAFAAMAAAACAAAAAwAFAAQAAAABAAAAAQAFAAUAAAACAAAAAAAFAAYAAAABAAAAAgAFAAcAAAAAAAAAAwAFAAgAAAADAAAAAgAFAAkAAAADAAAAAQAFAAoAAAACAAAAAQAFAAsAAAAAAAAAAQAFAAwAAAADAAAAAwAFAA0AAAADAAAAAAAFAA4AAAAAAAAAAAAFAA8AAAACAAAAAQAFABAAAAACAAAAAwAGABAAAAABAAAAAgAGAA8AAAAAAAAAAwAGAA4AAAABAAAAAQAGAA0AAAADAAAAAAAGAAwAAAAAAAAAAwAGAAsAAAAAAAAAAwAGAAoAAAAAAAAAAwAGAAkAAAACAAAAAQAGAAgAAAADAAAAAQAGAAcAAAADAAAAAgAGAAYAAAACAAAAAwAGAAUAAAABAAAAAgAGAAQAAAADAAAAAgAGAAMAAAAAAAAAAQAGAAIAAAAAAAAAAgAHAAIAAAADAAAAAgAHAAMAAAADAAAAAgAHAAQAAAABAAAAAQAHAAUAAAADAAAAAgAHAAYAAAAAAAAAAwAHAAcAAAAAAAAAAQAHAAgAAAACAAAAAgAHAAkAAAABAAAAAgAHAAoAAAADAAAAAQAHAAsAAAACAAAAAQAHAAwAAAAAAAAAAwAHAA0AAAAAAAAAAwAHAA4AAAADAAAAAQAHAA8AAAACAAAAAAAHABAAAAADAAAAAwAAAAAAAAADAAAAAwABAAAAAAACAAAAAwACAAAAAAACAAAAAQADAAAAAAAAAAAAAwAEAAAAAAADAAAAAgAFAAAAAAAAAAAAAwAGAAAAAAADAAAAAQAHAAAAAAACAAAAAwA=")
+tile_set = SubResource("TileSet_pjkut")
 
 [node name="TileMapWallCorners" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.25490198, 0.25490198, 0.25490198, 1)
-z_index = -5
-tile_set = SubResource("TileSet_4rtng")
-
-[node name="TileMapDoors" type="TileMapLayer" parent="."]
-unique_name_in_owner = true
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAD/////KAAAAAAAAQAIAP//KAAAAAAAAAD+//7/KAABAAAAAQAJAP7/KAABAAAAAAAIABIAKAAAAAAAAgAJABMAKAABAAAAAgD//xIAKAAAAAAAAwD+/xMAKAABAAAAAwAAABIAKAACAAAAAwABABIAKAACAAAAAgACABIAKAACAAAAAAADABIAKAACAAAAAgAEABIAKAACAAAAAgAFABIAKAADAAAAAQAGABIAKAADAAAAAgAHABIAKAACAAAAAAAIABMAKAADAAAAAQAHABMAKAACAAAAAwAGABMAKAACAAAAAAAFABMAKAACAAAAAQAEABMAKAADAAAAAwADABMAKAACAAAAAQACABMAKAADAAAAAQABABMAKAACAAAAAQAAABMAKAACAAAAAQD//xMAKAADAAAAAgD+/xIAKAACAAAAAAD+/xEAKAADAAAAAwD+/xAAKAACAAAAAwD+/w8AKAADAAAAAAD+/w4AKAACAAAAAwD+/w0AKAADAAAAAQD+/wwAKAADAAAAAQD+/wsAKAADAAAAAwD+/woAKAACAAAAAQD//xEAKAACAAAAAgD//xAAKAACAAAAAgD//w8AKAADAAAAAwD//w4AKAACAAAAAQD//w0AKAACAAAAAgD//wwAKAADAAAAAgD//wsAKAADAAAAAgD//woAKAACAAAAAgD//wkAKAADAAAAAQD//wgAKAADAAAAAgD//wcAKAADAAAAAgD//wYAKAADAAAAAgD//wUAKAADAAAAAQD//wQAKAADAAAAAQD//wMAKAADAAAAAAD//wIAKAACAAAAAQD//wEAKAADAAAAAwD+/wkAKAADAAAAAwD+/wgAKAADAAAAAAD+/wcAKAACAAAAAgD+/wYAKAACAAAAAwD+/wUAKAACAAAAAQD+/wQAKAADAAAAAgD+/wMAKAADAAAAAgD+/wIAKAACAAAAAAD+/wEAKAACAAAAAQD+/wAAKAACAAAAAQD+////KAACAAAAAgD//wAAKAADAAAAAAAIAAAAKAACAAAAAAAIAAEAKAACAAAAAAAIAAIAKAADAAAAAQAIAAMAKAACAAAAAwAIAAQAKAACAAAAAgAIAAUAKAACAAAAAAAIAAYAKAADAAAAAwAIAAcAKAACAAAAAwAIAAgAKAADAAAAAwAIAAkAKAACAAAAAAAIAAoAKAADAAAAAgAIAAsAKAACAAAAAgAIAAwAKAACAAAAAgAIAA0AKAADAAAAAQAIAA4AKAACAAAAAgAIAA8AKAACAAAAAwAIABAAKAADAAAAAwAIABEAKAADAAAAAgAJABIAKAADAAAAAgAJABEAKAADAAAAAgAJABAAKAADAAAAAgAJAA8AKAACAAAAAQAJAA4AKAACAAAAAQAJAA0AKAACAAAAAAAJAAwAKAADAAAAAwAJAAsAKAACAAAAAgAJAAoAKAADAAAAAwAJAAkAKAADAAAAAAAJAAgAKAACAAAAAgAJAAcAKAADAAAAAQAJAAYAKAACAAAAAQAJAAUAKAACAAAAAAAJAAQAKAADAAAAAwAJAAMAKAACAAAAAAAJAAIAKAADAAAAAwAJAAEAKAADAAAAAwAJAAAAKAACAAAAAgAJAP//KAADAAAAAwAHAP//KAADAAAAAgAGAP//KAACAAAAAAAFAP//KAACAAAAAQAEAP//KAACAAAAAwADAP//KAADAAAAAQACAP//KAACAAAAAgABAP//KAADAAAAAgAAAP//KAACAAAAAwD///7/KAADAAAAAQAAAP7/KAADAAAAAQABAP7/KAADAAAAAwACAP7/KAADAAAAAAADAP7/KAACAAAAAAAEAP7/KAACAAAAAQAFAP7/KAADAAAAAAAGAP7/KAADAAAAAQAHAP7/KAACAAAAAAAIAP7/KAADAAAAAAA=")
+tile_set = SubResource("TileSet_oumiw")
 
 [node name="TileMapObstacles" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
+z_index = 1
 y_sort_enabled = true
 position = Vector2(26, 20)
-tile_set = SubResource("TileSet_oguce")
+tile_set = SubResource("TileSet_0ktnh")
 
 [node name="TileMapBitsandBobs" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.92099476, 0.9209946, 0.9209946, 1)
+z_index = 1
 y_sort_enabled = true
 position = Vector2(7, 7)
-tile_set = SubResource("TileSet_goocm")
+tile_set = SubResource("TileSet_yckkc")
 
 [node name="TileMapFloorCover" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.8203659, 0.82036585, 0.8203658, 1)
-tile_set = SubResource("TileSet_2vw2r")
-
-[node name="MobSpawnPoints" type="Node2D" parent="."]
-
-[node name="Point1" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="Point2" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="Point3" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="Point4" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="Point5" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="Point6" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="Point7" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="Point8" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="Point9" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="Point10" type="Node2D" parent="MobSpawnPoints"]
-
-[node name="DoorArea" type="Area2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(160, 0)
-
-[node name="DoorCollision" type="CollisionShape2D" parent="DoorArea"]
 z_index = 1
-position = Vector2(0.38249207, -13.544966)
-shape = SubResource("RectangleShape2D_2vw2r")
-
-[node name="DoorSprite" type="AnimatedSprite2D" parent="DoorArea"]
-unique_name_in_owner = true
-position = Vector2(0, -25)
-sprite_frames = SubResource("SpriteFrames_vmobn")
-animation = &"DarkSteel"
-autoplay = "DarkSteel"
-
-[connection signal="body_entered" from="DoorArea" to="." method="_on_door_area_body_entered"]
+tile_set = SubResource("TileSet_5txr0")

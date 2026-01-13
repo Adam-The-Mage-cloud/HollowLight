@@ -1,14 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=10 format=3 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
-[ext_resource type="PackedScene" uid="uid://dow01u60oiexx" path="res://Scenes/random_dungeon_spawner.tscn" id="1_y16yq"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
 [ext_resource type="PackedScene" uid="uid://chadpnqf4f2xn" path="res://Scenes/brody.tscn" id="2_upa5u"]
 [ext_resource type="PackedScene" uid="uid://doutgnk2nj6pi" path="res://Scenes/torch.tscn" id="3_eoier"]
 [ext_resource type="PackedScene" uid="uid://0g8pb6puuqkw" path="res://Scenes/ogre.tscn" id="4_6j5ir"]
 [ext_resource type="PackedScene" uid="uid://cdo6hvtefqe2x" path="res://Scenes/brazier.tscn" id="5_mgc0q"]
-[ext_resource type="PackedScene" uid="uid://crssqr3d5ml2q" path="res://Scenes/procedural_room.tscn" id="6_73nn6"]
-[ext_resource type="Texture2D" uid="uid://dlxqfcnlhtxox" path="res://pixelvignette1.jpg" id="6_r0mdn"]
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 1
@@ -29,11 +26,6 @@ script = ExtResource("1_18r40")
 [node name="EventBus" type="Node" parent="."]
 script = ExtResource("2_6y7pd")
 
-[node name="procedural_room" parent="." instance=ExtResource("6_73nn6")]
-z_index = 2
-
-[node name="random_dungeon_spawner" parent="." instance=ExtResource("1_y16yq")]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_aqqks")
 
@@ -46,6 +38,8 @@ unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(-0.65, 3.5)
 rotation = 3.2253685
+collision_layer = 524289
+collision_mask = 524289
 
 [node name="RegularRoomPath" type="Path2D" parent="Brody"]
 position = Vector2(-155.62364, -61.112957)
@@ -65,9 +59,10 @@ curve = SubResource("Curve2D_18r40")
 
 [node name="BrodyCam" type="Camera2D" parent="Brody"]
 z_index = 1
-zoom = Vector2(10, 10)
+zoom = Vector2(5, 5)
 limit_smoothed = true
 position_smoothing_enabled = true
+position_smoothing_speed = 3.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_left_margin = 0.0
@@ -75,19 +70,12 @@ drag_top_margin = 0.0
 drag_right_margin = 0.0
 drag_bottom_margin = 0.0
 
-[node name="FogVignette" type="Sprite2D" parent="Brody/BrodyCam"]
-visible = false
-modulate = Color(0.15967038, 0.15967038, 0.1596703, 0.1254902)
-z_index = 10
-scale = Vector2(0.9, 1.1)
-texture = ExtResource("6_r0mdn")
-
 [node name="ogre" parent="." instance=ExtResource("4_6j5ir")]
 z_as_relative = false
 position = Vector2(223.51823, 56.9237)
 
 [node name="brazier" parent="." instance=ExtResource("5_mgc0q")]
-position = Vector2(161.34305, 25.159767)
+position = Vector2(153.16489, 3.4291687)
 
 [node name="brazier2" parent="." instance=ExtResource("5_mgc0q")]
 position = Vector2(223.7279, 88.91606)

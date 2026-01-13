@@ -23,6 +23,7 @@ EventBus="*res://Scripts/event_bus.gd"
 
 window/size/viewport_width=4096
 window/size/viewport_height=2304
+window/stretch/mode="canvas_items"
 
 [input]
 
