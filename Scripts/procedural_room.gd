@@ -73,9 +73,6 @@ func _ready() :
 		direction = randi_range(1, 1) # 1 = up/down , 2 = left/right
 		if direction == 1 : # It's up so we need to send the room up on the y-axis, relative to its door
 			$".".global_position.y = door_origin.y - (height * 10) + 10
-			#%SpawnPoints.global_position.y = global_position.y - global_position.y
-			print("Room root global:", global_position)
-			print ("mobspawnroot:", %SpawnPoints.global_position)
 			if room_type == 1 :
 				pass
 			if room_type == 2 :
@@ -344,54 +341,169 @@ func generate_frontfacing_wall():
 func generate_obstacles() :
 	# Generate Regular Gray Dungeon Obstacles
 	if theme == 1 :
+		var obstacle_spawn_chance = 0.01
 		obstacle_source_id = 10
 		for x in range ((width / 1.8) * 3.4) :
 			for y in range ((height / 1.815) * 3.65) :
-				if randf() < 0.001: # 1% chance per tile
+				if randf() < obstacle_spawn_chance: # 1% chance per tile
 					var atlas_x = randi_range(0, 1) # Chooses the base x tile to then have an alternative (or 0 / no alternative) chosen
 					var atlas_y = randi_range(0, 1) # Chooses the base y tile to then have an alternative (or 0 / no alternative) chosen
 					var alternative_chance = randi_range(0, 1) # (4 in total starting from 0 [0 being the regular tile] (this picks a random alternative orientiation))
 					%TileMapObstacles.set_cell(Vector2i(x,y), obstacle_source_id, Vector2i(atlas_x, atlas_y), alternative_chance)
 
-func generate_bitsandbobs() :
-	# Generate Regular Gray Dungeon BitsandBobs
-	if theme == 1 :
-		bitsandbobs_source_id = 20
-		for x in range ((width) * 2.4) :
-			for y in range ((height / 0.315) * 0.7) :
-				if randf() < 0.005: # 1% chance per tile
-					var atlas_x = randi_range(0, 5) # Chooses the base x tile to then have an alternative (or 0 / no alternative) chosen
-					var atlas_y = randi_range(0, 1) # Chooses the base y tile to then have an alternative (or 0 / no alternative) chosen
-					var alternative_chance = randi_range(0, 1) # (4 in total starting from 0 [0 being the regular tile] (this picks a random alternative orientiation))
-					%TileMapBitsandBobs.set_cell(Vector2i(x,y), bitsandbobs_source_id, Vector2i(atlas_x, atlas_y), alternative_chance)
+func generate_bitsandbobs():
+	if theme != 1:
+		return
+
+	bitsandbobs_source_id = 20
+
+	# How many attempts? Tune to taste.
+	# 0.02 = 2% of floor tiles attempt to spawn bits.
+	var attempts := int(floor_positions.size() * 0.02)
+
+	for i in range(attempts):
+
+		# Pick a random valid floor tile
+		var pos = floor_positions.pick_random()
+
+		# Avoid the door path
+		if is_near_door(pos.x, pos.y):
+			continue
+
+		# Bits & Bobs CAN be near walls, so no wall check here
+
+		# Avoid overlapping existing bits
+		if %TileMapBitsandBobs.get_cell_source_id(pos) != -1:
+			continue
+
+		# Choose tile variant
+		var atlas_x := randi_range(0, 5)
+		var atlas_y := randi_range(0, 1)
+		var alt := randi_range(0, 1)
+
+		# Place the bit/bob
+		%TileMapBitsandBobs.set_cell(pos, bitsandbobs_source_id, Vector2i(atlas_x, atlas_y), alt)
 
 func generate_floorcover():
-	# Generate Regular Gray Dungeon FloorCover
-	if theme == 1:
-		floorcover_source_id = 60
-		var density = 0.025
-		var categories = {"cobwebs": 0, "hay": 1, "gold": 2, "mushrooms": 3}
-		var cluster_count = int(width * height * density) # scale with room size
-		for i in range(cluster_count):
-			# Pick a random cluster center
-			var cx = randi_range(0, int(width * 2.4))
-			var cy = randi_range(0, int((height / 0.315) * 0.7))
-			# Pick a category for this entire cluster
-			var category_keys = categories.keys()
-			var chosen_category = category_keys[randi() % category_keys.size()]
-			var atlas_y = categories[chosen_category]
-			# Cluster size
-			var tiles_in_cluster = randi_range(1, 5)
-			for j in range(tiles_in_cluster):
-				var ox = randi_range(-6, 6)
-				var oy = randi_range(-6, 6)
-				var x = cx + ox
-				var y = cy + oy
-				if x < 0 or y < 0:
-					continue
-				var atlas_x = randi_range(0, 3)
-				var alt = randi_range(0, 3)
-				%TileMapFloorCover.set_cell(Vector2i(x, y), floorcover_source_id, Vector2i(atlas_x, atlas_y), alt)
+	if theme != 1:
+		return
+
+	var floorcover_source_id := 60
+
+	# Categories map to atlas_y rows
+	var categories := {
+		"cobwebs": 0,
+		"hay": 1,
+		"gold": 2,
+		"mushrooms": 3
+	}
+
+	# Noise for density variation
+	var noise := FastNoiseLite.new()
+	noise.seed = randi()
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	noise.frequency = 0.4
+	noise.fractal_type = FastNoiseLite.FRACTAL_FBM
+
+	# Number of clusters based on actual floor area
+	var cluster_count := int(floor_positions.size() * 0.025)
+
+	for i in range(cluster_count):
+
+		# Pick a random floor tile as the cluster center
+		var center = floor_positions.pick_random()
+		var cx = center.x
+		var cy = center.y
+
+		# Noise mask for natural distribution
+		var d := noise.get_noise_2d(float(cx), float(cy))
+		if d < -0.1:
+			continue
+
+		# Weighted category selection
+		var chosen_category := weighted_category_choice()
+		var atlas_y = categories[chosen_category]
+
+		# Organic cluster shape
+		var cluster_radius := randi_range(2, 5)
+		var tile_count := randi_range(2, 7)
+
+		for j in range(tile_count):
+
+			# Polar offsets for natural blob shapes
+			var angle := randf() * TAU
+			var dist := randf() * float(cluster_radius)
+			var ox := int(round(cos(angle) * dist))
+			var oy := int(round(sin(angle) * dist))
+
+			var x = cx + ox
+			var y = cy + oy
+			var pos := Vector2i(x, y)
+
+			# Only place on valid floor tiles
+			if not floor_positions.has(pos):
+				continue
+
+			# Category rules
+			if chosen_category == "cobwebs" and not is_near_wall(x, y):
+				continue
+
+			if chosen_category == "mushrooms" and is_near_door(x, y):
+				continue
+
+			# Avoid overwriting existing floorcover
+			if %TileMapFloorCover.get_cell_source_id(pos) != -1:
+				continue
+
+			var atlas_x := weighted_atlas_x(chosen_category)
+			var alt := randi_range(0, 7)
+
+			%TileMapFloorCover.set_cell(pos, floorcover_source_id, Vector2i(atlas_x, atlas_y), alt)
+
+
+func weighted_category_choice() -> String:
+	var roll := randf()
+
+	# Tune these weights to taste
+	if roll < 0.10:
+		return "gold"        # 10%
+	elif roll < 0.35:
+		return "hay"         # 25%
+	elif roll < 0.75:
+		return "mushrooms"   # 40%
+	else:
+		return "cobwebs"     # 25%
+
+
+func weighted_atlas_x(category: String) -> int:
+	match category:
+		"mushrooms":
+			# Mostly small mushrooms, occasional variant
+			return randi_range(0, 3)
+		"gold":
+			# Mostly coins, rare big nugget
+			return randi_range(0, 3)
+		"hay":
+			# Slight bias to one or two shapes
+			return randi_range(0, 3)
+		"cobwebs":
+			return randi_range(0, 3)
+		_:
+			return randi_range(0, 3)
+
+
+func is_near_wall(x: int, y: int) -> bool:
+	for ox in range(-1, 2):
+		for oy in range(-1, 2) :
+			var pos := Vector2i(x + ox, y + oy)
+			if %TileMapWalls.get_cell_source_id(pos) != -1:
+				return true
+	return false
+
+
+func is_near_door(x: int, y: int) -> bool:
+	# Stub: plug into your actual door system
+	return false
 
 func position_door() -> void:
 	if direction == 1:
