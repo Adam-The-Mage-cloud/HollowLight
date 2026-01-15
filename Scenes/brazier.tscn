@@ -85,12 +85,12 @@ size = Vector2(17.062656, 9.006208)
 
 [sub_resource type="Gradient" id="Gradient_hph1r"]
 offsets = PackedFloat32Array(0.0946844, 0.63973063, 0.72727275)
-colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_w7syr"]
 gradient = SubResource("Gradient_hph1r")
-width = 96
-height = 96
+width = 128
+height = 128
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -143,7 +143,7 @@ unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-0.504097, 5.4626875)
 color = Color(1, 0.439216, 0.172549, 1)
-energy = 3.0
+energy = 10.0
 texture = SubResource("GradientTexture2D_w7syr")
 
 [node name="BrazierShadow" type="Sprite2D" parent="."]

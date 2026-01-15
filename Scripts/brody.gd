@@ -4,7 +4,7 @@ var max_health = 5
 var health = 5
 
 var direction = Vector2.ZERO
-var speed = 3000
+var speed = 4000
 
 var weapon_equipped = false
 var torch_equipped = true
@@ -146,14 +146,14 @@ func dash_ability():
 		dashing = true
 		dash_available = false
 		%DashCooldown.start()
-		speed = 3000
+		speed = 4000
 		%feet.visible = false
 		%BrodySprite.play("roll")
 	
 		# Acceleration phase
 		for i in range(9):
 			await get_tree().create_timer(0.005).timeout
-			speed *= 1.135
+			speed *= 1.12
 	
 		# Deceleration phase
 		await get_tree().create_timer(0.18).timeout
@@ -162,7 +162,7 @@ func dash_ability():
 			speed /= 2
 	
 		await get_tree().create_timer(0.04).timeout
-		speed = 3000
+		speed = 4000
 		
 		# Reset state
 		collision_mask = original_mask
@@ -233,7 +233,13 @@ func got_torch_wraithed() :
 	flash_white()
 	check_alive()
 
-func ogre_slashed() :
+func ogre_slashed(ogre) :
 	health -= 2
 	flash_white()
+	# Bigger Knockback :
+	global_position.y += randf_range(-3, 3)
+	global_position.x += randf_range(-3, 3)
+	var knockback_direction = (global_position - ogre.global_position).normalized()
+	var knockback_movement = create_tween()
+	knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	check_alive()

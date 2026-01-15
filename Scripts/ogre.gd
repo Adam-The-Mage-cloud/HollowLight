@@ -126,7 +126,7 @@ func breathing() :
 
 func _on_axe_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
-		body.ogre_slashed()
+		body.ogre_slashed($".")
 
 func _on_all_beacons_lit() :
 	shadow_form()

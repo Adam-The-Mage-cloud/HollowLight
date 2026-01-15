@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=13 format=3 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
@@ -6,6 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://doutgnk2nj6pi" path="res://Scenes/torch.tscn" id="3_eoier"]
 [ext_resource type="PackedScene" uid="uid://crssqr3d5ml2q" path="res://Scenes/procedural_room.tscn" id="6_73nn6"]
 [ext_resource type="Texture2D" uid="uid://dlxqfcnlhtxox" path="res://pixelvignette1.jpg" id="6_r0mdn"]
+[ext_resource type="Shader" uid="uid://dk2tyesvpget7" path="res://Shaders/darkness_postproduction.gdshader" id="7_6y7pd"]
+[ext_resource type="Script" uid="uid://fwb1f7q1hcow" path="res://Scripts/darkness_postprocessing.gd" id="8_73nn6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r0mdn"]
+shader = ExtResource("7_6y7pd")
+shader_parameter/darkness_strength = 0.7
+shader_parameter/light_pos = Vector2(0.5, 0.5)
+shader_parameter/light_radius = 0.25
+shader_parameter/steps = 4
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 3
@@ -23,6 +32,17 @@ y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_18r40")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_r0mdn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_73nn6")
+
 [node name="EventBus" type="Node" parent="."]
 script = ExtResource("2_6y7pd")
 
@@ -30,14 +50,6 @@ script = ExtResource("2_6y7pd")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_aqqks")
-
-[node name="MonstersLayer" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
-layer = 0
-follow_viewport_enabled = true
-
-[node name="MonsterColourCorrection" type="CanvasModulate" parent="MonstersLayer"]
-color = Color(0.671828, 0.8589004, 1, 1)
 
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]
 unique_name_in_owner = true
@@ -68,6 +80,7 @@ curve = SubResource("Curve2D_18r40")
 [node name="CorridorFollowPath" type="PathFollow2D" parent="Brody/CorridorRoomPath"]
 
 [node name="BrodyCam" type="Camera2D" parent="Brody"]
+unique_name_in_owner = true
 z_index = 1
 zoom = Vector2(10, 10)
 limit_smoothed = true

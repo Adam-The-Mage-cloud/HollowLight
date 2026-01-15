@@ -4,11 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://cq0xpqi7tt5pm" path="res://Artwork/Torch.png" id="1_mryve"]
 
 [sub_resource type="Gradient" id="Gradient_mgc0q"]
-offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
-colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0.0946844, 0.739203)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_h1t0l"]
 gradient = SubResource("Gradient_mgc0q")
+width = 96
+height = 96
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -167,7 +169,7 @@ y_sort_enabled = true
 use_parent_material = true
 position = Vector2(14.637634, -13.30919)
 color = Color(1, 0.439216, 0.172549, 1)
-energy = 1.98
+energy = 10.95
 texture = SubResource("GradientTexture2D_h1t0l")
 
 [node name="TorchEnd" type="CollisionShape2D" parent="."]

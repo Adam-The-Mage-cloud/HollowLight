@@ -17,24 +17,29 @@ margins = Vector2i(29, 75)
 texture_region_size = Vector2i(14, 34)
 1:0/next_alternative_id = 4
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, 5.450264, 6.8376026, 5.5493603, 6.9367, 17.34175, -7.1348906, 17.04446)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 1:0/1 = 1
+1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 2:0/next_alternative_id = 4
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, 5.0538807, 6.8376026, 4.9547863, 6.936699, 17.044462, -6.936699, 17.044462)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 2:0/1 = 1
+2:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 3:0/next_alternative_id = 4
 3:0/0 = 0
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, 4.954785, 6.936699, 4.558402, 7.233986, 17.04446, -7.035795, 17.341747)
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 3:0/1 = 1
+3:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 4:0/next_alternative_id = 4
 4:0/0 = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.9366994, 4.9547853, 6.8376026, 5.152976, 7.035795, 16.846268, -7.035795, 17.04446)
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 4:0/1 = 1
+4:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 0:0/next_alternative_id = 5
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.0221634, 4.7399616, -5, 5, 7.0357943, 4.9547844, 7.5444736, 17.120153, -7.1092157, 17.410322)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 0:0/1 = 1
+0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
 
 [sub_resource type="TileSet" id="TileSet_t264i"]
 tile_size = Vector2i(10, 10)
@@ -2055,6 +2060,9 @@ animations = [{
 texture_filter = 1
 script = ExtResource("1_bbfjf")
 
+[node name="ProceduralRoomColour" type="CanvasModulate" parent="."]
+color = Color(0.23786438, 0.7105198, 0.9999996, 1)
+
 [node name="TileMapFrontFaceWall" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
@@ -2062,40 +2070,39 @@ tile_set = SubResource("TileSet_t264i")
 
 [node name="TileMapRoomOutline" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-modulate = Color(0.18120003, 0.18120006, 0.1812, 1)
+modulate = Color(0.10340399, 0.14138749, 0.16852486, 1)
 z_index = 3
 y_sort_enabled = true
 tile_set = SubResource("TileSet_vmobn")
-collision_enabled = false
 
 [node name="TileMapRoomDarkerOutline" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-modulate = Color(0.13319641, 0.13319641, 0.13319638, 1)
+modulate = Color(0.058006093, 0.08445232, 0.106479265, 1)
 z_index = 2
 y_sort_enabled = true
 tile_set = SubResource("TileSet_4yqbe")
 
 [node name="TileMapWalls" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-modulate = Color(0.25490198, 0.25490198, 0.25490198, 1)
+modulate = Color(0.14901961, 0.19607843, 0.23529412, 1)
 z_index = -5
 tile_set = SubResource("TileSet_8s45h")
 
 [node name="TileMapUnderWalls" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-modulate = Color(0.25490198, 0.25490198, 0.25490198, 1)
+modulate = Color(0.14901961, 0.19607843, 0.23529412, 1)
 z_index = -6
 tile_set = SubResource("TileSet_qnclt")
 
 [node name="TileMapFloor" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-modulate = Color(0.25565878, 0.25565878, 0.25565878, 1)
+modulate = Color(0.14901961, 0.19607843, 0.23529412, 1)
 z_index = -1
 tile_set = SubResource("TileSet_a0xh1")
 
 [node name="TileMapWallCorners" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-modulate = Color(0.25490198, 0.25490198, 0.25490198, 1)
+modulate = Color(0.14901961, 0.19607843, 0.23529412, 1)
 z_index = -5
 tile_set = SubResource("TileSet_4rtng")
 
@@ -2150,6 +2157,7 @@ unique_name_in_owner = true
 
 [node name="DoorArea" type="StaticBody2D" parent="."]
 unique_name_in_owner = true
+y_sort_enabled = true
 position = Vector2(160, -0.07444763)
 collision_mask = 0
 

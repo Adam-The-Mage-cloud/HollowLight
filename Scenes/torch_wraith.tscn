@@ -46,7 +46,7 @@ size = Vector2(16.838001, 15.839331)
 
 [sub_resource type="Gradient" id="Gradient_qcmox"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
-colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_86bfp"]
 gradient = SubResource("Gradient_qcmox")
@@ -235,7 +235,7 @@ shape = SubResource("RectangleShape2D_1sngw")
 unique_name_in_owner = true
 position = Vector2(-0.091278076, 0.4622898)
 color = Color(1, 0.4627451, 0.21960784, 0.60784316)
-energy = 2.4
+energy = 4.8
 texture = SubResource("GradientTexture2D_86bfp")
 
 [node name="MonsterBurningParticles" type="GPUParticles2D" parent="."]

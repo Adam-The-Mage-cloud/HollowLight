@@ -28,7 +28,7 @@ shader_parameter/crumble_fade = 0.6
 
 [sub_resource type="Gradient" id="Gradient_mgc0q"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
-colors = PackedColorArray(1, 1, 1, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vc312"]
 gradient = SubResource("Gradient_mgc0q")
@@ -383,7 +383,7 @@ unique_name_in_owner = true
 position = Vector2(-1.9524307, -0.91290855)
 enabled = false
 color = Color(1, 0.4627451, 0.21960784, 0.60784316)
-energy = 2.4
+energy = 4.8
 texture = SubResource("GradientTexture2D_vc312")
 
 [node name="OgreHitBox" type="Area2D" parent="."]

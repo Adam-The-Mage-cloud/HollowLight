@@ -40,6 +40,8 @@ var room_frontfacing_wall_source_id = 0
 
 var direction
 var first_room = true
+var protected_cells : Array[Vector2i] = []
+var previous_frontwall_world_positions : Array[Vector2] = []
 var previous_floor_world_positions: Array[Vector2] = []
 var door_origin
 var width = 32
@@ -53,37 +55,34 @@ var height = 18
 func _ready() -> void:
 	randomize()
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
-
+	
 	_choose_room_type_and_size()
-
-	if first_room == false:
-		_position_room_relative_to_door()
-
 	theme = 1
-
+	
 	# FLOOR GENERATION
 	generate_floor()
 	_smooth_floor(2)
 	_raggedize_edges()
-
-	# WIDENS NARROW PASSAGES BEFORE THEY ARE CONNECTED
 	_widen_narrow_passages()
-
-	# ENSURES ALL FLOOR IS REACHABLE
 	_ensure_reachable_floor()
-
+	
+	# NOW that floor exists, align room to previous door
+	if first_room == false :
+		_position_room_relative_to_door()
+		_register_protected_door_area()
+	
 	# WALLS / OUTLINES
 	generate_walls_from_floor()
 	generate_wall_corners_from_floor()
 	generate_frontfacing_wall_from_floor()
 	generate_outline_layers_from_floor()
 	generate_underwall_ring()
-
+	
 	# INTERIOR
 	generate_obstacles()
 	generate_bitsandbobs()
 	generate_floorcover()
-
+	
 	# DOOR + SPAWNS
 	position_door()
 	place_spawn_points()
@@ -97,32 +96,41 @@ func _ready() -> void:
 func _choose_room_type_and_size() -> void:
 	if first_room:
 		room_type = 2
-		width = randi_range(14, 18)
-		height = randi_range(18, 30)
+		width = randi_range(14, 18) * 1.25
+		height = randi_range(18, 30) * 1.25
 	else:
 		if room_type == 0:
-			room_type = randi_range(1, 9)
-
+			room_type = randi_range(1, 9) * 1.25
+			
 		match room_type:
 			1:
-				width = randi_range(32, 52)
-				height = randi_range(22, 34)
+				width = randi_range(32, 52) * 1.25
+				height = randi_range(22, 34) * 1.25
 			2:
-				width = randi_range(14, 20)
-				height = randi_range(24, 40)
+				width = randi_range(14, 20) * 1.25
+				height = randi_range(24, 40) * 1.25
 			3,4,5,6,7,8,9:
-				width = randi_range(32, 52)
-				height = randi_range(22, 36)
+				width = randi_range(32, 52) * 1.25
+				height = randi_range(22, 36) * 1.25
 			_:
-				width = randi_range(32, 48)
-				height = randi_range(22, 34)
+				width = randi_range(32, 48) * 1.25
+				height = randi_range(22, 34) * 1.25
 
 func _position_room_relative_to_door() -> void:
-	direction = 1
-	if direction == 1:
-		global_position.y = door_origin.y - (height * 10) + 10
-		if room_type == 2:
-			global_position.x = door_origin.x - (width * 10) / 2
+	if door_origin == null:
+		return
+		
+	# 1. Find the lowest floor tile in the new room
+	var lowest_tile: Vector2i = _get_lowest_floor_tile()
+	
+	# 2. Convert that tile to local/world space
+	var lowest_local: Vector2 = %TileMapFloor.map_to_local(lowest_tile)
+	
+	# 3. Compute the offset needed to align it to the old door
+	var offset = door_origin - lowest_local
+	
+	# 4. Move the entire room so the lowest tile sits exactly at the door
+	global_position = offset
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # FLOOR GENERATION
@@ -142,16 +150,14 @@ func generate_floor() -> void:
 	%TileMapFloor.clear()
 
 	match room_type:
-		1: _generate_ragged_hall()
-		2: _generate_corridor_room()
-		3: _generate_circle_room()
-		4: _generate_cave_room()
-		5: _generate_cross_room()
-		6: _generate_pillar_room()
-		7: _generate_blob_room()
-		8: _generate_lobed_room()
-		9: _generate_ring_room()
-		_: _generate_ragged_hall()
+		1:
+			_generate_cave_system()          # natural Stardew-like cave
+		2:
+			_generate_cave_with_human_room() # cave + carved room
+		3:
+			_generate_mixed_cave()           # multiple chambers + rooms
+		_:
+			_generate_cave_system()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # WIDEN NARROW PASSAGES
@@ -160,15 +166,15 @@ func generate_floor() -> void:
 func _widen_narrow_passages() -> void:
 	var floor_set = build_floor_set()
 	var to_add = []
-	
+	var widen_value = 2 # Default = 2 
 	for p in floor_positions:
 		var neighbors = 0
-		for d in [Vector2i(1,0), Vector2i(-1,0), Vector2i(0,1), Vector2i(0,-1)]:
+		for d in [Vector2i(widen_value,0), Vector2i(-widen_value,0), Vector2i(0,widen_value), Vector2i(0,-widen_value)]:
 			if floor_set.has(p + d):
 				neighbors += 1
 				
 		if neighbors == 1:
-			for d in [Vector2i(1,0), Vector2i(-1,0), Vector2i(0,1), Vector2i(0,-1)]:
+			for d in [Vector2i(widen_value,0), Vector2i(-widen_value,0), Vector2i(0,widen_value), Vector2i(0,-widen_value)]:
 				var n = p + d
 				if not floor_set.has(n):
 					to_add.append(n)
@@ -204,139 +210,142 @@ func _ensure_reachable_floor() -> void:
 			floor_positions.erase(p)
 			%TileMapFloor.set_cell(p, -1)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# WALLS / CORNERS / OUTLINES / FRONT-FACING WALL
-# (your existing implementations stay exactly the same)
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ---------------------------------------------------------
+# CAVE SYSTEM GENERATION (STARDEW-LIKE)
+# ---------------------------------------------------------
 
-func _generate_ragged_hall() -> void:
-	# Start with a rectangle, then carve out edges with noise texture
-	for x in range(width):
-		for y in range(height):
+func _generate_cave_system() -> void:
+	var chambers: Array[Vector2i] = []
+	var chamber_count = randi_range(3, 6)
+
+	for i in range(chamber_count):
+		chambers.append(Vector2i(
+			randi_range(int(width * 0.2), int(width * 0.8)),
+			randi_range(int(height * 0.2), int(height * 0.8))
+		))
+
+	for c in chambers:
+		_carve_chamber(c, randi_range(6, 12))
+		
+	for i in range(chambers.size() - 1):
+		_carve_tunnel(chambers[i], chambers[i + 1], 3)
+		
+	if chambers.size() > 2 and randf() < 0.6:
+		_carve_tunnel(chambers[0], chambers[chambers.size() - 1], 3)
+		
+	for i in range(randi_range(3, 7)):
+		var c = floor_positions.pick_random()
+		_carve_chamber(c, randi_range(3, 6))
+		
+	_carve_negative_space()
+	_force_central_chamber()
+
+func _generate_cave_with_human_room() -> void:
+	_generate_cave_system()
+	
+	var cx = width / 2
+	var cy = randi_range(int(height * 0.3), int(height * 0.6))
+	var room_w = randi_range(10, 18)
+	var room_h = randi_range(8, 14)
+
+	for x in range(cx - room_w / 2, cx + room_w / 2):
+		for y in range(cy - room_h / 2, cy + room_h / 2):
 			_add_floor(Vector2i(x, y))
-			
+
+	var attach_point = Vector2i(cx, cy + room_h / 2 + 2)
+	var nearest = _find_nearest_floor(attach_point)
+	if nearest != null:
+		_carve_tunnel(attach_point, nearest, 3)
+
+func _generate_mixed_cave() -> void:
+	_generate_cave_system()
+	
+	var extra_rooms = randi_range(1, 3)
+	for i in range(extra_rooms):
+		var base = floor_positions.pick_random()
+		var room_w = randi_range(8, 14)
+		var room_h = randi_range(6, 10)
+		var offset = Vector2i(
+			randi_range(-room_w, room_w),
+			randi_range(-room_h, room_h)
+		)
+		var cx = base.x + offset.x
+		var cy = base.y + offset.y
+		
+		for x in range(cx - room_w / 2, cx + room_w / 2):
+			for y in range(cy - room_h / 2, cy + room_h / 2):
+				_add_floor(Vector2i(x, y))
+
+# ---------------------------------------------------------
+# CAVE HELPERS
+# ---------------------------------------------------------
+
+func _carve_chamber(center: Vector2i, radius: int) -> void:
+	for x in range(center.x - radius, center.x + radius + 1):
+		for y in range(center.y - radius, center.y + radius + 1):
+			if x < 0 or x >= width or y < 0 or y >= height:
+				continue
+			if Vector2(x - center.x, y - center.y).length() <= radius:
+				_add_floor(Vector2i(x, y))
+
+func _carve_tunnel(a: Vector2i, b: Vector2i, width_radius = 3) -> void:
+	var x = a.x
+	var y = a.y
+	
+	while x != b.x or y != b.y:
+		for ox in range(-width_radius, width_radius + 1):
+			for oy in range(-width_radius, width_radius + 1):
+				if Vector2(ox, oy).length() <= width_radius:
+					var px = x + ox
+					var py = y + oy
+					if px >= 0 and px < width and py >= 0 and py < height:
+						_add_floor(Vector2i(px, py))
+						
+		if x < b.x: x += 1
+		elif x > b.x: x -= 1
+		
+		if y < b.y: y += 1
+		elif y > b.y: y -= 1
+
+func _carve_negative_space() -> void:
 	var noise = FastNoiseLite.new()
 	noise.seed = randi()
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	noise.frequency = 0.12
-	
+	noise.frequency = 0.05
+
 	for p in floor_positions.duplicate():
-		var n = noise.get_noise_2d(float(p.x), float(p.y))
-		if n < -0.15:
+		if noise.get_noise_2d(p.x, p.y) < -0.25:
 			floor_positions.erase(p)
 			%TileMapFloor.set_cell(p, -1)
 
-func _generate_corridor_room() -> void:
-	# Wider, more generous corridor, with some curveballs
-	var mid_x = width / 2
-	var corridor_half_width = randi_range(2, 3) 
-	
-	for x in range(width):
-		for y in range(height):
-			if abs(x - mid_x) <= corridor_half_width:
-				_add_floor(Vector2i(x, y))
-				
-	# Add some side pockets / splits
-	for i in range(randi_range(2, 4)):
-		var pocket_y = randi_range(int(height * 0.2), int(height * 0.8))
-		var pocket_dir = randi_range(-1, 1)
-		var pocket_length = randi_range(4, 8)
-		for j in range(pocket_length):
-			var px = mid_x + pocket_dir * (corridor_half_width + j)
-			if px >= 0 and px < width:
-				for oy in range(-1, 2):
-					var py = pocket_y + oy
-					if py >= 0 and py < height:
-						_add_floor(Vector2i(px, py))
+func _force_central_chamber() -> void:
+	var cx = width / 2
+	var cy = height / 2
+	var radius = int(min(width, height) * 0.15)
 
-func _generate_circle_room() -> void:
-	var cx = width / 2.0
-	var cy = height / 2.0
-	var radius = min(width, height) * 0.45
-	for x in range(width):
-		for y in range(height):
+	for x in range(cx - radius, cx + radius + 1):
+		for y in range(cy - radius, cy + radius + 1):
+			if x < 0 or x >= width or y < 0 or y >= height:
+				continue
 			if Vector2(x - cx, y - cy).length() <= radius:
 				_add_floor(Vector2i(x, y))
 
-func _generate_cave_room() -> void:
-	var noise = FastNoiseLite.new()
-	noise.seed = randi()
-	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	noise.frequency = 0.10
-	
-	for x in range(width):
-		for y in range(height):
-			var n = noise.get_noise_2d(float(x), float(y))
-			if n > -0.1:
-				_add_floor(Vector2i(x, y))
+func _find_nearest_floor(target: Vector2i) -> Vector2i:
+	var best: Vector2i = Vector2i.ZERO
+	var best_dist = INF
+	for p in floor_positions:
+		var d = target.distance_to(p)
+		if d < best_dist:
+			best_dist = d
+			best = p
+	return best
 
-func _generate_cross_room() -> void:
-	var mid_x = width / 2
-	var mid_y = height / 2
-	for x in range(width):
-		for y in range(height):
-			if abs(x - mid_x) < int(width * 0.18) or abs(y - mid_y) < int(height * 0.18):
-				_add_floor(Vector2i(x, y))
-
-func _generate_pillar_room() -> void:
-	_generate_ragged_hall()
-	
-	var pillars = [
-		Vector2i(width / 4, height / 4),
-		Vector2i(3 * width / 4, height / 4),
-		Vector2i(width / 4, 3 * height / 4),
-		Vector2i(3 * width / 4, 3 * height / 4)
-	]
-	
-	for p in pillars:
-		for ox in range(-1, 2):
-			for oy in range(-1, 2):
-				var pos = p + Vector2i(ox, oy)
-				if floor_positions.has(pos):
-					floor_positions.erase(pos)
-					%TileMapFloor.set_cell(pos, -1)
-
-func _generate_blob_room() -> void:
-	var noise = FastNoiseLite.new()
-	noise.seed = randi()
-	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	noise.frequency = 0.08
-	
-	var threshold = -0.05
-	
-	for x in range(width):
-		for y in range(height):
-			var n = noise.get_noise_2d(float(x), float(y))
-			if n > threshold:
-				_add_floor(Vector2i(x, y))
-
-func _generate_lobed_room() -> void:
-	var centers = [
-		Vector2(width * 0.3, height * 0.3),
-		Vector2(width * 0.7, height * 0.3),
-		Vector2(width * 0.5, height * 0.7)
-	]
-	
-	var radius = min(width, height) * 0.25
-	
-	for x in range(width):
-		for y in range(height):
-			for c in centers:
-				if Vector2(x, y).distance_to(c) <= radius:
-					_add_floor(Vector2i(x, y))
-					break
-
-func _generate_ring_room() -> void:
-	var cx = width / 2.0
-	var cy = height / 2.0
-	var outer = min(width, height) * 0.45
-	var inner = outer * 0.55
-	
-	for x in range(width):
-		for y in range(height):
-			var d = Vector2(x - cx, y - cy).length()
-			if d <= outer and d >= inner:
-				_add_floor(Vector2i(x, y))
+func _get_lowest_floor_tile() -> Vector2i:
+	var lowest = floor_positions[0]
+	for p in floor_positions:
+		if p.y > lowest.y:
+			lowest = p
+	return lowest
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # POST-PROCESSING: SMOOTH + RAGGED EDGES
@@ -379,28 +388,6 @@ func _raggedize_edges() -> void:
 		floor_positions.erase(p)
 		%TileMapFloor.set_cell(p, -1)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# WALLS / CORNERS / UNDERWALL / OUTLINES / FRONT-FACING WALL
-# (your existing implementations can stay as-is, using floor_positions)
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# ... keep your existing:
-# generate_walls_from_floor()
-# generate_wall_corners_from_floor()
-# generate_underwall_ring()
-# _generate_outline_layer()
-# generate_outline_layers_from_floor()
-# generate_frontfacing_wall_from_floor()
-# generate_obstacles()
-# generate_bitsandbobs()
-# generate_floorcover()
-# position_door()
-# place_spawn_points()
-# monster_spawns()
-# beacon_spawns()
-# _on_all_beacons_lit()
-# _on_door_open_area_body_entered()
-
 # -------------------------------------------------------------------
 # FLOOR-DRIVEN WALLS / CORNERS / OUTLINES / FRONT-FACING WALL
 # -------------------------------------------------------------------
@@ -409,6 +396,15 @@ func _raggedize_edges() -> void:
 func build_previous_floor_set() -> Dictionary:
 	var s = {}
 	for world_pos in previous_floor_world_positions:
+		var local_pos = %TileMapFloor.to_local(world_pos)
+		var cell = %TileMapFloor.local_to_map(local_pos)
+		s[cell] = true
+	return s
+
+# Previous Front-Facing Walls :
+func build_previous_frontfacingwalls_set() -> Dictionary:
+	var s = {}
+	for world_pos in previous_frontwall_world_positions:
 		var local_pos = %TileMapFloor.to_local(world_pos)
 		var cell = %TileMapFloor.local_to_map(local_pos)
 		s[cell] = true
@@ -423,6 +419,42 @@ func build_floor_set() -> Dictionary:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # THIS FUNCTION HELPS (THROUGH WALL_POSITIONS ARRAY WITH LOCATIONING) TELL THE ROOM ITS DIMENISONS AND WHERE OUTLINES ETC SHOULD GO:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func _get_entry_floor_tile() -> Vector2i:
+	if floor_positions.is_empty():
+		return Vector2i.ZERO
+	var floor_set = build_floor_set()
+	# 1. Find the vertical center of the room
+	var avg_x = 0
+	for p in floor_positions:
+		avg_x += p.x
+	avg_x /= floor_positions.size()
+	# 2. Find all tiles within a horizontal band around the center
+	var band: Array[Vector2i] = []
+	for p in floor_positions:
+		if abs(p.x - avg_x) <= 4: # 8‑tile wide band
+			band.append(p)
+	# If the band is empty, fall back to all floor tiles
+	if band.is_empty():
+		band = floor_positions.duplicate()
+	# 3. Find the highest reachable tile in that band
+	var best = band[0]
+	for p in band:
+		if p.y < best.y:
+			best = p
+	return best
+
+func _register_protected_door_area() -> void:
+	if door_origin == null:
+		return
+
+	var local = %TileMapFloor.to_local(door_origin)
+	var cell = %TileMapFloor.local_to_map(local)
+
+	# Protect a small 3×3 area around the door
+	for ox in range(-1, 2):
+		for oy in range(-1, 2):
+			protected_cells.append(cell + Vector2i(ox, oy))
+
 func generate_walls_from_floor() -> void:
 	%TileMapWalls.clear()
 	%TileMapUnderWalls.clear()
@@ -561,6 +593,7 @@ func _generate_outline_layer(tilemap: TileMapLayer, source_id: int, offset: int)
 		return
 		
 	var old_floor_set = build_previous_floor_set()
+	var old_frontwall_set = build_previous_frontfacingwalls_set()
 	
 	var floor_set = build_floor_set()
 	
@@ -588,6 +621,22 @@ func _generate_outline_layer(tilemap: TileMapLayer, source_id: int, offset: int)
 			
 			if old_floor_set.has(npos) :
 				continue
+			if old_floor_set.has(npos + Vector2i(0, -1)) :
+				continue
+			if old_floor_set.has(npos + Vector2i(0, -2)) :
+				continue
+			if old_floor_set.has(npos + Vector2i(0, +1)) :
+				continue
+			
+			if old_frontwall_set.has(npos) :
+				continue
+			if old_frontwall_set.has(npos + Vector2i(0, -1)) :
+				continue
+			if old_frontwall_set.has(npos + Vector2i(0, -2)) :
+				continue
+			if old_frontwall_set.has(npos + Vector2i(0, +1)) :
+				continue
+			
 			# Skip if this outline layer already placed something here
 			#if tilemap.get_cell_source_id(npos) != -1:
 				#continue
@@ -599,6 +648,17 @@ func _generate_outline_layer(tilemap: TileMapLayer, source_id: int, offset: int)
 			if %TileMapFrontFaceWall.get_cell_source_id(npos + Vector2i(0, -2)) != -1:
 				continue
 			if %TileMapFrontFaceWall.get_cell_source_id(npos + Vector2i(0, +1)) != -1:
+				continue
+			
+			if protected_cells.has(npos):
+				continue
+			if protected_cells.has(npos + Vector2i(0, -2)):
+				continue
+			if protected_cells.has(npos + Vector2i(0, -1)):
+				continue
+			if protected_cells.has(npos + Vector2i(-1, 0)):
+				continue
+			if protected_cells.has(npos + Vector2i(1, 0)):
 				continue
 			
 			# Place outline tile
@@ -629,6 +689,8 @@ func generate_frontfacing_wall_from_floor() -> void:
 		if not floor_set.has(below):
 			continue
 		if floor_set.has(above):
+			continue
+		if protected_cells.has(above):
 			continue
 		var front_pos = w + Vector2i(0, -1)
 		var atlas_x = randi_range(0, 4)
@@ -818,7 +880,8 @@ func pick_spawn_positions() -> Array[Vector2i]:
 
 func place_spawn_points() -> void:
 	var positions = pick_spawn_positions()
-	for i in range(spawnpoints):
+	var count = min(spawnpoints, positions.size())
+	for i in range(count):
 		var spawn_node = %SpawnPoints.get_child(i)
 		var tile_pos: Vector2i = positions[i]
 		var local_pixel = %TileMapFloor.map_to_local(tile_pos)
@@ -833,7 +896,7 @@ func monster_spawns() -> void:
 			var rand = randi_range(1, spawnpoints)
 			var spawn_node = %SpawnPoints.get_child(rand - 1)
 			new_ogre.global_position = spawn_node.global_position
-			add_child(new_ogre)
+			call_deferred("add_child", new_ogre)
 
 func beacon_spawns() -> void:
 	if theme == 1:
@@ -860,14 +923,23 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 		%DoorSprite.play("DarkSteelSmashed")
 		var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
 		new_room.door_origin = %DoorArea.global_position
-		new_room.z_index = 2
+		new_room.z_index = 0
 		new_room.first_room = false
 		
+		# Send Old Floor Positions :
 		var world_floor_positions: Array[Vector2] = []
 		for p in floor_positions:
 			var local_pixel = %TileMapFloor.map_to_local(p)
 			var world_pos = %TileMapFloor.to_global(local_pixel)
 			world_floor_positions.append(world_pos)
 		new_room.previous_floor_world_positions = world_floor_positions
+		
+		# Send Old FrontWall Positions :
+		var world_frontwall_positions: Array[Vector2] = []
+		for p in world_frontwall_positions:
+			var local_pixel = %TileMapFloor.map_to_local(p)
+			var world_pos = %TileMapFloor.to_global(local_pixel)
+			world_frontwall_positions.append(world_pos)
+		new_room.previous_frontwall_world_positions = world_frontwall_positions
 		
 		get_tree().current_scene.call_deferred("add_child", new_room)
