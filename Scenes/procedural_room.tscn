@@ -15,36 +15,26 @@
 texture = ExtResource("2_4rtng")
 margins = Vector2i(29, 75)
 texture_region_size = Vector2i(14, 34)
-1:0/next_alternative_id = 3
+1:0/next_alternative_id = 4
 1:0/0 = 0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, 5.450264, 6.8376026, 5.5493603, 6.9367, 17.34175, -7.1348906, 17.04446)
-1:0/2 = 2
-1:0/2/flip_h = true
-1:0/2/physics_layer_0/polygon_0/points = PackedVector2Array(-7.0357943, 4.7565937, 6.8376045, 4.9547844, 6.936699, 16.945364, -6.8376026, 16.548983)
-2:0/next_alternative_id = 3
+1:0/1 = 1
+2:0/next_alternative_id = 4
 2:0/0 = 0
 2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, 5.0538807, 6.8376026, 4.9547863, 6.936699, 17.044462, -6.936699, 17.044462)
-2:0/2 = 2
-2:0/2/flip_h = true
-2:0/2/physics_layer_0/polygon_0/points = PackedVector2Array(-7.233987, 5.8466473, 7.035795, 6.342125, 6.7385073, 18.134514, -7.333082, 18.035418)
-3:0/next_alternative_id = 3
+2:0/1 = 1
+3:0/next_alternative_id = 4
 3:0/0 = 0
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, 4.954785, 6.936699, 4.558402, 7.233986, 17.04446, -7.035795, 17.341747)
-3:0/2 = 2
-3:0/2/flip_h = true
-3:0/2/physics_layer_0/polygon_0/points = PackedVector2Array(-7.4321775, 5.3511677, 6.5403156, 6.2430286, 7.1348906, 17.539938, -7.333082, 18.035418)
-4:0/next_alternative_id = 3
+3:0/1 = 1
+4:0/next_alternative_id = 4
 4:0/0 = 0
 4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.9366994, 4.9547853, 6.8376026, 5.152976, 7.035795, 16.846268, -7.035795, 17.04446)
-4:0/2 = 2
-4:0/2/flip_h = true
-4:0/2/physics_layer_0/polygon_0/points = PackedVector2Array(-7.0357947, 5.4502635, 6.639413, 5.846646, 7.0357943, 17.837225, -7.0357947, 17.936321)
-0:0/next_alternative_id = 3
+4:0/1 = 1
+0:0/next_alternative_id = 5
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.0221634, 4.7399616, -5, 5, 7.0357943, 4.9547844, 7.5444736, 17.120153, -7.1092157, 17.410322)
-0:0/2 = 2
-0:0/2/flip_h = true
-0:0/2/physics_layer_0/polygon_0/points = PackedVector2Array(-7.0357943, 4.7565937, 6.8376045, 4.8556895, 6.936699, 16.251696, -6.8376026, 16.251696)
+0:0/1 = 1
 
 [sub_resource type="TileSet" id="TileSet_t264i"]
 tile_size = Vector2i(10, 10)
@@ -2076,11 +2066,13 @@ modulate = Color(0.18120003, 0.18120006, 0.1812, 1)
 z_index = 3
 y_sort_enabled = true
 tile_set = SubResource("TileSet_vmobn")
+collision_enabled = false
 
 [node name="TileMapRoomDarkerOutline" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.13319641, 0.13319641, 0.13319638, 1)
 z_index = 2
+y_sort_enabled = true
 tile_set = SubResource("TileSet_4yqbe")
 
 [node name="TileMapWalls" type="TileMapLayer" parent="."]
