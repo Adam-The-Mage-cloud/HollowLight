@@ -3,6 +3,10 @@ extends CharacterBody2D
 var max_health = 5
 var health = 5
 
+# Touchscreen :
+var touch_move = Vector2.ZERO
+
+
 var direction = Vector2.ZERO
 var speed = 4000
 
@@ -25,60 +29,13 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("dash") :
 		dash_ability()
 	# Check For Input :
-	if Input.is_action_pressed("up") and Input.is_action_pressed("right") :
-		direction = Vector2(1, -1)
-		if dashing == false :
+	direction = get_move_direction()
+	
+	if direction != Vector2.ZERO:
+		if dashing == false:
 			moving()
 			%BrodySprite.play("moving")
-
-		
-	elif Input.is_action_pressed("up") and Input.is_action_pressed("left") :
-		direction = Vector2(-1, -1)
-		if dashing == false :
-			moving()
-			%BrodySprite.play("moving")
-
-		
-	elif Input.is_action_pressed("down") and Input.is_action_pressed("right") :
-		direction = Vector2(1, 1)
-		if dashing == false :
-			moving()
-			%BrodySprite.play("moving")
-
-		
-	elif Input.is_action_pressed("down") and Input.is_action_pressed("left") :
-		direction = Vector2(-1, 1)
-		if dashing == false :
-			moving()
-			%BrodySprite.play("moving")
-
-		
-	elif Input.is_action_pressed("up") :
-		direction = Vector2(0, -1)
-		if dashing == false :
-			moving()
-			%BrodySprite.play("moving")
-
-	elif Input.is_action_pressed("down") :
-		direction = Vector2(0, 1)
-		if dashing == false :
-			moving()
-			%BrodySprite.play("moving")
-
-	elif Input.is_action_pressed("right") :
-		direction = Vector2(1, 0)
-		if dashing == false :
-			moving()
-			%BrodySprite.play("moving")
-
-	elif Input.is_action_pressed("left") :
-		direction = Vector2(-1, 0)
-		if dashing == false :
-			moving()
-			%BrodySprite.play("moving")
-		
-	else :
-		direction = Vector2.ZERO
+	else:
 		%BrodySprite.play("stationary")
 		%feet.play("stationary")
 	
@@ -93,15 +50,19 @@ func _physics_process(delta: float) -> void:
 	velocity = (direction * speed) * delta
 	move_and_slide()
 
-func world_to_screen(world_pos: Vector2, cam: Camera2D, viewport: Viewport) -> Vector2:
-	var screen_size = viewport.get_visible_rect().size
-	var cam_center = cam.get_screen_center_position()
-	var zoom = cam.zoom
-
-	var offset = (world_pos - cam_center)
-	offset /= zoom
-
-	return screen_size * 0.5 + offset
+# Movement :
+func get_move_direction() -> Vector2:
+	# Touch joystick first
+	if touch_move.length() > 0.1:
+		return touch_move.normalized()
+	
+	# Keyboard fallback
+	var dir := Vector2(
+		Input.get_action_strength("right") - Input.get_action_strength("left"),
+		Input.get_action_strength("down") - Input.get_action_strength("up")
+	)
+	
+	return dir.normalized()
 
 
 func dash_ability():
@@ -169,6 +130,7 @@ func dash_ability():
 		dashing = false
 		%feet.visible = true
 		%BrodySprite.play("moving")
+
 func moving() :
 	while direction != Vector2.ZERO :
 		# Animation :
@@ -217,25 +179,39 @@ func breathing() :
 		bobbing = false
 		breathing()
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# EXTERNAL GAMEPLAY REACTIONS :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func check_alive() :
 	if health <= 0 :
 		pass
 		#queue_free()
 		#get_tree().pause()
 
+func blood_splatter() :
+	%BloodSplatterParticles.emitting = true
+
 func flash_white():
-	var tween := create_tween()
+	var tween = create_tween()
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
+
+func caught_by_wormbat() :
+	health -= 0.1
+	flash_white()
+	blood_splatter()
+	check_alive()
 
 func got_torch_wraithed() :
 	health -= 1
 	flash_white()
+	blood_splatter()
 	check_alive()
 
 func ogre_slashed(ogre) :
 	health -= 2
 	flash_white()
+	blood_splatter()
 	# Bigger Knockback :
 	global_position.y += randf_range(-3, 3)
 	global_position.x += randf_range(-3, 3)
@@ -243,3 +219,10 @@ func ogre_slashed(ogre) :
 	var knockback_movement = create_tween()
 	knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	check_alive()
+
+# TOUCHSCREEN REACTIONS :
+func _on_touch_screen_press_2_move_stick_changed(vec: Variant) -> void:
+	touch_move = vec
+
+func _on_dash_button_pressed() -> void:
+	dash_ability()

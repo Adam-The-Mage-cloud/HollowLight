@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://chadpnqf4f2xn"]
+[gd_scene load_steps=33 format=3 uid="uid://chadpnqf4f2xn"]
 
 [ext_resource type="Script" uid="uid://bwjcjoh73w2jp" path="res://Scripts/brody.gd" id="1_1lbbp"]
 [ext_resource type="Texture2D" uid="uid://dwsaukrqi5ql4" path="res://Artwork/Orb.png" id="1_k4lj1"]
@@ -329,6 +329,30 @@ turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
 
+[sub_resource type="Gradient" id="Gradient_vfjlh"]
+offsets = PackedFloat32Array(0, 0.5984849, 1)
+colors = PackedColorArray(0, 0.71389955, 2.3102762e-06, 1, 0.26195547, 0.4633317, 0.26528853, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_l2vdu"]
+gradient = SubResource("Gradient_vfjlh")
+
+[sub_resource type="Curve" id="Curve_s6v4d"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7632509, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_cd0il"]
+curve = SubResource("Curve_s6v4d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l2vdu"]
+particle_flag_disable_z = true
+spread = 47.5
+initial_velocity_min = -250.0
+initial_velocity_max = 250.0
+damping_min = 4.0
+damping_max = 14.000001
+scale_curve = SubResource("CurveTexture_cd0il")
+color_ramp = SubResource("GradientTexture1D_l2vdu")
+
 [node name="Brody" type="CharacterBody2D"]
 z_index = 2
 y_sort_enabled = true
@@ -364,6 +388,7 @@ centered = false
 offset = Vector2(0, 10.5)
 
 [node name="BrodyHitbox" type="CollisionShape2D" parent="."]
+visible = false
 use_parent_material = true
 position = Vector2(-1, 4)
 scale = Vector2(0.5165187, 0.5165187)
@@ -406,5 +431,15 @@ texture = ExtResource("3_vfjlh")
 one_shot = true
 preprocess = 0.2
 process_material = SubResource("ParticleProcessMaterial_vfjlh")
+
+[node name="BloodSplatterParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-1.0333595, 3.444538)
+emitting = false
+amount = 50
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_l2vdu")
 
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]

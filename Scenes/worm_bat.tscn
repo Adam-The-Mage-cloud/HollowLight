@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cmthdr4mmds4r"]
+[gd_scene load_steps=24 format=3 uid="uid://cmthdr4mmds4r"]
 
 [ext_resource type="Shader" uid="uid://bdmp6bbfhb06v" path="res://Shaders/worm_bat.gdshader" id="1_6xhtv"]
 [ext_resource type="Texture2D" uid="uid://6m3vajsist0m" path="res://Artwork/Batcatcher.png" id="1_bbcrk"]
@@ -19,7 +19,9 @@ shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rtueh"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6xhtv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pj4bo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rtueh"]
 atlas = ExtResource("1_bbcrk")
@@ -142,6 +144,8 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_rtueh"]
+
 [node name="worm_bat" type="Area2D"]
 z_index = 2
 y_sort_enabled = true
@@ -149,10 +153,17 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_6xhtv")
 script = ExtResource("1_w1irv")
 
-[node name="WormBatCollision" type="CollisionShape2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(-0.47451115, 5.48238)
-shape = SubResource("CircleShape2D_rtueh")
+[node name="WormBatCollision1" type="CollisionShape2D" parent="."]
+position = Vector2(-8.711656, 0.8405199)
+rotation = 0.753728
+scale = Vector2(0.6668298, 1.4642302)
+shape = SubResource("RectangleShape2D_6xhtv")
+
+[node name="WormBatCollision2" type="CollisionShape2D" parent="."]
+position = Vector2(8.699436, 1.2187581)
+rotation = -0.7942899
+scale = Vector2(0.7330757, 1.5579375)
+shape = SubResource("RectangleShape2D_pj4bo")
 
 [node name="WormBat" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -222,4 +233,13 @@ position = Vector2(14, 1)
 sprite_frames = SubResource("SpriteFrames_1qasf")
 animation = &"right_hook"
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[node name="WormBatHitbox" type="Area2D" parent="."]
+
+[node name="WormBatHitboxCollision" type="CollisionShape2D" parent="WormBatHitbox"]
+unique_name_in_owner = true
+position = Vector2(-0.47451115, 5.48238)
+shape = SubResource("CircleShape2D_rtueh")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="area_entered" from="WormBatHitbox" to="." method="_on_worm_bat_hitbox_area_entered"]
