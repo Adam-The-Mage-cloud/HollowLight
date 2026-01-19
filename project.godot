@@ -21,8 +21,8 @@ EventBus="*res://Scripts/event_bus.gd"
 
 [display]
 
-window/size/viewport_width=4096
-window/size/viewport_height=2304
+window/size/viewport_width=409
+window/size/viewport_height=230
 window/stretch/mode="canvas_items"
 
 [input]
@@ -78,6 +78,10 @@ aim_right={
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
 ]
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [rendering]
 

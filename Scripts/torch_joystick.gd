@@ -2,9 +2,9 @@ extends Control
 
 signal stick_changed(vec)
 
-var radius := 50.0
-var output := Vector2.ZERO
-var center := Vector2.ZERO
+var radius = 30.0
+var output = Vector2.ZERO
+var center = Vector2.ZERO
 
 func _ready():
 	center = %TorchJoystickBase.position
