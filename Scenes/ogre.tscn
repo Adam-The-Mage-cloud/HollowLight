@@ -14,7 +14,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4j2he"]
 shader = ExtResource("1_n5x3l")
 shader_parameter/flash_amount = 0.0
-shader_parameter/flash_color = Vector3(0.95, 0.65, 0.25)
+shader_parameter/flash_color = Vector3(0.01, 0.01, 0.01)
 shader_parameter/susceptible_flash_amount = 0.0
 shader_parameter/susceptible_flash_color = Vector3(0.2, 0.03, 0.03)
 shader_parameter/burn_amount = 0.0
@@ -247,7 +247,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xdnku"]
-size = Vector2(152.7606, 90.9104)
+size = Vector2(231.93118, 140)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5uq8"]
 size = Vector2(14.566326, 14.594847)
@@ -446,8 +446,7 @@ texture = SubResource("GradientTexture2D_uw55x")
 
 [node name="visibility_collision" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-visible = false
-position = Vector2(-57.550884, -1.3365021)
+position = Vector2(-17.965591, 2)
 shape = SubResource("RectangleShape2D_xdnku")
 
 [node name="AxePivot" type="Marker2D" parent="."]

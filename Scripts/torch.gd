@@ -3,9 +3,6 @@ extends Area2D
 var equipped = true
 var minitorch_now_on = true
 
-# Touchscreen :
-var touch_stick = Vector2.ZERO
-
 # All Variables Needed For Solid Torch Movement With Joystick / Mouse :
 var area_centre
 var target_position
@@ -80,23 +77,21 @@ func _physics_process(delta: float) -> void:
 
 
 func _get_aim_direction(centre: Vector2) -> Vector2:
-	# Touch joystick first
-	if touch_stick.length() > 0.1:
-		return touch_stick.normalized()
-	
-	# Controller stick
+	# Controller stick direction
 	var stick := Vector2(
-	Input.get_action_strength("aim_right") - Input.get_action_strength("aim_left"),
-	Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
+		Input.get_action_strength("aim_right") - Input.get_action_strength("aim_left"),
+		Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
 	)
+
+	# If stick is being used, prefer it
 	if stick.length() > 0.2:
 		return stick.normalized()
-	
-	# Mouse fallback
+
+	# Otherwise use mouse direction
 	var mouse_dir := get_global_mouse_position() - centre
 	if mouse_dir.length() < 1.0:
 		return Vector2.ZERO
-	
+
 	return mouse_dir.normalized()
 
 
@@ -131,7 +126,3 @@ func minitorch_off() :
 	%TorchSprite.visible = true
 	%MainFlameSecondary.emitting = true
 	%MainFlameSecondary.emitting = true
-
-
-func _on_touch_screen_layer_stick_changed(vec: Variant) -> void:
-	touch_stick = vec

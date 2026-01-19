@@ -3,12 +3,11 @@ extends CharacterBody2D
 var max_health = 5
 var health = 5
 
-# Touchscreen :
-var touch_move = Vector2.ZERO
-
-
 var direction = Vector2.ZERO
 var speed = 4000
+var acceleration = 9000.0
+var friction = 6000.0
+var max_speed = 75.0
 
 var weapon_equipped = false
 var torch_equipped = true
@@ -29,13 +28,60 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("dash") :
 		dash_ability()
 	# Check For Input :
-	direction = get_move_direction()
-	
-	if direction != Vector2.ZERO:
-		if dashing == false:
+	if Input.is_action_pressed("up") and Input.is_action_pressed("right") :
+		direction = Vector2(1, -1)
+		if dashing == false :
 			moving()
 			%BrodySprite.play("moving")
-	else:
+
+		
+	elif Input.is_action_pressed("up") and Input.is_action_pressed("left") :
+		direction = Vector2(-1, -1)
+		if dashing == false :
+			moving()
+			%BrodySprite.play("moving")
+
+		
+	elif Input.is_action_pressed("down") and Input.is_action_pressed("right") :
+		direction = Vector2(1, 1)
+		if dashing == false :
+			moving()
+			%BrodySprite.play("moving")
+
+		
+	elif Input.is_action_pressed("down") and Input.is_action_pressed("left") :
+		direction = Vector2(-1, 1)
+		if dashing == false :
+			moving()
+			%BrodySprite.play("moving")
+
+		
+	elif Input.is_action_pressed("up") :
+		direction = Vector2(0, -1)
+		if dashing == false :
+			moving()
+			%BrodySprite.play("moving")
+
+	elif Input.is_action_pressed("down") :
+		direction = Vector2(0, 1)
+		if dashing == false :
+			moving()
+			%BrodySprite.play("moving")
+
+	elif Input.is_action_pressed("right") :
+		direction = Vector2(1, 0)
+		if dashing == false :
+			moving()
+			%BrodySprite.play("moving")
+
+	elif Input.is_action_pressed("left") :
+		direction = Vector2(-1, 0)
+		if dashing == false :
+			moving()
+			%BrodySprite.play("moving")
+		
+	else :
+		direction = Vector2.ZERO
 		%BrodySprite.play("stationary")
 		%feet.play("stationary")
 	
@@ -45,24 +91,27 @@ func _physics_process(delta: float) -> void:
 	elif direction == Vector2.ZERO and %antenna.rotation_degrees <= 0 :
 		%antenna.rotation_degrees += 225 * delta # until at degrees = 0
 	
-	# Movement :
+	# Movement:
 	direction = direction.normalized()
-	velocity = (direction * speed) * delta
+	
+	if direction != Vector2.ZERO:
+		# Accelerate toward target direction
+		velocity = velocity.move_toward(direction * max_speed, acceleration * delta)
+	else:
+		# Apply friction when no input
+		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
+	
 	move_and_slide()
 
-# Movement :
-func get_move_direction() -> Vector2:
-	# Touch joystick first
-	if touch_move.length() > 0.1:
-		return touch_move.normalized()
-	
-	# Keyboard fallback
-	var dir := Vector2(
-		Input.get_action_strength("right") - Input.get_action_strength("left"),
-		Input.get_action_strength("down") - Input.get_action_strength("up")
-	)
-	
-	return dir.normalized()
+func world_to_screen(world_pos: Vector2, cam: Camera2D, viewport: Viewport) -> Vector2:
+	var screen_size = viewport.get_visible_rect().size
+	var cam_center = cam.get_screen_center_position()
+	var zoom = cam.zoom
+
+	var offset = (world_pos - cam_center)
+	offset /= zoom
+
+	return screen_size * 0.5 + offset
 
 
 func dash_ability():
@@ -114,23 +163,22 @@ func dash_ability():
 		# Acceleration phase
 		for i in range(9):
 			await get_tree().create_timer(0.005).timeout
-			speed *= 1.12
+			max_speed *= 1.12
 	
 		# Deceleration phase
 		await get_tree().create_timer(0.18).timeout
 		for i in range(4):
 			await get_tree().create_timer(0.03).timeout
-			speed /= 2
+			max_speed /= 2
 	
 		await get_tree().create_timer(0.04).timeout
-		speed = 4000
+		max_speed = 75.0
 		
 		# Reset state
 		collision_mask = original_mask
 		dashing = false
 		%feet.visible = true
 		%BrodySprite.play("moving")
-
 func moving() :
 	while direction != Vector2.ZERO :
 		# Animation :
@@ -179,39 +227,25 @@ func breathing() :
 		bobbing = false
 		breathing()
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# EXTERNAL GAMEPLAY REACTIONS :
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func check_alive() :
 	if health <= 0 :
 		pass
 		#queue_free()
 		#get_tree().pause()
 
-func blood_splatter() :
-	%BloodSplatterParticles.emitting = true
-
 func flash_white():
 	var tween = create_tween()
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
 
-func caught_by_wormbat() :
-	health -= 0.1
-	flash_white()
-	blood_splatter()
-	check_alive()
-
 func got_torch_wraithed() :
 	health -= 1
 	flash_white()
-	blood_splatter()
 	check_alive()
 
 func ogre_slashed(ogre) :
 	health -= 2
 	flash_white()
-	blood_splatter()
 	# Bigger Knockback :
 	global_position.y += randf_range(-3, 3)
 	global_position.x += randf_range(-3, 3)
@@ -219,10 +253,3 @@ func ogre_slashed(ogre) :
 	var knockback_movement = create_tween()
 	knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	check_alive()
-
-# TOUCHSCREEN REACTIONS :
-func _on_touch_screen_press_2_move_stick_changed(vec: Variant) -> void:
-	touch_move = vec
-
-func _on_dash_button_pressed() -> void:
-	dash_ability()

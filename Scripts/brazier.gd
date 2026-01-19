@@ -4,6 +4,7 @@ var lit = false
 
 func _ready() :
 	EventBus.emit_signal("beacon_spawned")
+	material = $".".material.duplicate()
 	%BrazierSprite.play("unlit")
 	%MainFlame.emitting = false
 	%MainFlameSecondary.emitting = false
@@ -39,3 +40,20 @@ func brazier_lit() :
 func _on_area_entered(area: Area2D) -> void:
 	if area.name == "Torch" :
 		brazier_lit()
+		%FlashingTimer.stop()
+
+func flash_white():
+	var mat = $".".material
+	if mat == null:
+		return
+		
+	# Flash up to white
+	var tween := create_tween()
+	tween.tween_property(mat, "shader_parameter/flash_amount", 1.0, 0.3)
+	
+	# Fade back down
+	tween.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.3)
+
+func _on_flashing_timer_timeout() :
+	if lit == false :
+		flash_white()

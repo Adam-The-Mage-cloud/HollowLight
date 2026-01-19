@@ -26,6 +26,7 @@ var already_opened = false
 var spawnpoints = 10
 
 var room_type = 0
+var room_complexity = -0.45 # -1 is super open, simple space (boss) / -0.05 is super complex, (tight)
 var wallrings = 20
 var theme = 0
 
@@ -54,6 +55,7 @@ var height = 18
 
 func _ready() -> void:
 	randomize()
+	%DoorArea.material = %DoorArea.material.duplicate()
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
 	
 	_choose_room_type_and_size()
@@ -314,7 +316,7 @@ func _carve_negative_space() -> void:
 	noise.frequency = 0.05
 
 	for p in floor_positions.duplicate():
-		if noise.get_noise_2d(p.x, p.y) < -0.25:
+		if noise.get_noise_2d(p.x, p.y) < room_complexity :
 			floor_positions.erase(p)
 			%TileMapFloor.set_cell(p, -1)
 
@@ -916,9 +918,28 @@ func beacon_spawns() -> void:
 func _on_all_beacons_lit() -> void:
 	%DoorStopperCollision.set_deferred("disabled", true)
 	room_complete = true
+	# Door Flashes :
+	%DoorFlashingTimer.start()
+
+func _on_door_flashing_timer_timeout() -> void:
+	flash_white()
+
+func flash_white():
+	if already_opened == false :
+		var mat = %DoorArea.material
+		if mat == null:
+			return
+			
+		# Flash up to white
+		var tween = create_tween()
+		tween.tween_property(mat, "shader_parameter/flash_amount", 1.0, 0.3)
+		
+		# Fade back down
+		tween.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.3)
 
 func _on_door_open_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" and not already_opened and room_complete:
+		%DoorFlashingTimer.stop()
 		already_opened = true
 		%DoorSprite.play("DarkSteelSmashed")
 		var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()

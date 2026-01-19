@@ -175,10 +175,23 @@ func _on_ogre_hit_box_area_entered(area: Area2D) -> void:
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		burn()
+	elif area.name == "Torch" and lightable == false :
+		# Mini Knockback
+		global_position.y += randf_range(-3, 3)
+		global_position.x += randf_range(-3, 3)
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		flash_white()
 
+func flash_white() :
+	var tween = create_tween()
+	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
+	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
 
 func burn() :
-	var tween1 := create_tween()
+	var tween1 = create_tween()
+	tween1.tween_property(material, "shader_parameter/flash_color", Vector3(0.95, 0.65, 0.25), 0.25)
 	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)
 	tween1.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.15)
 	

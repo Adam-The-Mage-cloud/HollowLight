@@ -2,8 +2,6 @@ extends Node2D
 
 var Shadow_Cloud = preload("res://Scenes/the_shadow.tscn")
 
-var is_touchscreen = false
-
 var current_sanity_volume = 4 # How many, and how long 
 var current_sanity_scale = 2 # How big of a cloud they should spawn as in line with sanity volume
 
@@ -11,7 +9,6 @@ var room_finished = false
 
 func _ready() :
 	randomize()
-
 
 func _on_shadow_spawn_timer_timeout() -> void:
 	# Spawn another Shadow cloud :
@@ -43,11 +40,7 @@ func _on_worm_bat_chance_timeout() -> void:
 			WormBat.global_position = %RegularFollowPath.global_position
 			WormBat.target = %Brody
 			%MonstersLayer.add_child(WormBat)
-			%WormBatChance.wait_time += randf_range(-1, 1)
-
-
-# Wait For Touchscreen to be Pressed to turn on touchscreen settings :
-func _input(event):
-	if event is InputEventScreenTouch:
-		is_touchscreen = true
-		%TouchScreenLayer.visible = true
+			if %WormBatChance.wait_time > 2 :
+				%WormBatChance.wait_time += randf_range(-1, 1)
+			else :
+				%WormBatChance.wait_time += 4

@@ -7,8 +7,6 @@ var brody_position
 var direction
 var speed = 30
 
-var target_captured = false
-
 var max_health = 2
 var health = 2
 
@@ -37,7 +35,16 @@ func _physics_process(delta: float) -> void:
 			position += delta * speed * direction
 
 
-
+func _on_area_entered(area: Area2D) -> void:
+	# Knockback and 1/3 burnt flash from Torch
+	if area.name == "Torch" :
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 36, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		# Take away 1/3 of health and some of appearance
+		health -= 1
+		burn_away()
 
 func realistic_movement() :
 	while flying == true :
@@ -111,28 +118,3 @@ func burn_away() :
 		charcoal_tween.tween_property(material, "shader_parameter/charcoal_amount", 0.0, 0.4)
 		await get_tree().create_timer(0.4).timeout
 		queue_free()
-
-# WORM BAT TAKING DAMAGE :
-func _on_worm_bat_hitbox_area_entered(area: Area2D) -> void:
-		# Knockback and 1/3 burnt flash from Torch
-	if area.name == "Torch" :
-		target_captured = false
-		var knockback_direction = (global_position - area.global_position).normalized()
-		var knockback_movement = create_tween()
-		knockback_movement.tween_property(self, "position", position + knockback_direction * 36, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		
-		# Take away 1/3 of health and some of appearance
-		health -= 1
-		burn_away()
-
-# WORM BAT DEALING DAMAGE WITH MANDIBLES AND TRAPPING PLAYER IN :
-func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Brody" :
-		target_captured = true
-		while target_captured == true :
-			body.caught_by_wormbat()
-			body.global_position = $".".global_position
-			await get_tree().create_timer(0.1).timeout
-
-func _on_body_exited(body: Node2D) -> void:
-	target_captured = false

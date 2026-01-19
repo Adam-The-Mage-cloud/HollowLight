@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://crssqr3d5ml2q"]
+[gd_scene load_steps=38 format=3 uid="uid://crssqr3d5ml2q"]
 
 [ext_resource type="Script" uid="uid://wdphlyeqrkxh" path="res://Scripts/procedural_room.gd" id="1_bbfjf"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4rtng"]
@@ -17,29 +17,29 @@ margins = Vector2i(29, 75)
 texture_region_size = Vector2i(14, 34)
 1:0/next_alternative_id = 4
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -12.585155, 7.233986, -12.486059, 6.8376026, 11.197815, -7.233987, 11.495102)
 1:0/1 = 1
-1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-6.846611, -12.113234, 6.671055, -11.762125, 6.738508, 12.089676, -6.936699, 12.188771)
 2:0/next_alternative_id = 4
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -12.585155, 7.233986, -12.486059, 6.8376026, 11.197815, -7.233987, 11.495102)
 2:0/1 = 1
-2:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+2:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.1977177, -12.81545, 6.671055, -12.81545, 7.035795, 12.287867, -6.936699, 12.18877)
 3:0/next_alternative_id = 4
 3:0/0 = 0
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -12.585155, 7.233986, -12.486059, 6.8376026, 11.197815, -7.233987, 11.495102)
 3:0/1 = 1
-3:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+3:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.0221653, -12.991004, 6.846611, -12.81545, 7.333082, 12.68425, -6.8376036, 12.981537)
 4:0/next_alternative_id = 4
 4:0/0 = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -12.585155, 7.233986, -12.486059, 6.8376026, 11.197815, -7.233987, 11.495102)
 4:0/1 = 1
-4:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+4:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.1977177, -12.113234, 6.671055, -12.113234, 6.9367, 11.098719, -6.837603, 11.197814)
 0:0/next_alternative_id = 5
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -12.585155, 7.233986, -12.486059, 6.8376026, 11.197815, -7.233987, 11.495102)
 0:0/1 = 1
-0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, 5, -5, 5, 5, -5, 5)
+0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.548826, -10.7088, 7.1977196, -11.411017, 6.8376026, 11.891484, -6.639412, 11.99058)
 
 [sub_resource type="TileSet" id="TileSet_t264i"]
 tile_size = Vector2i(10, 10)
@@ -871,8 +871,6 @@ texture = ExtResource("2_8s45h")
 separation = Vector2i(1, 1)
 0:0/next_alternative_id = 8
 0:0/0 = 0
-0:0/1 = 1
-0:0/1/flip_h = true
 0:0/2 = 2
 0:0/2/flip_v = true
 0:0/3 = 3
@@ -890,6 +888,8 @@ separation = Vector2i(1, 1)
 0:0/7/flip_h = true
 0:0/7/flip_v = true
 0:0/7/transpose = true
+0:0/1 = 1
+0:0/1/flip_h = true
 1:0/next_alternative_id = 8
 1:0/0 = 0
 1:0/1 = 1
@@ -2014,6 +2014,21 @@ texture_region_size = Vector2i(23, 31)
 tile_size = Vector2i(10, 10)
 sources/60 = SubResource("TileSetAtlasSource_goocm")
 
+[sub_resource type="Shader" id="Shader_4rtng"]
+code = "shader_type canvas_item;
+
+uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+    vec4 tex = texture(TEXTURE, UV);
+    COLOR = mix(tex, vec4(1.0, 1.0, 1.0, tex.a), flash_amount);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qnclt"]
+shader = SubResource("Shader_4rtng")
+shader_parameter/flash_amount = 0.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vw2r"]
 size = Vector2(26.165543, 26.399036)
 
@@ -2057,6 +2072,7 @@ animations = [{
 }]
 
 [node name="procedural_room" type="Node2D"]
+y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_bbfjf")
 
@@ -2108,6 +2124,7 @@ tile_set = SubResource("TileSet_4rtng")
 
 [node name="TileMapObstacles" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
+z_index = 2
 y_sort_enabled = true
 tile_set = SubResource("TileSet_oguce")
 
@@ -2121,6 +2138,8 @@ tile_set = SubResource("TileSet_goocm")
 unique_name_in_owner = true
 modulate = Color(0.8203659, 0.82036585, 0.8203658, 1)
 tile_set = SubResource("TileSet_2vw2r")
+
+[node name="EnvironmentalLights" type="Node2D" parent="."]
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -2158,6 +2177,7 @@ unique_name_in_owner = true
 [node name="DoorArea" type="StaticBody2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
+material = SubResource("ShaderMaterial_qnclt")
 position = Vector2(160, -0.07444763)
 collision_mask = 0
 
@@ -2170,6 +2190,7 @@ shape = SubResource("RectangleShape2D_2vw2r")
 [node name="DoorSprite" type="AnimatedSprite2D" parent="DoorArea"]
 unique_name_in_owner = true
 y_sort_enabled = true
+use_parent_material = true
 position = Vector2(0, -25.830685)
 sprite_frames = SubResource("SpriteFrames_vmobn")
 animation = &"DarkSteel"
@@ -2182,4 +2203,9 @@ z_index = 1
 position = Vector2(0, -13.330685)
 shape = SubResource("RectangleShape2D_2vw2r")
 
+[node name="DoorFlashingTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+
 [connection signal="body_entered" from="DoorArea/DoorOpenArea" to="." method="_on_door_open_area_body_entered"]
+[connection signal="timeout" from="DoorFlashingTimer" to="." method="_on_door_flashing_timer_timeout"]

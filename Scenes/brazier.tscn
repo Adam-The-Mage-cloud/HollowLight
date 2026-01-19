@@ -1,7 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://cdo6hvtefqe2x"]
+[gd_scene load_steps=19 format=3 uid="uid://cdo6hvtefqe2x"]
 
+[ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="1_3rkoo"]
 [ext_resource type="Script" uid="uid://bmq0q5o2lkg6u" path="res://Scripts/brazier.gd" id="1_w7syr"]
 [ext_resource type="Texture2D" uid="uid://c2atipwkmqsh1" path="res://Artwork/Beacons.png" id="1_wqvan"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3rkoo"]
+shader = ExtResource("1_3rkoo")
+shader_parameter/flash_amount = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w7syr"]
 atlas = ExtResource("1_wqvan")
@@ -109,11 +114,13 @@ fill_from = Vector2(0.5, 0.5)
 z_index = 2
 y_sort_enabled = true
 texture_filter = 1
+material = SubResource("ShaderMaterial_3rkoo")
 script = ExtResource("1_w7syr")
 
 [node name="BrazierSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
+use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_mjyeq")
 animation = &"lit"
 autoplay = "unlit"
@@ -152,4 +159,10 @@ use_parent_material = true
 position = Vector2(-0.73835754, 11.464703)
 texture = SubResource("GradientTexture2D_3rkoo")
 
+[node name="FlashingTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.75
+autostart = true
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="FlashingTimer" to="." method="_on_flashing_timer_timeout"]
