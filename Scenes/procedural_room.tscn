@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://crssqr3d5ml2q"]
+[gd_scene load_steps=39 format=3 uid="uid://crssqr3d5ml2q"]
 
 [ext_resource type="Script" uid="uid://wdphlyeqrkxh" path="res://Scripts/procedural_room.gd" id="1_bbfjf"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4rtng"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d1ehv3e2vqgjq" path="res://Artwork/Dungeon_Obstacles_.png" id="4_yngn0"]
 [ext_resource type="Texture2D" uid="uid://dymjg44nnmi2q" path="res://Artwork/Dungeon_Floor_Cover.png" id="5_57jhf"]
 [ext_resource type="Texture2D" uid="uid://dd14ejrwjs3ma" path="res://Artwork/Dungeon_Doors.png" id="8_2vw2r"]
+[ext_resource type="Script" uid="uid://57sy2jyoc728" path="res://Scripts/dungeon_door.gd" id="10_qnclt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4yqbe"]
 texture = ExtResource("2_4rtng")
@@ -2131,6 +2132,7 @@ tile_set = SubResource("TileSet_oguce")
 [node name="TileMapBitsandBobs" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.92099476, 0.9209946, 0.9209946, 1)
+z_index = 2
 y_sort_enabled = true
 tile_set = SubResource("TileSet_goocm")
 
@@ -2180,6 +2182,7 @@ y_sort_enabled = true
 material = SubResource("ShaderMaterial_qnclt")
 position = Vector2(160, -0.07444763)
 collision_mask = 0
+script = ExtResource("10_qnclt")
 
 [node name="DoorStopperCollision" type="CollisionShape2D" parent="DoorArea"]
 unique_name_in_owner = true

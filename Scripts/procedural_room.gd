@@ -55,7 +55,9 @@ var height = 18
 
 func _ready() -> void:
 	randomize()
+	# Door :
 	%DoorArea.material = %DoorArea.material.duplicate()
+	%DoorArea.add_to_group("doors")
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
 	
 	_choose_room_type_and_size()
@@ -941,6 +943,8 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" and not already_opened and room_complete:
 		%DoorFlashingTimer.stop()
 		already_opened = true
+		%DoorArea.remove_from_group("doors")
+		%DoorArea.unlocked = true
 		%DoorSprite.play("DarkSteelSmashed")
 		var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
 		new_room.door_origin = %DoorArea.global_position

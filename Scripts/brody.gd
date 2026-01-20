@@ -183,6 +183,23 @@ func breathing() :
 		bobbing = false
 		breathing()
 
+# UI Tracking :
+func get_nearest_unlit_brazier(player_pos: Vector2) -> Node2D:
+	var braziers = get_tree().get_nodes_in_group("braziers")
+	var nearest: Node2D = null
+	var nearest_dist = INF
+	
+	for b in braziers:
+		if b.lit == true:  # or whatever your property is
+			continue
+	
+		var dist = player_pos.distance_to(b.global_position)
+		if dist < nearest_dist:
+			nearest_dist = dist
+			nearest = b
+	
+	return nearest
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # EXTERNAL GAMEPLAY REACTIONS :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

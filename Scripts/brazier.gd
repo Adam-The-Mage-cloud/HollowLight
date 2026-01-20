@@ -4,6 +4,7 @@ var lit = false
 
 func _ready() :
 	EventBus.emit_signal("beacon_spawned")
+	add_to_group("braziers")
 	material = $".".material.duplicate()
 	%BrazierSprite.play("unlit")
 	%MainFlame.emitting = false
@@ -16,6 +17,7 @@ func brazier_lit() :
 		lit = true
 		# Let Game Know Beacon is Lit :
 		EventBus.beacon_lit.emit()
+		remove_from_group("braziers")
 		%BrazierSprite.play("lit")
 		%BrazierLight.enabled = true
 		%MainFlame.emitting = true

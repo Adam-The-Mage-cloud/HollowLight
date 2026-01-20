@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=20 format=3 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
@@ -12,6 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://dlxqfcnlhtxox" path="res://pixelvignette1.jpg" id="6_r0mdn"]
 [ext_resource type="Texture2D" uid="uid://d1awoq62q6e2d" path="res://Artwork/Dash_Button.png" id="8_tpqse"]
 [ext_resource type="Texture2D" uid="uid://bv2t68o63xjhw" path="res://Artwork/Dash_Button_Pressed.png" id="9_c78sm"]
+[ext_resource type="Texture2D" uid="uid://dcrn4k4r624w8" path="res://Artwork/Arrowhead_Indicator.png" id="10_c78sm"]
+[ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="10_sftma"]
+[ext_resource type="Script" uid="uid://c6fn7vbrscab5" path="res://Scripts/indicator_director.gd" id="11_i47ox"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_erobn"]
+shader = ExtResource("10_sftma")
+shader_parameter/flash_amount = 0.0
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 3
@@ -98,6 +105,20 @@ scale = Vector2(3, 3)
 texture_normal = ExtResource("8_tpqse")
 texture_pressed = ExtResource("9_c78sm")
 
+[node name="GameplayUI" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="IndicatorDirector" type="Sprite2D" parent="GameplayUI"]
+z_index = 999
+texture_filter = 1
+material = SubResource("ShaderMaterial_erobn")
+texture = ExtResource("10_c78sm")
+script = ExtResource("11_i47ox")
+
+[node name="FlashTimer" type="Timer" parent="GameplayUI/IndicatorDirector"]
+wait_time = 2.25
+autostart = true
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_aqqks")
 
@@ -173,6 +194,8 @@ autostart = true
 [connection signal="stick_changed" from="TouchScreenLayer/TouchScreenPress1" to="Brody/Torch" method="_on_touch_screen_layer_stick_changed"]
 [connection signal="move_stick_changed" from="TouchScreenLayer/TouchScreenPress2" to="Brody" method="_on_touch_screen_press_2_move_stick_changed"]
 [connection signal="pressed" from="TouchScreenLayer/DashButton" to="Brody" method="_on_dash_button_pressed"]
+[connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_flash_timer_timeout"]
+[connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_timer_timeout"]
 [connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]
 [connection signal="timeout" from="TorchWraithChance" to="." method="_on_torch_wraith_chance_timeout"]
 [connection signal="timeout" from="WormBatChance" to="." method="_on_worm_bat_chance_timeout"]
