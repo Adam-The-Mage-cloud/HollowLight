@@ -1,10 +1,11 @@
-[gd_scene load_steps=39 format=3 uid="uid://crssqr3d5ml2q"]
+[gd_scene load_steps=40 format=3 uid="uid://crssqr3d5ml2q"]
 
 [ext_resource type="Script" uid="uid://wdphlyeqrkxh" path="res://Scripts/procedural_room.gd" id="1_bbfjf"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4rtng"]
 [ext_resource type="Texture2D" uid="uid://dxnhs6niv54yx" path="res://Artwork/Gray_Dungeon_Cobble_Wall.png" id="2_8s45h"]
 [ext_resource type="Texture2D" uid="uid://cywdleye4u8mm" path="res://Artwork/Gray_Dungeon_Tileset_10x10.png" id="2_a0xh1"]
 [ext_resource type="Texture2D" uid="uid://bncc1qcmom8x0" path="res://Artwork/Gray_Dungeon_Tileset_10x10_Walls.png" id="2_oguce"]
+[ext_resource type="PackedScene" uid="uid://bfmwpn0mqsibv" path="res://Scenes/stepladder.tscn" id="2_vmobn"]
 [ext_resource type="Texture2D" uid="uid://dljnv5g52rq7i" path="res://Artwork/Dungeon_Bits_&_Bobs.png" id="3_yngn0"]
 [ext_resource type="Texture2D" uid="uid://ccte21ux3x8en" path="res://Artwork/Gray_Dungeon_Tileset_10x10_Corners.png" id="4_goocm"]
 [ext_resource type="Texture2D" uid="uid://d1ehv3e2vqgjq" path="res://Artwork/Dungeon_Obstacles_.png" id="4_yngn0"]
@@ -2145,6 +2146,9 @@ tile_set = SubResource("TileSet_2vw2r")
 unique_name_in_owner = true
 z_index = 2
 
+[node name="Mist" type="Node2D" parent="."]
+unique_name_in_owner = true
+
 [node name="SpawnPoints" type="Node2D" parent="."]
 unique_name_in_owner = true
 
@@ -2211,6 +2215,9 @@ shape = SubResource("RectangleShape2D_2vw2r")
 [node name="DoorFlashingTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 2.0
+
+[node name="stepladder" parent="." instance=ExtResource("2_vmobn")]
+position = Vector2(161, 41)
 
 [connection signal="body_entered" from="DoorArea/DoorOpenArea" to="." method="_on_door_open_area_body_entered"]
 [connection signal="timeout" from="DoorFlashingTimer" to="." method="_on_door_flashing_timer_timeout"]

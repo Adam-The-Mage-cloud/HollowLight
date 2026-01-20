@@ -16,6 +16,7 @@ func _ready() :
 func _input(event):
 	if event is InputEventScreenTouch:
 		is_touchscreen = true
+		%BrodyCam.zoom = Vector2(1.325, 1.325)
 		%TouchScreenLayer.visible = true
 
 func _on_shadow_spawn_timer_timeout() -> void:

@@ -191,6 +191,7 @@ curve = SubResource("Curve2D_18r40")
 [node name="BrodyCam" type="Camera2D" parent="Brody"]
 unique_name_in_owner = true
 z_index = 1
+zoom = Vector2(0.2, 0.2)
 limit_smoothed = true
 position_smoothing_enabled = true
 drag_horizontal_enabled = true

@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfmwpn0mqsibv"]
+
+[ext_resource type="Script" uid="uid://c5qrs3krqwsjf" path="res://Scripts/stepladder.gd" id="1_3w34e"]
+[ext_resource type="Texture2D" uid="uid://cudc2nwav6a7v" path="res://Artwork/Dungeon_Ladder.png" id="1_8xkrw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3w34e"]
+size = Vector2(41, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k7yd"]
+atlas = ExtResource("1_8xkrw")
+region = Rect2(0, 0, 43, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m5nnk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7k7yd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="stepladder" type="Area2D"]
+texture_filter = 1
+script = ExtResource("1_3w34e")
+
+[node name="StepLadderCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_3w34e")
+
+[node name="StepLadderSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_m5nnk")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

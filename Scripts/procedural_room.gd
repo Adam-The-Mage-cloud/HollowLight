@@ -41,6 +41,7 @@ var room_frontfacing_wall_source_id = 0
 
 var direction
 var first_room = true
+var stepladder_chance = 1
 var protected_cells : Array[Vector2i] = []
 var previous_frontwall_world_positions : Array[Vector2] = []
 var previous_floor_world_positions: Array[Vector2] = []
@@ -94,6 +95,11 @@ func _ready() -> void:
 	beacon_spawns()
 	environmental_lights_spawns()
 	moonlight_spawns()
+	fog_cluster_spawns()
+	# Stepladder Chance :
+	if stepladder_chance != 0 :
+		if randi_range(1, 2) == 1 :
+			spawn_stepladder()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ROOM TYPE + SIZE
@@ -584,7 +590,6 @@ func generate_underwall_ring() -> void:
 			var atlas_x = randi_range(2, 3)
 			var atlas_y = 0
 			var alt = randi_range(0, 3)
-			print("Placing underwall at: ", pos)
 			%TileMapUnderWalls.set_cell(pos, 30, Vector2i(atlas_x, atlas_y), alt)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -923,6 +928,15 @@ func beacon_spawns() -> void:
 			new_beacon.global_position = spawn_node.global_position
 			add_child(new_beacon)
 
+# Stepladder :
+func spawn_stepladder() :
+	if theme == 1:
+		var new_stepladder = preload("res://Scenes/stepladder.tscn").instantiate()
+		var rand = randi_range(1, spawnpoints)
+		var spawn_node = %SpawnPoints.get_child(rand - 1)
+		new_stepladder.global_position = spawn_node.global_position
+		add_child(new_stepladder)
+
 func environmental_lights_spawns():
 	if theme != 1:
 		return
@@ -930,7 +944,7 @@ func environmental_lights_spawns():
 	if previous_frontwall_world_positions.is_empty():
 		return
 	
-	var walltorch_amount = randi_range(1, 4)
+	var walltorch_amount = randi_range(3, 6)
 	var lights_node = %EnvironmentalLights
 	
 	var placed_positions: Array[Vector2] = []
@@ -968,18 +982,75 @@ func moonlight_spawns():
 	if floor_positions.is_empty():
 		return
 	
-	var cluster_count = randi_range(0, 2)  # how many clumps
-	var beams_per_cluster = randi_range(2, 5)
-	var cluster_radius = 3                # tiles around the center
-	var min_distance = 30.0                # pixel spacing
+	if randi_range(1, 3) == 2 : # Then natural light room!
+		var cluster_count = randi_range(1, 3)  # how many clumps
+		var beams_per_cluster = randi_range(2, 4)
+		var cluster_radius = 2               # tiles around the center
+		var min_distance = 30.0                # pixel spacing
+		var placed_positions: Array[Vector2] = []
+		
+		for c in range(cluster_count):
+			# Pick a random floor tile as the cluster center
+			var center_tile: Vector2i = floor_positions.pick_random()
+			
+			for i in range(beams_per_cluster):
+				var attempts = 10
+				
+				while attempts > 0:
+					attempts -= 1
+					
+					# Random offset around the cluster center
+					var ox = randi_range(-cluster_radius, cluster_radius)
+					var oy = randi_range(-cluster_radius, cluster_radius)
+					var tile_pos = center_tile + Vector2i(ox, oy)
+					
+					# Must be valid floor
+					if not floor_positions.has(tile_pos):
+						continue
+					
+					# Avoid door area
+					if is_near_door(tile_pos.x, tile_pos.y):
+						continue
+					
+					# Convert tile → world
+					var local_pixel = %TileMapFloor.map_to_local(tile_pos)
+					var world_pos = get_tree().current_scene.to_global(local_pixel)
+					
+					# Spacing check
+					var too_close = false
+					for existing in placed_positions:
+						if existing.distance_to(world_pos) < min_distance:
+							too_close = true
+							break
+					
+					if too_close:
+						continue
+					
+					# Spawn moonlight beam
+					var moonlight = preload("res://Scenes/outside_light.tscn").instantiate()
+					moonlight.global_position = world_pos
+					%EnvironmentalLights.add_child(moonlight)
+					
+					placed_positions.append(world_pos)
+					break
+
+func fog_cluster_spawns():
+	if floor_positions.is_empty():
+		return
+	
+	var cluster_count = randi_range(2, 4)     # number of fog clumps
+	var fogs_per_cluster = randi_range(3, 7)  # how many fog sprites per clump
+	var cluster_radius = 4                    # tiles around center
+	var min_distance = 20.0                   # pixel spacing between fog sprites
+	
 	var placed_positions: Array[Vector2] = []
 	
 	for c in range(cluster_count):
 		# Pick a random floor tile as the cluster center
 		var center_tile: Vector2i = floor_positions.pick_random()
 		
-		for i in range(beams_per_cluster):
-			var attempts = 10
+		for i in range(fogs_per_cluster):
+			var attempts = 17
 			
 			while attempts > 0:
 				attempts -= 1
@@ -1011,10 +1082,10 @@ func moonlight_spawns():
 				if too_close:
 					continue
 				
-				# Spawn moonlight beam
-				var moonlight = preload("res://Scenes/outside_light.tscn").instantiate()
-				moonlight.global_position = world_pos
-				%EnvironmentalLights.add_child(moonlight)
+				# Spawn fog cluster sprite
+				var fog = preload("res://Scenes/fog_cluster.tscn").instantiate()
+				fog.global_position = world_pos
+				%Mist.add_child(fog)
 				
 				placed_positions.append(world_pos)
 				break
@@ -1045,6 +1116,27 @@ func flash_white():
 		
 		# Fade back down
 		tween.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.3)
+
+func new_stepladder_dungeon(body) :
+		var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
+		new_room.z_index = 0
+		new_room.global_position.x += global_position.x + 750
+		new_room.stepladder_chance = 0
+		body.global_position = new_room.global_position
+		body.global_position.y += 5
+		body.global_position.x += 5
+		# We also need to clear all existing EventBus data (beacons etc) :
+		EventBus.beacons_lit = 0
+		EventBus.total_beacons_to_light = 0
+		EventBus.total_beacons = 0
+		# Delete all previous rooms :
+		if get_tree().current_scene.get_node("procedural_room") != null :
+			get_tree().current_scene.get_node("procedural_room").queue_free()
+		elif get_tree().current_scene.get_node("new_room") != null :
+			get_tree().current_scene.get_node("new_room").queue_free()
+		
+		get_tree().current_scene.call_deferred("add_child", new_room)
+		# new_room.first_room = false
 
 func _on_door_open_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" and not already_opened and room_complete:
