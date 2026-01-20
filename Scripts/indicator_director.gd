@@ -42,7 +42,6 @@ func _process(_delta):
 	position = edge_pos
 	rotation = dir.angle()
 	rotation_degrees += 90
-	print("screen_pos:", screen_pos, " pointer_pos:", position)
 
 
 func get_nearest_brazier():

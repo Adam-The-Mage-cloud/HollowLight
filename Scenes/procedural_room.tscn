@@ -2142,6 +2142,8 @@ modulate = Color(0.8203659, 0.82036585, 0.8203658, 1)
 tile_set = SubResource("TileSet_2vw2r")
 
 [node name="EnvironmentalLights" type="Node2D" parent="."]
+unique_name_in_owner = true
+z_index = 2
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 unique_name_in_owner = true

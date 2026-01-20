@@ -92,6 +92,8 @@ func _ready() -> void:
 	place_spawn_points()
 	monster_spawns()
 	beacon_spawns()
+	environmental_lights_spawns()
+	moonlight_spawns()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ROOM TYPE + SIZE
@@ -680,28 +682,37 @@ func generate_outline_layers_from_floor() -> void:
 
 func generate_frontfacing_wall_from_floor() -> void:
 	%TileMapFrontFaceWall.clear()
+	previous_frontwall_world_positions.clear()
+	
 	if theme != 1:
 		return
+	
 	wall_source_id = 80
 	var floor_set = build_floor_set()
+	
 	for w in wall_positions:
 		var below = w + Vector2i(0, 1)
 		var above = w + Vector2i(0, -1)
-		# Only place a front-facing wall where:
-		# - There is floor below (so it's a real wall edge)
-		# - There is NOT floor above (so it's exposed)
+		
 		if not floor_set.has(below):
 			continue
 		if floor_set.has(above):
 			continue
 		if protected_cells.has(above):
 			continue
+		
 		var front_pos = w + Vector2i(0, -1)
+		
 		var atlas_x = randi_range(0, 4)
 		var atlas_y = 0
 		var alt = randi_range(0, 1)
-
+		
 		%TileMapFrontFaceWall.set_cell(front_pos, wall_source_id, Vector2i(atlas_x, atlas_y), alt)
+		
+		# Correct global position (same fix as spawnpoints)
+		var local_pixel = %TileMapFrontFaceWall.map_to_local(front_pos)
+		var world_pos = get_tree().current_scene.to_global(local_pixel)
+		previous_frontwall_world_positions.append(world_pos)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -911,6 +922,102 @@ func beacon_spawns() -> void:
 			var spawn_node = %SpawnPoints.get_child(rand - 1)
 			new_beacon.global_position = spawn_node.global_position
 			add_child(new_beacon)
+
+func environmental_lights_spawns():
+	if theme != 1:
+		return
+		
+	if previous_frontwall_world_positions.is_empty():
+		return
+	
+	var walltorch_amount = randi_range(1, 4)
+	var lights_node = %EnvironmentalLights
+	
+	var placed_positions: Array[Vector2] = []
+	var min_distance = 48.0  # adjust to taste (pixels)
+	
+	for i in range(walltorch_amount):
+		var attempts = 10  # avoid infinite loops
+			
+		while attempts > 0:
+			attempts -= 1
+			
+			var pos = previous_frontwall_world_positions.pick_random()
+			
+			var too_close = false
+			for existing in placed_positions:
+				if existing.distance_to(pos) < min_distance:
+					too_close = true
+					break
+			
+			if too_close:
+				continue  # try another position
+			
+			# Valid position → spawn torch
+			var new_walltorch = preload("res://Scenes/wall_torch.tscn").instantiate()
+			new_walltorch.global_position = pos
+			lights_node.add_child(new_walltorch)
+			
+			placed_positions.append(pos)
+			break
+
+func moonlight_spawns():
+	if theme != 1:
+		return
+	
+	if floor_positions.is_empty():
+		return
+	
+	var cluster_count = randi_range(0, 2)  # how many clumps
+	var beams_per_cluster = randi_range(2, 5)
+	var cluster_radius = 3                # tiles around the center
+	var min_distance = 30.0                # pixel spacing
+	var placed_positions: Array[Vector2] = []
+	
+	for c in range(cluster_count):
+		# Pick a random floor tile as the cluster center
+		var center_tile: Vector2i = floor_positions.pick_random()
+		
+		for i in range(beams_per_cluster):
+			var attempts = 10
+			
+			while attempts > 0:
+				attempts -= 1
+				
+				# Random offset around the cluster center
+				var ox = randi_range(-cluster_radius, cluster_radius)
+				var oy = randi_range(-cluster_radius, cluster_radius)
+				var tile_pos = center_tile + Vector2i(ox, oy)
+				
+				# Must be valid floor
+				if not floor_positions.has(tile_pos):
+					continue
+				
+				# Avoid door area
+				if is_near_door(tile_pos.x, tile_pos.y):
+					continue
+				
+				# Convert tile → world
+				var local_pixel = %TileMapFloor.map_to_local(tile_pos)
+				var world_pos = get_tree().current_scene.to_global(local_pixel)
+				
+				# Spacing check
+				var too_close = false
+				for existing in placed_positions:
+					if existing.distance_to(world_pos) < min_distance:
+						too_close = true
+						break
+				
+				if too_close:
+					continue
+				
+				# Spawn moonlight beam
+				var moonlight = preload("res://Scenes/outside_light.tscn").instantiate()
+				moonlight.global_position = world_pos
+				%EnvironmentalLights.add_child(moonlight)
+				
+				placed_positions.append(world_pos)
+				break
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

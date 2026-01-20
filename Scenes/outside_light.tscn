@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://b00evojp2btx2"]
+
+[ext_resource type="Script" uid="uid://b67b1uw1d7stp" path="res://Scripts/outside_light.gd" id="1_34ccw"]
+[ext_resource type="Shader" uid="uid://dyypkcf7mn73n" path="res://Shaders/outside_light.gdshader" id="2_r6uug"]
+[ext_resource type="Texture2D" uid="uid://j6o81k3ke8sa" path="res://Artwork/moonlight_cracking_through_texture.tres" id="3_34ccw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_deuqc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r6uug"]
+shader = ExtResource("2_r6uug")
+shader_parameter/softness = 0.25
+
+[sub_resource type="Gradient" id="Gradient_r6uug"]
+offsets = PackedFloat32Array(0, 0.83555555)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_34ccw"]
+gradient = SubResource("Gradient_r6uug")
+fill = 1
+fill_from = Vector2(0.49844238, 0.5077882)
+fill_to = Vector2(0.17133956, 0.9283489)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_34ccw"]
+shader = ExtResource("2_r6uug")
+shader_parameter/softness = 1.24
+
+[node name="outside_light" type="Area2D"]
+z_index = 5
+scale = Vector2(4, 4)
+script = ExtResource("1_34ccw")
+
+[node name="LightAreaCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_deuqc")
+
+[node name="OutsideLightArea" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_r6uug")
+position = Vector2(0.04128647, 0.037539482)
+scale = Vector2(0.125, 0.125)
+color = Color(0.52253526, 0.39926055, 0.112073444, 1)
+energy = 10.0
+texture = SubResource("GradientTexture2D_34ccw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.3529412)
+material = SubResource("ShaderMaterial_34ccw")
+scale = Vector2(0.035, 0.035)
+texture = ExtResource("3_34ccw")
