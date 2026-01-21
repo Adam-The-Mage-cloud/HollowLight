@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cdo6hvtefqe2x"]
+[gd_scene load_steps=20 format=3 uid="uid://cdo6hvtefqe2x"]
 
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="1_3rkoo"]
 [ext_resource type="Script" uid="uid://bmq0q5o2lkg6u" path="res://Scripts/brazier.gd" id="1_w7syr"]
@@ -110,6 +110,8 @@ use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_3rkoo"]
+
 [node name="brazier" type="Area2D"]
 z_index = 6
 y_sort_enabled = true
@@ -159,10 +161,26 @@ use_parent_material = true
 position = Vector2(-0.73835754, 11.464703)
 texture = SubResource("GradientTexture2D_3rkoo")
 
+[node name="DarknessRepeller" type="Area2D" parent="."]
+
+[node name="DarknessRepellerCollision" type="CollisionShape2D" parent="DarknessRepeller"]
+unique_name_in_owner = true
+position = Vector2(0, 8)
+scale = Vector2(3.4472642, 3.4472642)
+shape = SubResource("CircleShape2D_3rkoo")
+disabled = true
+
+[node name="DarknessReducer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.2
+
 [node name="FlashingTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 3.75
 autostart = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_entered"]
+[connection signal="body_exited" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_exited"]
+[connection signal="timeout" from="DarknessReducer" to="." method="_on_darkness_reducer_timeout"]
 [connection signal="timeout" from="FlashingTimer" to="." method="_on_flashing_timer_timeout"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://chadpnqf4f2xn"]
+[gd_scene load_steps=39 format=3 uid="uid://chadpnqf4f2xn"]
 
 [ext_resource type="Script" uid="uid://bwjcjoh73w2jp" path="res://Scripts/brody.gd" id="1_1lbbp"]
 [ext_resource type="Texture2D" uid="uid://dwsaukrqi5ql4" path="res://Artwork/Orb.png" id="1_k4lj1"]
 [ext_resource type="Texture2D" uid="uid://b7ygaqnk23ial" path="res://Artwork/Particles/Particle_Effects_2.png" id="3_vfjlh"]
+[ext_resource type="Texture2D" uid="uid://b28j8m15a6ijg" path="res://Artwork/Particles/Positive_Particle_Small.png" id="4_l2vdu"]
 
 [sub_resource type="Shader" id="Shader_vfjlh"]
 code = "shader_type canvas_item;
@@ -353,6 +354,32 @@ damping_max = 14.000001
 scale_curve = SubResource("CurveTexture_cd0il")
 color_ramp = SubResource("GradientTexture1D_l2vdu")
 
+[sub_resource type="Gradient" id="Gradient_s6v4d"]
+colors = PackedColorArray(1, 1, 1, 1, 0.5264226, 0.5264226, 0.5264226, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cd0il"]
+gradient = SubResource("Gradient_s6v4d")
+
+[sub_resource type="Curve" id="Curve_l2vdu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.84771574, 0.3962264), -0.7122359, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_s6v4d"]
+curve = SubResource("Curve_l2vdu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s6v4d"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 3, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, -1, 0)
+spread = 24.0
+initial_velocity_min = 4.0
+initial_velocity_max = 6.0
+gravity = Vector3(0, -4, 0)
+scale_curve = SubResource("CurveTexture_s6v4d")
+color_ramp = SubResource("GradientTexture1D_cd0il")
+
 [node name="Brody" type="CharacterBody2D"]
 z_index = 2
 y_sort_enabled = true
@@ -442,4 +469,20 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_l2vdu")
 
+[node name="DarknessClearingParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(-1, -1)
+emitting = false
+amount = 4
+texture = ExtResource("4_l2vdu")
+lifetime = 1.8
+explosiveness = 0.24
+randomness = 0.12
+process_material = SubResource("ParticleProcessMaterial_s6v4d")
+
+[node name="RestingTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
+[connection signal="timeout" from="RestingTimer" to="." method="_on_resting_timer_timeout"]

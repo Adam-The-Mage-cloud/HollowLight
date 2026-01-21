@@ -217,16 +217,22 @@ func flash_white():
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
 
-func caught_by_wormbat() :
+func darkness_consuming() :
+	health -= 1
+	# Play Darkened Sprite
+
+func caught_by_wormbat(wormbat) :
 	health -= 0.1
 	flash_white()
 	blood_splatter()
+	basic_knockback(wormbat)
 	check_alive()
 
-func got_torch_wraithed() :
+func got_torch_wraithed(torch_wraith) :
 	health -= 1
 	flash_white()
 	blood_splatter()
+	basic_knockback(torch_wraith) 
 	check_alive()
 
 func ogre_slashed(ogre) :
@@ -240,6 +246,28 @@ func ogre_slashed(ogre) :
 	var knockback_movement = create_tween()
 	knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	check_alive()
+
+
+# General Basic Knockback :
+func basic_knockback(entity) :
+	global_position.y += randf_range(-2, 2)
+	global_position.x += randf_range(-2, 2)
+	var knockback_direction = (global_position - entity.global_position).normalized()
+	var knockback_movement = create_tween()
+	knockback_movement.tween_property(self, "position", position + knockback_direction * 2, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+# Beacon Reactions :
+func resting() :
+	%DarknessClearingParticles.emitting = true
+	%RestingTimer.start()
+
+func nolonger_resting() :
+	%DarknessClearingParticles.emitting = false
+	%RestingTimer.stop()
+
+func _on_resting_timer_timeout() -> void:
+	health += 2
+
 
 # TOUCHSCREEN REACTIONS :
 func _on_touch_screen_press_2_move_stick_changed(vec: Variant) -> void:

@@ -5,7 +5,7 @@ var version_number
 var target
 var brody_position
 var direction
-var speed = 5
+var speed = 12
 
 var pinatered = false
 
@@ -81,7 +81,7 @@ func on_fire():
 	tween1.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.15)
 	
 	# Turn Light Mask on :
-	drop_currency()
+	#drop_currency()
 	$".".light_mask = 1
 	%OnFireLight.enabled = true
 	
@@ -103,3 +103,8 @@ func drop_currency() :
 		var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
 		ember.global_position = $".".global_position
 		get_tree().current_scene.call_deferred("add_child", ember)
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.name == "Brody" :
+		body.darkness_consuming()

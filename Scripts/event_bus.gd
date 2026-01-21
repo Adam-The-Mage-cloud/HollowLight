@@ -18,7 +18,7 @@ var total_beacons_to_light = 0
 var beacons_lit = 0
 
 # Currency Variables :
-var total_acquired_embers = 0
+var total_current_darkness = 0.0
 var total_acquired_experience = 0
 var total_acquired_goldpieces = 0
 
@@ -35,12 +35,13 @@ func _on_beacon_spawned() :
 
 func _on_beacon_lit() :
 	beacons_lit += 1
+	total_current_darkness -= 15
 	if beacons_lit == total_beacons_to_light :
 		EventBus.all_beacons_lit.emit()
 
 # Currency System Functions :
 func _on_ember_acquired() :
-	total_acquired_embers += 1
+	total_current_darkness -= 5
 
 func _on_experience_orb_acquired() :
 	total_acquired_experience += 1

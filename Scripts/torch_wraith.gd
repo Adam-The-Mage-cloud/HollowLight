@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
-		body.got_torch_wraithed()
+		body.got_torch_wraithed($".")
 		# Wraith Knockback:
 		global_position.y += randf_range(-3, 3)
 		global_position.x += randf_range(-3, 3)

@@ -4,8 +4,7 @@ var Shadow_Cloud = preload("res://Scenes/the_shadow.tscn")
 
 var is_touchscreen = false
 
-var current_sanity_volume = 4 # How many, and how long 
-var current_sanity_scale = 2 # How big of a cloud they should spawn as in line with sanity volume
+var darkness_increase_per_second = 2
 
 var room_finished = false
 
@@ -19,16 +18,19 @@ func _input(event):
 		%BrodyCam.zoom = Vector2(1.325, 1.325)
 		%TouchScreenLayer.visible = true
 
+func _process(_delta: float) -> void: 
+	%DarknessEffect.modulate.a = EventBus.total_current_darkness / 100
+
 func _on_shadow_spawn_timer_timeout() -> void:
 	# Spawn another Shadow cloud :
 	%RegularFollowPath.progress_ratio = randf_range(0, 1)
 	var initial_spawn_position = %RegularFollowPath.global_position
-	for i in range(current_sanity_volume + randf_range(current_sanity_scale, current_sanity_scale + 1)) :
+	for i in range(2, EventBus.total_current_darkness / 8) :
 		var new_shadowcloud = Shadow_Cloud.instantiate()
-		new_shadowcloud.global_position = initial_spawn_position + Vector2(current_sanity_scale * randf_range(-7.5,7.5), current_sanity_scale * randf_range(-7.5, 7.5))
+		new_shadowcloud.global_position = initial_spawn_position + Vector2(EventBus.total_current_darkness / 65 * randf_range(-7.5,7.5), EventBus.total_current_darkness / 65 * randf_range(-7.5, 7.5))
 		new_shadowcloud.target = %Brody
 		%MonstersLayer.add_child(new_shadowcloud)
-	%ShadowSpawnTimer.wait_time = 10.0 / current_sanity_scale
+	%ShadowSpawnTimer.wait_time = (10.0 / (EventBus.total_current_darkness / 5)) # THIS MIGHT NEED SOME TLC LOL AND THE DISTANCE RANGE ABOVE!
 
 
 func _on_torch_wraith_chance_timeout() -> void:
@@ -53,3 +55,7 @@ func _on_worm_bat_chance_timeout() -> void:
 				%WormBatChance.wait_time += randf_range(-1, 1)
 			else :
 				%WormBatChance.wait_time += 3
+
+
+func _on_darkness_checker_timeout() -> void:
+	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + darkness_increase_per_second, 0.0, 100.0)

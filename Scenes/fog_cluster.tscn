@@ -1,46 +1,12 @@
 [gd_scene load_steps=7 format=3 uid="uid://mpfk56djauqh"]
 
 [ext_resource type="Script" uid="uid://bpausvkgxg7kw" path="res://Scripts/fog_cluster.gd" id="1_6tu87"]
+[ext_resource type="Shader" uid="uid://dnw2ps5tvg487" path="res://Shaders/fog_cluster.gdshader" id="2_4t5dn"]
 [ext_resource type="Texture2D" uid="uid://c5g1su1f1fw14" path="res://Artwork/fire noise texture.jpeg" id="3_4t5dn"]
-
-[sub_resource type="Shader" id="Shader_fqfbw"]
-code = "shader_type canvas_item;
-
-uniform float noise_scale = 2.0;
-uniform float distortion_amount = 0.25;
-uniform float softness = 1.8;
-uniform float intensity = 0.6;
-uniform float time_scale = 0.15;
-
-uniform sampler2D noise_tex;
-
-void fragment() {
-    vec2 uv = UV * noise_scale;
-
-    float t = TIME * time_scale;
-
-    // Distort UVs for organic wobble
-    float d1 = texture(noise_tex, uv + vec2(t * 0.2, t * 0.1)).r;
-    float d2 = texture(noise_tex, uv - vec2(t * 0.15, t * 0.25)).r;
-    float distortion = (d1 - d2) * distortion_amount;
-
-    uv += distortion;
-
-    // Sample noise for fog density
-    float n = texture(noise_tex, uv).r;
-
-    // Soft radial fade so the blob has a natural edge
-    float dist = distance(UV, vec2(0.5));
-    float radial = pow(1.0 - dist, softness);
-
-    float fog = n * radial * intensity;
-
-    COLOR = vec4(vec3(1.0), fog);
-}"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4t5dn"]
 resource_local_to_scene = true
-shader = SubResource("Shader_fqfbw")
+shader = ExtResource("2_4t5dn")
 shader_parameter/noise_scale = 1.0
 shader_parameter/distortion_amount = 0.02
 shader_parameter/softness = 5.0

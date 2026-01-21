@@ -11,6 +11,7 @@ func _ready() :
 	%MainFlameSecondary.emitting = false
 	%BrazierLight.enabled = false
 
+
 func brazier_lit() :
 	if lit == false :
 		# Create a tween for both more particles to appear over time and more light to appear overtime :
@@ -19,6 +20,7 @@ func brazier_lit() :
 		EventBus.beacon_lit.emit()
 		remove_from_group("braziers")
 		%BrazierSprite.play("lit")
+		%DarknessRepellerCollision.call_deferred("set_disabled", false)
 		%BrazierLight.enabled = true
 		%MainFlame.emitting = true
 		%MainFlameSecondary.emitting = true
@@ -39,10 +41,12 @@ func brazier_lit() :
 		particles_tween.tween_property(%MainFlame, "amount_ratio", 1.00, 5.5)
 		particles_tween.tween_property(%MainFlameSecondary, "amount_ratio", 1.00, 4.0)
 
+
 func _on_area_entered(area: Area2D) -> void:
 	if area.name == "Torch" :
 		brazier_lit()
 		%FlashingTimer.stop()
+
 
 func flash_white():
 	var mat = $".".material
@@ -56,6 +60,25 @@ func flash_white():
 	# Fade back down
 	tween.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.3)
 
+
 func _on_flashing_timer_timeout() :
 	if lit == false :
 		flash_white()
+
+
+func _on_darkness_repeller_body_entered(body: Node2D) -> void:
+	if body.name == "Brody" :
+		# Darkness Level Decreasing :
+		body.resting()
+		%DarknessReducer.start()
+
+
+func _on_darkness_repeller_body_exited(body: Node2D) -> void:
+	if body.name == "Brody" :
+		# Stop Darkness Level Decreasing :
+		body.nolonger_resting()
+		%DarknessReducer.stop()
+
+
+func _on_darkness_reducer_timeout() -> void:
+	EventBus.total_current_darkness -= 2

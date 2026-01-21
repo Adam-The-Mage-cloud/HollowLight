@@ -18,12 +18,12 @@
 [ext_resource type="Script" uid="uid://c6fn7vbrscab5" path="res://Scripts/indicator_director.gd" id="11_i47ox"]
 [ext_resource type="Shader" uid="uid://dcgionpdp32vo" path="res://Shaders/darkness.gdshader" id="13_vc13p"]
 
+[sub_resource type="Environment" id="Environment_aqqks"]
+background_mode = 3
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_erobn"]
 shader = ExtResource("10_sftma")
 shader_parameter/flash_amount = 0.0
-
-[sub_resource type="Environment" id="Environment_aqqks"]
-background_mode = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vc13p"]
 shader = ExtResource("13_vc13p")
@@ -56,6 +56,9 @@ script = ExtResource("1_18r40")
 
 [node name="EventBus" type="Node" parent="."]
 script = ExtResource("2_6y7pd")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_aqqks")
 
 [node name="trapdoor_room" parent="." instance=ExtResource("3_vc13p")]
 position = Vector2(-31, 46)
@@ -142,9 +145,6 @@ script = ExtResource("11_i47ox")
 wait_time = 2.25
 autostart = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_aqqks")
-
 [node name="MonstersLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 layer = 0
@@ -158,7 +158,7 @@ layer = 10
 
 [node name="DarknessEffect" type="Parallax2D" parent="DarknessLayer"]
 unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.45882353)
+modulate = Color(1, 1, 1, 0)
 z_index = 2
 y_sort_enabled = true
 scale = Vector2(0.1603263, 0.1603263)
@@ -237,6 +237,9 @@ texture = SubResource("GradientTexture2D_gpk8t")
 flip_h = true
 metadata/_edit_use_anchors_ = true
 
+[node name="DarknessChecker" type="Timer" parent="DarknessLayer/DarknessEffect"]
+autostart = true
+
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]
 unique_name_in_owner = true
 position = Vector2(129.90372, 67.17283)
@@ -303,6 +306,7 @@ autostart = true
 [connection signal="pressed" from="TouchScreenLayer/DashButton" to="Brody" method="_on_dash_button_pressed"]
 [connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_timer_timeout"]
 [connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_flash_timer_timeout"]
+[connection signal="timeout" from="DarknessLayer/DarknessEffect/DarknessChecker" to="." method="_on_darkness_checker_timeout"]
 [connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]
 [connection signal="timeout" from="TorchWraithChance" to="." method="_on_torch_wraith_chance_timeout"]
 [connection signal="timeout" from="WormBatChance" to="." method="_on_worm_bat_chance_timeout"]
