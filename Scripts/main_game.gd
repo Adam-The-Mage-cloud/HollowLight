@@ -43,6 +43,7 @@ func _on_torch_wraith_chance_timeout() -> void:
 			%MonstersLayer.add_child(TorchWraith)
 			%TorchWraithChance.wait_time += randf_range(-1, 1)
 
+
 func _on_worm_bat_chance_timeout() -> void:
 	if room_finished == false :
 		%RegularFollowPath.progress_ratio = randf_range(0, 1)
@@ -58,4 +59,4 @@ func _on_worm_bat_chance_timeout() -> void:
 
 
 func _on_darkness_checker_timeout() -> void:
-	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + darkness_increase_per_second, 0.0, 100.0)
+	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + darkness_increase_per_second, 1.0, 100.0)

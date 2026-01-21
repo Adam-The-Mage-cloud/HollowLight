@@ -493,4 +493,8 @@ explosiveness = 0.24
 randomness = 0.12
 process_material = SubResource("ParticleProcessMaterial_s6v4d")
 
+[node name="RestingTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
+[connection signal="timeout" from="RestingTimer" to="." method="_on_resting_timer_timeout"]
