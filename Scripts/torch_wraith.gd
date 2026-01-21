@@ -6,6 +6,8 @@ var in_sight
 var direction = Vector2.ZERO
 var brody_position
 
+var pinatered = false
+
 var health = 3
 
 var speed = 20
@@ -90,10 +92,12 @@ func burn_away() :
 	%OnFireLight.enabled = true
 	# Calculate new burn target
 	if health == 2 :
+		drop_xp()
 		%MonsterBurningParticles.amount_ratio = 0.3
 		%OnFireLight.texture.width = 32
 		%OnFireLight.texture.height = 32
 	else :
+		drop_xp()
 		%MonsterBurningParticles.amount_ratio = 1.0
 		%OnFireLight.texture.width = 48
 		%OnFireLight.texture.height = 48
@@ -102,6 +106,9 @@ func burn_away() :
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.6, 0.0)
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.0, 0.45)
 	if health <= 0:
+		drop_embers()
+		drop_xp()
+		pinatered = true
 		var rotation_tween = create_tween()
 		rotation_tween.tween_property($".", "rotation_degrees", $".".rotation_degrees + 540, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		var scale_tween = create_tween()
@@ -110,3 +117,30 @@ func burn_away() :
 		death_tween.tween_property(material, "shader_parameter/burn_amount", 1.0, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		await get_tree().create_timer(0.3).timeout
 		queue_free()
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Currency :
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func drop_embers() :
+	if pinatered == false :
+		# Drop Embers :
+		var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
+		ember.global_position = $".".global_position
+		get_tree().current_scene.call_deferred("add_child", ember)
+
+
+func drop_xp() :
+	if pinatered == false :
+		# Drop Gold / XP :
+		var random_amount = 0
+		if health > 0 :
+			random_amount = randi_range(1, 1)
+		else :
+			random_amount = randi_range(2, 4)
+			
+		for i in random_amount : 
+			var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
+			xp.global_position = $".".global_position
+			get_tree().current_scene.call_deferred("add_child", xp)
+			await get_tree().create_timer(0.008).timeout

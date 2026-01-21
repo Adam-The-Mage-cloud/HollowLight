@@ -7,6 +7,8 @@ var brody_position
 var direction
 var speed = 5
 
+var pinatered = false
+
 var burning = false
 
 func _ready() :
@@ -78,9 +80,11 @@ func on_fire():
 	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)
 	tween1.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.15)
 	
-	# Turn Light Mask on :aaaaaa
+	# Turn Light Mask on :
+	drop_currency()
 	$".".light_mask = 1
 	%OnFireLight.enabled = true
+	
 	var tween2 := create_tween()
 	tween2.tween_property(material, "shader_parameter/burn_amount", 1.0, 1.0)
 	
@@ -91,3 +95,11 @@ func on_fire():
 	# Once finished then queue_free :
 	tween2.finished.connect(func() :
 		queue_free())
+
+func drop_currency() :
+	# Drop Embers :
+	if pinatered == false :
+		pinatered = true
+		var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
+		ember.global_position = $".".global_position
+		get_tree().current_scene.call_deferred("add_child", ember)

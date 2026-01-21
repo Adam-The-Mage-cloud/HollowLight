@@ -9,6 +9,8 @@ var speed = 30
 
 var target_captured = false
 
+var pinatered = false
+
 var max_health = 2
 var health = 2
 
@@ -76,7 +78,7 @@ func flapping() :
 
 func burn_away() :
 	# Flash effect
-	var tween1 := create_tween()
+	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)
 	tween1.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.15)
 	# Turn on fire light
@@ -84,6 +86,7 @@ func burn_away() :
 	%OnFireLight.enabled = true
 	# Calculate new burn target
 	if health == 1 :
+		drop_xp()
 		%MonsterBurningParticles.emitting = true
 		%MonsterBurningLeft.emitting = true
 		%MonsterBurningRight.emitting = true
@@ -97,6 +100,9 @@ func burn_away() :
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.6, 0.0)
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.0, 0.45)
 	if health <= 0:
+		drop_embers()
+		drop_xp()
+		pinatered = true
 		flying = false
 		#var scale_tween = create_tween() 
 		#scale_tween.tween_property($".", "scale", Vector2(0,0), 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
@@ -134,5 +140,32 @@ func _on_body_entered(body: Node2D) -> void:
 			body.global_position = $".".global_position
 			await get_tree().create_timer(0.1).timeout
 
+
 func _on_body_exited(_body: Node2D) -> void:
 	target_captured = false
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Currency :
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func drop_embers() :
+	if pinatered == false :
+		# Drop Embers :
+		var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
+		ember.global_position = $".".global_position
+		get_tree().current_scene.call_deferred("add_child", ember)
+
+
+func drop_xp() :
+	if pinatered == false :
+		# Drop Gold / XP :
+		var random_amount = 0
+		if health > 0 :
+			random_amount = randi_range(1, 1)
+		else :
+			random_amount = randi_range(2, 4)
+			
+		for i in random_amount : 
+			var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
+			xp.global_position = $".".global_position
+			get_tree().current_scene.call_deferred("add_child", xp)
+			await get_tree().create_timer(0.008).timeout

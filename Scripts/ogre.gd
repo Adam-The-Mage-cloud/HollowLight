@@ -6,6 +6,8 @@ var direction
 
 var target
 
+var pinatered = false
+
 var bobbing = false
 
 var lightable = false
@@ -215,9 +217,25 @@ func burn() :
 		
 
 func drop_currency() :
-	# Drop Gold / XP
-	var random_amount = randi_range(1, 3)
-	for i in random_amount : 
-		var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
-		xp.global_position = $".".global_position
-		get_tree().current_scene.call_deferred("add_child", xp)
+	if pinatered == false :
+		pinatered = true
+		# Drop XP :
+		var random_xp_amount = randi_range(3, 6)
+		for i in random_xp_amount : 
+			var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
+			xp.global_position = $".".global_position
+			get_tree().current_scene.call_deferred("add_child", xp)
+			await get_tree().create_timer(0.008).timeout
+			
+		# Drop Gold :
+		var random_gold_amount = randi_range(3, 9)
+		for i in random_gold_amount : 
+			var gold_piece = preload("res://Scenes/Currencies/gold_piece.tscn").instantiate()
+			gold_piece.global_position = $".".global_position
+			get_tree().current_scene.call_deferred("add_child", gold_piece)
+			await get_tree().create_timer(0.008).timeout
+			
+		# Drop Embers :
+		var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
+		ember.global_position = $".".global_position
+		get_tree().current_scene.call_deferred("add_child", ember)

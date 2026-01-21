@@ -12,6 +12,7 @@ signal monster_died(monster)
 # Currency System Signals :
 signal ember_acquired(ember)
 signal experience_orb_acquired(experience_orb)
+signal goldpiece_acquired(gold_piece)
 
 var total_beacons_to_light = 0
 var beacons_lit = 0
@@ -19,6 +20,7 @@ var beacons_lit = 0
 # Currency Variables :
 var total_acquired_embers = 0
 var total_acquired_experience = 0
+var total_acquired_goldpieces = 0
 
 func _ready():
 	EventBus.beacon_spawned.connect(_on_beacon_spawned)
@@ -26,6 +28,7 @@ func _ready():
 	
 	EventBus.ember_acquired.connect(_on_ember_acquired)
 	EventBus.ember_acquired.connect(_on_experience_orb_acquired)
+	EventBus.ember_acquired.connect(_on_goldpiece_acquired)
 
 func _on_beacon_spawned() :
 	total_beacons_to_light += 1
@@ -41,3 +44,6 @@ func _on_ember_acquired() :
 
 func _on_experience_orb_acquired() :
 	total_acquired_experience += 1
+
+func _on_goldpiece_acquired() :
+	total_acquired_goldpieces += 1

@@ -6,15 +6,23 @@ var target
 var brody_position
 
 var direction
-var speed = 80
+var speed = 70
 
-var launch_radius: float = 32.0
-var launch_height: float = 24.0
-var launch_time: float = 0.35
+var launch_radius: float = 24.0
+var launch_height: float = 16.0
+var launch_time: float = 0.24
 
 func _ready():
 	randomize()
-	%XPSprite.material = %XPSprite.material.duplicate()
+	%GoldSprite.material = %GoldSprite.material.duplicate()
+	# Pick Random Goldpiece Skin :
+	if randi_range(1,3) == 1 :
+		%GoldSprite.play("goldpiece_1")
+	elif randi_range(1,3) == 2 :
+		%GoldSprite.play("goldpiece_2")
+	if randi_range(1,3) == 3 :
+		%GoldSprite.play("goldpiece_3")
+	
 	# Animation :
 	var tween = create_tween()
 	# Pick Random Landing Point :
@@ -69,21 +77,20 @@ func _on_body_exited(body: Node2D) -> void:
 
 func _on_pickup_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
-		EventBus.emit_signal("experience_orb_acquired")
+		EventBus.emit_signal("goldpiece_acquired")
 		queue_free()
 
-
 func flash_white() :
-	var mat = %XPSprite.material
+	var mat = %GoldSprite.material
 	if mat == null:
 		return
 		
 	# Flash up to white
 	var tween = create_tween()
-	tween.tween_property(mat, "shader_parameter/flash_amount", 0.4, 0.25)
+	tween.tween_property(mat, "shader_parameter/flash_amount", 0.6, 0.2)
 	
 	# Fade back down
-	tween.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.25)
+	tween.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.2)
 
 
 func _on_flash_timer_timeout() -> void:
