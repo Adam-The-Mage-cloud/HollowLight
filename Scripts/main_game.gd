@@ -49,4 +49,7 @@ func _on_worm_bat_chance_timeout() -> void:
 			WormBat.global_position = %RegularFollowPath.global_position
 			WormBat.target = %Brody
 			%MonstersLayer.add_child(WormBat)
-			%WormBatChance.wait_time += randf_range(-1, 1)
+			if %WormBatChance.wait_time > 2 :
+				%WormBatChance.wait_time += randf_range(-1, 1)
+			else :
+				%WormBatChance.wait_time += 3

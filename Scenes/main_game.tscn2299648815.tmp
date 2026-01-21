@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=25 format=3 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://dcrn4k4r624w8" path="res://Artwork/Arrowhead_Indicator.png" id="10_c78sm"]
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="10_sftma"]
 [ext_resource type="Script" uid="uid://c6fn7vbrscab5" path="res://Scripts/indicator_director.gd" id="11_i47ox"]
+[ext_resource type="PackedScene" uid="uid://c32msemfdfdi8" path="res://Scenes/Currencies/ember.tscn" id="18_gpk8t"]
+[ext_resource type="PackedScene" uid="uid://bk2ny42prqkau" path="res://Scenes/Currencies/experience_orb.tscn" id="19_hm1wn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vc13p"]
 shader = ExtResource("3_erobn")
@@ -222,6 +224,24 @@ autostart = true
 unique_name_in_owner = true
 wait_time = 4.0
 autostart = true
+
+[node name="ember" parent="." instance=ExtResource("18_gpk8t")]
+position = Vector2(109, -37)
+
+[node name="ember2" parent="." instance=ExtResource("18_gpk8t")]
+position = Vector2(148, -26)
+
+[node name="experience_orb" parent="." instance=ExtResource("19_hm1wn")]
+position = Vector2(121, -24)
+
+[node name="experience_orb2" parent="." instance=ExtResource("19_hm1wn")]
+position = Vector2(132, -36)
+
+[node name="experience_orb3" parent="." instance=ExtResource("19_hm1wn")]
+position = Vector2(155, -47)
+
+[node name="experience_orb4" parent="." instance=ExtResource("19_hm1wn")]
+position = Vector2(167, -20)
 
 [connection signal="stick_changed" from="TouchScreenLayer/TouchScreenPress1" to="Brody/Torch" method="_on_touch_screen_layer_stick_changed"]
 [connection signal="move_stick_changed" from="TouchScreenLayer/TouchScreenPress2" to="Brody" method="_on_touch_screen_press_2_move_stick_changed"]

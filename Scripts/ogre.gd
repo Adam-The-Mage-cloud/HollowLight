@@ -130,6 +130,7 @@ func _on_axe_area_body_entered(body: Node2D) -> void:
 
 func _on_all_beacons_lit() :
 	shadow_form()
+	# Drop Gold at this point?
 
 func shadow_form() :
 	var first_flash = create_tween()
@@ -198,6 +199,8 @@ func burn() :
 	# Turn Light Mask on :aaaaaa
 	$".".light_mask = 1
 	%OnFireLight.enabled = true
+	# Drop Currencies :
+	drop_currency()
 	
 	var tween2 := create_tween()
 	tween2.tween_property(material, "shader_parameter/burn_amount", 1.0, 1.0)
@@ -210,3 +213,11 @@ func burn() :
 	tween2.finished.connect(func() :
 		queue_free())
 		
+
+func drop_currency() :
+	# Drop Gold / XP
+	var random_amount = randi_range(1, 3)
+	for i in random_amount : 
+		var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
+		xp.global_position = $".".global_position
+		get_tree().current_scene.call_deferred("add_child", xp)

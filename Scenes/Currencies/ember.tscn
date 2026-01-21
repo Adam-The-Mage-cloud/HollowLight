@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://c32msemfdfdi8"]
+
+[ext_resource type="Script" uid="uid://bov0lf0itxgqj" path="res://Scripts/ember.gd" id="1_dpfje"]
+[ext_resource type="Texture2D" uid="uid://btxeuxmj47rlu" path="res://Artwork/Ember.png" id="1_r6mmd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r6mmd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpfje"]
+atlas = ExtResource("1_r6mmd")
+region = Rect2(0, 0, 11, 11)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8qefa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpfje")
+}],
+"loop": true,
+"name": &"ember",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r6mmd"]
+size = Vector2(8, 8)
+
+[node name="ember" type="Area2D"]
+z_index = 4
+texture_filter = 1
+script = ExtResource("1_dpfje")
+
+[node name="RadarCollisionArea" type="CollisionShape2D" parent="."]
+scale = Vector2(2.2886138, 2.2886138)
+shape = SubResource("CircleShape2D_r6mmd")
+
+[node name="EmberSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8qefa")
+animation = &"ember"
+
+[node name="PickupArea" type="Area2D" parent="."]
+
+[node name="PickupCollisionArea" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("RectangleShape2D_r6mmd")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
