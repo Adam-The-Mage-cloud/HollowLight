@@ -45,7 +45,7 @@ var stepladder_chance = 1
 var protected_cells : Array[Vector2i] = []
 var previous_frontwall_world_positions : Array[Vector2] = []
 var previous_floor_world_positions: Array[Vector2] = []
-var door_origin
+var door_origin = Vector2.ZERO
 var width = 32
 var height = 18
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -56,6 +56,7 @@ var height = 18
 
 func _ready() -> void:
 	randomize()
+	$".".add_to_group("rooms")
 	# Door :
 	%DoorArea.material = %DoorArea.material.duplicate()
 	%DoorArea.add_to_group("doors")
@@ -73,6 +74,7 @@ func _ready() -> void:
 	
 	# NOW that floor exists, align room to previous door
 	if first_room == false :
+		await get_tree().process_frame
 		_position_room_relative_to_door()
 		_register_protected_door_area()
 	
@@ -98,7 +100,7 @@ func _ready() -> void:
 	fog_cluster_spawns()
 	# Stepladder Chance :
 	if stepladder_chance != 0 :
-		if randi_range(1, 2) == 1 :
+		if randi_range(1, 5) == 1 :
 			spawn_stepladder()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -129,7 +131,7 @@ func _choose_room_type_and_size() -> void:
 				height = randi_range(22, 34) * 1.25
 
 func _position_room_relative_to_door() -> void:
-	if door_origin == null:
+	if door_origin == Vector2.ZERO:
 		return
 		
 	# 1. Find the lowest floor tile in the new room
@@ -1118,22 +1120,17 @@ func flash_white():
 		tween.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.3)
 
 func new_stepladder_dungeon(body) :
-		var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
+		var new_room = preload("res://Scenes/custom_rooms/trapdoor_room.tscn").instantiate()
 		new_room.z_index = 0
 		new_room.global_position.x += global_position.x + 750
-		new_room.stepladder_chance = 0
-		body.global_position = new_room.global_position
-		body.global_position.y += 5
-		body.global_position.x += 5
+		body.global_position = new_room.global_position + Vector2(160, 21)
 		# We also need to clear all existing EventBus data (beacons etc) :
 		EventBus.beacons_lit = 0
 		EventBus.total_beacons_to_light = 0
 		EventBus.total_beacons = 0
 		# Delete all previous rooms :
-		if get_tree().current_scene.get_node("procedural_room") != null :
-			get_tree().current_scene.get_node("procedural_room").queue_free()
-		elif get_tree().current_scene.get_node("new_room") != null :
-			get_tree().current_scene.get_node("new_room").queue_free()
+		for node in get_tree().current_scene.get_tree().get_nodes_in_group("rooms"):
+			node.queue_free()
 		
 		get_tree().current_scene.call_deferred("add_child", new_room)
 		# new_room.first_room = false
