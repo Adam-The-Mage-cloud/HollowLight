@@ -37,6 +37,7 @@ func _on_area_entered(area: Area2D) -> void:
 		if type == 1 and smashed == false : # THEN VASE / URN SO :
 			# BREAK :
 			smashed = true
+			drop_loot()
 			%VaseShatteredParticles.emitting = true
 			%InteractableSprite.play("vase_" + str(chosen_skin_number) + "_broken")
 		
@@ -60,7 +61,9 @@ func _on_area_entered(area: Area2D) -> void:
 				# Play Campfire 2 Alight Sprite
 				pass
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Extra Effect Functions :
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func alight_flame() :
 	var intro_light_tween = create_tween()
 	intro_light_tween.tween_property(%FlameLight, "energy", 0.8, 1.4)
@@ -79,6 +82,23 @@ func alight_flame() :
 	particles_tween.tween_property(%MainFlame, "amount_ratio", 1.00, 5.5)
 	particles_tween.tween_property(%MainFlameSecondary, "amount_ratio", 1.00, 4.0)
 
+
+func drop_loot() : 
+	# Drop XP :
+	var random_xp_amount = randi_range(2, 4)
+	for i in random_xp_amount : 
+		var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
+		xp.global_position = $".".global_position
+		get_tree().current_scene.call_deferred("add_child", xp)
+		await get_tree().create_timer(0.008).timeout
+		
+	# Drop Gold :
+	var random_gold_amount = randi_range(2, 6)
+	for i in random_gold_amount : 
+		var gold_piece = preload("res://Scenes/Currencies/gold_piece.tscn").instantiate()
+		gold_piece.global_position = $".".global_position
+		get_tree().current_scene.call_deferred("add_child", gold_piece)
+		await get_tree().create_timer(0.008).timeout
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # DARKNESS REDUCING AURA INTERACTABLES :

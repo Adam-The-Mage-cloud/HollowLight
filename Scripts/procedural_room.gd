@@ -947,7 +947,6 @@ func generate_wall_interactables():
 		return
 	
 	var wall_interactable_amount = randi_range(3, 6)
-	var lights_node = %WallInteractables
 	
 	var placed_positions: Array[Vector2] = []
 	var min_distance = 48.0  # adjust to taste (pixels)
@@ -972,7 +971,7 @@ func generate_wall_interactables():
 			# Valid position → spawn torch
 			var new_walltorch = preload("res://Scenes/wall_interactables.tscn").instantiate()
 			new_walltorch.global_position = pos
-			lights_node.add_child(new_walltorch)
+			%WallInteractables.add_child(new_walltorch)
 			
 			placed_positions.append(pos)
 			break

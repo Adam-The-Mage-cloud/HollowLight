@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://bdmwq41laaxdd"]
+[gd_scene load_steps=15 format=3 uid="uid://bdmwq41laaxdd"]
 
-[ext_resource type="Script" uid="uid://5dsb7wcd6bt7" path="res://Scripts/wall_torch.gd" id="1_bqh01"]
+[ext_resource type="Script" uid="uid://5dsb7wcd6bt7" path="res://Scripts/wall_interactables.gd" id="1_bqh01"]
 [ext_resource type="Texture2D" uid="uid://bxacl5n4lito3" path="res://Artwork/Gray_Dungeon_Wall_Torch.png" id="2_nrrn8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlo4b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bqh01"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ws8ji"]
 atlas = ExtResource("2_nrrn8")
@@ -16,7 +18,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_ws8ji")
 }],
 "loop": true,
-"name": &"unlit",
+"name": &"walltorch_1",
 "speed": 5.0
 }]
 
@@ -89,11 +91,20 @@ script = ExtResource("1_bqh01")
 [node name="WallInteractableCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mlo4b")
 
+[node name="DarknessRepeller" type="Area2D" parent="."]
+
+[node name="DarknessRepellerCollision" type="CollisionShape2D" parent="DarknessRepeller"]
+unique_name_in_owner = true
+position = Vector2(0, 6)
+scale = Vector2(2.1794734, 2.1794734)
+shape = SubResource("CircleShape2D_bqh01")
+disabled = true
+
 [node name="WallInteractableSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_hy64k")
-animation = &"unlit"
+animation = &"walltorch_1"
 
 [node name="MainFlame" type="GPUParticles2D" parent="WallInteractableSprite"]
 unique_name_in_owner = true
@@ -120,8 +131,15 @@ process_material = SubResource("ParticleProcessMaterial_mcevj")
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-0.504097, 5.4626875)
+enabled = false
 color = Color(1, 0.439216, 0.172549, 1)
 energy = 10.0
 texture = SubResource("GradientTexture2D_ws8ji")
 
+[node name="DarknessReducer" type="Timer" parent="."]
+unique_name_in_owner = true
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_entered"]
+[connection signal="body_exited" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_exited"]
+[connection signal="timeout" from="DarknessReducer" to="." method="_on_darkness_reducer_timeout"]
