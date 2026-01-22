@@ -63,7 +63,9 @@ func _ready() -> void:
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
 	
 	_choose_room_type_and_size()
-	theme = 1
+	# Randomly Pick Theme and Let The Rest of The Game Know :
+	theme = randi_range(1, 1)
+	EventBus.current_theme = theme
 	
 	# FLOOR GENERATION
 	generate_floor()
@@ -95,7 +97,8 @@ func _ready() -> void:
 	place_spawn_points()
 	monster_spawns()
 	beacon_spawns()
-	environmental_lights_spawns()
+	generate_wall_interactables()
+	generate_floor_interactables()
 	moonlight_spawns()
 	fog_cluster_spawns()
 	# Stepladder Chance :
@@ -733,7 +736,7 @@ func generate_obstacles() -> void:
 	obstacle_source_id = 10
 	for p in floor_positions:
 		if randf() < obstacle_spawn_chance:
-			var atlas_x = randi_range(0, 1)
+			var atlas_x = randi_range(0, 5)
 			var atlas_y = randi_range(0, 1)
 			var alt = randi_range(0, 1)
 			%TileMapObstacles.set_cell(p, obstacle_source_id, Vector2i(atlas_x, atlas_y), alt)
@@ -749,8 +752,8 @@ func generate_bitsandbobs() -> void:
 			continue
 		if %TileMapBitsandBobs.get_cell_source_id(pos) != -1:
 			continue
-		var atlas_x = randi_range(0, 5)
-		var atlas_y = randi_range(0, 1)
+		var atlas_x = randi_range(0, 4)
+		var atlas_y = randi_range(0, 0)
 		var alt = randi_range(0, 1)
 		%TileMapBitsandBobs.set_cell(pos, bitsandbobs_source_id, Vector2i(atlas_x, atlas_y), alt)
 
@@ -939,20 +942,17 @@ func spawn_stepladder() :
 		new_stepladder.global_position = spawn_node.global_position
 		add_child(new_stepladder)
 
-func environmental_lights_spawns():
-	if theme != 1:
-		return
-		
+func generate_wall_interactables():
 	if previous_frontwall_world_positions.is_empty():
 		return
 	
-	var walltorch_amount = randi_range(3, 6)
-	var lights_node = %EnvironmentalLights
+	var wall_interactable_amount = randi_range(3, 6)
+	var lights_node = %WallInteractables
 	
 	var placed_positions: Array[Vector2] = []
 	var min_distance = 48.0  # adjust to taste (pixels)
 	
-	for i in range(walltorch_amount):
+	for i in range(wall_interactable_amount):
 		var attempts = 10  # avoid infinite loops
 			
 		while attempts > 0:
@@ -970,12 +970,50 @@ func environmental_lights_spawns():
 				continue  # try another position
 			
 			# Valid position → spawn torch
-			var new_walltorch = preload("res://Scenes/wall_torch.tscn").instantiate()
+			var new_walltorch = preload("res://Scenes/wall_interactables.tscn").instantiate()
 			new_walltorch.global_position = pos
 			lights_node.add_child(new_walltorch)
 			
 			placed_positions.append(pos)
 			break
+
+func generate_floor_interactables() -> void:
+	var spawn_chance = 0.010  # (where 1.0 is 100% chance per floor tile)
+	var used = {}
+		
+	for p in floor_positions:
+		# Skip protected tiles (door area)
+		if protected_cells.has(p):
+			continue
+		
+		# Skip if Bits & Bobs already placed something here
+		if %TileMapBitsandBobs.get_cell_source_id(p) != -1:
+			continue
+		
+		# Skip if obstacles occupy this tile
+		if %TileMapObstacles.get_cell_source_id(p) != -1:
+			continue
+		
+		# Skip if already used by another interactable
+		if used.has(p):
+			continue
+		
+		# Random chance
+		if randf() > spawn_chance:
+			continue
+		
+		# Convert tile → world
+		var local_pixel = %TileMapFloor.map_to_local(p)
+		var world_pos = get_tree().current_scene.to_global(local_pixel)
+		
+		# Spawn interactable
+		var scene = preload("res://Scenes/floor_interactables.tscn")
+		var inst = scene.instantiate()
+		inst.global_position = world_pos
+		%FloorInteractables.add_child(inst)
+	
+		# Mark tile as used
+		used[p] = true
 
 func moonlight_spawns():
 	if theme != 1:

@@ -5,7 +5,7 @@ var version_number
 var target
 var brody_position
 var direction
-var speed = 12
+var speed = 24
 
 var pinatered = false
 

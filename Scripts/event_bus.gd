@@ -22,6 +22,9 @@ var total_current_darkness = 0.0
 var total_acquired_experience = 0
 var total_acquired_goldpieces = 0
 
+# Theme Indicator
+var current_theme = 1
+
 func _ready():
 	EventBus.beacon_spawned.connect(_on_beacon_spawned)
 	EventBus.beacon_lit.connect(_on_beacon_lit)

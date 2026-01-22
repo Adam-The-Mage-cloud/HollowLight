@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfmwpn0mqsibv"]
+[gd_scene load_steps=8 format=3 uid="uid://bfmwpn0mqsibv"]
 
 [ext_resource type="Script" uid="uid://c5qrs3krqwsjf" path="res://Scripts/stepladder.gd" id="1_3w34e"]
 [ext_resource type="Texture2D" uid="uid://cudc2nwav6a7v" path="res://Artwork/Dungeon_Ladder.png" id="1_8xkrw"]
+[ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="2_7k7yd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3w34e"]
 size = Vector2(41, 26)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m5nnk"]
+shader = ExtResource("2_7k7yd")
+shader_parameter/flash_amount = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7k7yd"]
 atlas = ExtResource("1_8xkrw")
@@ -30,6 +35,8 @@ position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_3w34e")
 
 [node name="StepLadderSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_m5nnk")
 sprite_frames = SubResource("SpriteFrames_m5nnk")
 
 [node name="Timer" type="Timer" parent="."]

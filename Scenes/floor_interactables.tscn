@@ -1,0 +1,224 @@
+[gd_scene load_steps=23 format=3 uid="uid://duajbyy6olgji"]
+
+[ext_resource type="Texture2D" uid="uid://dtg413hiy53ro" path="res://Artwork/Dungeon_Interactables.png" id="1_006lm"]
+[ext_resource type="Script" uid="uid://dwyxlb8vsdm24" path="res://Scripts/floor_interactables.gd" id="1_n14hj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_006lm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n14hj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n14hj"]
+atlas = ExtResource("1_006lm")
+region = Rect2(81, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0q5tm"]
+atlas = ExtResource("1_006lm")
+region = Rect2(105, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jf4kt"]
+atlas = ExtResource("1_006lm")
+region = Rect2(129, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsckk"]
+atlas = ExtResource("1_006lm")
+region = Rect2(129, 70, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kudcs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n14hj")
+}],
+"loop": true,
+"name": &"campfire_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0q5tm")
+}],
+"loop": true,
+"name": &"campfire_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jf4kt")
+}],
+"loop": true,
+"name": &"vase_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lsckk")
+}],
+"loop": true,
+"name": &"vase_1_broken",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_n14hj"]
+offsets = PackedFloat32Array(0, 0.998195)
+colors = PackedColorArray(0.492081, 1.89515e-06, 2.40654e-07, 1, 1, 0.725456, 0.293907, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0dv5e"]
+gradient = SubResource("Gradient_n14hj")
+
+[sub_resource type="Curve" id="Curve_0q5tm"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_mhh1w"]
+curve = SubResource("Curve_0q5tm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jf4kt"]
+lifetime_randomness = 0.21
+particle_flag_rotate_y = true
+emission_shape_offset = Vector3(-0.65, 0, 0)
+emission_shape_scale = Vector3(1.8, 1.6, 1)
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(0, -1, 0)
+spread = 143.182
+flatness = 1.0
+radial_velocity_min = -8.00002
+radial_velocity_max = 7.99998
+gravity = Vector3(0, -20, 0)
+radial_accel_min = -15.0
+radial_accel_max = -15.0
+scale_curve = SubResource("CurveTexture_mhh1w")
+color_ramp = SubResource("GradientTexture1D_0dv5e")
+turbulence_noise_strength = 0.05
+turbulence_noise_scale = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lsckk"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.15, 0, 0)
+emission_shape_scale = Vector3(1.2, 0.6, 1)
+emission_shape = 1
+emission_sphere_radius = 5.5
+direction = Vector3(0, -1, 0)
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, -25, 0)
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+scale_curve = SubResource("CurveTexture_mhh1w")
+color_ramp = SubResource("GradientTexture1D_0dv5e")
+
+[sub_resource type="Gradient" id="Gradient_0q5tm"]
+colors = PackedColorArray(0.39215687, 0.34509805, 0.4, 1, 0.70859015, 0.6589383, 0.7167585, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jf4kt"]
+gradient = SubResource("Gradient_0q5tm")
+
+[sub_resource type="Curve" id="Curve_lsckk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.87309635, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6i4l4"]
+curve = SubResource("Curve_lsckk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n14hj"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(3, 6, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(1, -85, 0)
+spread = 36.0
+initial_velocity_min = -36.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 80, 0)
+radial_accel_min = -7.170002
+radial_accel_max = 11.579997
+damping_min = 0.120000005
+damping_max = 0.36
+scale_min = 0.75
+scale_curve = SubResource("CurveTexture_6i4l4")
+color = Color(0.8042695, 0.7667956, 0.8103906, 1)
+color_ramp = SubResource("GradientTexture1D_jf4kt")
+
+[sub_resource type="Gradient" id="Gradient_hph1r"]
+offsets = PackedFloat32Array(0.0946844, 0.7022222)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n14hj"]
+gradient = SubResource("Gradient_hph1r")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="floor_interactables" type="Area2D"]
+z_index = 2
+y_sort_enabled = true
+texture_filter = 1
+script = ExtResource("1_n14hj")
+
+[node name="InteractableCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0.38205716, 5.847178)
+scale = Vector2(0.48762316, 0.48762316)
+shape = SubResource("RectangleShape2D_006lm")
+
+[node name="DarknessRepeller" type="Area2D" parent="."]
+
+[node name="DarknessRepellerCollision" type="CollisionShape2D" parent="DarknessRepeller"]
+unique_name_in_owner = true
+position = Vector2(0, 8)
+scale = Vector2(3.0167193, 3.0167193)
+shape = SubResource("CircleShape2D_n14hj")
+disabled = true
+
+[node name="InteractableSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_kudcs")
+animation = &"vase_1"
+
+[node name="MainFlame" type="GPUParticles2D" parent="InteractableSprite"]
+unique_name_in_owner = true
+position = Vector2(-0.90586853, 2.3468008)
+emitting = false
+amount = 265
+amount_ratio = 0.5
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_jf4kt")
+
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="InteractableSprite/MainFlame"]
+unique_name_in_owner = true
+position = Vector2(-0.2045064, 2.995389)
+emitting = false
+amount = 100
+amount_ratio = 0.5
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_lsckk")
+
+[node name="VaseShatteredParticles" type="GPUParticles2D" parent="InteractableSprite"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(0.61021423, 2.644291)
+emitting = false
+amount = 120
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+randomness = 0.24
+process_material = SubResource("ParticleProcessMaterial_n14hj")
+
+[node name="FlameLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-0.504097, 5.4626875)
+enabled = false
+color = Color(1, 0.439216, 0.172549, 1)
+energy = 10.0
+texture = SubResource("GradientTexture2D_n14hj")
+
+[node name="DarknessReducer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_entered"]
+[connection signal="body_exited" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_exited"]
+[connection signal="timeout" from="DarknessReducer" to="." method="_on_darkness_reducer_timeout"]

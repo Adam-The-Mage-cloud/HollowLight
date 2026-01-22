@@ -23,6 +23,7 @@ EventBus="*res://Scripts/event_bus.gd"
 
 window/size/viewport_width=409
 window/size/viewport_height=230
+window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [input]
@@ -85,6 +86,4 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
-rendering_device/fallback_to_vulkan=false
-rendering_device/fallback_to_d3d12=false
 textures/vram_compression/import_etc2_astc=true

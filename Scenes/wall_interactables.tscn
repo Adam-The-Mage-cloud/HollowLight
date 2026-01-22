@@ -1,23 +1,12 @@
 [gd_scene load_steps=14 format=3 uid="uid://bdmwq41laaxdd"]
 
-[ext_resource type="Texture2D" uid="uid://bxacl5n4lito3" path="res://Artwork/Gray_Dungeon_Wall_Torch.png" id="1_mlo4b"]
-[ext_resource type="Script" uid="uid://5dsb7wcd6bt7" path="res://Scripts/wall_torch.gd" id="1_ws8ji"]
+[ext_resource type="Script" uid="uid://5dsb7wcd6bt7" path="res://Scripts/wall_torch.gd" id="1_bqh01"]
+[ext_resource type="Texture2D" uid="uid://bxacl5n4lito3" path="res://Artwork/Gray_Dungeon_Wall_Torch.png" id="2_nrrn8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlo4b"]
 
-[sub_resource type="Gradient" id="Gradient_hph1r"]
-offsets = PackedFloat32Array(0.0946844, 0.63973063, 0.72727275)
-colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ws8ji"]
-gradient = SubResource("Gradient_hph1r")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_ws8ji"]
-atlas = ExtResource("1_mlo4b")
+atlas = ExtResource("2_nrrn8")
 region = Rect2(0, 0, 14, 18)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hy64k"]
@@ -81,29 +70,32 @@ radial_accel_max = -10.0
 scale_curve = SubResource("CurveTexture_mhh1w")
 color_ramp = SubResource("GradientTexture1D_0dv5e")
 
-[node name="WallTorch" type="Area2D"]
+[sub_resource type="Gradient" id="Gradient_iqxhq"]
+offsets = PackedFloat32Array(0.0946844, 0.63973063, 0.72727275)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ws8ji"]
+gradient = SubResource("Gradient_iqxhq")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="wall_interactables" type="Area2D"]
 y_sort_enabled = true
 texture_filter = 1
-script = ExtResource("1_ws8ji")
+script = ExtResource("1_bqh01")
 
-[node name="WallTorchCollision" type="CollisionShape2D" parent="."]
+[node name="WallInteractableCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mlo4b")
 
-[node name="WallTorchLight" type="PointLight2D" parent="."]
-unique_name_in_owner = true
-use_parent_material = true
-position = Vector2(-0.504097, 5.4626875)
-color = Color(1, 0.439216, 0.172549, 1)
-energy = 10.0
-texture = SubResource("GradientTexture2D_ws8ji")
-
-[node name="WallTorchSprite" type="AnimatedSprite2D" parent="."]
+[node name="WallInteractableSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_hy64k")
 animation = &"unlit"
 
-[node name="MainFlame" type="GPUParticles2D" parent="WallTorchSprite"]
+[node name="MainFlame" type="GPUParticles2D" parent="WallInteractableSprite"]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
@@ -114,7 +106,7 @@ amount_ratio = 0.4
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_hy64k")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="WallTorchSprite/MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="WallInteractableSprite/MainFlame"]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(-0.2045064, 1.2581568)
@@ -123,5 +115,13 @@ amount = 100
 amount_ratio = 0.3
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_mcevj")
+
+[node name="WallTorchLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-0.504097, 5.4626875)
+color = Color(1, 0.439216, 0.172549, 1)
+energy = 10.0
+texture = SubResource("GradientTexture2D_ws8ji")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

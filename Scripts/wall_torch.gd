@@ -4,7 +4,7 @@ var lit = false
 
 func _ready() :
 	#material = $".".material.duplicate()
-	%WallTorchSprite.play("unlit")
+	%WallInteractableSprite.play("unlit")
 	%MainFlame.emitting = false
 	%MainFlameSecondary.emitting = false
 	%WallTorchLight.enabled = false
@@ -14,7 +14,7 @@ func wall_torch_lit() :
 		# Create a tween for both more particles to appear over time and more light to appear overtime :
 		lit = true
 		# Let Game Know Beacon is Lit :
-		%WallTorchSprite.play("unlit")
+		%WallInteractableSprite.play("unlit")
 		%WallTorchLight.enabled = true
 		%MainFlame.emitting = true
 		%MainFlameSecondary.emitting = true

@@ -30,7 +30,8 @@ func _on_shadow_spawn_timer_timeout() -> void:
 		new_shadowcloud.global_position = initial_spawn_position + Vector2(EventBus.total_current_darkness / 65 * randf_range(-7.5,7.5), EventBus.total_current_darkness / 65 * randf_range(-7.5, 7.5))
 		new_shadowcloud.target = %Brody
 		%MonstersLayer.add_child(new_shadowcloud)
-	%ShadowSpawnTimer.wait_time = (10.0 / (EventBus.total_current_darkness / 5)) # THIS MIGHT NEED SOME TLC LOL AND THE DISTANCE RANGE ABOVE!
+	if EventBus.total_current_darkness >= 5 :
+		%ShadowSpawnTimer.wait_time = (10.0 / (EventBus.total_current_darkness / 5)) # THIS MIGHT NEED SOME TLC LOL AND THE DISTANCE RANGE ABOVE!
 
 
 func _on_torch_wraith_chance_timeout() -> void:
