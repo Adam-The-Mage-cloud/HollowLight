@@ -14,6 +14,8 @@ signal ember_acquired(ember)
 signal experience_orb_acquired(experience_orb)
 signal goldpiece_acquired(gold_piece)
 
+signal new_room
+
 var total_beacons_to_light = 0
 var beacons_lit = 0
 
@@ -21,6 +23,11 @@ var beacons_lit = 0
 var total_current_darkness = 0.0
 var total_acquired_experience = 0
 var total_acquired_goldpieces = 0
+
+# Rooms Completed / ENDGAME DECIDER :
+var rooms_completed = 0.0
+var game_over_chance = 0.0
+var last_room = false
 
 # Theme Indicator
 var current_theme = 1
@@ -32,6 +39,8 @@ func _ready():
 	EventBus.ember_acquired.connect(_on_ember_acquired)
 	EventBus.ember_acquired.connect(_on_experience_orb_acquired)
 	EventBus.ember_acquired.connect(_on_goldpiece_acquired)
+	
+	EventBus.new_room.connect(_on_new_room)
 
 func _on_beacon_spawned() :
 	total_beacons_to_light += 1
@@ -51,3 +60,10 @@ func _on_experience_orb_acquired() :
 
 func _on_goldpiece_acquired() :
 	total_acquired_goldpieces += 1
+
+# New Room / Game Finisher Decider :
+func _on_new_room() :
+	game_over_chance = (rooms_completed * 2) / 100
+	if randf_range(0, 1) < game_over_chance :
+		if rooms_completed >= 7 :
+			last_room = true

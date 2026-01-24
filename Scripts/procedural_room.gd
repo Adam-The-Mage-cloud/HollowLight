@@ -3,7 +3,7 @@ extends Node2D
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~wqww~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Source ID's :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Floor Tiles = ID 0-9
+# Floor Tiles = ID 0-9                ID 0 = REG GRAY FLOOR / ID 1 = DIRT FLOOR / ID 2 = CLAY FLOOR
 # Obstacle Tiles = ID 10-19
 # BitsandBobs Tiles = ID 20-29
 # Wall Tiles = ID 30-39
@@ -21,11 +21,13 @@ extends Node2D
 var floor_positions: Array[Vector2i] = []
 # Floor Cluster Arrays (for visually correct spreading) :
 var dirt_cluster = {}
+var clay_cluster = {}
 
 var wall_positions: Array[Vector2i] = []
 
 var room_complete = false
 var already_opened = false
+var last_room = false
 
 var spawnpoints = 10
 
@@ -76,6 +78,14 @@ func _ready() -> void:
 	%DoorArea.material = %DoorArea.material.duplicate()
 	%DoorArea.add_to_group("doors")
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
+	
+	# If last room then prepare Door to have light :
+	if last_room == true :
+		%FinishLight1.enabled = true
+		%FinishLight2.enabled = true
+		%FinishLight3.enabled = true
+		if theme == 1 : # Then DarkSteel Door! :
+			%DoorSprite.play("DarkSteelFinishDoor")
 	
 	_choose_room_type_and_size()
 	# Randomly Pick Theme and Let The Rest of The Game Know :
@@ -193,86 +203,125 @@ func generate_floor() -> void:
 		_:
 			_generate_cave_system()
 
-# This Function Generates Variants Within The Floor Using Different Sets Such As Dirt etc, these have their own unique terrain ID's e.g. regular stone = 0, dirt = 1
+# This Function Generates Variants Within The Floor Using A Secondary Set Such As Dirt etc, then a 3rd Set Such as Clay, 
+# These have their own unique terrain ID's within %TileMapFloor e.g. regular stone = 0, dirt = 1, clay = 2
 func generate_floor_variant_clusters():
 	# Generate Noise to help with natural irregularity :
 	var noise = FastNoiseLite.new()
 	noise.seed = randi()
 	noise.frequency = 0.12
 	
-	if theme != 1:
-		return
-		
-	var cluster_count = randi_range(5, 10)
-		
-	for i in range(cluster_count):
-		var center = floor_positions.pick_random()
-		
-		# 1. Build cluster set using random walk and our globally declared dirt cluster array
-		var walker = center
-		dirt_cluster[walker] = true
-		
-		var steps = randi_range(4, 24)  # how big/small the clusters are!
-		
-		for s in range(steps):
-			var dir = [
-				Vector2i.LEFT,
-				Vector2i.RIGHT,
-				Vector2i.UP,
-				Vector2i.DOWN
-			].pick_random()
+	if theme == 1 : # DIRT CLUSTER AND THEN CLAY WITHIN THE DIRT
+		# DIRT :
+		var cluster_count = randi_range(5, 10)
+		var clay_cluster_count = randi_range(3, 6)
 			
-			walker += dir
+		for i in range(cluster_count):
+			var center = floor_positions.pick_random()
 			
-			var radius = randi_range(2, 3)
-
-			for dx in range(-radius, radius + 1):
-				for dy in range(-radius, radius + 1):
-					var np = walker + Vector2i(dx, dy)
-					if floor_positions.has(np):
-						var n = noise.get_noise_2d(np.x, np.y)
-						if n > randf() * 0.35: # irregular threshold
-							dirt_cluster[np] = true
-		
-		# 2. Autotile the cluster
+			# 1. Build cluster set using random walk and our globally declared dirt cluster array
+			var walker = center
+			dirt_cluster[walker] = true
+			
+			var steps = randi_range(4, 24)  # how big/small the clusters are!
+			
+			for s in range(steps):
+				var dir = [
+					Vector2i.LEFT,
+					Vector2i.RIGHT,
+					Vector2i.UP,
+					Vector2i.DOWN
+				].pick_random()
+				
+				walker += dir
+				
+				var radius = randi_range(2, 3)
+				
+				for dx in range(-radius, radius + 1):
+					for dy in range(-radius, radius + 1):
+						var np = walker + Vector2i(dx, dy)
+						if floor_positions.has(np):
+							var n = noise.get_noise_2d(np.x, np.y)
+							if n > randf() * 0.35: # irregular threshold
+								dirt_cluster[np] = true
+		# CLAY (Generating Within Dirt) :
+		for i in range(clay_cluster_count):
+			var center = dirt_cluster.keys().pick_random()
+			
+			var walker = center
+			clay_cluster[walker] = true
+			
+			var steps = randi_range(100, 120)
+			
+			for s in range(steps):
+				var dir = [
+					Vector2i.LEFT,
+					Vector2i.RIGHT,
+					Vector2i.UP,
+					Vector2i.DOWN
+				].pick_random()
+				
+				walker += dir
+				
+				# Only allow clay to grow inside dirt
+				if not dirt_cluster.has(walker):
+					continue
+				
+				var radius = randi_range(1, 1)
+				
+				for dx in range(-radius, radius + 1):
+					for dy in range(-radius, radius + 1):
+						var np = walker + Vector2i(dx, dy)
+						# Only place clay if all 4 neighbours are dirt too
+						if dirt_cluster.has(np) and dirt_cluster.has(np + Vector2i.LEFT) and dirt_cluster.has(np + Vector2i.RIGHT) and dirt_cluster.has(np + Vector2i.UP) and dirt_cluster.has(np + Vector2i.DOWN):
+							var n = noise.get_noise_2d(np.x, np.y)
+							if n > randf() * 0.05:
+								clay_cluster[np] = true
+			
+		# Autotile The Dirt Cluster :
 		for p in dirt_cluster.keys():
 			var atlas = get_tile_for_cluster(p, dirt_cluster)
 			%TileMapFloor.set_cell(p, 1, atlas)
+			
+		# Autotile The Clay Clusters Within Dirt :
+		for p in clay_cluster.keys():
+			var atlas = get_tile_for_cluster(p, clay_cluster)
+			%TileMapFloor.set_cell(p, 2, atlas)
 
 # THIS IS ALWAYS DELETABLE IF IT DOESN'T WORK BUT THIS BASICALLY ALLOWS US TO SORT WHAT TILE SHOULD BE PLACED WHERE BY HAND RATHER THAN RELYING ON THE GODOT AUTOTILER :
 func get_tile_for_cluster(p: Vector2i, cluster: Dictionary) -> Vector2i:
-	# Define Dirt Tiles :
-	var DIRT_FULL = [Vector2i(0,2), Vector2i(1,2), Vector2i(2,2), Vector2i(3,2)]
-	var DIRT_EDGE_LEFT = [Vector2i(0,1)]
-	var DIRT_EDGE_RIGHT = [Vector2i(1,1)]
-	var DIRT_EDGE_TOP = [Vector2i(3,1)]
-	var DIRT_EDGE_BOTTOM = [Vector2i(2,1)]
-	var DIRT_CORNER_TL = [Vector2i(0,0)]
-	var DIRT_CORNER_TR = [Vector2i(1,0)]
-	var DIRT_CORNER_BL = [Vector2i(2,0)]
-	var DIRT_CORNER_BR = [Vector2i(3,0)]
+	# Define Tiles :
+	var FULL = [Vector2i(0,2), Vector2i(1,2), Vector2i(2,2), Vector2i(3,2)]
+	var EDGE_LEFT = [Vector2i(0,1)]
+	var EDGE_RIGHT = [Vector2i(1,1)]
+	var EDGE_TOP = [Vector2i(3,1)]
+	var EDGE_BOTTOM = [Vector2i(2,1)]
+	var CORNER_TL = [Vector2i(0,0)]
+	var CORNER_TR = [Vector2i(1,0)]
+	var CORNER_BL = [Vector2i(2,0)]
+	var CORNER_BR = [Vector2i(3,0)]
 	
-	# Check neighbours *inside the cluster*
+	# Check neighbours inside the cluster :
 	var up = cluster.has(p + Vector2i(0, -1))
 	var down = cluster.has(p + Vector2i(0, 1))
 	var left = cluster.has(p + Vector2i(-1, 0))
 	var right = cluster.has(p + Vector2i(1, 0))
 	
-	# Full surrounded dirt
+	# If the tile is fully surrounded :
 	if up and down and left and right:
-		return DIRT_FULL.pick_random()
+		return FULL.pick_random()
 	
-	# Corners
-	if not up and not left: return DIRT_CORNER_TL.pick_random()
-	if not up and not right: return DIRT_CORNER_TR.pick_random()
-	if not down and not left: return DIRT_CORNER_BL.pick_random()
-	if not down and not right: return DIRT_CORNER_BR.pick_random()
+	# Corners :
+	if not up and not left: return CORNER_TL.pick_random()
+	if not up and not right: return CORNER_TR.pick_random()
+	if not down and not left: return CORNER_BL.pick_random()
+	if not down and not right: return CORNER_BR.pick_random()
 	
-	# Edges
-	if not left: return DIRT_EDGE_LEFT.pick_random()
-	if not right: return DIRT_EDGE_RIGHT.pick_random()
-	if not up: return DIRT_EDGE_TOP.pick_random()
-	if not down: return DIRT_EDGE_BOTTOM.pick_random()
+	# Edges :
+	if not left: return EDGE_LEFT.pick_random()
+	if not right: return EDGE_RIGHT.pick_random()
+	if not up: return EDGE_TOP.pick_random()
+	if not down: return EDGE_BOTTOM.pick_random()
 	
 	return Vector2.ZERO
 
@@ -1365,6 +1414,7 @@ func fog_cluster_spawns():
 func _on_all_beacons_lit() -> void:
 	%DoorStopperCollision.set_deferred("disabled", true)
 	room_complete = true
+	EventBus.rooms_completed += 1
 	# Door Flashes :
 	%DoorFlashingTimer.start()
 
@@ -1402,30 +1452,39 @@ func new_stepladder_dungeon(body) :
 
 func _on_door_open_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" and not already_opened and room_complete:
-		%DoorFlashingTimer.stop()
-		already_opened = true
-		%DoorArea.remove_from_group("doors")
-		%DoorArea.unlocked = true
-		%DoorSprite.play("DarkSteelSmashed")
-		var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
-		new_room.door_origin = %DoorArea.global_position
-		new_room.z_index = 0
-		new_room.first_room = false
+		if last_room == false :
+			%DoorFlashingTimer.stop()
+			already_opened = true
+			%DoorArea.remove_from_group("doors")
+			%DoorArea.unlocked = true
+			%DoorSprite.play("DarkSteelSmashed")
+			var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
+			new_room.door_origin = %DoorArea.global_position
+			new_room.z_index = 0
+			new_room.first_room = false
+			EventBus._on_new_room()
+			new_room.last_room = EventBus.last_room
+			
+			# Send Old Floor Positions :
+			var world_floor_positions: Array[Vector2] = []
+			for p in floor_positions:
+				var local_pixel = %TileMapFloor.map_to_local(p)
+				var world_pos = %TileMapFloor.to_global(local_pixel)
+				world_floor_positions.append(world_pos)
+			new_room.previous_floor_world_positions = world_floor_positions
+			
+			# Send Old FrontWall Positions :
+			var world_frontwall_positions: Array[Vector2] = []
+			for p in world_frontwall_positions:
+				var local_pixel = %TileMapFloor.map_to_local(p)
+				var world_pos = %TileMapFloor.to_global(local_pixel)
+				world_frontwall_positions.append(world_pos)
+			new_room.previous_frontwall_world_positions = world_frontwall_positions
+			
+			get_tree().current_scene.call_deferred("add_child", new_room)
 		
-		# Send Old Floor Positions :
-		var world_floor_positions: Array[Vector2] = []
-		for p in floor_positions:
-			var local_pixel = %TileMapFloor.map_to_local(p)
-			var world_pos = %TileMapFloor.to_global(local_pixel)
-			world_floor_positions.append(world_pos)
-		new_room.previous_floor_world_positions = world_floor_positions
-		
-		# Send Old FrontWall Positions :
-		var world_frontwall_positions: Array[Vector2] = []
-		for p in world_frontwall_positions:
-			var local_pixel = %TileMapFloor.map_to_local(p)
-			var world_pos = %TileMapFloor.to_global(local_pixel)
-			world_frontwall_positions.append(world_pos)
-		new_room.previous_frontwall_world_positions = world_frontwall_positions
-		
-		get_tree().current_scene.call_deferred("add_child", new_room)
+		elif last_room == true :
+			pass
+			# Fade to bright endgame screen with background and then earnings being tallied up etc, 
+			# before a "continue on home" button to take you to the village, or "adventure" to adventure again!
+			# Spawn Player in outside village : )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://crssqr3d5ml2q"]
+[gd_scene load_steps=50 format=3 uid="uid://crssqr3d5ml2q"]
 
 [ext_resource type="Script" uid="uid://wdphlyeqrkxh" path="res://Scripts/procedural_room.gd" id="1_bbfjf"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4rtng"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d1ehv3e2vqgjq" path="res://Artwork/Dungeon_Obstacles_.png" id="4_yngn0"]
 [ext_resource type="Texture2D" uid="uid://dymjg44nnmi2q" path="res://Artwork/Dungeon_Floor_Cover.png" id="5_57jhf"]
 [ext_resource type="Texture2D" uid="uid://y4xg73ej8luu" path="res://Artwork/Dirt_Dungeon_Tileset_10x10.png" id="6_vmobn"]
+[ext_resource type="Texture2D" uid="uid://dplop73jtwqut" path="res://Artwork/Lighter_Clay_Tileset_10x10.png" id="7_4yqbe"]
 [ext_resource type="Texture2D" uid="uid://dd14ejrwjs3ma" path="res://Artwork/Dungeon_Doors.png" id="8_2vw2r"]
 [ext_resource type="Texture2D" uid="uid://uskr4udq314c" path="res://Artwork/Plant_Tileset_Tinted.png" id="10_qnclt"]
 
@@ -1886,6 +1887,24 @@ texture_region_size = Vector2i(10, 10)
 3:2/0/terrains_peering_bit/top_side = 0
 3:2/0/terrains_peering_bit/top_right_corner = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kk80f"]
+texture = ExtResource("7_4yqbe")
+margins = Vector2i(3, 3)
+separation = Vector2i(7, 2)
+texture_region_size = Vector2i(10, 10)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_5aitk"]
 tile_size = Vector2i(10, 10)
 terrain_set_0/mode = 0
@@ -1893,8 +1912,11 @@ terrain_set_0/terrain_0/name = "DefaultDungeon"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 terrain_set_0/terrain_1/name = "Dirt"
 terrain_set_0/terrain_1/color = Color(0.5706008, 0.14395565, 0.26789254, 1)
+terrain_set_0/terrain_2/name = "Terrain 2"
+terrain_set_0/terrain_2/color = Color(0.46875, 0.5, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_qh32t")
 sources/1 = SubResource("TileSetAtlasSource_t264i")
+sources/2 = SubResource("TileSetAtlasSource_kk80f")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jv8f7"]
 texture = ExtResource("4_goocm")
@@ -2800,23 +2822,27 @@ func _ready() -> void:
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vw2r"]
 size = Vector2(26.165543, 26.399036)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4rtng"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yqbe"]
 atlas = ExtResource("8_2vw2r")
-region = Rect2(2, 5, 71, 64)
+region = Rect2(2, 6, 71, 63)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qnclt"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_t264i"]
 atlas = ExtResource("8_2vw2r")
-region = Rect2(2, 70, 71, 64)
+region = Rect2(74, 70, 71, 63)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8s45h"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sity7"]
 atlas = ExtResource("8_2vw2r")
-region = Rect2(74, 5, 71, 64)
+region = Rect2(2, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kk80f"]
+atlas = ExtResource("8_2vw2r")
+region = Rect2(74, 6, 71, 63)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vmobn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4rtng")
+"texture": SubResource("AtlasTexture_4yqbe")
 }],
 "loop": true,
 "name": &"DarkSteel",
@@ -2824,7 +2850,15 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qnclt")
+"texture": SubResource("AtlasTexture_t264i")
+}],
+"loop": true,
+"name": &"DarkSteelFinishDoor",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sity7")
 }],
 "loop": true,
 "name": &"DarkSteelOpened",
@@ -2832,12 +2866,28 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8s45h")
+"texture": SubResource("AtlasTexture_kk80f")
 }],
 "loop": true,
 "name": &"DarkSteelSmashed",
 "speed": 5.0
 }]
+
+[sub_resource type="Gradient" id="Gradient_eomwv"]
+offsets = PackedFloat32Array(0.38867924, 0.6339623, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.17254902, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_spy0k"]
+gradient = SubResource("Gradient_eomwv")
+fill = 2
+fill_from = Vector2(0.48433048, 0.43874645)
+fill_to = Vector2(0.5982906, 0.8803419)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t264i"]
+gradient = SubResource("Gradient_eomwv")
+fill = 2
+fill_from = Vector2(0.48433048, 0.43874645)
+fill_to = Vector2(0.94871795, 0.84900284)
 
 [node name="procedural_room" type="Node2D"]
 y_sort_enabled = true
@@ -2972,6 +3022,7 @@ script = SubResource("GDScript_3fph8")
 
 [node name="DoorStopperCollision" type="CollisionShape2D" parent="DoorArea"]
 unique_name_in_owner = true
+visible = false
 z_index = 1
 position = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_2vw2r")
@@ -2985,9 +3036,44 @@ sprite_frames = SubResource("SpriteFrames_vmobn")
 animation = &"DarkSteel"
 autoplay = "DarkSteel"
 
+[node name="FinishLight1" type="PointLight2D" parent="DoorArea/DoorSprite"]
+unique_name_in_owner = true
+z_index = -1
+y_sort_enabled = true
+position = Vector2(12.500005, 14.405129)
+scale = Vector2(0.109375104, 0.8906251)
+enabled = false
+color = Color(1, 1, 0.67058825, 1)
+energy = 5.0
+texture = SubResource("GradientTexture2D_spy0k")
+
+[node name="FinishLight2" type="PointLight2D" parent="DoorArea/DoorSprite"]
+unique_name_in_owner = true
+z_index = -1
+y_sort_enabled = true
+position = Vector2(-13.749996, 14.905132)
+scale = Vector2(0.11718758, 0.8906251)
+enabled = false
+color = Color(1, 1, 0.67058825, 1)
+energy = 5.0
+texture = SubResource("GradientTexture2D_spy0k")
+
+[node name="FinishLight3" type="PointLight2D" parent="DoorArea/DoorSprite"]
+unique_name_in_owner = true
+z_index = -1
+y_sort_enabled = true
+position = Vector2(-3.9999983, 22.784716)
+rotation = 1.5707964
+scale = Vector2(0.08188798, 0.8906251)
+enabled = false
+color = Color(1, 1, 0.67058825, 1)
+energy = 5.0
+texture = SubResource("GradientTexture2D_t264i")
+
 [node name="DoorOpenArea" type="Area2D" parent="DoorArea"]
 
 [node name="DoorCollision" type="CollisionShape2D" parent="DoorArea/DoorOpenArea"]
+visible = false
 z_index = 1
 position = Vector2(0, -13.330685)
 shape = SubResource("RectangleShape2D_2vw2r")

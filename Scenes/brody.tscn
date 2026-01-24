@@ -435,7 +435,7 @@ shape = SubResource("CircleShape2D_niouw")
 
 [node name="DashCooldown" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 0.6
+wait_time = 0.55
 one_shot = true
 
 [node name="BrodyShadow" type="Sprite2D" parent="."]
