@@ -39,7 +39,7 @@ material = SubResource("ShaderMaterial_xvl3v")
 script = ExtResource("1_1etqg")
 
 [node name="RadarCollisionArea" type="CollisionShape2D" parent="."]
-scale = Vector2(2.3418303, 2.3418303)
+scale = Vector2(2.9605906, 2.9605906)
 shape = SubResource("CircleShape2D_1etqg")
 
 [node name="XPSprite" type="AnimatedSprite2D" parent="."]
@@ -59,7 +59,12 @@ unique_name_in_owner = true
 wait_time = 1.4
 autostart = true
 
+[node name="SpeedAccelerator" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.125
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]
+[connection signal="timeout" from="SpeedAccelerator" to="." method="_on_speed_accelerator_timeout"]

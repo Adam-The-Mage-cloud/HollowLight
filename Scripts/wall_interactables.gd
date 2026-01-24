@@ -37,6 +37,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.name == "Torch" :
 		if type == 1 and alight == false : # THEN WALL TORCH SO :
 			# ALIGHT WALLTORCH :
+			%DarknessRepellerCollision.call_deferred("set_disabled", false)
 			alight = true
 			%WallTorchLight.enabled = true
 			alight_flame()

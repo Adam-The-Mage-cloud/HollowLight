@@ -113,7 +113,7 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="CircleShape2D" id="CircleShape2D_3rkoo"]
 
 [node name="brazier" type="Area2D"]
-z_index = 6
+z_index = 5
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_3rkoo")

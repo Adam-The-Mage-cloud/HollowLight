@@ -52,13 +52,13 @@ func _on_area_entered(area: Area2D) -> void:
 			%DarknessRepellerCollision.call_deferred("set_disabled", false)
 			
 			if chosen_skin_number == 1 :
-				# Play Campfire 1 Alight Sprite
+				%InteractableSprite.play("campfire_1_alight")
 				%MainFlame.amount_ratio = 0.3
 				%MainFlameSecondary.amount_ratio = 0.3
 				%MainFlame.position = Vector2(0.1, 4.25)
 				
 			elif chosen_skin_number == 2 :
-				# Play Campfire 2 Alight Sprite
+				%InteractableSprite.play("campfire_2_alight")
 				pass
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -215,12 +215,12 @@ func crushed() :
 		%BrodySprite.play("puddle")
 		%antenna.position.y += 4
 		%feet.position.y -= 2
-		await get_tree().create_timer(1.6).timeout
+		await get_tree().create_timer(0.8).timeout
 		%antenna.position.y -= 4
 		%feet.position.y += 2
-		squashed = false
 		input_enabled = true
-		#get_tree().pause()
+		await get_tree().create_timer(0.55).timeout
+		squashed = false
 
 func blood_splatter() :
 	%BloodSplatterParticles.emitting = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://duajbyy6olgji"]
+[gd_scene load_steps=25 format=3 uid="uid://duajbyy6olgji"]
 
 [ext_resource type="Texture2D" uid="uid://dtg413hiy53ro" path="res://Artwork/Dungeon_Interactables.png" id="1_006lm"]
 [ext_resource type="Script" uid="uid://dwyxlb8vsdm24" path="res://Scripts/floor_interactables.gd" id="1_n14hj"]
@@ -11,9 +11,17 @@
 atlas = ExtResource("1_006lm")
 region = Rect2(81, 38, 23, 31)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6i4l4"]
+atlas = ExtResource("1_006lm")
+region = Rect2(81, 71, 23, 31)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0q5tm"]
 atlas = ExtResource("1_006lm")
 region = Rect2(105, 38, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5un8a"]
+atlas = ExtResource("1_006lm")
+region = Rect2(105, 71, 23, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jf4kt"]
 atlas = ExtResource("1_006lm")
@@ -35,10 +43,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_6i4l4")
+}],
+"loop": true,
+"name": &"campfire_1_alight",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_0q5tm")
 }],
 "loop": true,
 "name": &"campfire_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5un8a")
+}],
+"loop": true,
+"name": &"campfire_2_alight",
 "speed": 5.0
 }, {
 "frames": [{
@@ -174,7 +198,7 @@ disabled = true
 [node name="InteractableSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_kudcs")
-animation = &"vase_1"
+animation = &"campfire_2_alight"
 
 [node name="MainFlame" type="GPUParticles2D" parent="InteractableSprite"]
 unique_name_in_owner = true

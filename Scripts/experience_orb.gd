@@ -44,6 +44,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
 		player_tracking = true
 		target = body
+		%SpeedAccelerator.start()
 
 func _physics_process(delta: float) -> void:
 	if player_tracking == true :
@@ -60,11 +61,6 @@ func _physics_process(delta: float) -> void:
 			$".".scale.x = 1
 		# Now we have the direction to Brody we can move towards it with :
 		position += delta * speed * direction
-
-
-func _on_body_exited(body: Node2D) -> void:
-	if body.name == "Brody" :
-		player_tracking = false
 
 
 func _on_pickup_area_body_entered(body: Node2D) -> void:
@@ -88,3 +84,7 @@ func flash_white() :
 
 func _on_flash_timer_timeout() -> void:
 	flash_white()
+
+
+func _on_speed_accelerator_timeout() -> void:
+	speed += 1

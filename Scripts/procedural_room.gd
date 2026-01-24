@@ -1,6 +1,6 @@
 extends Node2D
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~wqww~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Source ID's :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Floor Tiles = ID 0-9
@@ -12,12 +12,16 @@ extends Node2D
 # Floor Cover (mushrooms etc) = ID 60-69
 # Room Outline (cobblestone etc) = ID 70-79
 # Front Facing Wall (mineshaft etc) = ID 80-89
+# Exterior Plants (Menacing / Kind etc) = ID 90-99
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # VARIABLES :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var floor_positions: Array[Vector2i] = []
+# Floor Cluster Arrays (for visually correct spreading) :
+var dirt_cluster = {}
+
 var wall_positions: Array[Vector2i] = []
 
 var room_complete = false
@@ -26,9 +30,19 @@ var already_opened = false
 var spawnpoints = 10
 
 var room_type = 0
-var room_complexity = -0.45 # -1 is super open, simple space (boss) / -0.05 is super complex, (tight)
-var wallrings = 20
 var theme = 0
+
+# Room Spawn Modifiers :
+var dungeon_outline_plant_spawn_chance = 2 # Where higher is rarer. and 1 is everytime
+var room_complexity = -0.45 # -1 is super open, simple space (boss) / -0.05 is super complex, (tight)
+var floorcover_cluster_rate = 0.065 # The lower, the less clusters spawn in relation to the amount of floor tiles in the room
+var bits_and_bobs_spawn_rate = 0.02 # Like above, the lower, the less likely to spawn in relation to the amount of floor tiles in the room
+var obstacles_spawn_rate = 0.006 # The lower, the less obstacles are likely to spawn
+var floor_interactable_spawn_chance = 0.010  # (where 1.0 is 100% chance per floor tile)
+var max_wall_interactable_amount = 6000 # The max possible amount of wall interactables / number of floor tiles
+var stepladder_spawn_rate = 5 # Where 1 is every time and the greater from 1 it is, the less likely aka 1/2 or 1/3 or 1/8...
+
+var beacon_amount = randi_range(1, 4)
 
 var floor_source_id = 0
 var obstacle_source_id = 0
@@ -46,6 +60,7 @@ var protected_cells : Array[Vector2i] = []
 var previous_frontwall_world_positions : Array[Vector2] = []
 var previous_floor_world_positions: Array[Vector2] = []
 var door_origin = Vector2.ZERO
+var new_door_y = 99999
 var width = 32
 var height = 18
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,6 +88,7 @@ func _ready() -> void:
 	_raggedize_edges()
 	_widen_narrow_passages()
 	_ensure_reachable_floor()
+	generate_floor_variant_clusters()
 	
 	# NOW that floor exists, align room to previous door
 	if first_room == false :
@@ -94,6 +110,7 @@ func _ready() -> void:
 	
 	# DOOR + SPAWNS
 	position_door()
+	generate_exterior_plants_outline()
 	place_spawn_points()
 	monster_spawns()
 	beacon_spawns()
@@ -103,7 +120,7 @@ func _ready() -> void:
 	fog_cluster_spawns()
 	# Stepladder Chance :
 	if stepladder_chance != 0 :
-		if randi_range(1, 5) == 1 :
+		if randi_range(1, stepladder_spawn_rate) == 1 :
 			spawn_stepladder()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -175,6 +192,89 @@ func generate_floor() -> void:
 			_generate_mixed_cave()           # multiple chambers + rooms
 		_:
 			_generate_cave_system()
+
+# This Function Generates Variants Within The Floor Using Different Sets Such As Dirt etc, these have their own unique terrain ID's e.g. regular stone = 0, dirt = 1
+func generate_floor_variant_clusters():
+	# Generate Noise to help with natural irregularity :
+	var noise = FastNoiseLite.new()
+	noise.seed = randi()
+	noise.frequency = 0.12
+	
+	if theme != 1:
+		return
+		
+	var cluster_count = randi_range(5, 10)
+		
+	for i in range(cluster_count):
+		var center = floor_positions.pick_random()
+		
+		# 1. Build cluster set using random walk and our globally declared dirt cluster array
+		var walker = center
+		dirt_cluster[walker] = true
+		
+		var steps = randi_range(4, 24)  # how big/small the clusters are!
+		
+		for s in range(steps):
+			var dir = [
+				Vector2i.LEFT,
+				Vector2i.RIGHT,
+				Vector2i.UP,
+				Vector2i.DOWN
+			].pick_random()
+			
+			walker += dir
+			
+			var radius = randi_range(2, 3)
+
+			for dx in range(-radius, radius + 1):
+				for dy in range(-radius, radius + 1):
+					var np = walker + Vector2i(dx, dy)
+					if floor_positions.has(np):
+						var n = noise.get_noise_2d(np.x, np.y)
+						if n > randf() * 0.35: # irregular threshold
+							dirt_cluster[np] = true
+		
+		# 2. Autotile the cluster
+		for p in dirt_cluster.keys():
+			var atlas = get_tile_for_cluster(p, dirt_cluster)
+			%TileMapFloor.set_cell(p, 1, atlas)
+
+# THIS IS ALWAYS DELETABLE IF IT DOESN'T WORK BUT THIS BASICALLY ALLOWS US TO SORT WHAT TILE SHOULD BE PLACED WHERE BY HAND RATHER THAN RELYING ON THE GODOT AUTOTILER :
+func get_tile_for_cluster(p: Vector2i, cluster: Dictionary) -> Vector2i:
+	# Define Dirt Tiles :
+	var DIRT_FULL = [Vector2i(0,2), Vector2i(1,2), Vector2i(2,2), Vector2i(3,2)]
+	var DIRT_EDGE_LEFT = [Vector2i(0,1)]
+	var DIRT_EDGE_RIGHT = [Vector2i(1,1)]
+	var DIRT_EDGE_TOP = [Vector2i(3,1)]
+	var DIRT_EDGE_BOTTOM = [Vector2i(2,1)]
+	var DIRT_CORNER_TL = [Vector2i(0,0)]
+	var DIRT_CORNER_TR = [Vector2i(1,0)]
+	var DIRT_CORNER_BL = [Vector2i(2,0)]
+	var DIRT_CORNER_BR = [Vector2i(3,0)]
+	
+	# Check neighbours *inside the cluster*
+	var up = cluster.has(p + Vector2i(0, -1))
+	var down = cluster.has(p + Vector2i(0, 1))
+	var left = cluster.has(p + Vector2i(-1, 0))
+	var right = cluster.has(p + Vector2i(1, 0))
+	
+	# Full surrounded dirt
+	if up and down and left and right:
+		return DIRT_FULL.pick_random()
+	
+	# Corners
+	if not up and not left: return DIRT_CORNER_TL.pick_random()
+	if not up and not right: return DIRT_CORNER_TR.pick_random()
+	if not down and not left: return DIRT_CORNER_BL.pick_random()
+	if not down and not right: return DIRT_CORNER_BR.pick_random()
+	
+	# Edges
+	if not left: return DIRT_EDGE_LEFT.pick_random()
+	if not right: return DIRT_EDGE_RIGHT.pick_random()
+	if not up: return DIRT_EDGE_TOP.pick_random()
+	if not down: return DIRT_EDGE_BOTTOM.pick_random()
+	
+	return Vector2.ZERO
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # WIDEN NARROW PASSAGES
@@ -690,6 +790,120 @@ func generate_outline_layers_from_floor() -> void:
 	_generate_outline_layer(%TileMapRoomOutline, room_outline_source_id, 1)
 	_generate_outline_layer(%TileMapRoomDarkerOutline, room_outline_source_id, 3)
 
+
+func generate_exterior_plants_outline() -> void:
+	%TileMapExteriorPlants.clear()
+	
+	if theme != 1 or first_room:
+		return
+	
+	var placed_plants = {}
+	var noise = FastNoiseLite.new()
+	noise.seed = randi()
+	noise.frequency = 0.1
+	
+	var old_floor_set = build_previous_floor_set()
+	var old_frontwall_set = build_previous_frontfacingwalls_set()
+	var floor_set = build_floor_set()
+	
+	var source_id = 90 # Menacing Plants
+	
+	for p in floor_positions:
+		var offset = 3  # x beyond your darker outline (which uses 3)
+		var x = p.x
+		var y = p.y
+		
+		var neighbors = [
+			Vector2i(x, y - offset - 1),
+			Vector2i(x, y - offset - 2),
+			Vector2i(x, y + offset + 1),
+			Vector2i(x - offset + 1 - randi_range(2, 3), y),
+			Vector2i(x + offset - 1 + randi_range(2, 3), y),
+		]
+		
+		for npos in neighbors:
+			
+			# Reject if too close to another plant
+			if too_close_to_other_plants(placed_plants, npos, 2):
+				continue
+			
+			# Skip if it's floor
+			if floor_set.has(npos):
+				continue
+			
+			# Skip entire x‑axis above the door
+			if npos.y < new_door_y:
+				continue
+			
+			# Skip if overlapping previous room floor (with vertical padding like outlines)
+			if old_floor_set.has(npos):
+				continue
+			if old_floor_set.has(npos + Vector2i(0, -1)):
+				continue
+			if old_floor_set.has(npos + Vector2i(0, -2)):
+				continue
+			if old_floor_set.has(npos + Vector2i(0, 1)):
+				continue
+			
+			# Skip if outline already placed here
+			if %TileMapRoomOutline.get_cell_source_id(npos) != -1:
+				continue
+			#if %TileMapRoomDarkerOutline.get_cell_source_id(npos) != -1:
+				#continue
+			
+			# Skip if overlapping previous frontwalls (with vertical padding)
+			if old_frontwall_set.has(npos):
+				continue
+			if old_frontwall_set.has(npos + Vector2i(0, -1)):
+				continue
+			if old_frontwall_set.has(npos + Vector2i(0, -2)):
+				continue
+			if old_frontwall_set.has(npos + Vector2i(0, 1)):
+				continue
+			
+			# Skip if front‑facing wall occupies this tile or its vertical neighbors
+			if %TileMapFrontFaceWall.get_cell_source_id(npos) != -1:
+				continue
+			if %TileMapFrontFaceWall.get_cell_source_id(npos + Vector2i(0, -1)) != -1:
+				continue
+			if %TileMapFrontFaceWall.get_cell_source_id(npos + Vector2i(0, 1)) != -1:
+				continue
+			
+			# Respect protected door area
+			if protected_cells.has(npos):
+				continue
+			if protected_cells.has(npos + Vector2i(0, -2)):
+				continue
+			if protected_cells.has(npos + Vector2i(0, -1)):
+				continue
+			if protected_cells.has(npos + Vector2i(-1, 0)):
+				continue
+			if protected_cells.has(npos + Vector2i(1, 0)):
+				continue
+			
+			# Spread out with noise :
+			if noise.get_noise_2d(npos.x, npos.y) > 0.25: # NOISE SCALER (Scales the chance that a plant can spawn!)
+				continue
+			
+			if abs(npos.x - x) > abs(npos.y - y) :
+				if randf() < 0.7: 
+					continue
+				
+			# Finally, place plant tile
+			if randi_range(1, dungeon_outline_plant_spawn_chance) == 1 : # (Chance of plants spawning)
+				var atlas_x = randi_range(0, 3)   # Plant ATLAS
+				var atlas_y = randi_range(0, 15)                 
+				var alt = randi_range(0, 1)
+				%TileMapExteriorPlants.set_cell(npos, source_id, Vector2i(atlas_x, atlas_y), alt)
+				placed_plants[npos] = true
+
+# Helper to stop plants spawning ontop of each other :
+func too_close_to_other_plants(placed_plants: Dictionary, pos: Vector2i, radius = 2) -> bool:
+	for p in placed_plants:
+		if p.distance_to(pos) <= radius:
+			return true
+	return false
+
 func generate_frontfacing_wall_from_floor() -> void:
 	%TileMapFrontFaceWall.clear()
 	previous_frontwall_world_positions.clear()
@@ -732,20 +946,32 @@ func generate_frontfacing_wall_from_floor() -> void:
 func generate_obstacles() -> void:
 	if theme != 1:
 		return
-	var obstacle_spawn_chance = 0.01
 	obstacle_source_id = 10
 	for p in floor_positions:
-		if randf() < obstacle_spawn_chance:
+		if randf() < obstacles_spawn_rate:
+			if is_near_obstacle(p, 2): # If it's too near to furniture then stop:
+				continue
+			
 			var atlas_x = randi_range(0, 5)
 			var atlas_y = randi_range(0, 1)
 			var alt = randi_range(0, 1)
 			%TileMapObstacles.set_cell(p, obstacle_source_id, Vector2i(atlas_x, atlas_y), alt)
 
+# Helps Figure out if something is neaar obstacles and so whether to avoid it etc :
+func is_near_obstacle(pos: Vector2i, radius = 2) -> bool:
+	for dx in range(-radius, radius + 1):
+		for dy in range(-radius, radius + 1):
+			var check = pos + Vector2i(dx, dy)
+			if %TileMapObstacles.get_cell_source_id(check) != -1:
+				return true
+	return false
+
+
 func generate_bitsandbobs() -> void:
 	if theme != 1:
 		return
 	bitsandbobs_source_id = 20
-	var attempts = int(floor_positions.size() * 0.02)
+	var attempts = int(floor_positions.size() * bits_and_bobs_spawn_rate)
 	for i in range(attempts):
 		var pos: Vector2i = floor_positions.pick_random()
 		if is_near_door(pos.x, pos.y):
@@ -772,7 +998,7 @@ func generate_floorcover() -> void:
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	noise.frequency = 0.4
 	noise.fractal_type = FastNoiseLite.FRACTAL_FBM
-	var cluster_count = int(floor_positions.size() * 0.025)
+	var cluster_count = int(floor_positions.size() * floorcover_cluster_rate)
 	
 	for i in range(cluster_count):
 		var center: Vector2i = floor_positions.pick_random()
@@ -846,7 +1072,6 @@ func is_near_wall(x: int, y: int) -> bool:
 	return false
 
 func is_near_door(x: int, y: int) -> bool:
-	# Stub – wire into your actual door logic if needed
 	return false
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -892,6 +1117,9 @@ func position_door() -> void:
 	for ox in range(-1, 2):
 		for oy in range(-3, 2):
 			wall_map.set_cell(door_cell + Vector2i(ox, oy), -1)
+	
+	new_door_y = door_tile.y
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -915,17 +1143,18 @@ func place_spawn_points() -> void:
 
 func monster_spawns() -> void:
 	if theme == 1:
-		var ogre_amount = randi_range(1, 3)
-		for i in range(ogre_amount):
-			var new_ogre = preload("res://Scenes/ogre.tscn").instantiate()
-			var rand = randi_range(1, spawnpoints)
-			var spawn_node = %SpawnPoints.get_child(rand - 1)
-			new_ogre.global_position = spawn_node.global_position
-			call_deferred("add_child", new_ogre)
+		var random_monster_picker = randi_range(1, 1) 
+		if random_monster_picker == 1 : # Then Ogre :
+			var ogre_amount = randi_range(1, 3)
+			for i in range(ogre_amount):
+				var new_ogre = preload("res://Scenes/ogre.tscn").instantiate()
+				var rand = randi_range(1, spawnpoints)
+				var spawn_node = %SpawnPoints.get_child(rand - 1)
+				new_ogre.global_position = spawn_node.global_position
+				call_deferred("add_child", new_ogre)
 
 func beacon_spawns() -> void:
 	if theme == 1:
-		var beacon_amount = randi_range(1, 4)
 		for i in range(beacon_amount):
 			var new_beacon = preload("res://Scenes/brazier.tscn").instantiate()
 			var rand = randi_range(1, spawnpoints)
@@ -946,7 +1175,7 @@ func generate_wall_interactables():
 	if previous_frontwall_world_positions.is_empty():
 		return
 	
-	var wall_interactable_amount = randi_range(3, 6)
+	var wall_interactable_amount = randi_range((max_wall_interactable_amount * 0.6) / floor_positions.size(), max_wall_interactable_amount / floor_positions.size())
 	
 	var placed_positions: Array[Vector2] = []
 	var min_distance = 48.0  # adjust to taste (pixels)
@@ -977,7 +1206,6 @@ func generate_wall_interactables():
 			break
 
 func generate_floor_interactables() -> void:
-	var spawn_chance = 0.010  # (where 1.0 is 100% chance per floor tile)
 	var used = {}
 		
 	for p in floor_positions:
@@ -998,7 +1226,7 @@ func generate_floor_interactables() -> void:
 			continue
 		
 		# Random chance
-		if randf() > spawn_chance:
+		if randf() > floor_interactable_spawn_chance:
 			continue
 		
 		# Convert tile → world
