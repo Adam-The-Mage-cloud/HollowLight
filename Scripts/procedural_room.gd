@@ -1484,6 +1484,7 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 			get_tree().current_scene.call_deferred("add_child", new_room)
 		
 		elif last_room == true :
+			EventBus.last_room_passed()
 			pass
 			# Fade to bright endgame screen with background and then earnings being tallied up etc, 
 			# before a "continue on home" button to take you to the village, or "adventure" to adventure again!

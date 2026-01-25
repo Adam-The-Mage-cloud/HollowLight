@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=28 format=3 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
 [ext_resource type="PackedScene" uid="uid://chadpnqf4f2xn" path="res://Scenes/brody.tscn" id="2_upa5u"]
 [ext_resource type="PackedScene" uid="uid://doutgnk2nj6pi" path="res://Scenes/torch.tscn" id="3_eoier"]
+[ext_resource type="PackedScene" uid="uid://bggfdglfd1xsj" path="res://Scenes/custom_rooms/trapdoor_room.tscn" id="3_ry2jr"]
 [ext_resource type="Script" uid="uid://c4jqsqgryrvkm" path="res://Scripts/torch_joystick.gd" id="4_6y7pd"]
 [ext_resource type="Texture2D" uid="uid://cu6mkbkarog8v" path="res://Artwork/Joystick_Pressed.png" id="4_18r40"]
 [ext_resource type="Texture2D" uid="uid://c5g1su1f1fw14" path="res://Artwork/fire noise texture.jpeg" id="4_vc13p"]
@@ -13,10 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://d1awoq62q6e2d" path="res://Artwork/Dash_Button.png" id="8_tpqse"]
 [ext_resource type="Texture2D" uid="uid://bv2t68o63xjhw" path="res://Artwork/Dash_Button_Pressed.png" id="9_c78sm"]
 [ext_resource type="Texture2D" uid="uid://dcrn4k4r624w8" path="res://Artwork/Arrowhead_Indicator.png" id="10_c78sm"]
+[ext_resource type="Script" uid="uid://cnyno3yuqeqci" path="res://Scripts/menu_controller.gd" id="10_hm1wn"]
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="10_sftma"]
 [ext_resource type="Script" uid="uid://c6fn7vbrscab5" path="res://Scripts/indicator_director.gd" id="11_i47ox"]
+[ext_resource type="FontFile" uid="uid://6phwuvbfmw4m" path="res://Artwork/Fonts/PixelatedEleganceRegular-ovyAA.ttf" id="12_ry2jr"]
 [ext_resource type="Shader" uid="uid://dcgionpdp32vo" path="res://Shaders/darkness.gdshader" id="13_vc13p"]
-[ext_resource type="PackedScene" uid="uid://bklfhm2tp32pr" path="res://Scenes/custom_rooms/the_sanctuary.tscn" id="18_gpk8t"]
+[ext_resource type="Texture2D" uid="uid://cxs07dsokwlaj" path="res://Artwork/Menus/End_Of_Dungeon_Menu.png" id="18_hm1wn"]
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 3
@@ -60,9 +63,8 @@ script = ExtResource("2_6y7pd")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_aqqks")
 
-[node name="the_sanctuary" parent="." instance=ExtResource("18_gpk8t")]
-y_sort_enabled = true
-position = Vector2(30, 40)
+[node name="trapdoor_room" parent="." instance=ExtResource("3_ry2jr")]
+position = Vector2(-33, 38)
 
 [node name="TouchScreenLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -133,6 +135,39 @@ scale = Vector2(3, 3)
 texture_normal = ExtResource("8_tpqse")
 texture_pressed = ExtResource("9_c78sm")
 
+[node name="Menus" type="CanvasLayer" parent="."]
+
+[node name="MenuController" type="Control" parent="Menus"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("10_hm1wn")
+
+[node name="EndOfDungeonMenu" type="Sprite2D" parent="Menus/MenuController"]
+unique_name_in_owner = true
+z_index = 1
+texture_filter = 1
+position = Vector2(207.00002, 115.00001)
+scale = Vector2(3, 3)
+texture = ExtResource("18_hm1wn")
+
+[node name="TotalGoldText" type="RichTextLabel" parent="Menus/MenuController"]
+unique_name_in_owner = true
+z_index = 2
+texture_filter = 1
+layout_mode = 0
+offset_left = 136.0
+offset_top = 138.0
+offset_right = 176.0
+offset_bottom = 178.0
+scale = Vector2(2.0628552, 2.0628552)
+theme_override_colors/default_color = Color(0.9882353, 0.827451, 0.05882353, 1)
+theme_override_fonts/normal_font = ExtResource("12_ry2jr")
+theme_override_font_sizes/normal_font_size = 9
+text = "hello"
+horizontal_alignment = 1
+
 [node name="GameplayUI" type="CanvasLayer" parent="."]
 layer = 5
 
@@ -145,6 +180,11 @@ script = ExtResource("11_i47ox")
 
 [node name="FlashTimer" type="Timer" parent="GameplayUI/IndicatorDirector"]
 wait_time = 2.25
+autostart = true
+
+[node name="WormBatChance" type="Timer" parent="GameplayUI"]
+unique_name_in_owner = true
+wait_time = 4.0
 autostart = true
 
 [node name="MonstersLayer" type="CanvasLayer" parent="."]
@@ -298,17 +338,12 @@ unique_name_in_owner = true
 wait_time = 6.0
 autostart = true
 
-[node name="WormBatChance" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 4.0
-autostart = true
-
 [connection signal="stick_changed" from="TouchScreenLayer/TouchScreenPress1" to="Brody/Torch" method="_on_touch_screen_layer_stick_changed"]
 [connection signal="move_stick_changed" from="TouchScreenLayer/TouchScreenPress2" to="Brody" method="_on_touch_screen_press_2_move_stick_changed"]
 [connection signal="pressed" from="TouchScreenLayer/DashButton" to="Brody" method="_on_dash_button_pressed"]
 [connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_timer_timeout"]
 [connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_flash_timer_timeout"]
+[connection signal="timeout" from="GameplayUI/WormBatChance" to="." method="_on_worm_bat_chance_timeout"]
 [connection signal="timeout" from="DarknessLayer/DarknessEffect/DarknessChecker" to="." method="_on_darkness_checker_timeout"]
 [connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]
 [connection signal="timeout" from="TorchWraithChance" to="." method="_on_torch_wraith_chance_timeout"]
-[connection signal="timeout" from="WormBatChance" to="." method="_on_worm_bat_chance_timeout"]

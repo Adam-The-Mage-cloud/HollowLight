@@ -167,668 +167,502 @@ position = Vector2(0, -42)
 y_sort_enabled = true
 
 [node name="Smallgrass" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(68, 83)
 script = null
 
 [node name="Smallgrass2" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(102, 88)
 
 [node name="Smallgrass3" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(90, 104)
 
 [node name="Smallgrass4" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(61, 98)
 
 [node name="Smallgrass5" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(83, 88)
 
 [node name="Smallgrass6" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(55, 85)
 
 [node name="Smallgrass7" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(68, 94)
 
 [node name="Smallgrass8" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(75, 103)
 
 [node name="Smallgrass9" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(90, 91)
 
 [node name="Smallgrass10" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(81, 81)
 
 [node name="Smallgrass11" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(94, 83)
 
 [node name="Smallgrass12" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(102, 99)
 
 [node name="Smallgrass13" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(86, 97)
 
 [node name="Smallgrass14" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(66, 108)
 
 [node name="Smallgrass15" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(82, 113)
 
 [node name="Smallgrass16" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(115, 94)
 
 [node name="Smallgrass17" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(201, 24)
 
 [node name="Smallgrass18" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(211, 15)
 
 [node name="Smallgrass19" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(226, 18)
 
 [node name="Smallgrass20" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(231, 25)
 
 [node name="Smallgrass21" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(243, 23)
 
 [node name="Smallgrass22" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(247, 29)
 
 [node name="Smallgrass23" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(251, 36)
 
 [node name="Smallgrass24" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(258, 31)
 
 [node name="Smallgrass25" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(237, 34)
 
 [node name="Smallgrass26" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(265, 39)
 
 [node name="Smallgrass27" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(194, 30)
 
 [node name="Smallgrass28" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(212, 27)
 
 [node name="Smallgrass29" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(201, 36)
 
 [node name="Smallgrass30" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(205, 41)
 
 [node name="Smallgrass31" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(214, 37)
 
 [node name="Smallgrass32" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(199, 45)
 
 [node name="Smallgrass33" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(188, 37)
 
 [node name="Smallgrass34" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(185, 48)
 
 [node name="Smallgrass35" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(197, 52)
 
 [node name="Smallgrass36" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(254, 54)
 
 [node name="Smallgrass37" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(266, 47)
 
 [node name="Smallgrass38" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(264, 60)
 
 [node name="Smallgrass39" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(252, 63)
 
 [node name="Smallgrass40" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(241, 58)
 
 [node name="Smallgrass41" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(245, 76)
 
 [node name="Smallgrass42" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(254, 71)
 
 [node name="Smallgrass43" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(269, 73)
 
 [node name="Smallgrass44" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(257, 79)
 
 [node name="Smallgrass45" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(237, 80)
 
 [node name="Smallgrass46" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(225, 77)
 
 [node name="Smallgrass47" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(230, 86)
 
 [node name="Smallgrass48" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(205, -29)
 
 [node name="Smallgrass49" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(217, -25)
 
 [node name="Smallgrass50" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(229, -30)
 
 [node name="Smallgrass51" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(214, -38)
 
 [node name="Smallgrass52" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(205, -49)
 
 [node name="Smallgrass53" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(222, -51)
 
 [node name="Smallgrass54" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(227, -46)
 
 [node name="Smallgrass55" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(239, -27)
 
 [node name="Smallgrass56" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(233, -20)
 
 [node name="Smallgrass57" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(217, -14)
 
 [node name="Smallgrass58" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(203, -20)
 
 [node name="Smallgrass59" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(191, -27)
 
 [node name="Smallgrass60" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(183, 1)
 
 [node name="Smallgrass61" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(170, -1)
 
 [node name="Smallgrass62" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(160, -10)
 
 [node name="Smallgrass63" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(145, -11)
 
 [node name="Smallgrass64" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(129, -16)
 
 [node name="Smallgrass65" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(132, -10)
 
 [node name="Smallgrass66" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(158, -21)
 
 [node name="Smallgrass67" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(151, -29)
 
 [node name="Smallgrass68" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(117, -11)
 
 [node name="Smallgrass69" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(129, -3)
 
 [node name="Smallgrass70" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(147, 0)
 
 [node name="Smallgrass71" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(76, -83)
 
 [node name="Smallgrass72" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(83, -79)
 
 [node name="Smallgrass73" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(92, -87)
 
 [node name="Smallgrass74" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(102, -78)
 
 [node name="Smallgrass75" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(97, -70)
 
 [node name="Smallgrass76" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(62, -77)
 
 [node name="Smallgrass77" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(71, -74)
 
 [node name="Smallgrass78" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(127, -64)
 
 [node name="Smallgrass79" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(132, -60)
 
 [node name="Smallgrass80" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(137, -68)
 
 [node name="Smallgrass81" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-41, -22)
 
 [node name="Smallgrass82" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-52, -17)
 
 [node name="Smallgrass83" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-43, -14)
 
 [node name="Smallgrass84" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-32, -19)
 
 [node name="Smallgrass85" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-39, -5)
 
 [node name="Smallgrass86" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-39, -5)
 
 [node name="Smallgrass87" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-11, 26)
 
 [node name="Smallgrass88" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-6, 18)
 
 [node name="Smallgrass89" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-2, 32)
 
 [node name="Smallgrass90" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-33, 78)
 
 [node name="Smallgrass91" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-21, 71)
 
 [node name="Smallgrass92" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-10, 74)
 
 [node name="Smallgrass93" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-17, 81)
 
 [node name="Smallgrass94" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-29, 84)
 
 [node name="Smallgrass95" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-17, 91)
 
 [node name="Smallgrass96" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-2, 84)
 
 [node name="Smallgrass97" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(26, -5)
 
 [node name="Smallgrass98" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(63, 11)
 
 [node name="Smallgrass99" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(52, -19)
 
 [node name="Smallgrass100" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(33, 32)
 
 [node name="Smallgrass101" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(40, 35)
 
 [node name="Smallgrass102" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(27, 41)
 
 [node name="Smallgrass103" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(25, -27)
 
 [node name="Smallgrass104" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(16, -20)
 
 [node name="Smallgrass105" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(9, 10)
 
 [node name="Smallgrass106" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-59, 155)
 
 [node name="Smallgrass107" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-51, 145)
 
 [node name="Smallgrass108" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-39, 150)
 
 [node name="Smallgrass109" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-46, 159)
 
 [node name="Smallgrass110" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-55, 167)
 
 [node name="Smallgrass111" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-26, 156)
 
 [node name="Smallgrass112" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-20, 161)
 
 [node name="Smallgrass113" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-28, 167)
 
 [node name="Smallgrass114" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-10, 167)
 
 [node name="Smallgrass115" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-14, 175)
 
 [node name="Smallgrass116" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-23, 181)
 
 [node name="Smallgrass117" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-23, 181)
 
 [node name="Smallgrass118" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-15, 185)
 
 [node name="Smallgrass119" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-18, 192)
 
 [node name="Smallgrass120" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-5, 182)
 
 [node name="Smallgrass121" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-3, 189)
 
 [node name="Smallgrass122" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(3, 173)
 
 [node name="Smallgrass123" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(3, 165)
 
 [node name="Smallgrass124" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-6, 152)
 
 [node name="Smallgrass125" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-16, 145)
 
 [node name="Smallgrass126" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-6, 134)
 
 [node name="Smallgrass127" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-25, 127)
 
 [node name="Smallgrass128" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(-34, 135)
 
 [node name="Smallgrass129" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(62, 180)
 
 [node name="Smallgrass130" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(77, 172)
 
 [node name="Smallgrass131" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(81, 188)
 
 [node name="Smallgrass132" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(87, 195)
 
 [node name="Smallgrass133" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(46, 164)
 
 [node name="Smallgrass134" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(39, 147)
 
 [node name="Smallgrass135" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(39, 147)
 
 [node name="Smallgrass136" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(92, 147)
 
 [node name="Smallgrass137" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(105, 139)
 
 [node name="Smallgrass138" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(115, 182)
 
 [node name="Smallgrass139" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(125, 176)
 
 [node name="Smallgrass140" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(135, 179)
 
 [node name="Smallgrass141" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(137, 186)
 
 [node name="Smallgrass142" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(148, 177)
 
 [node name="Smallgrass143" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(195, 181)
 
 [node name="Smallgrass144" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(207, 176)
 
 [node name="Smallgrass145" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(216, 180)
 
 [node name="Smallgrass146" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(219, 186)
 
 [node name="Smallgrass147" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(226, 195)
 
 [node name="Smallgrass148" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(229, 177)
 
 [node name="Smallgrass149" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(222, 168)
 
 [node name="Smallgrass150" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(208, 166)
 
 [node name="Smallgrass151" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(215, 159)
 
 [node name="Smallgrass152" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(178, 136)
 
 [node name="Smallgrass153" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(171, 131)
 
 [node name="Smallgrass154" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(164, 126)
 
 [node name="Smallgrass155" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(175, 123)
 
 [node name="Smallgrass156" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(167, 119)
 
 [node name="Smallgrass157" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(180, 114)
 
 [node name="Smallgrass158" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(154, 117)
 
 [node name="Smallgrass159" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(146, 121)
 
 [node name="Smallgrass160" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(138, 126)
 
 [node name="Smallgrass161" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(149, 129)
 
 [node name="Smallgrass162" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(23, 99)
 
 [node name="Smallgrass163" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(29, 95)
 
 [node name="Smallgrass164" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(21, 91)
 
 [node name="Smallgrass165" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(31, 108)
 
 [node name="Smallgrass166" parent="SmallGrass" instance=ExtResource("3_kbio4")]
-y_sort_enabled = false
 position = Vector2(4, 99)
 
 [node name="Trees" type="Node2D" parent="."]

@@ -16,6 +16,9 @@ signal goldpiece_acquired(gold_piece)
 
 signal new_room
 
+# ENDGAME Signals :
+signal last_room_complete()
+
 var total_beacons_to_light = 0
 var beacons_lit = 0
 
@@ -23,6 +26,7 @@ var beacons_lit = 0
 var total_current_darkness = 0.0
 var total_acquired_experience = 0
 var total_acquired_goldpieces = 0
+var total_new_acquired_goldpieces = 0
 
 # Rooms Completed / ENDGAME DECIDER :
 var rooms_completed = 0.0
@@ -59,11 +63,14 @@ func _on_experience_orb_acquired() :
 	total_acquired_experience += 1
 
 func _on_goldpiece_acquired() :
-	total_acquired_goldpieces += 1
+	total_new_acquired_goldpieces += 1
 
 # New Room / Game Finisher Decider :
 func _on_new_room() :
-	game_over_chance = (rooms_completed * 2) / 100
+	game_over_chance = (rooms_completed * 100) / 100 # 2
 	if randf_range(0, 1) < game_over_chance :
-		if rooms_completed >= 7 :
+		if rooms_completed >= 1 : # 7
 			last_room = true
+
+func last_room_passed() :
+	EventBus.last_room_complete.emit()
