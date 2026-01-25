@@ -1,0 +1,81 @@
+[gd_scene load_steps=10 format=3 uid="uid://dt83xmpkmw7x2"]
+
+[ext_resource type="Script" uid="uid://ddeouedvko5by" path="res://Scripts/travellers_sanctuary/tallgrass.gd" id="1_4tkku"]
+[ext_resource type="Texture2D" uid="uid://clg6204cgcaov" path="res://Artwork/Plants_Outside_Tileset.png" id="2_qjnch"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_verhq"]
+size = Vector2(15, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fipd0"]
+atlas = ExtResource("2_qjnch")
+region = Rect2(82, 4, 15, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3g331"]
+atlas = ExtResource("2_qjnch")
+region = Rect2(82, 40, 15, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrobm"]
+atlas = ExtResource("2_qjnch")
+region = Rect2(82, 76, 15, 27)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7wdkd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fipd0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3g331")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrobm")
+}],
+"loop": true,
+"name": &"swaying",
+"speed": 3.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_fipd0"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fipd0"]
+gradient = SubResource("Gradient_fipd0")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Tallgrass" type="Area2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_4tkku")
+
+[node name="TallGrassCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-1.1920929e-07, 2.5)
+scale = Vector2(0.613254, 0.613254)
+shape = SubResource("RectangleShape2D_verhq")
+debug_color = Color(0.720624, 0.477045, 0.127548, 0.42)
+
+[node name="Tallgrass" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(0, -4.5)
+sprite_frames = SubResource("SpriteFrames_7wdkd")
+autoplay = "default"
+
+[node name="TallGrassShadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.3137255)
+z_index = -1
+use_parent_material = true
+position = Vector2(0, 5)
+scale = Vector2(1.25, 0.75)
+texture = SubResource("GradientTexture2D_fipd0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

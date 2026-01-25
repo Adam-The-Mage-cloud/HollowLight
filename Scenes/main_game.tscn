@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
 [ext_resource type="PackedScene" uid="uid://chadpnqf4f2xn" path="res://Scenes/brody.tscn" id="2_upa5u"]
 [ext_resource type="PackedScene" uid="uid://doutgnk2nj6pi" path="res://Scenes/torch.tscn" id="3_eoier"]
-[ext_resource type="PackedScene" uid="uid://bggfdglfd1xsj" path="res://Scenes/custom_rooms/trapdoor_room.tscn" id="3_vc13p"]
 [ext_resource type="Script" uid="uid://c4jqsqgryrvkm" path="res://Scripts/torch_joystick.gd" id="4_6y7pd"]
 [ext_resource type="Texture2D" uid="uid://cu6mkbkarog8v" path="res://Artwork/Joystick_Pressed.png" id="4_18r40"]
 [ext_resource type="Texture2D" uid="uid://c5g1su1f1fw14" path="res://Artwork/fire noise texture.jpeg" id="4_vc13p"]
@@ -17,6 +16,7 @@
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="10_sftma"]
 [ext_resource type="Script" uid="uid://c6fn7vbrscab5" path="res://Scripts/indicator_director.gd" id="11_i47ox"]
 [ext_resource type="Shader" uid="uid://dcgionpdp32vo" path="res://Shaders/darkness.gdshader" id="13_vc13p"]
+[ext_resource type="PackedScene" uid="uid://bklfhm2tp32pr" path="res://Scenes/custom_rooms/the_sanctuary.tscn" id="18_gpk8t"]
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 3
@@ -60,20 +60,22 @@ script = ExtResource("2_6y7pd")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_aqqks")
 
-[node name="trapdoor_room" parent="." instance=ExtResource("3_vc13p")]
-position = Vector2(-31, 46)
+[node name="the_sanctuary" parent="." instance=ExtResource("18_gpk8t")]
+y_sort_enabled = true
+position = Vector2(30, 40)
 
 [node name="TouchScreenLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 process_mode = 3
+process_priority = 3
+process_physics_priority = 4
+layer = 30
 visible = false
 
 [node name="TouchScreenPress1" type="Control" parent="TouchScreenLayer"]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
-grow_horizontal = 0
-grow_vertical = 0
 script = ExtResource("4_6y7pd")
 
 [node name="TorchJoystickSprite" type="TextureRect" parent="TouchScreenLayer/TouchScreenPress1"]
@@ -126,7 +128,7 @@ pivot_offset = Vector2(7.5, 8)
 
 [node name="DashButton" type="TouchScreenButton" parent="TouchScreenLayer"]
 texture_filter = 1
-position = Vector2(265, 122.00001)
+position = Vector2(276, 126.00001)
 scale = Vector2(3, 3)
 texture_normal = ExtResource("8_tpqse")
 texture_pressed = ExtResource("9_c78sm")

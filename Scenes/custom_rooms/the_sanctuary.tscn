@@ -1,0 +1,880 @@
+[gd_scene load_steps=11 format=4 uid="uid://bklfhm2tp32pr"]
+
+[ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
+[ext_resource type="PackedScene" uid="uid://byj02odr2ti4q" path="res://Scenes/travellers_sanctuary/smallgrass.tscn" id="3_kbio4"]
+[ext_resource type="PackedScene" uid="uid://dt83xmpkmw7x2" path="res://Scenes/travellers_sanctuary/tallgrass.tscn" id="4_kbio4"]
+[ext_resource type="PackedScene" uid="uid://nm8p1d0it3q7" path="res://Scenes/travellers_sanctuary/sanctuary_campfire.tscn" id="6_0oo8m"]
+[ext_resource type="PackedScene" uid="uid://bfgqfdxugrc4c" path="res://Scenes/travellers_sanctuary/clive_npc.tscn" id="6_7kch7"]
+[ext_resource type="PackedScene" uid="uid://br6d3apohpg5v" path="res://Scenes/travellers_sanctuary/reg_village_tree.tscn" id="6_o6jja"]
+
+[sub_resource type="Gradient" id="Gradient_lps57"]
+offsets = PackedFloat32Array(0.38222224, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7kch7"]
+gradient = SubResource("Gradient_lps57")
+fill = 1
+fill_from = Vector2(0.51713395, 0.52024925)
+fill_to = Vector2(0.85358256, 0.15264797)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3l2np"]
+texture = ExtResource("1_dlrfx")
+margins = Vector2i(5, 1)
+separation = Vector2i(1, 3)
+texture_region_size = Vector2i(10, 10)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_o1bx0"]
+tile_size = Vector2i(10, 10)
+sources/0 = SubResource("TileSetAtlasSource_3l2np")
+
+[node name="the_sanctuary" type="Node2D"]
+z_index = 1
+texture_filter = 1
+
+[node name="ProceduralRoomColour" type="CanvasModulate" parent="."]
+color = Color(0.952067, 0.9071462, 0.76115376, 1)
+
+[node name="SunRaysLight" type="PointLight2D" parent="."]
+position = Vector2(104, 62)
+scale = Vector2(5, 5)
+color = Color(0.8784314, 0.043137256, 0.15686275, 0.90588236)
+energy = 1.4
+texture = SubResource("GradientTexture2D_7kch7")
+
+[node name="GrassFloor" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAEAAAAAAAEAAAADAAEAAAAAAAIAAAADAAEAAAAAAAMAAAAAAAAAAAAAAAQAAAAGAAEAAAAAAAUAAAAHAAEAAAAAAAYAAAAJAAEAAAAAAAcAAAAEAAEAAAAAAAgAAAAAAAEAAAAAAAkAAAAFAAEAAAAAAAoAAAAGAAEAAAAAAAsAAAABAAAAAAAAAAwAAAABAAAAAAAAAA0AAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA8AAAAAAAAAAAAAABAAAAABAAAAAAAAABEAAAAAAAEAAAAAABIAAAAAAAEAAAABAAAAAAAJAAEAAAABAAEAAAABAAEAAAABAAIAAAABAAAAAAABAAMAAAAAAAAAAAABAAQAAAAAAAAAAAABAAUAAAAGAAEAAAABAAYAAAAEAAEAAAABAAcAAAABAAEAAAABAAgAAAAAAAEAAAABAAkAAAAGAAEAAAABAAoAAAAAAAAAAAABAAsAAAABAAAAAAABAAwAAAABAAAAAAABAA0AAAAAAAAAAAABAA4AAAABAAAAAAABAA8AAAABAAAAAAABABAAAAAFAAEAAAABABEAAAACAAEAAAABABIAAAAJAAEAAAACAAAAAAAAAAEAAAACAAEAAAABAAAAAAACAAIAAAAAAAAAAAACAAMAAAABAAAAAAACAAQAAAAAAAAAAAACAAUAAAAAAAEAAAACAAYAAAACAAEAAAACAAcAAAAHAAEAAAACAAgAAAAAAAEAAAACAAkAAAAGAAEAAAACAAoAAAAAAAEAAAACAAsAAAABAAEAAAACAAwAAAABAAAAAAACAA0AAAAAAAAAAAACAA4AAAABAAAAAAACAA8AAAABAAAAAAACABAAAAAAAAAAAAACABEAAAAGAAEAAAACABIAAAADAAEAAAADAAAAAAAAAAAAAAADAAEAAAABAAAAAAADAAIAAAABAAAAAAADAAMAAAABAAAAAAADAAQAAAAGAAEAAAADAAUAAAAAAAEAAAADAAYAAAAHAAEAAAADAAcAAAAIAAEAAAADAAgAAAAGAAEAAAADAAkAAAAAAAEAAAADAAoAAAAGAAEAAAADAAsAAAAFAAEAAAADAAwAAAAAAAEAAAADAA0AAAAAAAAAAAADAA4AAAABAAAAAAADAA8AAAAHAAEAAAADABAAAAABAAAAAAADABEAAAAAAAAAAAADABIAAAAGAAEAAAAEAAAAAAABAAAAAAAEAAEAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAAAAAAAAAAEAAQAAAAIAAEAAAAEAAUAAAAJAAEAAAAEAAYAAAAIAAEAAAAEAAcAAAAAAAEAAAAEAAgAAAAEAAEAAAAEAAkAAAACAAEAAAAEAAoAAAAGAAEAAAAEAAsAAAAJAAEAAAAEAAwAAAADAAEAAAAEAA0AAAAGAAEAAAAEAA4AAAADAAEAAAAEAA8AAAAGAAEAAAAEABAAAAAAAAEAAAAEABEAAAACAAEAAAAEABIAAAADAAEAAAAFAAAAAAAAAAAAAAAFAAEAAAABAAAAAAAFAAIAAAABAAAAAAAFAAMAAAAAAAAAAAAFAAQAAAABAAAAAAAFAAUAAAAFAAEAAAAFAAYAAAACAAEAAAAFAAcAAAAEAAEAAAAFAAgAAAAFAAEAAAAFAAkAAAABAAEAAAAFAAoAAAAEAAEAAAAFAAsAAAAFAAEAAAAFAAwAAAAGAAEAAAAFAA0AAAAFAAEAAAAFAA4AAAAGAAEAAAAFAA8AAAACAAEAAAAFABAAAAAAAAEAAAAFABEAAAAIAAEAAAAFABIAAAAAAAEAAAAGAAAAAAABAAAAAAAGAAEAAAABAAAAAAAGAAIAAAACAAEAAAAGAAMAAAAAAAAAAAAGAAQAAAABAAEAAAAGAAUAAAAFAAEAAAAGAAYAAAAGAAEAAAAGAAcAAAAAAAEAAAAGAAgAAAAJAAEAAAAGAAkAAAAEAAEAAAAGAAoAAAADAAEAAAAGAAsAAAAJAAEAAAAGAAwAAAABAAEAAAAGAA0AAAAEAAEAAAAGAA4AAAAAAAEAAAAGAA8AAAABAAAAAAAGABAAAAAAAAAAAAAGABEAAAACAAEAAAAGABIAAAAEAAEAAAAHAAAAAAAAAAAAAAAHAAEAAAAEAAEAAAAHAAIAAAAIAAEAAAAHAAMAAAAIAAEAAAAHAAQAAAAGAAEAAAAHAAUAAAACAAEAAAAHAAYAAAABAAEAAAAHAAcAAAAIAAEAAAAHAAgAAAADAAEAAAAHAAkAAAADAAEAAAAHAAoAAAAJAAEAAAAHAAsAAAAAAAEAAAAHAAwAAAAEAAEAAAAHAA0AAAACAAEAAAAHAA4AAAAAAAAAAAAHAA8AAAABAAAAAAAHABAAAAABAAAAAAAHABEAAAAAAAAAAAAHABIAAAACAAEAAAAIAAAAAAAIAAEAAAAIAAEAAAACAAEAAAAIAAIAAAAFAAEAAAAIAAMAAAAAAAEAAAAIAAQAAAAFAAEAAAAIAAUAAAAHAAEAAAAIAAYAAAAIAAEAAAAIAAcAAAADAAEAAAAIAAgAAAABAAEAAAAIAAkAAAAGAAEAAAAIAAoAAAAIAAEAAAAIAAsAAAAGAAEAAAAIAAwAAAAHAAEAAAAIAA0AAAAFAAEAAAAIAA4AAAAIAAEAAAAIAA8AAAADAAEAAAAIABAAAAABAAAAAAAIABEAAAABAAAAAAAIABIAAAACAAEAAAAJAAAAAAABAAEAAAAJAAEAAAABAAEAAAAJAAIAAAAFAAEAAAAJAAMAAAAEAAEAAAAJAAQAAAADAAEAAAAJAAUAAAAEAAEAAAAJAAYAAAABAAEAAAAJAAcAAAAGAAEAAAAJAAgAAAACAAEAAAAJAAkAAAAIAAEAAAAJAAoAAAAJAAEAAAAJAAsAAAAHAAEAAAAJAAwAAAADAAEAAAAJAA0AAAABAAEAAAAJAA4AAAAAAAEAAAAJAA8AAAABAAAAAAAJABAAAAAAAAAAAAAJABEAAAABAAAAAAAJABIAAAAAAAAAAAAKAAAAAAAIAAEAAAAKAAEAAAABAAEAAAAKAAIAAAACAAEAAAAKAAMAAAADAAEAAAAKAAQAAAAIAAEAAAAKAAUAAAAJAAEAAAAKAAYAAAAIAAEAAAAKAAcAAAACAAEAAAAKAAgAAAABAAEAAAAKAAkAAAAFAAEAAAAKAAoAAAADAAEAAAAKAAsAAAAHAAEAAAAKAAwAAAAJAAEAAAAKAA0AAAAJAAEAAAAKAA4AAAABAAEAAAAKAA8AAAAAAAAAAAAKABAAAAAAAAAAAAAKABEAAAAAAAAAAAAKABIAAAAAAAAAAAALAAAAAAABAAEAAAALAAEAAAAEAAEAAAALAAIAAAAGAAEAAAALAAMAAAAAAAEAAAALAAQAAAAAAAEAAAALAAUAAAAJAAEAAAALAAYAAAAJAAEAAAALAAcAAAAIAAEAAAALAAgAAAAEAAEAAAALAAkAAAABAAEAAAALAAoAAAAGAAEAAAALAAsAAAADAAEAAAALAAwAAAAFAAEAAAALAA0AAAAGAAEAAAALAA4AAAABAAAAAAALAA8AAAABAAAAAAALABAAAAABAAAAAAALABEAAAAAAAAAAAALABIAAAAAAAAAAAAMAAAAAAAHAAEAAAAMAAEAAAAJAAEAAAAMAAIAAAAJAAEAAAAMAAMAAAABAAEAAAAMAAQAAAAJAAEAAAAMAAUAAAAIAAEAAAAMAAYAAAAJAAEAAAAMAAcAAAAFAAEAAAAMAAgAAAAHAAEAAAAMAAkAAAAEAAEAAAAMAAoAAAAHAAEAAAAMAAsAAAAGAAEAAAAMAAwAAAAIAAEAAAAMAA0AAAAHAAEAAAAMAA4AAAABAAEAAAAMAA8AAAABAAAAAAAMABAAAAABAAAAAAAMABEAAAABAAAAAAAMABIAAAABAAAAAAANAAAAAAABAAEAAAANAAEAAAAHAAEAAAANAAIAAAAIAAEAAAANAAMAAAABAAEAAAANAAQAAAADAAEAAAANAAUAAAAFAAEAAAANAAYAAAAGAAEAAAANAAcAAAADAAEAAAANAAgAAAAGAAEAAAANAAkAAAAJAAEAAAANAAoAAAADAAEAAAANAAsAAAAEAAEAAAANAAwAAAAEAAEAAAANAA0AAAAGAAEAAAANAA4AAAABAAAAAAANAA8AAAABAAAAAAANABAAAAAAAAAAAAANABEAAAAAAAAAAAANABIAAAAAAAAAAAAOAAAAAAAAAAEAAAAOAAEAAAAGAAEAAAAOAAIAAAAGAAEAAAAOAAMAAAAFAAEAAAAOAAQAAAAAAAEAAAAOAAUAAAADAAEAAAAOAAYAAAAEAAEAAAAOAAcAAAAEAAEAAAAOAAgAAAAJAAEAAAAOAAkAAAADAAEAAAAOAAoAAAAHAAEAAAAOAAsAAAADAAEAAAAOAAwAAAAFAAEAAAAOAA0AAAABAAEAAAAOAA4AAAAAAAAAAAAOAA8AAAAAAAAAAAAOABAAAAABAAAAAAAOABEAAAABAAAAAAAOABIAAAAHAAEAAAAPAAAAAAAFAAEAAAAPAAEAAAAIAAEAAAAPAAIAAAAJAAEAAAAPAAMAAAAJAAEAAAAPAAQAAAAJAAEAAAAPAAUAAAAIAAEAAAAPAAYAAAAHAAEAAAAPAAcAAAADAAEAAAAPAAgAAAAFAAEAAAAPAAkAAAABAAEAAAAPAAoAAAAIAAEAAAAPAAsAAAACAAEAAAAPAAwAAAAAAAEAAAAPAA0AAAABAAAAAAAPAA4AAAABAAAAAAAPAA8AAAABAAAAAAAPABAAAAAAAAAAAAAPABEAAAABAAAAAAAPABIAAAAAAAAAAAAQAAAAAAABAAEAAAAQAAEAAAABAAEAAAAQAAIAAAAAAAEAAAAQAAMAAAAEAAEAAAAQAAQAAAAGAAEAAAAQAAUAAAAIAAEAAAAQAAYAAAABAAEAAAAQAAcAAAADAAEAAAAQAAgAAAABAAEAAAAQAAkAAAAFAAEAAAAQAAoAAAACAAEAAAAQAAsAAAAIAAEAAAAQAAwAAAAIAAEAAAAQAA0AAAADAAEAAAAQAA4AAAAAAAAAAAAQAA8AAAABAAAAAAAQABAAAAAAAAAAAAAQABEAAAAAAAAAAAAQABIAAAACAAEAAAARAAAAAAAHAAEAAAARAAEAAAAEAAEAAAARAAIAAAAFAAEAAAARAAMAAAAFAAEAAAARAAQAAAACAAEAAAARAAUAAAAJAAEAAAARAAYAAAAJAAEAAAARAAcAAAADAAEAAAARAAgAAAAIAAEAAAARAAkAAAADAAEAAAARAAoAAAADAAEAAAARAAsAAAAAAAEAAAARAAwAAAAGAAEAAAARAA0AAAAIAAEAAAARAA4AAAAGAAEAAAARAA8AAAAAAAAAAAARABAAAAABAAAAAAARABEAAAABAAAAAAARABIAAAABAAAAAAAAAPb/AAAJAAEAAAAAAPf/AAAAAAEAAAAAAPj/AAAFAAEAAAAAAPn/AAACAAEAAAAAAPr/AAAIAAEAAAAAAPv/AAAEAAEAAAAAAPz/AAAAAAEAAAAAAP3/AAAJAAEAAAAAAP7/AAAEAAEAAAAAAP//AAAIAAEAAAABAPb/AAAEAAEAAAABAPf/AAAHAAEAAAABAPj/AAABAAEAAAABAPn/AAAIAAEAAAABAPr/AAABAAEAAAABAPv/AAAAAAEAAAABAPz/AAAGAAEAAAABAP3/AAAGAAEAAAABAP7/AAACAAEAAAABAP//AAAJAAEAAAACAPb/AAAEAAEAAAACAPf/AAAIAAEAAAACAPj/AAAIAAEAAAACAPn/AAAFAAEAAAACAPr/AAAHAAEAAAACAPv/AAADAAEAAAACAPz/AAABAAEAAAACAP3/AAAGAAEAAAACAP7/AAAFAAEAAAACAP//AAABAAAAAAADAPb/AAABAAEAAAADAPf/AAAIAAEAAAADAPj/AAAEAAEAAAADAPn/AAAJAAEAAAADAPr/AAABAAEAAAADAPv/AAACAAEAAAADAPz/AAACAAEAAAADAP3/AAAFAAEAAAADAP7/AAABAAAAAAADAP//AAABAAAAAAAEAPb/AAAEAAEAAAAEAPf/AAAIAAEAAAAEAPj/AAAFAAEAAAAEAPn/AAAEAAEAAAAEAPr/AAAEAAEAAAAEAPv/AAAEAAEAAAAEAPz/AAAHAAEAAAAEAP3/AAAJAAEAAAAEAP7/AAAEAAEAAAAEAP//AAABAAAAAAAFAPb/AAAHAAEAAAAFAPf/AAAEAAEAAAAFAPj/AAAGAAEAAAAFAPn/AAAEAAEAAAAFAPr/AAADAAEAAAAFAPv/AAAIAAEAAAAFAPz/AAACAAEAAAAFAP3/AAAIAAEAAAAFAP7/AAABAAEAAAAFAP//AAAJAAEAAAAGAPb/AAAEAAEAAAAGAPf/AAADAAEAAAAGAPj/AAAAAAEAAAAGAPn/AAAGAAEAAAAGAPr/AAADAAEAAAAGAPv/AAAFAAEAAAAGAPz/AAABAAEAAAAGAP3/AAAEAAEAAAAGAP7/AAABAAEAAAAGAP//AAAAAAAAAAAHAPb/AAAFAAEAAAAHAPf/AAAGAAEAAAAHAPj/AAADAAEAAAAHAPn/AAAJAAEAAAAHAPr/AAAGAAEAAAAHAPv/AAAAAAEAAAAHAPz/AAAFAAEAAAAHAP3/AAACAAEAAAAHAP7/AAAGAAEAAAAHAP//AAADAAEAAAAIAPb/AAAFAAEAAAAIAPf/AAAGAAEAAAAIAPj/AAABAAEAAAAIAPn/AAAEAAEAAAAIAPr/AAAIAAEAAAAIAPv/AAAEAAEAAAAIAPz/AAAAAAEAAAAIAP3/AAAHAAEAAAAIAP7/AAAIAAEAAAAIAP//AAAGAAEAAAAJAPb/AAAGAAEAAAAJAPf/AAAFAAEAAAAJAPj/AAAAAAEAAAAJAPn/AAAFAAEAAAAJAPr/AAAEAAEAAAAJAPv/AAAAAAEAAAAJAPz/AAAIAAEAAAAJAP3/AAAIAAEAAAAJAP7/AAAAAAEAAAAJAP//AAAAAAEAAAAKAPb/AAAFAAEAAAAKAPf/AAAIAAEAAAAKAPj/AAAEAAEAAAAKAPn/AAAEAAEAAAAKAPr/AAAGAAEAAAAKAPv/AAAJAAEAAAAKAPz/AAAAAAEAAAAKAP3/AAAJAAEAAAAKAP7/AAAJAAEAAAAKAP//AAAIAAEAAAALAPb/AAACAAEAAAALAPf/AAABAAEAAAALAPj/AAACAAEAAAALAPn/AAADAAEAAAALAPr/AAAIAAEAAAALAPv/AAADAAEAAAALAPz/AAADAAEAAAALAP3/AAAFAAEAAAALAP7/AAAEAAEAAAALAP//AAAFAAEAAAAMAPb/AAAIAAEAAAAMAPf/AAAFAAEAAAAMAPj/AAAIAAEAAAAMAPn/AAAJAAEAAAAMAPr/AAAJAAEAAAAMAPv/AAAEAAEAAAAMAPz/AAAEAAEAAAAMAP3/AAAGAAEAAAAMAP7/AAADAAEAAAAMAP//AAAHAAEAAAANAPb/AAAEAAEAAAANAPf/AAAFAAEAAAANAPj/AAAJAAEAAAANAPn/AAAHAAEAAAANAPr/AAAHAAEAAAANAPv/AAAHAAEAAAANAPz/AAACAAEAAAANAP3/AAAGAAEAAAANAP7/AAACAAEAAAANAP//AAAJAAEAAAAOAPb/AAAEAAEAAAAOAPf/AAAFAAEAAAAOAPj/AAAHAAEAAAAOAPn/AAAEAAEAAAAOAPr/AAAAAAEAAAAOAPv/AAACAAEAAAAOAPz/AAAJAAEAAAAOAP3/AAAHAAEAAAAOAP7/AAADAAEAAAAOAP//AAAAAAEAAAAPAPb/AAADAAEAAAAPAPf/AAAJAAEAAAAPAPj/AAAHAAEAAAAPAPn/AAAIAAEAAAAPAPr/AAAGAAEAAAAPAPv/AAABAAEAAAAPAPz/AAAJAAEAAAAPAP3/AAAGAAEAAAAPAP7/AAAHAAEAAAAPAP//AAAGAAEAAAAQAPb/AAAAAAEAAAAQAPf/AAADAAEAAAAQAPj/AAAFAAEAAAAQAPn/AAAAAAEAAAAQAPr/AAAHAAEAAAAQAPv/AAABAAEAAAAQAPz/AAAEAAEAAAAQAP3/AAAJAAEAAAAQAP7/AAAIAAEAAAAQAP//AAAHAAEAAAARAPb/AAAAAAEAAAARAPf/AAADAAEAAAARAPj/AAAFAAEAAAARAPn/AAAAAAEAAAARAPr/AAAHAAEAAAARAPv/AAACAAEAAAARAPz/AAAGAAEAAAARAP3/AAAIAAEAAAARAP7/AAAFAAEAAAARAP//AAACAAEAAAASAP//AAADAAEAAAASAAAAAAAAAAEAAAASAAEAAAAJAAEAAAASAAIAAAAIAAEAAAASAAMAAAAAAAEAAAASAAQAAAAIAAEAAAASAAUAAAAAAAEAAAASAAYAAAAHAAEAAAASAAcAAAACAAEAAAASAAgAAAAAAAAAAAASAAkAAAAAAAEAAAASAAoAAAAAAAEAAAASAAsAAAAIAAEAAAATAP//AAABAAEAAAATAAAAAAAHAAEAAAATAAEAAAADAAEAAAATAAIAAAADAAEAAAATAAMAAAAFAAEAAAATAAQAAAAGAAEAAAATAAUAAAAFAAEAAAATAAYAAAAIAAEAAAATAAcAAAABAAAAAAATAAgAAAABAAAAAAATAAkAAAABAAAAAAATAAoAAAAAAAEAAAATAAsAAAAJAAEAAAAUAP//AAAHAAEAAAAUAAAAAAACAAEAAAAUAAEAAAACAAEAAAAUAAIAAAAEAAEAAAAUAAMAAAADAAEAAAAUAAQAAAABAAAAAAAUAAUAAAAIAAEAAAAUAAYAAAAAAAAAAAAUAAcAAAABAAAAAAAUAAgAAAABAAAAAAAUAAkAAAAHAAEAAAAUAAoAAAAFAAEAAAAUAAsAAAAIAAEAAAAVAP//AAAJAAEAAAAVAAAAAAABAAEAAAAVAAEAAAABAAEAAAAVAAIAAAACAAEAAAAVAAMAAAABAAAAAAAVAAQAAAABAAAAAAAVAAUAAAAAAAAAAAAVAAYAAAAAAAAAAAAVAAcAAAAAAAAAAAAVAAgAAAABAAAAAAAVAAkAAAABAAAAAAAVAAoAAAAGAAEAAAAVAAsAAAABAAEAAAAWAP//AAAGAAEAAAAWAAAAAAAHAAEAAAAWAAEAAAADAAEAAAAWAAIAAAADAAEAAAAWAAMAAAAHAAEAAAAWAAQAAAAAAAAAAAAWAAUAAAABAAAAAAAWAAYAAAAAAAAAAAAWAAcAAAABAAAAAAAWAAgAAAAAAAAAAAAWAAkAAAACAAEAAAAWAAoAAAADAAEAAAAWAAsAAAAGAAEAAAAXAP//AAAEAAEAAAAXAAAAAAADAAEAAAAXAAEAAAAGAAEAAAAXAAIAAAAGAAEAAAAXAAMAAAAEAAEAAAAXAAQAAAAAAAAAAAAXAAUAAAABAAAAAAAXAAYAAAAAAAAAAAAXAAcAAAAAAAAAAAAXAAgAAAAAAAAAAAAXAAkAAAADAAEAAAAXAAoAAAAEAAEAAAAXAAsAAAAHAAEAAAAYAP//AAADAAEAAAAYAAAAAAAFAAEAAAAYAAEAAAAHAAEAAAAYAAIAAAAHAAEAAAAYAAMAAAAAAAEAAAAYAAQAAAAGAAEAAAAYAAUAAAABAAAAAAAYAAYAAAAAAAAAAAAYAAcAAAAAAAAAAAAYAAgAAAAGAAEAAAAYAAkAAAAHAAEAAAAYAAoAAAAJAAEAAAAYAAsAAAAGAAEAAAAZAP//AAAJAAEAAAAZAAAAAAABAAEAAAAZAAEAAAAIAAEAAAAZAAIAAAAEAAEAAAAZAAMAAAAFAAEAAAAZAAQAAAAHAAEAAAAZAAUAAAABAAAAAAAZAAYAAAAFAAEAAAAZAAcAAAAGAAEAAAAZAAgAAAABAAEAAAAZAAkAAAAHAAEAAAAZAAoAAAAFAAEAAAAZAAsAAAAJAAEAAAAaAP//AAAJAAEAAAAaAAAAAAABAAEAAAAaAAEAAAAAAAEAAAAaAAIAAAACAAEAAAAaAAMAAAAIAAEAAAAaAAQAAAAHAAEAAAAaAAUAAAAAAAEAAAAaAAYAAAAGAAEAAAAaAAcAAAABAAEAAAAaAAgAAAAGAAEAAAAaAAkAAAAFAAEAAAAaAAoAAAAIAAEAAAAaAAsAAAAAAAEAAAAbAP//AAAEAAEAAAAbAAAAAAAJAAEAAAAbAAEAAAACAAEAAAAbAAIAAAAEAAEAAAAbAAMAAAAEAAEAAAAbAAQAAAABAAEAAAAbAAUAAAAAAAEAAAAbAAYAAAAGAAEAAAAbAAcAAAAIAAEAAAAbAAgAAAACAAEAAAAbAAkAAAAIAAEAAAAbAAoAAAAEAAEAAAAbAAsAAAAFAAEAAAASAPv/AAAIAAEAAAASAPz/AAAFAAEAAAASAP3/AAABAAEAAAASAP7/AAACAAEAAAATAPv/AAAHAAEAAAATAPz/AAAFAAEAAAATAP3/AAADAAEAAAATAP7/AAACAAEAAAAUAPv/AAAAAAEAAAAUAPz/AAAHAAEAAAAUAP3/AAABAAEAAAAUAP7/AAAIAAEAAAAXAP7/AAACAAEAAAAYAP7/AAABAAEAAAAZAP7/AAACAAEAAAAcAAAAAAAGAAEAAAAcAAEAAAAFAAEAAAAcAAIAAAAEAAEAAAAcAAMAAAACAAEAAAAdAAAAAAABAAEAAAAdAAEAAAAEAAEAAAAdAAIAAAAEAAEAAAAdAAMAAAABAAEAAAAcAAUAAAAFAAEAAAAcAAYAAAAJAAEAAAAcAAcAAAAEAAEAAAAcAAgAAAAAAAEAAAAcAAkAAAAIAAEAAAAcAAoAAAACAAEAAAAdAAUAAAAJAAEAAAAdAAYAAAAHAAEAAAAdAAcAAAABAAEAAAAdAAgAAAAEAAEAAAAdAAkAAAAIAAEAAAAdAAoAAAAAAAEAAAAeAAUAAAADAAEAAAAeAAYAAAABAAEAAAAeAAcAAAAAAAEAAAAeAAgAAAAFAAEAAAAeAAkAAAADAAEAAAAeAAoAAAADAAEAAAAfAAUAAAAAAAEAAAAfAAYAAAABAAEAAAAfAAcAAAABAAEAAAAfAAgAAAAIAAEAAAAfAAkAAAAHAAEAAAAfAAoAAAAFAAEAAAAgAAYAAAABAAEAAAAgAAcAAAADAAEAAAAgAAgAAAAHAAEAAAAgAAkAAAAAAAEAAAAcAAsAAAAGAAEAAAAcAAwAAAAFAAEAAAAcAA0AAAAJAAEAAAAcAA4AAAAGAAEAAAAdAAsAAAAHAAEAAAAdAAwAAAAEAAEAAAAdAA0AAAAFAAEAAAAdAA4AAAACAAEAAAAbAAwAAAACAAEAAAAeAAwAAAAAAAEAAAAeAA0AAAAJAAEAAAAXAAwAAAAAAAEAAAAYAAwAAAAHAAEAAAAVAAwAAAAGAAEAAAAVAA0AAAADAAEAAAAWAAwAAAAEAAEAAAAWAA0AAAAIAAEAAAAUAAwAAAAIAAEAAAASAA4AAAAFAAEAAAASAA8AAAAFAAEAAAASABAAAAABAAAAAAATAA8AAAAEAAEAAAATABAAAAABAAEAAAASABEAAAABAAAAAAATABEAAAAAAAAAAAATABIAAAADAAEAAAAUABAAAAAGAAEAAAAUABEAAAAAAAEAAAAUABIAAAABAAEAAAAVABAAAAAEAAEAAAAVABEAAAAIAAEAAAAVABIAAAAFAAEAAAAQABMAAAAFAAEAAAARABMAAAACAAEAAAASABMAAAAIAAEAAAATABMAAAACAAEAAAAVABMAAAAJAAEAAAAWABEAAAAIAAEAAAAWABIAAAAEAAEAAAAWABMAAAAEAAEAAAAXABIAAAAEAAEAAAAWABQAAAAGAAEAAAANABMAAAAEAAEAAAAGABMAAAADAAEAAAAGABQAAAADAAEAAAAHABMAAAADAAEAAAAHABQAAAABAAEAAAAIABMAAAAAAAAAAAAIABQAAAAEAAEAAAAJABMAAAAAAAAAAAAJABQAAAAAAAAAAAAKABMAAAAAAAAAAAAKABQAAAABAAAAAAALABMAAAABAAAAAAALABQAAAABAAEAAAAIABUAAAADAAEAAAAJABUAAAAFAAEAAAABABMAAAADAAEAAAACABMAAAAJAAEAAAADABMAAAAGAAEAAAD+/xIAAAACAAEAAAD+/xMAAAAHAAEAAAD//xIAAAAIAAEAAAD//xMAAAADAAEAAAD+/xQAAAACAAEAAAD9/xMAAAAHAAEAAAD8/wsAAAAEAAEAAAD8/wwAAAACAAEAAAD8/w0AAAAIAAEAAAD8/w4AAAAFAAEAAAD8/w8AAAACAAEAAAD9/wsAAAAHAAEAAAD9/wwAAAAHAAEAAAD9/w0AAAAAAAEAAAD9/w4AAAAJAAEAAAD9/w8AAAAFAAEAAAD9/xAAAAAJAAEAAAD+/wsAAAAGAAEAAAD+/wwAAAAGAAEAAAD+/w0AAAABAAAAAAD+/w4AAAAGAAEAAAD+/w8AAAAEAAEAAAD+/xAAAAABAAEAAAD//wsAAAAJAAEAAAD//wwAAAABAAAAAAD//w0AAAABAAAAAAD//w4AAAAEAAEAAAD//w8AAAABAAAAAAD//xAAAAADAAEAAAD7/wwAAAAHAAEAAAD7/w0AAAAGAAEAAAD7/w4AAAACAAEAAAD7/w8AAAAFAAEAAAD7/xAAAAAAAAEAAAD7/xEAAAAEAAEAAAD8/xAAAAABAAEAAAD6/w8AAAAEAAEAAAD6/xAAAAABAAEAAAD6/xEAAAACAAEAAAD5/xAAAAAHAAEAAAD6/w0AAAAFAAEAAAD+/wcAAAAEAAEAAAD+/wgAAAAAAAEAAAD+/wkAAAAJAAEAAAD+/woAAAAAAAEAAAD//wcAAAABAAEAAAD//wgAAAAGAAEAAAD//wkAAAAFAAEAAAD//woAAAAAAAEAAAD8/wcAAAAIAAEAAAD8/wgAAAAIAAEAAAD9/wcAAAAHAAEAAAD9/wgAAAAAAAEAAAD+/wYAAAAEAAEAAAD9/wYAAAAFAAEAAAD9/wAAAAADAAEAAAD+/wAAAAAGAAEAAAD+/wEAAAAHAAEAAAD+/wIAAAABAAEAAAD+/wMAAAACAAEAAAD//wAAAAAHAAEAAAD//wEAAAAAAAEAAAD//wIAAAACAAEAAAD//wMAAAADAAEAAAD+////AAACAAEAAAD///7/AAADAAEAAAD/////AAAIAAEAAAD+//v/AAADAAEAAAD///r/AAABAAEAAAD///v/AAAAAAEAAAD///z/AAADAAEAAAD9//X/AAAJAAEAAAD9//b/AAAFAAEAAAD9//f/AAAHAAEAAAD9//j/AAAFAAEAAAD+//T/AAAAAAEAAAD+//X/AAABAAEAAAD+//b/AAAJAAEAAAD+//f/AAADAAEAAAD+//j/AAAAAAEAAAD///T/AAAJAAEAAAD///X/AAACAAEAAAD///b/AAAFAAEAAAD///f/AAAEAAEAAAD///j/AAAJAAEAAAD8//f/AAAEAAEAAAABAPL/AAAJAAEAAAABAPP/AAADAAEAAAABAPT/AAAIAAEAAAABAPX/AAAAAAEAAAACAPL/AAAGAAEAAAACAPP/AAADAAEAAAACAPT/AAAAAAEAAAACAPX/AAAFAAEAAAADAPL/AAAFAAEAAAADAPP/AAABAAEAAAADAPT/AAABAAEAAAADAPX/AAAAAAEAAAAAAPT/AAAJAAEAAAAAAPP/AAAAAAEAAAAAAPX/AAAGAAEAAAAEAPT/AAAGAAEAAAAEAPX/AAAJAAEAAAAGAPT/AAACAAEAAAAGAPX/AAAIAAEAAAAHAPT/AAAAAAEAAAAHAPX/AAABAAEAAAAIAPT/AAACAAEAAAAIAPX/AAAFAAEAAAAJAPT/AAABAAEAAAAJAPX/AAAAAAEAAAAKAPT/AAAGAAEAAAAKAPX/AAAGAAEAAAAFAPX/AAABAAEAAAD///n/AAAEAAEAAAD+//n/AAAAAAEAAAAEAPP/AAAHAAEAAAAFAPT/AAAGAAEAAAAHAPP/AAAJAAEAAAAIAPP/AAACAAEAAAALAPX/AAABAAEAAAAMAPX/AAAFAAEAAAAPAPT/AAACAAEAAAAPAPX/AAAHAAEAAAAQAPT/AAAJAAEAAAAQAPX/AAABAAEAAAARAPT/AAAHAAEAAAARAPX/AAAHAAEAAAASAPX/AAADAAEAAAASAPb/AAAFAAEAAAATAPX/AAABAAEAAAATAPb/AAAGAAEAAAAUAPX/AAAEAAEAAAAUAPb/AAAAAAEAAAAQAPP/AAAAAAEAAAATAPT/AAAEAAEAAAASAPf/AAADAAEAAAASAPn/AAAFAAEAAAASAPr/AAAFAAEAAAATAPr/AAAHAAEAAAAVAPz/AAAAAAEAAAAVAP3/AAADAAEAAAAVAP7/AAAJAAEAAAAWAP7/AAADAAEAAAAWAPz/AAADAAEAAAAVAPn/AAAFAAEAAAAVAPr/AAAGAAEAAAAVAPv/AAAGAAEAAAAWAPn/AAAJAAEAAAAWAPr/AAABAAEAAAAWAPv/AAABAAEAAAAXAPr/AAAJAAEAAAAXAPv/AAAFAAEAAAAUAPr/AAABAAEAAAAeAAEAAAADAAEAAAAeAAIAAAAIAAEAAAAfAAIAAAAIAAEAAAAYAP3/AAACAAEAAAASAAwAAAAGAAEAAAD//wQAAAAEAAEAAAD7//7/AAADAAEAAAD7////AAABAAEAAAD8//7/AAAGAAEAAAD8////AAAHAAEAAAD9//7/AAAFAAEAAAD9////AAAIAAEAAAD8//3/AAAFAAEAAAD6////AAAFAAEAAAD8/wAAAAADAAEAAAD7/wAAAAACAAEAAAD8/wEAAAAHAAEAAAD8/wIAAAAGAAEAAAD9/wEAAAAAAAEAAAAFABMAAAAGAAEAAAARABQAAAAHAAEAAAD9/xEAAAABAAEAAAD+/xEAAAAIAAEAAAD//xEAAAAHAAEAAAD9/woAAAACAAEAAAD7/wgAAAAJAAEAAAD8/wkAAAAHAAEAAAD9/wkAAAADAAEAAAAhAAcAAAAHAAEAAAAcAAQAAAAHAAEAAAAdAAQAAAACAAEAAAAeAAQAAAAAAAEAAAAcAA8AAAAIAAEAAAAbAA4AAAAGAAEAAAASABIAAAABAAEAAAA=")
+tile_set = SubResource("TileSet_o1bx0")
+
+[node name="clive_npc" parent="." instance=ExtResource("6_7kch7")]
+position = Vector2(83, 34)
+
+[node name="sanctuary_campfire" parent="." instance=ExtResource("6_0oo8m")]
+position = Vector2(124, 70)
+
+[node name="TallGrass" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Tallgrass" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(152, 58)
+script = null
+
+[node name="Tallgrass2" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(113, 27)
+
+[node name="Tallgrass3" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(134, 38)
+
+[node name="Tallgrass4" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(170, 50)
+
+[node name="Tallgrass5" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(153, 35)
+
+[node name="Tallgrass6" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(126, 21)
+
+[node name="Tallgrass7" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(140, 20)
+
+[node name="Tallgrass8" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(73, -31)
+
+[node name="Tallgrass9" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(112, -32)
+
+[node name="Tallgrass10" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(99, -31)
+
+[node name="Tallgrass11" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(85, -35)
+
+[node name="Tallgrass12" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(95, -41)
+
+[node name="Tallgrass13" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(89, -21)
+
+[node name="Tallgrass14" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(63, -24)
+
+[node name="Tallgrass15" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(10, -61)
+
+[node name="Tallgrass16" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(18, -68)
+
+[node name="Tallgrass17" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(28, -56)
+
+[node name="Tallgrass18" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(41, -58)
+
+[node name="Tallgrass19" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(44, -42)
+
+[node name="Tallgrass20" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(32, -46)
+
+[node name="Tallgrass21" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(16, -40)
+
+[node name="Tallgrass22" parent="TallGrass" instance=ExtResource("4_kbio4")]
+y_sort_enabled = false
+position = Vector2(0, -42)
+
+[node name="SmallGrass" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Smallgrass" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(68, 83)
+script = null
+
+[node name="Smallgrass2" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(102, 88)
+
+[node name="Smallgrass3" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(90, 104)
+
+[node name="Smallgrass4" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(61, 98)
+
+[node name="Smallgrass5" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(83, 88)
+
+[node name="Smallgrass6" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(55, 85)
+
+[node name="Smallgrass7" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(68, 94)
+
+[node name="Smallgrass8" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(75, 103)
+
+[node name="Smallgrass9" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(90, 91)
+
+[node name="Smallgrass10" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(81, 81)
+
+[node name="Smallgrass11" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(94, 83)
+
+[node name="Smallgrass12" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(102, 99)
+
+[node name="Smallgrass13" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(86, 97)
+
+[node name="Smallgrass14" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(66, 108)
+
+[node name="Smallgrass15" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(82, 113)
+
+[node name="Smallgrass16" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(115, 94)
+
+[node name="Smallgrass17" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(201, 24)
+
+[node name="Smallgrass18" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(211, 15)
+
+[node name="Smallgrass19" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(226, 18)
+
+[node name="Smallgrass20" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(231, 25)
+
+[node name="Smallgrass21" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(243, 23)
+
+[node name="Smallgrass22" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(247, 29)
+
+[node name="Smallgrass23" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(251, 36)
+
+[node name="Smallgrass24" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(258, 31)
+
+[node name="Smallgrass25" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(237, 34)
+
+[node name="Smallgrass26" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(265, 39)
+
+[node name="Smallgrass27" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(194, 30)
+
+[node name="Smallgrass28" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(212, 27)
+
+[node name="Smallgrass29" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(201, 36)
+
+[node name="Smallgrass30" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(205, 41)
+
+[node name="Smallgrass31" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(214, 37)
+
+[node name="Smallgrass32" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(199, 45)
+
+[node name="Smallgrass33" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(188, 37)
+
+[node name="Smallgrass34" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(185, 48)
+
+[node name="Smallgrass35" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(197, 52)
+
+[node name="Smallgrass36" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(254, 54)
+
+[node name="Smallgrass37" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(266, 47)
+
+[node name="Smallgrass38" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(264, 60)
+
+[node name="Smallgrass39" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(252, 63)
+
+[node name="Smallgrass40" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(241, 58)
+
+[node name="Smallgrass41" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(245, 76)
+
+[node name="Smallgrass42" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(254, 71)
+
+[node name="Smallgrass43" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(269, 73)
+
+[node name="Smallgrass44" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(257, 79)
+
+[node name="Smallgrass45" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(237, 80)
+
+[node name="Smallgrass46" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(225, 77)
+
+[node name="Smallgrass47" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(230, 86)
+
+[node name="Smallgrass48" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(205, -29)
+
+[node name="Smallgrass49" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(217, -25)
+
+[node name="Smallgrass50" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(229, -30)
+
+[node name="Smallgrass51" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(214, -38)
+
+[node name="Smallgrass52" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(205, -49)
+
+[node name="Smallgrass53" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(222, -51)
+
+[node name="Smallgrass54" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(227, -46)
+
+[node name="Smallgrass55" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(239, -27)
+
+[node name="Smallgrass56" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(233, -20)
+
+[node name="Smallgrass57" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(217, -14)
+
+[node name="Smallgrass58" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(203, -20)
+
+[node name="Smallgrass59" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(191, -27)
+
+[node name="Smallgrass60" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(183, 1)
+
+[node name="Smallgrass61" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(170, -1)
+
+[node name="Smallgrass62" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(160, -10)
+
+[node name="Smallgrass63" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(145, -11)
+
+[node name="Smallgrass64" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(129, -16)
+
+[node name="Smallgrass65" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(132, -10)
+
+[node name="Smallgrass66" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(158, -21)
+
+[node name="Smallgrass67" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(151, -29)
+
+[node name="Smallgrass68" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(117, -11)
+
+[node name="Smallgrass69" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(129, -3)
+
+[node name="Smallgrass70" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(147, 0)
+
+[node name="Smallgrass71" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(76, -83)
+
+[node name="Smallgrass72" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(83, -79)
+
+[node name="Smallgrass73" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(92, -87)
+
+[node name="Smallgrass74" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(102, -78)
+
+[node name="Smallgrass75" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(97, -70)
+
+[node name="Smallgrass76" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(62, -77)
+
+[node name="Smallgrass77" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(71, -74)
+
+[node name="Smallgrass78" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(127, -64)
+
+[node name="Smallgrass79" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(132, -60)
+
+[node name="Smallgrass80" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(137, -68)
+
+[node name="Smallgrass81" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-41, -22)
+
+[node name="Smallgrass82" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-52, -17)
+
+[node name="Smallgrass83" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-43, -14)
+
+[node name="Smallgrass84" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-32, -19)
+
+[node name="Smallgrass85" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-39, -5)
+
+[node name="Smallgrass86" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-39, -5)
+
+[node name="Smallgrass87" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-11, 26)
+
+[node name="Smallgrass88" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-6, 18)
+
+[node name="Smallgrass89" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-2, 32)
+
+[node name="Smallgrass90" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-33, 78)
+
+[node name="Smallgrass91" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-21, 71)
+
+[node name="Smallgrass92" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-10, 74)
+
+[node name="Smallgrass93" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-17, 81)
+
+[node name="Smallgrass94" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-29, 84)
+
+[node name="Smallgrass95" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-17, 91)
+
+[node name="Smallgrass96" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-2, 84)
+
+[node name="Smallgrass97" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(26, -5)
+
+[node name="Smallgrass98" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(63, 11)
+
+[node name="Smallgrass99" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(52, -19)
+
+[node name="Smallgrass100" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(33, 32)
+
+[node name="Smallgrass101" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(40, 35)
+
+[node name="Smallgrass102" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(27, 41)
+
+[node name="Smallgrass103" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(25, -27)
+
+[node name="Smallgrass104" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(16, -20)
+
+[node name="Smallgrass105" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(9, 10)
+
+[node name="Smallgrass106" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-59, 155)
+
+[node name="Smallgrass107" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-51, 145)
+
+[node name="Smallgrass108" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-39, 150)
+
+[node name="Smallgrass109" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-46, 159)
+
+[node name="Smallgrass110" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-55, 167)
+
+[node name="Smallgrass111" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-26, 156)
+
+[node name="Smallgrass112" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-20, 161)
+
+[node name="Smallgrass113" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-28, 167)
+
+[node name="Smallgrass114" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-10, 167)
+
+[node name="Smallgrass115" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-14, 175)
+
+[node name="Smallgrass116" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-23, 181)
+
+[node name="Smallgrass117" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-23, 181)
+
+[node name="Smallgrass118" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-15, 185)
+
+[node name="Smallgrass119" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-18, 192)
+
+[node name="Smallgrass120" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-5, 182)
+
+[node name="Smallgrass121" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-3, 189)
+
+[node name="Smallgrass122" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(3, 173)
+
+[node name="Smallgrass123" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(3, 165)
+
+[node name="Smallgrass124" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-6, 152)
+
+[node name="Smallgrass125" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-16, 145)
+
+[node name="Smallgrass126" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-6, 134)
+
+[node name="Smallgrass127" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-25, 127)
+
+[node name="Smallgrass128" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(-34, 135)
+
+[node name="Smallgrass129" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(62, 180)
+
+[node name="Smallgrass130" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(77, 172)
+
+[node name="Smallgrass131" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(81, 188)
+
+[node name="Smallgrass132" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(87, 195)
+
+[node name="Smallgrass133" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(46, 164)
+
+[node name="Smallgrass134" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(39, 147)
+
+[node name="Smallgrass135" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(39, 147)
+
+[node name="Smallgrass136" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(92, 147)
+
+[node name="Smallgrass137" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(105, 139)
+
+[node name="Smallgrass138" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(115, 182)
+
+[node name="Smallgrass139" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(125, 176)
+
+[node name="Smallgrass140" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(135, 179)
+
+[node name="Smallgrass141" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(137, 186)
+
+[node name="Smallgrass142" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(148, 177)
+
+[node name="Smallgrass143" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(195, 181)
+
+[node name="Smallgrass144" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(207, 176)
+
+[node name="Smallgrass145" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(216, 180)
+
+[node name="Smallgrass146" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(219, 186)
+
+[node name="Smallgrass147" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(226, 195)
+
+[node name="Smallgrass148" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(229, 177)
+
+[node name="Smallgrass149" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(222, 168)
+
+[node name="Smallgrass150" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(208, 166)
+
+[node name="Smallgrass151" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(215, 159)
+
+[node name="Smallgrass152" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(178, 136)
+
+[node name="Smallgrass153" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(171, 131)
+
+[node name="Smallgrass154" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(164, 126)
+
+[node name="Smallgrass155" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(175, 123)
+
+[node name="Smallgrass156" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(167, 119)
+
+[node name="Smallgrass157" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(180, 114)
+
+[node name="Smallgrass158" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(154, 117)
+
+[node name="Smallgrass159" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(146, 121)
+
+[node name="Smallgrass160" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(138, 126)
+
+[node name="Smallgrass161" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(149, 129)
+
+[node name="Smallgrass162" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(23, 99)
+
+[node name="Smallgrass163" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(29, 95)
+
+[node name="Smallgrass164" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(21, 91)
+
+[node name="Smallgrass165" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(31, 108)
+
+[node name="Smallgrass166" parent="SmallGrass" instance=ExtResource("3_kbio4")]
+y_sort_enabled = false
+position = Vector2(4, 99)
+
+[node name="Trees" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="reg_village_tree" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(53, -42)
+
+[node name="reg_village_tree2" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(120, -88)
+
+[node name="reg_village_tree3" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(178, -8)
+
+[node name="reg_village_tree4" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(144, -25)
+
+[node name="reg_village_tree5" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(21, -96)
+
+[node name="reg_village_tree6" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(77, -116)
+
+[node name="reg_village_tree7" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(-1, -62)
+
+[node name="reg_village_tree8" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(95, -53)
+
+[node name="reg_village_tree9" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(227, -65)
+
+[node name="reg_village_tree10" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(191, -43)
+
+[node name="reg_village_tree11" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(169, -110)
+
+[node name="reg_village_tree12" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(-33, -11)
+
+[node name="reg_village_tree13" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(294, 5)
+
+[node name="reg_village_tree14" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(288, 129)
+
+[node name="reg_village_tree15" parent="Trees" instance=ExtResource("6_o6jja")]
+position = Vector2(-22, 57)

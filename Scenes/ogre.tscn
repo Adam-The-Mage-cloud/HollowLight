@@ -236,12 +236,12 @@ emission_box_extents = Vector3(2, 1, 1)
 gravity = Vector3(0, 98, 0)
 color_ramp = SubResource("GradientTexture1D_7kbme")
 
-[sub_resource type="Gradient" id="Gradient_7kbme"]
+[sub_resource type="Gradient" id="Gradient_4ma1k"]
 offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
 colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_uw55x"]
-gradient = SubResource("Gradient_7kbme")
+gradient = SubResource("Gradient_4ma1k")
 width = 36
 fill = 1
 fill_from = Vector2(0.5, 0.5)

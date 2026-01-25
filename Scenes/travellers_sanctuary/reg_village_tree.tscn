@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://br6d3apohpg5v"]
+
+[ext_resource type="Texture2D" uid="uid://bw8tfyixkrvy6" path="res://Artwork/Trees_Outside_Tileset.png" id="1_0kti5"]
+
+[sub_resource type="Gradient" id="Gradient_8dfno"]
+offsets = PackedFloat32Array(0, 0.53333336, 1)
+colors = PackedColorArray(0.2027232, 0.20272338, 0.2027233, 0.8666667, 0.68859535, 0.6885953, 0.6885948, 0.42352942, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ib3ja"]
+gradient = SubResource("Gradient_8dfno")
+fill = 1
+fill_from = Vector2(0.50155765, 0.46417445)
+fill_to = Vector2(0.894081, 0.10903427)
+
+[node name="reg_village_tree" type="Node2D"]
+z_index = 1
+texture_filter = 1
+
+[node name="Tree" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, -60)
+texture = ExtResource("1_0kti5")
+
+[node name="TreeShadow" type="PointLight2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, 5.9999995)
+scale = Vector2(1.1173462, 1.09375)
+color = Color(1, 1, 1, 0.62352943)
+blend_mode = 1
+texture = SubResource("GradientTexture2D_ib3ja")

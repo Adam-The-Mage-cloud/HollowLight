@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://byj02odr2ti4q"]
+
+[ext_resource type="Script" uid="uid://61r11lmemhp1" path="res://Scripts/travellers_sanctuary/smallgrass.gd" id="1_qrx2f"]
+[ext_resource type="Texture2D" uid="uid://clg6204cgcaov" path="res://Artwork/Plants_Outside_Tileset.png" id="2_lsvtt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4q1kl"]
+size = Vector2(22, 16.61607)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nc8st"]
+atlas = ExtResource("2_lsvtt")
+region = Rect2(32, 5, 22, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcef3"]
+atlas = ExtResource("2_lsvtt")
+region = Rect2(32, 41, 22, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6jx3v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc8st")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcef3")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_4ma1k"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nc8st"]
+gradient = SubResource("Gradient_4ma1k")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Smallgrass" type="Area2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_qrx2f")
+
+[node name="SmallGrassCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+scale = Vector2(0.601827, 0.601827)
+shape = SubResource("RectangleShape2D_4q1kl")
+debug_color = Color(0.700627, 0.485622, 0.219094, 0.42)
+
+[node name="Smallgrass" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(0, 1)
+sprite_frames = SubResource("SpriteFrames_6jx3v")
+autoplay = "default"
+frame_progress = 0.39868218
+
+[node name="TallGrassShadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.3137255)
+z_index = -1
+use_parent_material = true
+position = Vector2(0, 12)
+scale = Vector2(2, 0.5)
+texture = SubResource("GradientTexture2D_nc8st")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
