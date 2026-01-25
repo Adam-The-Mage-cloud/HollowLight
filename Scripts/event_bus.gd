@@ -26,6 +26,8 @@ var beacons_lit = 0
 var total_current_darkness = 0.0
 var total_acquired_experience = 0
 var total_acquired_goldpieces = 0
+
+var total_new_acquired_experience = 0
 var total_new_acquired_goldpieces = 0
 
 # Rooms Completed / ENDGAME DECIDER :
@@ -60,7 +62,7 @@ func _on_ember_acquired() :
 	total_current_darkness -= 5
 
 func _on_experience_orb_acquired() :
-	total_acquired_experience += 1
+	total_new_acquired_experience += 1
 
 func _on_goldpiece_acquired() :
 	total_new_acquired_goldpieces += 1
