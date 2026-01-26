@@ -15,6 +15,7 @@ func _on_dungeon_ended() :
 	animate_gold_gain()
 	%TotalXPText.visible = true
 	%XPProgressBar.visible = true
+	%XPProgressBar.visible = true
 
 # This function adds the gained gold from the duneon to the preexisting player count, but slowly for the sake of the endgame animation :
 func animate_gold_gain():
@@ -55,15 +56,70 @@ func animate_gold_gain():
 	tween.finished.connect(func():
 		EventBus.total_acquired_goldpieces = end_value)
 		
+	await get_tree().create_timer(1.0).timeout
 	# When That Sequence is Finished, BEGIN XP ANIMATION :
 	animate_xp_gain() 
 
-func animate_xp_gain() :
-	# Previous XP Number Fade In :
-	# XP FONT HIGHLIGHTS EVERYTIME A NEW LEVEL HAPPENS ON THE LEVEL UP BAR :
-	pass
+
+func animate_xp_gain():
+	var xp_to_add = 340  # placeholder
+	EventBus.total_new_acquired_experience += xp_to_add
 	
+	var current_xp = EventBus.total_acquired_experience
+	var new_xp_total = current_xp + EventBus.total_new_acquired_experience
 	
-	# Update the actual stored value at the end
-	#tween.finished.connect(func():
-		#EventBus.total_acquired_experience = end_value)
+	# Loop while we overflow past 100
+	while new_xp_total >= 100:
+		#var xp_needed = 100 - current_xp
+		
+		# Tween to 100 (level-up) :
+		await tween_xp_bar(current_xp, 100)
+		
+		# Player Level Up :
+		EventBus.player_level += 1
+		%TotalXPText.text = str(EventBus.player_level)
+		level_up_flashes()
+		
+		# Remove the 100 XP and then reset the bar :
+		new_xp_total -= 100
+		current_xp = 0
+		%XPProgressBar.value = 0
+		
+	# Final tween for leftover XP (where the bar isn't fully filled) :
+	await tween_xp_bar(current_xp, new_xp_total)
+	
+	# Update Stored XP
+	EventBus.total_acquired_experience = new_xp_total
+	EventBus.total_new_acquired_experience = 0
+
+
+func tween_xp_bar(from_value: float, to_value: float) -> void:
+	# Pre-Progress White Bar :
+	%XPProgressBarHighlight.value = from_value
+	var white_tween = create_tween()
+	white_tween.tween_property(%XPProgressBarHighlight, "value", to_value, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	await white_tween.finished
+	
+	# Actual Progress Bar
+	%XPProgressBar.value = from_value
+	var mainGain_tween = create_tween()
+	mainGain_tween.tween_property(%XPProgressBar, "value", to_value, 1.05)
+	await mainGain_tween.finished
+
+
+# Helps Showcase Each Time A Level Up Occurs :
+func level_up_flashes() :
+	# Increase Font Scale :
+	var XPFontScaler_tween = create_tween()
+	XPFontScaler_tween.tween_property(%TotalXPText, "scale", Vector2(0.6, 0.6), 0.04).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	var XPTextLevel_tween = create_tween()
+	XPTextLevel_tween.tween_property(%TotalXPText.material, "shader_parameter/flash_amount", 1.0, 0.05)
+	XPTextLevel_tween.tween_property(%TotalXPText.material, "shader_parameter/flash_amount", 0.0, 0.1)
+
+	var XPProgressBar_tween = create_tween()
+	XPProgressBar_tween.tween_property(%XPProgressBar.material, "shader_parameter/flash_amount", 1.0, 0.05)
+	XPProgressBar_tween.tween_property(%XPProgressBar.material, "shader_parameter/flash_amount", 0.0, 0.1)
+	
+	# Decrease Font Scale :
+	XPFontScaler_tween.tween_property(%TotalXPText, "scale", Vector2(0.53, 0.53), 0.04).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)

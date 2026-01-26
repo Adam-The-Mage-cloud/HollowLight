@@ -30,6 +30,9 @@ var total_acquired_goldpieces = 0
 var total_new_acquired_experience = 0
 var total_new_acquired_goldpieces = 0
 
+# PLAYER STATS :
+var player_level = 1
+
 # Rooms Completed / ENDGAME DECIDER :
 var rooms_completed = 0.0
 var game_over_chance = 0.0
