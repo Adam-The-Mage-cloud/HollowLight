@@ -16,8 +16,9 @@ signal goldpiece_acquired(gold_piece)
 
 signal new_room
 
-# ENDGAME Signals :
+# MENU Signals :
 signal last_room_complete()
+signal open_travel_menu()
 
 var total_beacons_to_light = 0
 var beacons_lit = 0
@@ -79,3 +80,6 @@ func _on_new_room() :
 
 func last_room_passed() :
 	EventBus.last_room_complete.emit()
+
+func open_the_travel_menu() :
+	EventBus.open_travel_menu.emit()

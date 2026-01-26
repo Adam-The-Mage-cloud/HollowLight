@@ -5,17 +5,28 @@ func _ready() :
 	EventBus.last_room_complete.connect(_on_dungeon_ended) # REMOVE THIS WHEN IT'S READY
 	_on_dungeon_ended()
 	pass
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# LOOT SCREEN AFTER DUNGEON :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func _on_dungeon_ended() :
+	EventBus.total_new_acquired_goldpieces += 50
 	# Fade in End of Dungeon Menu :
 	%EndOfDungeonMenu.visible = true
 	# Display The Initial Previous Gold Count pre-encounter :
 	%TotalGoldText.text = str(EventBus.total_acquired_goldpieces)
-	# Animated the newly gained gold
+	# BEGIN SERIES OF LOOT MENU ANIMATIONS:
+	loot_menu_fadein()
+
+
+func loot_menu_fadein() :
+	%LootScreen.visible = true
+	var LootScreenFade_tween = create_tween()
+	LootScreenFade_tween.tween_property(%LootScreen, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	await LootScreenFade_tween.finished
+	%XPOutlineFlasher.visible = true
 	animate_gold_gain()
-	%TotalXPText.visible = true
-	%XPProgressBar.visible = true
-	%XPProgressBar.visible = true
+
 
 # This function adds the gained gold from the duneon to the preexisting player count, but slowly for the sake of the endgame animation :
 func animate_gold_gain():
@@ -38,12 +49,21 @@ func animate_gold_gain():
 	var start_value = EventBus.total_acquired_goldpieces
 	var end_value = start_value + EventBus.total_new_acquired_goldpieces
 	var gold_addon_duration = 2.0  # Seconds
-	var tween = create_tween()
-	tween.tween_method(
+	var gold_addon_tween = create_tween()
+	gold_addon_tween.tween_method(
 		func(value):
 			%TotalGoldText.text = str(value),
 		start_value,
 		end_value,
+		gold_addon_duration
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	var gained_gold_tween = create_tween()
+	gained_gold_tween.tween_method(
+		func(value):
+			%GainedGoldText.text = "+" + str(value),
+		0,
+		EventBus.total_new_acquired_goldpieces,
 		gold_addon_duration
 	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
@@ -53,7 +73,7 @@ func animate_gold_gain():
 	var white_tween = create_tween()
 	white_tween.tween_property(%TotalGoldText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	# Update the actual stored value at the end
-	tween.finished.connect(func():
+	gained_gold_tween.finished.connect(func():
 		EventBus.total_acquired_goldpieces = end_value)
 		
 	await get_tree().create_timer(1.0).timeout
@@ -91,6 +111,11 @@ func animate_xp_gain():
 	# Update Stored XP
 	EventBus.total_acquired_experience = new_xp_total
 	EventBus.total_new_acquired_experience = 0
+	
+	# Signal for EventBus to begin the next menu (buttons!) :
+	await get_tree().create_timer(0.8).timeout
+	fade_lootscreen()
+	EventBus.open_the_travel_menu()
 
 
 func tween_xp_bar(from_value: float, to_value: float) -> void:
@@ -118,8 +143,77 @@ func level_up_flashes() :
 	XPTextLevel_tween.tween_property(%TotalXPText.material, "shader_parameter/flash_amount", 0.0, 0.1)
 
 	var XPProgressBar_tween = create_tween()
-	XPProgressBar_tween.tween_property(%XPProgressBar.material, "shader_parameter/flash_amount", 1.0, 0.05)
-	XPProgressBar_tween.tween_property(%XPProgressBar.material, "shader_parameter/flash_amount", 0.0, 0.1)
+	XPProgressBar_tween.tween_property(%XPOutlineFlasher.material, "shader_parameter/flash_amount", 1.0, 0.05)
+	XPProgressBar_tween.tween_property(%XPOutlineFlasher.material, "shader_parameter/flash_amount", 0.0, 0.1)
 	
 	# Decrease Font Scale :
 	XPFontScaler_tween.tween_property(%TotalXPText, "scale", Vector2(0.53, 0.53), 0.04).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+
+func fade_lootscreen() :
+	%XPOutlineFlasher.visible = false
+	var LootScreenFade_tween = create_tween()
+	LootScreenFade_tween.tween_property(%LootScreen, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	# Open Adventure Menu! :
+	open_adventure_menu()
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# OPEN ADVENTURE Menu AND ITS ANIMATIONS :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+func open_adventure_menu() :
+	# Fade-IN Adventure Menu :
+	%EndOfDungeonMenu.visible = true
+	adventure_menu_fadein()
+	
+	# Animate All The Different Sprites To Move UP/DOWN etc :
+	animate_playertorch() 
+	animated_homearrow()
+	animated_homeletter()
+
+func adventure_menu_fadein() :
+	%AdventureScreen.visible = true
+	var AdventureScreenFade_tween = create_tween()
+	AdventureScreenFade_tween.tween_property(%AdventureScreen, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func animate_playertorch() :
+	while %AdventureScreen.visible == true :
+		var MovingPlayerTorch_tween = create_tween()
+		MovingPlayerTorch_tween.tween_property(%MovingPlayerTorch, "position", Vector2(274.5, 97.0), 0.75).set_trans(Tween.TRANS_LINEAR)
+		# When Moved Up, Move Down :
+		await MovingPlayerTorch_tween.finished
+		replayicon_flash_white()
+		var MovingPlayerTorchDOWN_tween = create_tween()
+		MovingPlayerTorchDOWN_tween.tween_property(%MovingPlayerTorch, "position", Vector2(274.5, 145.0), 2.25).set_trans(Tween.TRANS_LINEAR)
+		await MovingPlayerTorchDOWN_tween.finished
+
+func animated_homearrow() :
+	while %AdventureScreen.visible == true :
+		var HomeArrow_tween = create_tween()
+		HomeArrow_tween.tween_property(%HomeArrow, "position", Vector2(130.5, 91.0), 0.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		# When Moved Up, Move Down :
+		await HomeArrow_tween.finished
+		var HomeArrowDOWN_tween = create_tween()
+		HomeArrowDOWN_tween.tween_property(%HomeArrow, "position", Vector2(130.5, 110.0), 0.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		await HomeArrowDOWN_tween.finished
+
+func animated_homeletter() :
+	while %AdventureScreen.visible == true :
+		var HomeLetter_tween = create_tween()
+		HomeLetter_tween.tween_property(%HomeH, "position", Vector2(130.5, 56.0), 2.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		# When Moved Up, Move Down :
+		await HomeLetter_tween.finished
+		var HomeLetterDOWN_tween = create_tween()
+		HomeLetterDOWN_tween.tween_property(%HomeH, "position", Vector2(130.5, 60.0), 2.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		await HomeLetterDOWN_tween.finished
+
+func replayicon_flash_white() :
+	var icon_flash = create_tween()
+	icon_flash.tween_property(%ReplayIcon.material, "shader_parameter/flash_amount", 1.0, 0.05)
+	icon_flash.tween_property(%ReplayIcon.material, "shader_parameter/flash_amount", 0.0, 0.1)
+	# and spin 90 degrees :
+	var icon_spin = create_tween()
+	icon_spin.tween_property(%NONSHADEREDReplayIcon, "rotation", rotation_degrees + 90, 2)
+	icon_spin.tween_property(%SHADEREDReplayIcon, "rotation", rotation_degrees + 90, 2)
+	# Play a woody particle drop off effect :
+	var tween particle

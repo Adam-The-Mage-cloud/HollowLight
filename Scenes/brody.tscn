@@ -404,7 +404,7 @@ unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_lgt8o")
-animation = &"puddle"
+animation = &"stationary"
 autoplay = "stationary"
 
 [node name="antenna" type="AnimatedSprite2D" parent="BrodySprite"]
