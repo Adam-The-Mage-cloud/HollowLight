@@ -3,14 +3,16 @@ extends Area2D
 var lit = false
 
 func _ready() :
-	EventBus.emit_signal("beacon_spawned")
-	add_to_group("braziers")
 	material = $".".material.duplicate()
 	%BrazierSprite.play("unlit")
 	%MainFlame.emitting = false
 	%MainFlameSecondary.emitting = false
 	%BrazierLight.enabled = false
 
+# This function is to stop braziers being counted before they are visible (blocking doors and the player from succeeding) :
+func now_visible() :
+	EventBus.emit_signal("beacon_spawned")
+	add_to_group("braziers")
 
 func brazier_lit() :
 	if lit == false :

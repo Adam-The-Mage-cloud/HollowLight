@@ -3012,6 +3012,8 @@ unique_name_in_owner = true
 [node name="10" type="Node2D" parent="SpawnPoints"]
 unique_name_in_owner = true
 
+[node name="Beacons" type="Node2D" parent="."]
+
 [node name="DoorArea" type="StaticBody2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true

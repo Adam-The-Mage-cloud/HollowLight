@@ -27,7 +27,6 @@ var wall_positions: Array[Vector2i] = []
 
 var room_complete = false
 var already_opened = false
-var last_room = false
 
 var spawnpoints = 10
 
@@ -74,13 +73,14 @@ var height = 18
 func _ready() -> void:
 	randomize()
 	$".".add_to_group("rooms")
+	EventBus.total_rooms += 1
 	# Door :
 	%DoorArea.material = %DoorArea.material.duplicate()
 	%DoorArea.add_to_group("doors")
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
 	
 	# If last room then prepare Door to have light :
-	if last_room == true :
+	if EventBus.last_room == true :
 		%FinishLight1.enabled = true
 		%FinishLight2.enabled = true
 		%FinishLight3.enabled = true
@@ -132,7 +132,9 @@ func _ready() -> void:
 	if stepladder_chance != 0 :
 		if randi_range(1, stepladder_spawn_rate) == 1 :
 			spawn_stepladder()
-
+		
+	# Pre-Generate Next Room :
+	spawn_next_room()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ROOM TYPE + SIZE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1209,7 +1211,7 @@ func beacon_spawns() -> void:
 			var rand = randi_range(1, spawnpoints)
 			var spawn_node = %SpawnPoints.get_child(rand - 1)
 			new_beacon.global_position = spawn_node.global_position
-			add_child(new_beacon)
+			get_node("Beacons").add_child(new_beacon)
 
 # Stepladder :
 func spawn_stepladder() :
@@ -1414,7 +1416,7 @@ func fog_cluster_spawns():
 func _on_all_beacons_lit() -> void:
 	%DoorStopperCollision.set_deferred("disabled", true)
 	room_complete = true
-	EventBus.rooms_completed += 1
+	#EventBus.rooms_completed += 1
 	# Door Flashes :
 	%DoorFlashingTimer.start()
 
@@ -1451,42 +1453,60 @@ func new_stepladder_dungeon(body) :
 		# new_room.first_room = false
 
 func _on_door_open_area_body_entered(body: Node2D) -> void:
-	if body.name == "Brody" and not already_opened and room_complete:
-		if last_room == false :
-			%DoorFlashingTimer.stop()
-			already_opened = true
-			%DoorArea.remove_from_group("doors")
-			%DoorArea.unlocked = true
-			%DoorSprite.play("DarkSteelSmashed")
-			var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
-			new_room.door_origin = %DoorArea.global_position
-			new_room.z_index = 0
-			new_room.first_room = false
-			EventBus._on_new_room()
-			new_room.last_room = EventBus.last_room
-			
-			# Send Old Floor Positions :
-			var world_floor_positions: Array[Vector2] = []
-			for p in floor_positions:
-				var local_pixel = %TileMapFloor.map_to_local(p)
-				var world_pos = %TileMapFloor.to_global(local_pixel)
-				world_floor_positions.append(world_pos)
-			new_room.previous_floor_world_positions = world_floor_positions
-			
-			# Send Old FrontWall Positions :
-			var world_frontwall_positions: Array[Vector2] = []
-			for p in world_frontwall_positions:
-				var local_pixel = %TileMapFloor.map_to_local(p)
-				var world_pos = %TileMapFloor.to_global(local_pixel)
-				world_frontwall_positions.append(world_pos)
-			new_room.previous_frontwall_world_positions = world_frontwall_positions
-			
-			get_tree().current_scene.get_node("RoomsToBeDeleted").call_deferred("add_child", new_room)
-			print(get_tree().current_scene.get_node("RoomsToBeDeleted"))
+	if body.name != "Brody" or already_opened or not room_complete:
+		return
+	
+	already_opened = true
+	%DoorFlashingTimer.stop()
+	%DoorArea.remove_from_group("doors")
+	%DoorArea.unlocked = true
+	%DoorSprite.play("DarkSteelSmashed")
+	
+	if EventBus.last_room:
+		EventBus.last_room_passed()
+		return
+	
+	# SWITCH TO NEXT ROOM :
+	var rooms = get_tree().current_scene.get_node("RoomsToBeDeleted").get_children()
+	var index = rooms.find($".")
+	
+	if index != -1 and index + 1 < rooms.size():
+		var next_room = rooms[index + 1]
 		
-		elif last_room == true :
-			EventBus.last_room_passed()
-			pass
-			# Fade to bright endgame screen with background and then earnings being tallied up etc, 
-			# before a "continue on home" button to take you to the village, or "adventure" to adventure again!
-			# Spawn Player in outside village : )
+		# Show next room :
+		next_room.visible = true
+		
+		# Tell EventBus How many beacons are in the next room, by getting ebacons to activate :
+		var new_rooms_beacons = next_room.get_node("Beacons").get_children()
+		for i in new_rooms_beacons :
+			i.now_visible()
+		
+func spawn_next_room() :
+	if EventBus.last_room == false :
+		var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
+		new_room.door_origin = %DoorArea.global_position
+		new_room.z_index = 0
+		new_room.first_room = false
+		EventBus._on_new_room()
+		
+		# Send Old Floor Positions :
+		var world_floor_positions: Array[Vector2] = []
+		for p in floor_positions:
+			var local_pixel = %TileMapFloor.map_to_local(p)
+			var world_pos = %TileMapFloor.to_global(local_pixel)
+			world_floor_positions.append(world_pos)
+		new_room.previous_floor_world_positions = world_floor_positions
+		
+		# Send Old FrontWall Positions :
+		var world_frontwall_positions: Array[Vector2] = []
+		for p in world_frontwall_positions:
+			var local_pixel = %TileMapFloor.map_to_local(p)
+			var world_pos = %TileMapFloor.to_global(local_pixel)
+			world_frontwall_positions.append(world_pos)
+		new_room.previous_frontwall_world_positions = world_frontwall_positions
+		
+		# Make Invisible  :
+		new_room.visible = false
+		
+		get_tree().current_scene.get_node("RoomsToBeDeleted").call_deferred("add_child", new_room)
+		print(get_tree().current_scene.get_node("RoomsToBeDeleted"))

@@ -38,9 +38,10 @@ var total_new_acquired_goldpieces = 0
 var player_level = 1
 
 # Rooms Completed / ENDGAME DECIDER :
-var rooms_completed = 0.0
+var current_room
 var game_over_chance = 0.0
 var last_room = false
+var total_rooms = 0.0
 
 # Theme Indicator
 var current_theme = 1
@@ -76,9 +77,9 @@ func _on_goldpiece_acquired() :
 
 # New Room / Game Finisher Decider :
 func _on_new_room() :
-	game_over_chance = (rooms_completed * 100) / 100 # 2
+	game_over_chance = 0.1 
 	if randf_range(0, 1) < game_over_chance :
-		if rooms_completed >= 1 : # 7
+		if total_rooms >= 4 : # 7
 			last_room = true
 
 func last_room_passed() :
