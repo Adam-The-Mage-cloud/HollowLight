@@ -55,4 +55,4 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 		new_room.previous_frontwall_world_positions = world_frontwall_positions
 		
 		await get_tree().process_frame
-		get_tree().current_scene.call_deferred("add_child", new_room)
+		get_tree().current_scene.get_node("RoomsToBeDeleted").call_deferred("add_child", new_room)

@@ -1447,7 +1447,7 @@ func new_stepladder_dungeon(body) :
 		for node in get_tree().current_scene.get_tree().get_nodes_in_group("rooms"):
 			node.queue_free()
 		
-		get_tree().current_scene.call_deferred("add_child", new_room)
+		get_tree().current_scene.get_node("RoomsToBeDeleted").call_deferred("add_child", new_room)
 		# new_room.first_room = false
 
 func _on_door_open_area_body_entered(body: Node2D) -> void:
@@ -1481,7 +1481,8 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 				world_frontwall_positions.append(world_pos)
 			new_room.previous_frontwall_world_positions = world_frontwall_positions
 			
-			get_tree().current_scene.call_deferred("add_child", new_room)
+			get_tree().current_scene.get_node("RoomsToBeDeleted").call_deferred("add_child", new_room)
+			print(get_tree().current_scene.get_node("RoomsToBeDeleted"))
 		
 		elif last_room == true :
 			EventBus.last_room_passed()

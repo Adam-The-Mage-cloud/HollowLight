@@ -1218,7 +1218,6 @@ scale = Vector2(5.2793274, 7.77476)
 shape = SubResource("RectangleShape2D_nkab7")
 
 [node name="GameplayUI" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
 layer = 5
 
 [node name="IndicatorDirector" type="Sprite2D" parent="GameplayUI"]
@@ -1232,6 +1231,11 @@ script = ExtResource("11_i47ox")
 wait_time = 2.25
 autostart = true
 
+[node name="WormBatChance" type="Timer" parent="GameplayUI"]
+unique_name_in_owner = true
+wait_time = 4.0
+autostart = true
+
 [node name="MonstersLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 layer = 0
@@ -1240,11 +1244,7 @@ follow_viewport_enabled = true
 [node name="MonsterColourCorrection" type="CanvasModulate" parent="MonstersLayer"]
 color = Color(0.671828, 0.8589004, 1, 1)
 
-[node name="MonstersToBeGone" type="Node2D" parent="MonstersLayer"]
-unique_name_in_owner = true
-
 [node name="DarknessLayer" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
 layer = 10
 
 [node name="DarknessEffect" type="Parallax2D" parent="DarknessLayer"]
@@ -1333,7 +1333,7 @@ autostart = true
 
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]
 unique_name_in_owner = true
-position = Vector2(130.15236, 59.85525)
+position = Vector2(216, 120)
 collision_layer = 3
 collision_mask = 3
 
@@ -1387,11 +1387,6 @@ unique_name_in_owner = true
 wait_time = 6.0
 autostart = true
 
-[node name="WormBatChance" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 4.0
-autostart = true
-
 [connection signal="stick_changed" from="TouchScreenLayer/TouchScreenPress1" to="Brody/Torch" method="_on_touch_screen_layer_stick_changed"]
 [connection signal="move_stick_changed" from="TouchScreenLayer/TouchScreenPress2" to="Brody" method="_on_touch_screen_press_2_move_stick_changed"]
 [connection signal="pressed" from="TouchScreenLayer/DashButton" to="Brody" method="_on_dash_button_pressed"]
@@ -1399,7 +1394,7 @@ autostart = true
 [connection signal="pressed" from="Menus/MenuController/AdventureScreen/SanctuaryButton" to="Menus/MenuController" method="_on_sanctuary_button_pressed"]
 [connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_timer_timeout"]
 [connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_flash_timer_timeout"]
+[connection signal="timeout" from="GameplayUI/WormBatChance" to="." method="_on_worm_bat_chance_timeout"]
 [connection signal="timeout" from="DarknessLayer/DarknessEffect/DarknessChecker" to="." method="_on_darkness_checker_timeout"]
 [connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]
 [connection signal="timeout" from="TorchWraithChance" to="." method="_on_torch_wraith_chance_timeout"]
-[connection signal="timeout" from="WormBatChance" to="." method="_on_worm_bat_chance_timeout"]

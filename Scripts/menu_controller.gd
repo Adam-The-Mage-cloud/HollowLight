@@ -2,26 +2,27 @@ extends Control
 
 func _ready() :
 	# Player Spawns in Sanctuary :
-	EventBus.last_room_complete.connect(_on_dungeon_ended) # REMOVE THIS WHEN IT'S READY
-	_on_dungeon_ended()
-	pass
+	EventBus.last_room_complete.connect(_on_dungeon_ended) 
+	# REMOVE THIS WHEN IT'S READY :
+	#_on_dungeon_ended()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # LOOT SCREEN AFTER DUNGEON :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func _on_dungeon_ended() :
-	EventBus.total_new_acquired_goldpieces += 50
+	# Fade in Menu Background :
+	main_background_fadein()
 	# Fade in End of Dungeon Menu :
+	loot_menu_fadein()
 	%EndOfDungeonMenu.visible = true
 	# Display The Initial Previous Gold Count pre-encounter :
 	%TotalGoldText.text = str(EventBus.total_acquired_goldpieces)
 	# BEGIN SERIES OF LOOT MENU ANIMATIONS:
-	loot_menu_fadein()
 
 
 func loot_menu_fadein() :
 	%LootScreen.visible = true
 	var LootScreenFade_tween = create_tween()
-	LootScreenFade_tween.tween_property(%LootScreen, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	LootScreenFade_tween.tween_property(%LootScreen, "modulate", Color(1.0, 1.0, 1.0, 1.0), 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
 	await LootScreenFade_tween.finished
 	%XPOutlineFlasher.visible = true
@@ -82,9 +83,6 @@ func animate_gold_gain():
 
 
 func animate_xp_gain():
-	var xp_to_add = 340  # placeholder
-	EventBus.total_new_acquired_experience += xp_to_add
-	
 	var current_xp = EventBus.total_acquired_experience
 	var new_xp_total = current_xp + EventBus.total_new_acquired_experience
 	
@@ -213,7 +211,52 @@ func replayicon_flash_white() :
 	icon_flash.tween_property(%ReplayIcon.material, "shader_parameter/flash_amount", 0.0, 0.1)
 	# and spin 90 degrees :
 	var icon_spin = create_tween()
-	icon_spin.tween_property(%NONSHADEREDReplayIcon, "rotation", rotation_degrees + 90, 2)
-	icon_spin.tween_property(%SHADEREDReplayIcon, "rotation", rotation_degrees + 90, 2)
+	icon_spin.parallel().tween_property(%ReplayIcon, "rotation_degrees", rotation_degrees + 90, 1.2).as_relative()
+	icon_spin.parallel().tween_property(%ReplayLog, "rotation_degrees", rotation_degrees + 90, 1.2).as_relative()
 	# Play a woody particle drop off effect :
-	var tween particle
+	%WoodSplinterParticles.emitting = true
+
+func adventure_menu_fadeout() :
+	var AdventureScreenFade_tween = create_tween()
+	AdventureScreenFade_tween.tween_property(%AdventureScreen, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	await AdventureScreenFade_tween.finished
+	%AdventureScreen.visible = false
+
+func _on_sanctuary_button_pressed() -> void:
+	# Highlight in Yellow All Assets on That Side Then Fade :
+	%HomeH.play("highlighted")
+	%HomeArrow.play("highlighted")
+	%AdventureMenuTent.play("highlighted")
+	# Fade Out :
+	adventure_menu_fadeout()
+	main_background_fadeout()
+	# Go To Sanctuary :
+
+func _on_replay_dungeon_button_pressed() -> void:
+	# Highlight in Yellow All Assets on That Side :
+	%ReplayIcon.play("highlighted")
+	%MovingPlayerTorch.play("highlighted")
+	%Axes.play("highlighted")
+	%ReplayLog.play("highlighted")
+	# Fade Out :
+	adventure_menu_fadeout()
+	main_background_fadeout()
+	# Begin New Dungeon :
+	EventBus.new_dungeon_crawl()
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# General Menu Fade Away :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func main_background_fadein() :
+	var MainMenuBackgroundFadeIn_tween = create_tween()
+	MainMenuBackgroundFadeIn_tween.parallel().tween_property(%EndOfDungeonMenu, "modulate", Color(1.0, 1.0, 1.0, 1.0), 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	MainMenuBackgroundFadeIn_tween.parallel().tween_property(%SpaceBackground, "modulate", Color(1.0, 1.0, 1.0, 1.0), 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	await MainMenuBackgroundFadeIn_tween.finished
+	%Menus.visible = true
+
+func main_background_fadeout() :
+	var MainMenuBackgroundFadeOut_tween = create_tween()
+	MainMenuBackgroundFadeOut_tween.parallel().tween_property(%EndOfDungeonMenu, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	MainMenuBackgroundFadeOut_tween.parallel().tween_property(%SpaceBackground, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	await MainMenuBackgroundFadeOut_tween.finished
+	%Menus.visible = false

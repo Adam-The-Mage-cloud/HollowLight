@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=4 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=78 format=4 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
@@ -17,10 +17,7 @@
 [ext_resource type="Script" uid="uid://cnyno3yuqeqci" path="res://Scripts/menu_controller.gd" id="10_hm1wn"]
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="10_sftma"]
 [ext_resource type="Script" uid="uid://c6fn7vbrscab5" path="res://Scripts/indicator_director.gd" id="11_i47ox"]
-[ext_resource type="Shader" uid="uid://cuarfti3gqvb7" path="res://Shaders/scrolling_space_background.gdshader" id="12_nkab7"]
-[ext_resource type="Texture2D" uid="uid://bwbxqoswnqal4" path="res://Artwork/Menus/Space_Background_BIG.png" id="12_q6b2w"]
 [ext_resource type="FontFile" uid="uid://6phwuvbfmw4m" path="res://Artwork/Fonts/PixelatedEleganceRegular-ovyAA.ttf" id="12_ry2jr"]
-[ext_resource type="Script" uid="uid://jse2wg7bt3sg" path="res://Scripts/scrolling_space_background.gd" id="13_nkab7"]
 [ext_resource type="Texture2D" uid="uid://c16hk74ia2gne" path="res://Artwork/Menus/Xp_Empty_Background_.png" id="13_ns551"]
 [ext_resource type="Shader" uid="uid://dcgionpdp32vo" path="res://Shaders/darkness.gdshader" id="13_vc13p"]
 [ext_resource type="Shader" uid="uid://jtcx64k0fxec" path="res://Shaders/font_flash.gdshader" id="14_58qbg"]
@@ -33,23 +30,11 @@
 [ext_resource type="Texture2D" uid="uid://bgvpb11gatlkx" path="res://Artwork/Menus/AdventureMenu/Arrow_Choose_Adventure.png" id="21_3bgrf"]
 [ext_resource type="Texture2D" uid="uid://boeyv3ren8wdo" path="res://Artwork/Menus/AdventureMenu/Replay_Choose_Adventure.png" id="22_vt8ts"]
 [ext_resource type="Texture2D" uid="uid://d3qs0l0qcbt2g" path="res://Artwork/Menus/AdventureMenu/Torch_Choose_Adventure.png" id="23_bbjgr"]
-[ext_resource type="Texture2D" uid="uid://chw164gebxdwf" path="res://Artwork/Menus/AdventureMenu/Highlighted_H_For_Home_Letter.png" id="24_g6spl"]
 [ext_resource type="Texture2D" uid="uid://tdt7fov7r6tn" path="res://Artwork/Menus/AdventureMenu/Axes_Choose_Adventure_Page.png" id="24_jbexl"]
 [ext_resource type="Texture2D" uid="uid://wku7bhmv1r5c" path="res://Artwork/Menus/AdventureMenu/Replay_Log_Choose_Adventure_Page.png" id="25_sgmg2"]
-[ext_resource type="Texture2D" uid="uid://bhbwi86hxjg7k" path="res://Artwork/Menus/AdventureMenu/Highlighted_Arrow_Choose_Adventure.png" id="26_nkab7"]
-[ext_resource type="Texture2D" uid="uid://dlq7bot7kmj68" path="res://Artwork/Menus/AdventureMenu/Highlighted_Replay_Choose_Adventure.png" id="28_evlxa"]
-[ext_resource type="Texture2D" uid="uid://biru2i30ny060" path="res://Artwork/Menus/AdventureMenu/Highlighted_Tent_Choose_Adventure_Page.png" id="29_e2wre"]
-[ext_resource type="Texture2D" uid="uid://c01hqtrljk5ta" path="res://Artwork/Menus/AdventureMenu/Tent_Choose_Adventure_Page.png" id="29_evlxa"]
-[ext_resource type="Texture2D" uid="uid://cs5it7wp3kc6o" path="res://Artwork/Menus/AdventureMenu/Highlighted_Torch_Choose_Adventure.png" id="30_7oxt3"]
-[ext_resource type="Texture2D" uid="uid://dp4grf0g3sxrf" path="res://Artwork/Menus/AdventureMenu/Highlighted_Axes_Choose_Adventure_Page.png" id="32_glqx2"]
-[ext_resource type="Texture2D" uid="uid://dvbknwkwbgmvt" path="res://Artwork/Menus/AdventureMenu/Highlighted_Replay_Log_Choose_Adventure_Page.png" id="34_h0kr5"]
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 3
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2wre"]
-shader = ExtResource("12_nkab7")
-shader_parameter/uv_offset = Vector2(0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0bxlt"]
 shader = ExtResource("14_58qbg")
@@ -612,87 +597,6 @@ animations = [{
 "speed": 1.2
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q6b2w"]
-atlas = ExtResource("20_vt8ts")
-region = Rect2(0, 0, 11, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nkab7"]
-atlas = ExtResource("24_g6spl")
-region = Rect2(0, 0, 11, 14)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_e2wre"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q6b2w")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nkab7")
-}],
-"loop": true,
-"name": &"highlighted",
-"speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e2wre"]
-atlas = ExtResource("21_3bgrf")
-region = Rect2(0, 0, 9, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7oxt3"]
-atlas = ExtResource("26_nkab7")
-region = Rect2(0, 0, 9, 8)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_n28rm"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e2wre")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7oxt3")
-}],
-"loop": true,
-"name": &"highlighted",
-"speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_smxg7"]
-atlas = ExtResource("29_evlxa")
-region = Rect2(0, 0, 37, 29)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_evlxa"]
-atlas = ExtResource("29_e2wre")
-region = Rect2(0, 0, 37, 29)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_nkab7"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_smxg7")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_evlxa")
-}],
-"loop": true,
-"name": &"highlighted",
-"speed": 5.0
-}]
-
 [sub_resource type="Shader" id="Shader_jbexl"]
 code = "shader_type canvas_item;
 
@@ -708,42 +612,15 @@ void fragment() {
 shader = SubResource("Shader_jbexl")
 shader_parameter/flash_amount = 0.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n28rm"]
-atlas = ExtResource("22_vt8ts")
-region = Rect2(0, 0, 9, 8)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_glqx2"]
-atlas = ExtResource("28_evlxa")
-region = Rect2(0, 0, 9, 8)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_gy1md"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n28rm")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_glqx2")
-}],
-"loop": true,
-"name": &"highlighted",
-"speed": 5.0
-}]
-
 [sub_resource type="Gradient" id="Gradient_jbexl"]
 offsets = PackedFloat32Array(0, 0.5984849, 1)
-colors = PackedColorArray(0.4459812, 0.29030985, 0.19133553, 1, 0.23095569, 0.140118, 0.083163895, 0.43137255, 1, 1, 1, 1)
+colors = PackedColorArray(0, 0.71389955, 2.3102762e-06, 1, 0.26195547, 0.4633317, 0.26528853, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_l2vdu"]
 gradient = SubResource("Gradient_jbexl")
 
 [sub_resource type="Curve" id="Curve_sgmg2"]
-_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7632509, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_cd0il"]
@@ -751,102 +628,13 @@ curve = SubResource("Curve_sgmg2")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g6spl"]
 particle_flag_disable_z = true
-emission_shape_scale = Vector3(5, 5, 1)
-emission_shape = 1
-emission_sphere_radius = 1.0
-direction = Vector3(0.5, 0, 0)
-spread = 180.0
-flatness = 1.0
-initial_velocity_min = -150.0
-initial_velocity_max = 150.0
-damping_max = 8.0
+spread = 47.5
+initial_velocity_min = -250.0
+initial_velocity_max = 250.0
+damping_min = 4.0
+damping_max = 14.000001
 scale_curve = SubResource("CurveTexture_cd0il")
 color_ramp = SubResource("GradientTexture1D_l2vdu")
-turbulence_enabled = true
-turbulence_noise_strength = 20.0
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gy1md"]
-atlas = ExtResource("23_bbjgr")
-region = Rect2(0, 0, 7, 28)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h0kr5"]
-atlas = ExtResource("30_7oxt3")
-region = Rect2(0, 0, 7, 28)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_h0kr5"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gy1md")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h0kr5")
-}],
-"loop": true,
-"name": &"highlighted",
-"speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8k7o2"]
-atlas = ExtResource("24_jbexl")
-region = Rect2(0, 0, 39, 22)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3kmrm"]
-atlas = ExtResource("32_glqx2")
-region = Rect2(0, 0, 39, 22)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_b8haf"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8k7o2")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3kmrm")
-}],
-"loop": true,
-"name": &"highlighted",
-"speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b8haf"]
-atlas = ExtResource("25_sgmg2")
-region = Rect2(0, 0, 16, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dsbp1"]
-atlas = ExtResource("34_h0kr5")
-region = Rect2(0, 0, 16, 14)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_rgo3w"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b8haf")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dsbp1")
-}],
-"loop": true,
-"name": &"highlighted",
-"speed": 5.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nkab7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_erobn"]
 shader = ExtResource("10_sftma")
@@ -887,10 +675,7 @@ script = ExtResource("2_6y7pd")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_aqqks")
 
-[node name="RoomsToBeDeleted" type="Node2D" parent="."]
-unique_name_in_owner = true
-
-[node name="trapdoor_room" parent="RoomsToBeDeleted" instance=ExtResource("3_ry2jr")]
+[node name="trapdoor_room" parent="." instance=ExtResource("3_ry2jr")]
 position = Vector2(-33, 38)
 
 [node name="TouchScreenLayer" type="CanvasLayer" parent="."]
@@ -963,7 +748,6 @@ texture_normal = ExtResource("8_tpqse")
 texture_pressed = ExtResource("9_c78sm")
 
 [node name="Menus" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
 
 [node name="MenuController" type="Control" parent="Menus"]
 layout_mode = 3
@@ -974,26 +758,11 @@ script = ExtResource("10_hm1wn")
 
 [node name="EndOfDungeonMenu" type="Sprite2D" parent="Menus/MenuController"]
 unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0)
 z_index = 1
 texture_filter = 1
 position = Vector2(207.00002, 115.00001)
 scale = Vector2(3, 3)
 texture = ExtResource("18_hm1wn")
-
-[node name="SpaceBackground" type="TextureRect" parent="Menus/MenuController"]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0)
-texture_filter = 1
-material = SubResource("ShaderMaterial_e2wre")
-layout_mode = 0
-offset_left = -280.49078
-offset_top = -255.90231
-offset_right = 581.5092
-offset_bottom = 474.0977
-texture = ExtResource("12_q6b2w")
-stretch_mode = 1
-script = ExtResource("13_nkab7")
 
 [node name="LootScreen" type="Control" parent="Menus/MenuController"]
 unique_name_in_owner = true
@@ -1086,7 +855,6 @@ texture_progress = ExtResource("16_0bxlt")
 
 [node name="XPOutlineFlasher" type="TextureProgressBar" parent="Menus/MenuController/LootScreen"]
 unique_name_in_owner = true
-visible = false
 z_index = 3
 texture_filter = 1
 material = SubResource("ShaderMaterial_jbexl")
@@ -1118,7 +886,6 @@ texture = ExtResource("19_06qyo")
 
 [node name="AdventureScreen" type="Control" parent="Menus/MenuController"]
 unique_name_in_owner = true
-visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -1130,95 +897,65 @@ position = Vector2(207, 115)
 scale = Vector2(3, 3)
 texture = ExtResource("19_3bgrf")
 
-[node name="HomeH" type="AnimatedSprite2D" parent="Menus/MenuController/AdventureScreen"]
+[node name="HomeH" type="Sprite2D" parent="Menus/MenuController/AdventureScreen"]
 unique_name_in_owner = true
 z_index = 1
 texture_filter = 1
 position = Vector2(130.5, 61)
 scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_e2wre")
-autoplay = "default"
+texture = ExtResource("20_vt8ts")
 
-[node name="HomeArrow" type="AnimatedSprite2D" parent="Menus/MenuController/AdventureScreen"]
+[node name="HomeArrow" type="Sprite2D" parent="Menus/MenuController/AdventureScreen"]
 unique_name_in_owner = true
 z_index = 2
 texture_filter = 1
 position = Vector2(130.5, 91)
 scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_n28rm")
-autoplay = "default"
+texture = ExtResource("21_3bgrf")
 
-[node name="AdventureMenuTent" type="AnimatedSprite2D" parent="Menus/MenuController/AdventureScreen"]
-unique_name_in_owner = true
-z_index = 1
-texture_filter = 1
-position = Vector2(139.5, 140.5)
-scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_nkab7")
-autoplay = "default"
-
-[node name="ReplayIcon" type="AnimatedSprite2D" parent="Menus/MenuController/AdventureScreen"]
+[node name="ReplayIcon" type="Sprite2D" parent="Menus/MenuController/AdventureScreen"]
 unique_name_in_owner = true
 z_index = 2
 texture_filter = 1
 material = SubResource("ShaderMaterial_sgmg2")
 position = Vector2(274, 58)
 scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_gy1md")
-autoplay = "default"
+texture = ExtResource("22_vt8ts")
 
-[node name="WoodSplinterParticles" type="GPUParticles2D" parent="Menus/MenuController/AdventureScreen/ReplayIcon"]
+[node name="BloodSplatterParticles" type="GPUParticles2D" parent="Menus/MenuController/AdventureScreen/ReplayIcon"]
 unique_name_in_owner = true
-position = Vector2(-0.4775124, 0.010544777)
+position = Vector2(-0.21411514, 0.1675272)
 emitting = false
 amount = 100
-lifetime = 0.2
+lifetime = 0.5
 one_shot = true
-speed_scale = 0.16
+speed_scale = 0.1
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_g6spl")
 
-[node name="MovingPlayerTorch" type="AnimatedSprite2D" parent="Menus/MenuController/AdventureScreen"]
+[node name="MovingPlayerTorch" type="Sprite2D" parent="Menus/MenuController/AdventureScreen"]
 unique_name_in_owner = true
 z_index = 3
 texture_filter = 1
 position = Vector2(274.5, 145)
 scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_h0kr5")
-autoplay = "default"
+texture = ExtResource("23_bbjgr")
 
-[node name="Axes" type="AnimatedSprite2D" parent="Menus/MenuController/AdventureScreen"]
-unique_name_in_owner = true
+[node name="Axes" type="Sprite2D" parent="Menus/MenuController/AdventureScreen"]
 z_index = 3
 texture_filter = 1
 position = Vector2(274.5, 139)
 scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_b8haf")
-autoplay = "default"
+texture = ExtResource("24_jbexl")
 
-[node name="ReplayLog" type="AnimatedSprite2D" parent="Menus/MenuController/AdventureScreen"]
-unique_name_in_owner = true
+[node name="ReplayLog" type="Sprite2D" parent="Menus/MenuController/AdventureScreen"]
 z_index = 1
 texture_filter = 1
 position = Vector2(272.5, 58)
 scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_rgo3w")
-autoplay = "default"
-
-[node name="ReplayDungeonButton" type="TouchScreenButton" parent="Menus/MenuController/AdventureScreen"]
-z_index = 2
-position = Vector2(274.50775, 114.80363)
-scale = Vector2(5.2793274, 7.77476)
-shape = SubResource("RectangleShape2D_nkab7")
-
-[node name="SanctuaryButton" type="TouchScreenButton" parent="Menus/MenuController/AdventureScreen"]
-z_index = 2
-position = Vector2(139.43266, 114.80363)
-scale = Vector2(5.2793274, 7.77476)
-shape = SubResource("RectangleShape2D_nkab7")
+texture = ExtResource("25_sgmg2")
 
 [node name="GameplayUI" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
 layer = 5
 
 [node name="IndicatorDirector" type="Sprite2D" parent="GameplayUI"]
@@ -1232,6 +969,11 @@ script = ExtResource("11_i47ox")
 wait_time = 2.25
 autostart = true
 
+[node name="WormBatChance" type="Timer" parent="GameplayUI"]
+unique_name_in_owner = true
+wait_time = 4.0
+autostart = true
+
 [node name="MonstersLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 layer = 0
@@ -1240,11 +982,7 @@ follow_viewport_enabled = true
 [node name="MonsterColourCorrection" type="CanvasModulate" parent="MonstersLayer"]
 color = Color(0.671828, 0.8589004, 1, 1)
 
-[node name="MonstersToBeGone" type="Node2D" parent="MonstersLayer"]
-unique_name_in_owner = true
-
 [node name="DarknessLayer" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
 layer = 10
 
 [node name="DarknessEffect" type="Parallax2D" parent="DarknessLayer"]
@@ -1333,7 +1071,7 @@ autostart = true
 
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]
 unique_name_in_owner = true
-position = Vector2(130.15236, 59.85525)
+position = Vector2(216, 120)
 collision_layer = 3
 collision_mask = 3
 
@@ -1387,19 +1125,12 @@ unique_name_in_owner = true
 wait_time = 6.0
 autostart = true
 
-[node name="WormBatChance" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 4.0
-autostart = true
-
 [connection signal="stick_changed" from="TouchScreenLayer/TouchScreenPress1" to="Brody/Torch" method="_on_touch_screen_layer_stick_changed"]
 [connection signal="move_stick_changed" from="TouchScreenLayer/TouchScreenPress2" to="Brody" method="_on_touch_screen_press_2_move_stick_changed"]
 [connection signal="pressed" from="TouchScreenLayer/DashButton" to="Brody" method="_on_dash_button_pressed"]
-[connection signal="pressed" from="Menus/MenuController/AdventureScreen/ReplayDungeonButton" to="Menus/MenuController" method="_on_replay_dungeon_button_pressed"]
-[connection signal="pressed" from="Menus/MenuController/AdventureScreen/SanctuaryButton" to="Menus/MenuController" method="_on_sanctuary_button_pressed"]
 [connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_timer_timeout"]
 [connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_flash_timer_timeout"]
+[connection signal="timeout" from="GameplayUI/WormBatChance" to="." method="_on_worm_bat_chance_timeout"]
 [connection signal="timeout" from="DarknessLayer/DarknessEffect/DarknessChecker" to="." method="_on_darkness_checker_timeout"]
 [connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]
 [connection signal="timeout" from="TorchWraithChance" to="." method="_on_torch_wraith_chance_timeout"]
-[connection signal="timeout" from="WormBatChance" to="." method="_on_worm_bat_chance_timeout"]

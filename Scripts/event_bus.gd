@@ -20,6 +20,9 @@ signal new_room
 signal last_room_complete()
 signal open_travel_menu()
 
+# NEW GAME / GO TO SANCTUARY Signals :
+signal new_crawl()
+
 var total_beacons_to_light = 0
 var beacons_lit = 0
 
@@ -47,8 +50,8 @@ func _ready():
 	EventBus.beacon_lit.connect(_on_beacon_lit)
 	
 	EventBus.ember_acquired.connect(_on_ember_acquired)
-	EventBus.ember_acquired.connect(_on_experience_orb_acquired)
-	EventBus.ember_acquired.connect(_on_goldpiece_acquired)
+	EventBus.experience_orb_acquired.connect(_on_experience_orb_acquired)
+	EventBus.goldpiece_acquired.connect(_on_goldpiece_acquired)
 	
 	EventBus.new_room.connect(_on_new_room)
 
@@ -83,3 +86,14 @@ func last_room_passed() :
 
 func open_the_travel_menu() :
 	EventBus.open_travel_menu.emit()
+
+
+# NEW DUNGEON CRAWL / HEAD TO SANCTUARY :
+func new_dungeon_crawl() :
+	total_current_darkness = 0.0
+	total_new_acquired_experience = 0
+	total_new_acquired_goldpieces = 0
+	beacons_lit = 0
+	total_beacons_to_light = 0
+	total_beacons = 0
+	EventBus.new_crawl.emit()
