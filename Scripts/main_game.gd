@@ -14,6 +14,7 @@ func _ready() :
 	# Connect Main Game To Certain Gameplay Events (For Node Removal/Performance etc e.g. Dungeon Reset / Sanctuary Spawn)
 	EventBus.last_room_complete.connect(_on_dungeon_ended)
 	EventBus.new_crawl.connect(_on_new_dungeon_crawl)
+	EventBus.spawn_sanctuary.connect(_on_spawning_sanctuary)
 
 # Wait For Touchscreen to be Pressed to turn on touchscreen settings :
 func _input(event):
@@ -71,6 +72,7 @@ func _on_darkness_checker_timeout() -> void:
 # GAMEPLAY EVENTS :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+# DUNGEON CRAWLING :
 func _on_dungeon_ended() :
 	# If any rooms around, delete them :
 	var deletable_entities = %RoomsToBeDeleted.get_children()
@@ -96,18 +98,18 @@ func _on_dungeon_ended() :
 	%TouchScreenLayer.visible = false
 
 func _on_new_dungeon_crawl() :
-	# LOAD NEW DUNGEON INTO %RoomsToBeDeleted :
+	# DISPLAY LOADING SCREEN :
+	pass
 	# Start With Spawning Trapdoor Room :
 	var new_room = preload("res://Scenes/custom_rooms/trapdoor_room.tscn").instantiate()
 	new_room.z_index = 0
 	%Brody.global_position = new_room.global_position + Vector2(140, 14)
-	# Delete all previous rooms :
 	%RoomsToBeDeleted.call_deferred("add_child", new_room)
 	
 	# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
-	%ShadowSpawnTimer.stop()
-	%TorchWraithChance.stop()
-	%WormBatChance.stop()
+	%ShadowSpawnTimer.start()
+	%TorchWraithChance.start()
+	%WormBatChance.start()
 	# Give Brody His Torch/Weapons :
 	%Torch.visible = true
 	# Turn ON DarknessLayer Effect :
@@ -116,3 +118,12 @@ func _on_new_dungeon_crawl() :
 	%GameplayUI.visible = true
 	# Enable ability for Touchscreen Controls (Temporarily) 
 	touchscreen_available = true
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ # SANCTUARY :
+func _on_spawning_sanctuary() :
+	var new_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
+	new_sanctuary.z_index = 0
+	%Brody.global_position = new_sanctuary.global_position + Vector2(140, 14)
+	%RoomsToBeDeleted.call_deferred("add_child", new_sanctuary)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

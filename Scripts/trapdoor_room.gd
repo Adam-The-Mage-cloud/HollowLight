@@ -2,6 +2,7 @@ extends Node2D
 
 var already_opened = false
 var room_complete = true
+var last_room = false
 
 var floor_positions: Array[Vector2i] = []
 var frontwall_positions: Array[Vector2i] = []
@@ -35,34 +36,41 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 		%DoorSprite.play("DarkSteelSmashed")
 		%DoorStopperCollision.set_deferred("disabled", true)
 		
-	if EventBus.last_room == true:
-		EventBus.last_room_passed()
-		return
-	
-	else :
-		# SWITCH TO NEXT ROOM :
-		var rooms = get_tree().current_scene.get_node("RoomsToBeDeleted").get_children()
-		var index = rooms.find($".")
+		if last_room == true:
+			EventBus.last_room_passed()
+			return
 		
-		if index != -1 and index + 1 < rooms.size():
-			var next_room = rooms[index + 1]
+		else :
+			# SWITCH TO NEXT ROOM :
+			EventBus.beacon_count_reset()
 			
-			# Show next room :
-			next_room.visible = true
+			var rooms = get_tree().current_scene.get_node("RoomsToBeDeleted").get_children()
+			var index = rooms.find($".")
 			
-			# Tell EventBus How many beacons are in the next room, by getting ebacons to activate :
-			var new_rooms_beacons = next_room.get_node("Beacons").get_children()
-			for i in new_rooms_beacons :
-				i.now_visible()
+			if index != -1 and index + 1 < rooms.size():
+				var next_room = rooms[index + 1]
+				
+				# Show next room :
+				EventBus.current_room = next_room
+				next_room.visible = true
+				
+				# Tell EventBus How many beacons are in the next room, by getting ebacons to activate :
+				var new_rooms_beacons = next_room.get_node("Beacons").get_children()
+				for i in new_rooms_beacons :
+					i.now_visible()
 
 
 func _spawn_next_room() :
 	await get_tree().process_frame
+	EventBus.last_room = false
 	var scene = load("res://Scenes/procedural_room.tscn")
 	var new_room = scene.instantiate()
 	new_room.door_origin = %DoorArea.global_position
 	new_room.z_index = 0
 	new_room.first_room = false
+	EventBus.total_rooms = 1
+	EventBus.game_over_chance = 0.0
+	EventBus.beacon_count_reset()
 	
 	# Send Old Floor Positions :
 	var world_floor_positions: Array[Vector2] = []

@@ -56,6 +56,7 @@ var room_frontfacing_wall_source_id = 0
 
 var direction
 var first_room = true
+var last_room = false
 var stepladder_chance = 1
 var protected_cells : Array[Vector2i] = []
 var previous_frontwall_world_positions : Array[Vector2] = []
@@ -81,6 +82,7 @@ func _ready() -> void:
 	
 	# If last room then prepare Door to have light :
 	if EventBus.last_room == true :
+		last_room = true
 		%FinishLight1.enabled = true
 		%FinishLight2.enabled = true
 		%FinishLight3.enabled = true
@@ -1414,11 +1416,12 @@ func fog_cluster_spawns():
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 func _on_all_beacons_lit() -> void:
-	%DoorStopperCollision.set_deferred("disabled", true)
-	room_complete = true
-	#EventBus.rooms_completed += 1
-	# Door Flashes :
-	%DoorFlashingTimer.start()
+	if EventBus.current_room == self :
+		%DoorStopperCollision.set_deferred("disabled", true)
+		room_complete = true
+		#EventBus.rooms_completed += 1
+		# Door Flashes :
+		%DoorFlashingTimer.start()
 
 func _on_door_flashing_timer_timeout() -> void:
 	flash_white()
@@ -1441,10 +1444,6 @@ func new_stepladder_dungeon(body) :
 		new_room.z_index = 0
 		new_room.global_position.x += global_position.x + 750
 		body.global_position = new_room.global_position + Vector2(160, 21)
-		# We also need to clear all existing EventBus data (beacons etc) :
-		EventBus.beacons_lit = 0
-		EventBus.total_beacons_to_light = 0
-		EventBus.total_beacons = 0
 		# Delete all previous rooms :
 		for node in get_tree().current_scene.get_tree().get_nodes_in_group("rooms"):
 			node.queue_free()
@@ -1453,33 +1452,38 @@ func new_stepladder_dungeon(body) :
 		# new_room.first_room = false
 
 func _on_door_open_area_body_entered(body: Node2D) -> void:
-	if body.name != "Brody" or already_opened or not room_complete:
+	if body.name != "Brody" or already_opened == true or room_complete == false :
 		return
 	
-	already_opened = true
-	%DoorFlashingTimer.stop()
-	%DoorArea.remove_from_group("doors")
-	%DoorArea.unlocked = true
-	%DoorSprite.play("DarkSteelSmashed")
-	
-	if EventBus.last_room:
-		EventBus.last_room_passed()
-		return
-	
-	# SWITCH TO NEXT ROOM :
-	var rooms = get_tree().current_scene.get_node("RoomsToBeDeleted").get_children()
-	var index = rooms.find($".")
-	
-	if index != -1 and index + 1 < rooms.size():
-		var next_room = rooms[index + 1]
+	else :
+		already_opened = true
+		%DoorFlashingTimer.stop()
+		%DoorArea.remove_from_group("doors")
+		%DoorArea.unlocked = true
+		%DoorSprite.play("DarkSteelSmashed")
 		
-		# Show next room :
-		next_room.visible = true
+		if last_room == true :
+			EventBus.last_room_passed()
+			return
 		
-		# Tell EventBus How many beacons are in the next room, by getting ebacons to activate :
-		var new_rooms_beacons = next_room.get_node("Beacons").get_children()
-		for i in new_rooms_beacons :
-			i.now_visible()
+		# SWITCH TO NEXT ROOM :
+		# Reset Beacons :
+		EventBus.beacon_count_reset()
+		
+		var rooms = get_tree().current_scene.get_node("RoomsToBeDeleted").get_children()
+		var index = rooms.find($".")
+		
+		if index != -1 and index + 1 < rooms.size():
+			var next_room = rooms[index + 1]
+			
+			# Show next room :
+			EventBus.current_room = next_room
+			next_room.visible = true
+			
+			# Tell EventBus How many beacons are in the next room, by getting ebacons to activate :
+			var new_rooms_beacons = next_room.get_node("Beacons").get_children()
+			for i in new_rooms_beacons :
+				i.now_visible()
 		
 func spawn_next_room() :
 	if EventBus.last_room == false :
@@ -1487,6 +1491,7 @@ func spawn_next_room() :
 		new_room.door_origin = %DoorArea.global_position
 		new_room.z_index = 0
 		new_room.first_room = false
+		EventBus.beacon_count_reset()
 		EventBus._on_new_room()
 		
 		# Send Old Floor Positions :
@@ -1509,4 +1514,3 @@ func spawn_next_room() :
 		new_room.visible = false
 		
 		get_tree().current_scene.get_node("RoomsToBeDeleted").call_deferred("add_child", new_room)
-		print(get_tree().current_scene.get_node("RoomsToBeDeleted"))

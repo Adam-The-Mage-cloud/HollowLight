@@ -131,7 +131,8 @@ func _on_axe_area_body_entered(body: Node2D) -> void:
 		body.ogre_slashed($".")
 
 func _on_all_beacons_lit() :
-	shadow_form()
+	if get_parent().visible == true :
+		shadow_form()
 	# Drop Gold at this point?
 
 func shadow_form() :

@@ -891,7 +891,6 @@ environment = SubResource("Environment_aqqks")
 unique_name_in_owner = true
 
 [node name="trapdoor_room" parent="RoomsToBeDeleted" instance=ExtResource("3_ry2jr")]
-position = Vector2(-33, 38)
 
 [node name="TouchScreenLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -1333,7 +1332,7 @@ autostart = true
 
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]
 unique_name_in_owner = true
-position = Vector2(130.15236, 59.85525)
+position = Vector2(160.22475, 22.586071)
 collision_layer = 3
 collision_mask = 3
 

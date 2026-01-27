@@ -23,6 +23,9 @@ signal open_travel_menu()
 # NEW GAME / GO TO SANCTUARY Signals :
 signal new_crawl()
 
+signal spawn_sanctuary()
+
+
 var total_beacons_to_light = 0
 var beacons_lit = 0
 
@@ -77,19 +80,25 @@ func _on_goldpiece_acquired() :
 
 # New Room / Game Finisher Decider :
 func _on_new_room() :
-	game_over_chance = 0.1 
+	game_over_chance = 0.25 
 	if randf_range(0, 1) < game_over_chance :
-		if total_rooms >= 4 : # 7
+		if total_rooms >= 5 : # 7
 			last_room = true
 
 func last_room_passed() :
+	EventBus.beacons_lit = 0
+	EventBus.total_beacons_to_light = 0
+	EventBus.total_beacons = 0
 	EventBus.last_room_complete.emit()
 
 func open_the_travel_menu() :
 	EventBus.open_travel_menu.emit()
 
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # NEW DUNGEON CRAWL / HEAD TO SANCTUARY :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# DUNGEONS :
 func new_dungeon_crawl() :
 	total_current_darkness = 0.0
 	total_new_acquired_experience = 0
@@ -98,3 +107,14 @@ func new_dungeon_crawl() :
 	total_beacons_to_light = 0
 	total_beacons = 0
 	EventBus.new_crawl.emit()
+
+# Done after every room :
+func beacon_count_reset() :
+	EventBus.beacons_lit = 0
+	EventBus.total_beacons_to_light = 0
+	EventBus.total_beacons = 0
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Sanctuary :
+func spawn_the_sanctuary() :
+	EventBus.spawn_sanctuary.emit()

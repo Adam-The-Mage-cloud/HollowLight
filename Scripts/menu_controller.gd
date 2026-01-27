@@ -231,6 +231,7 @@ func _on_sanctuary_button_pressed() -> void:
 	adventure_menu_fadeout()
 	main_background_fadeout()
 	# Go To Sanctuary :
+	EventBus.spawn_the_sanctuary()
 
 func _on_replay_dungeon_button_pressed() -> void:
 	# Highlight in Yellow All Assets on That Side :
@@ -244,7 +245,7 @@ func _on_replay_dungeon_button_pressed() -> void:
 	# Begin New Dungeon :
 	EventBus.new_dungeon_crawl()
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # General Menu Fade Away :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func main_background_fadein() :

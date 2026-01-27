@@ -3013,6 +3013,7 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="Beacons" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="DoorArea" type="StaticBody2D" parent="."]
 unique_name_in_owner = true
