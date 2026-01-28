@@ -1,11 +1,15 @@
-[gd_scene load_steps=11 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=19 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
+[ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
 [ext_resource type="PackedScene" uid="uid://byj02odr2ti4q" path="res://Scenes/travellers_sanctuary/smallgrass.tscn" id="3_kbio4"]
 [ext_resource type="PackedScene" uid="uid://dt83xmpkmw7x2" path="res://Scenes/travellers_sanctuary/tallgrass.tscn" id="4_kbio4"]
 [ext_resource type="PackedScene" uid="uid://nm8p1d0it3q7" path="res://Scenes/travellers_sanctuary/sanctuary_campfire.tscn" id="6_0oo8m"]
 [ext_resource type="PackedScene" uid="uid://bfgqfdxugrc4c" path="res://Scenes/travellers_sanctuary/clive_npc.tscn" id="6_7kch7"]
 [ext_resource type="PackedScene" uid="uid://br6d3apohpg5v" path="res://Scenes/travellers_sanctuary/reg_village_tree.tscn" id="6_o6jja"]
+[ext_resource type="Texture2D" uid="uid://cvo5o65ylw2o2" path="res://Artwork/Sanctuary/Torch_&_Shield_.png" id="7_o6jja"]
+[ext_resource type="Texture2D" uid="uid://c2btlsuq6jfou" path="res://Artwork/Sanctuary/Torch_&_Shield_Highlighted_.png" id="8_0oo8m"]
+[ext_resource type="Texture2D" uid="uid://bgvpb11gatlkx" path="res://Artwork/Menus/AdventureMenu/Arrow_Choose_Adventure.png" id="10_bsgyg"]
 
 [sub_resource type="Gradient" id="Gradient_lps57"]
 offsets = PackedFloat32Array(0.38222224, 1)
@@ -47,9 +51,39 @@ texture_region_size = Vector2i(10, 10)
 tile_size = Vector2i(10, 10)
 sources/0 = SubResource("TileSetAtlasSource_3l2np")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0oo8m"]
+atlas = ExtResource("7_o6jja")
+region = Rect2(0, 0, 20, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l46w4"]
+atlas = ExtResource("8_0oo8m")
+region = Rect2(0, 0, 20, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l46w4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0oo8m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l46w4")
+}],
+"loop": true,
+"name": &"highlighted",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0oo8m"]
+
 [node name="the_sanctuary" type="Node2D"]
 z_index = 1
 texture_filter = 1
+script = ExtResource("1_l46w4")
 
 [node name="ProceduralRoomColour" type="CanvasModulate" parent="."]
 color = Color(0.952067, 0.9071462, 0.76115376, 1)
@@ -712,3 +746,27 @@ position = Vector2(288, 129)
 
 [node name="reg_village_tree15" parent="Trees" instance=ExtResource("6_o6jja")]
 position = Vector2(-22, 57)
+
+[node name="TorchAndShield" type="Area2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="TorchAndShieldSprite" type="AnimatedSprite2D" parent="TorchAndShield"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(180, 5)
+sprite_frames = SubResource("SpriteFrames_l46w4")
+autoplay = "default"
+
+[node name="TorchAndShieldCollision" type="CollisionShape2D" parent="TorchAndShield"]
+position = Vector2(181, 6)
+scale = Vector2(1.8285646, 1.8285646)
+shape = SubResource("CircleShape2D_0oo8m")
+
+[node name="TorchAndShieldArrow" type="Sprite2D" parent="TorchAndShield"]
+unique_name_in_owner = true
+position = Vector2(177, -19)
+texture = ExtResource("10_bsgyg")
+
+[connection signal="body_entered" from="TorchAndShield" to="." method="_on_torch_and_shield_body_entered"]
+[connection signal="body_exited" from="TorchAndShield" to="." method="_on_torch_and_shield_body_exited"]

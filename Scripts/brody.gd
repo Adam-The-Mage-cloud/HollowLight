@@ -281,4 +281,8 @@ func _on_touch_screen_press_2_move_stick_changed(vec: Variant) -> void:
 	touch_move = vec
 
 func _on_dash_button_pressed() -> void:
+	# Always :
 	dash_ability()
+	# If in the vicinity of a highlighted interactable asset (e.g. torch & shield in sanctuary), activate it :
+	if EventBus.dungeon_crawl_button_available == true :
+		EventBus.new_dungeon_crawl()

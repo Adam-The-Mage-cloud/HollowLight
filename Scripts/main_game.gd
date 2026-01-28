@@ -15,6 +15,9 @@ func _ready() :
 	EventBus.last_room_complete.connect(_on_dungeon_ended)
 	EventBus.new_crawl.connect(_on_new_dungeon_crawl)
 	EventBus.spawn_sanctuary.connect(_on_spawning_sanctuary)
+	
+	# Start in Sanctuary :
+	_set_sanctuary_properties()
 
 # Wait For Touchscreen to be Pressed to turn on touchscreen settings :
 func _input(event):
@@ -75,14 +78,7 @@ func _on_darkness_checker_timeout() -> void:
 # DUNGEON CRAWLING :
 func _on_dungeon_ended() :
 	# If any rooms around, delete them :
-	var deletable_entities = %RoomsToBeDeleted.get_children()
-	for entity in deletable_entities:
-		entity.queue_free()
-	# If any monsters/entities around, delete them :
-	var deletable_creatures = %MonstersToBeGone.get_children()
-	for deletables in deletable_creatures :
-		deletables.queue_free()
-	
+	delete_current_memory()
 	# STOP TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
 	%ShadowSpawnTimer.stop()
 	%TorchWraithChance.stop()
@@ -98,6 +94,8 @@ func _on_dungeon_ended() :
 	%TouchScreenLayer.visible = false
 
 func _on_new_dungeon_crawl() :
+	# Delete Previous Instances (e.g. Sanctuary) :
+	delete_current_memory()
 	# DISPLAY LOADING SCREEN :
 	pass
 	# Start With Spawning Trapdoor Room :
@@ -126,4 +124,28 @@ func _on_spawning_sanctuary() :
 	%Brody.global_position = new_sanctuary.global_position + Vector2(140, 14)
 	%RoomsToBeDeleted.call_deferred("add_child", new_sanctuary)
 
+func _set_sanctuary_properties() :
+	# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
+	%ShadowSpawnTimer.stop()
+	%TorchWraithChance.stop()
+	%WormBatChance.stop()
+	# Give Brody His Torch/Weapons :
+	%Torch.visible = false
+	# Turn ON DarknessLayer Effect :
+	%DarknessLayer.visible = false
+	# Turn ON GameplayUI :
+	%GameplayUI.visible = false
+	# Enable ability for Touchscreen Controls (Temporarily) 
+	touchscreen_available = true
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+func delete_current_memory() :
+	# If any rooms around, delete them :
+	var deletable_entities = %RoomsToBeDeleted.get_children()
+	for entity in deletable_entities:
+		entity.queue_free()
+	# If any monsters/entities around, delete them :
+	var deletable_creatures = %MonstersToBeGone.get_children()
+	for deletables in deletable_creatures :
+		deletables.queue_free()

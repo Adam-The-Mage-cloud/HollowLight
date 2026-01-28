@@ -130,6 +130,8 @@ func _ready() -> void:
 	generate_floor_interactables()
 	moonlight_spawns()
 	fog_cluster_spawns()
+	
+	_ensure_door_corridor_clear()
 	# Stepladder Chance :
 	if stepladder_chance != 0 :
 		if randi_range(1, stepladder_spawn_rate) == 1 :
@@ -1124,8 +1126,72 @@ func is_near_wall(x: int, y: int) -> bool:
 				return true
 	return false
 
-func is_near_door(x: int, y: int) -> bool:
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# DOOR CLEARING SNAKE (Ensures Doors Are ALWAYS Clear of Blockades (unless blocked on purpose) 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func _ensure_door_corridor_clear() -> void:
+	if floor_positions.is_empty():
+		return
+
+	var door_cell := _door_start_cell()
+
+	# How deep into the room we guarantee clearance
+	var depth := 6   # 6 tiles downward is plenty
+
+	for i in range(depth):
+		var row := door_cell + Vector2i(0, i)
+
+		# Check a 2‑tile‑wide footprint (player width)
+		for ox in range(-1, 2):   # -1, 0, 1 → 3‑tile wide safety band
+			var c := row + Vector2i(ox, 0)
+
+			# Only clear if something is blocking AND it's inside the protected corridor
+			if _is_blocking_for_player(c):
+				_clear_blocking_in_door_corridor(c)
+
+func _door_start_cell() -> Vector2i:
+	# DoorArea is already positioned in world space
+	var local = %TileMapFloor.to_local(%DoorArea.global_position)
+	return %TileMapFloor.local_to_map(local)
+
+func _is_blocking_for_player(cell: Vector2i) -> bool:
+	# Anything solid that would block a 2‑tile‑wide player
+	if %TileMapWalls.get_cell_source_id(cell) != -1:
+		return true
+	if %TileMapFrontFaceWall.get_cell_source_id(cell) != -1:
+		return true
+	if %TileMapRoomOutline.get_cell_source_id(cell) != -1:
+		return true
+	if %TileMapRoomDarkerOutline.get_cell_source_id(cell) != -1:
+		return true
+	if %TileMapObstacles.get_cell_source_id(cell) != -1:
+		return true
+	# You can add more here if needed (exterior plants, etc.)
 	return false
+
+func _clear_blocking_in_door_corridor(cell: Vector2i) -> void:
+	# Only clear tiles that are allowed to be removed in the doorway corridor
+	%TileMapFrontFaceWall.set_cell(cell, -1)
+	%TileMapObstacles.set_cell(cell, -1)
+
+	# DO NOT clear outlines or walls unless they are literally on the door tile
+	if cell == _door_start_cell():
+		%TileMapWalls.set_cell(cell, -1)
+		%TileMapRoomOutline.set_cell(cell, -1)
+		%TileMapRoomDarkerOutline.set_cell(cell, -1)
+
+	# Ensure floor exists
+	if not floor_positions.has(cell):
+		_add_floor(cell)
+
+func is_near_door(x: int, y: int) -> bool:
+	var cell = Vector2i(x, y)
+	for ox in range(-1, 2):
+		for oy in range(-1, 2):
+			if protected_cells.has(cell + Vector2i(ox, oy)):
+				return true
+	return false
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -46,6 +46,9 @@ var game_over_chance = 0.0
 var last_room = false
 var total_rooms = 0.0
 
+# Sanctuary Buttons :
+var dungeon_crawl_button_available = false
+
 # Theme Indicator
 var current_theme = 1
 

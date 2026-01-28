@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
 [ext_resource type="PackedScene" uid="uid://chadpnqf4f2xn" path="res://Scenes/brody.tscn" id="2_upa5u"]
 [ext_resource type="PackedScene" uid="uid://doutgnk2nj6pi" path="res://Scenes/torch.tscn" id="3_eoier"]
-[ext_resource type="PackedScene" uid="uid://bggfdglfd1xsj" path="res://Scenes/custom_rooms/trapdoor_room.tscn" id="3_ry2jr"]
 [ext_resource type="Script" uid="uid://c4jqsqgryrvkm" path="res://Scripts/torch_joystick.gd" id="4_6y7pd"]
 [ext_resource type="Texture2D" uid="uid://cu6mkbkarog8v" path="res://Artwork/Joystick_Pressed.png" id="4_18r40"]
 [ext_resource type="Texture2D" uid="uid://c5g1su1f1fw14" path="res://Artwork/fire noise texture.jpeg" id="4_vc13p"]
@@ -43,6 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://cs5it7wp3kc6o" path="res://Artwork/Menus/AdventureMenu/Highlighted_Torch_Choose_Adventure.png" id="30_7oxt3"]
 [ext_resource type="Texture2D" uid="uid://dp4grf0g3sxrf" path="res://Artwork/Menus/AdventureMenu/Highlighted_Axes_Choose_Adventure_Page.png" id="32_glqx2"]
 [ext_resource type="Texture2D" uid="uid://dvbknwkwbgmvt" path="res://Artwork/Menus/AdventureMenu/Highlighted_Replay_Log_Choose_Adventure_Page.png" id="34_h0kr5"]
+[ext_resource type="PackedScene" uid="uid://bklfhm2tp32pr" path="res://Scenes/custom_rooms/the_sanctuary.tscn" id="43_h0kr5"]
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 3
@@ -890,7 +890,8 @@ environment = SubResource("Environment_aqqks")
 [node name="RoomsToBeDeleted" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="trapdoor_room" parent="RoomsToBeDeleted" instance=ExtResource("3_ry2jr")]
+[node name="the_sanctuary" parent="RoomsToBeDeleted" instance=ExtResource("43_h0kr5")]
+position = Vector2(69.22974, -37.91536)
 
 [node name="TouchScreenLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
