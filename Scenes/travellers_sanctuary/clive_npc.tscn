@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://ch5th8cq4hc18" path="res://Scripts/travellers_sanctuary/clive_npc.gd" id="1_68c2m"]
 [ext_resource type="Texture2D" uid="uid://betht5aagtd00" path="res://Artwork/Argorn_The_Trader.png" id="2_8fgcy"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ah7wu"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_68c2m"]
+size = Vector2(22, 19.77401)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_csh2d"]
 atlas = ExtResource("2_8fgcy")
@@ -179,20 +180,17 @@ animations = [{
 }]
 
 [node name="clive_npc" type="CharacterBody2D"]
-z_index = 1
-y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_68c2m")
 
 [node name="CliveCollision" type="CollisionShape2D" parent="."]
-position = Vector2(1, -20)
-scale = Vector2(0.47935313, 1.3569258)
-shape = SubResource("CircleShape2D_ah7wu")
+position = Vector2(0.25, 2)
+scale = Vector2(0.25, 0.708)
+shape = SubResource("RectangleShape2D_68c2m")
 
 [node name="CliveSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-y_sort_enabled = true
-position = Vector2(0, -26)
+position = Vector2(-1, -10)
 sprite_frames = SubResource("SpriteFrames_imj2p")
 animation = &"moving_sideways"
 autoplay = "stood_still_front"

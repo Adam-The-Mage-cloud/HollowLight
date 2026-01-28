@@ -41,7 +41,7 @@ var bits_and_bobs_spawn_rate = 0.02 # Like above, the lower, the less likely to 
 var obstacles_spawn_rate = 0.006 # The lower, the less obstacles are likely to spawn
 var floor_interactable_spawn_chance = 0.010  # (where 1.0 is 100% chance per floor tile)
 var max_wall_interactable_amount = 6000 # The max possible amount of wall interactables / number of floor tiles
-var stepladder_spawn_rate = 5 # Where 1 is every time and the greater from 1 it is, the less likely aka 1/2 or 1/3 or 1/8...
+var stepladder_spawn_rate = 9 # Where 1 is every time and the greater from 1 it is, the less likely aka 1/2 or 1/3 or 1/8...
 
 var beacon_amount = randi_range(1, 4)
 
@@ -86,6 +86,8 @@ func _ready() -> void:
 		%FinishLight1.enabled = true
 		%FinishLight2.enabled = true
 		%FinishLight3.enabled = true
+		# Emit a signal to tell the loading screen it's pretty much ready :
+		EventBus.last_room_loaded.emit()
 		if theme == 1 : # Then DarkSteel Door! :
 			%DoorSprite.play("DarkSteelFinishDoor")
 	
@@ -132,6 +134,7 @@ func _ready() -> void:
 	fog_cluster_spawns()
 	
 	_ensure_door_corridor_clear()
+	_ensure_room_opening_clear()
 	# Stepladder Chance :
 	if stepladder_chance != 0 :
 		if randi_range(1, stepladder_spawn_rate) == 1 :
@@ -1133,21 +1136,46 @@ func _ensure_door_corridor_clear() -> void:
 	if floor_positions.is_empty():
 		return
 
-	var door_cell := _door_start_cell()
+	var door_cell = _door_start_cell()
 
 	# How deep into the room we guarantee clearance
-	var depth := 6   # 6 tiles downward is plenty
+	var depth = 6   # 6 tiles downward is plenty
 
 	for i in range(depth):
-		var row := door_cell + Vector2i(0, i)
+		var row = door_cell + Vector2i(0, i)
 
 		# Check a 2‑tile‑wide footprint (player width)
-		for ox in range(-1, 2):   # -1, 0, 1 → 3‑tile wide safety band
-			var c := row + Vector2i(ox, 0)
+		for ox in range(-1, 1):   # -1, 0, 1 → 3‑tile wide safety band
+			var c = row + Vector2i(ox, 0)
 
 			# Only clear if something is blocking AND it's inside the protected corridor
 			if _is_blocking_for_player(c):
 				_clear_blocking_in_door_corridor(c)
+
+
+func _ensure_room_opening_clear() -> void:
+	if floor_positions.is_empty():
+		return
+	
+	# The “bottom” of the room (closest to previous door)
+	var entry_cell: Vector2i = _get_lowest_floor_tile()
+	
+	var depth = 6        # how far upward to clear
+	var half_width = 1    # how wide the opening should be
+	
+	for i in range(depth):
+		# Move UPWARD from the lowest tile
+		var row = entry_cell + Vector2i(0, -i)
+		
+		for ox in range(-half_width, half_width + 1):
+			var c = row + Vector2i(ox, 0)
+			
+			# Respect protected door area
+			if protected_cells.has(c):
+				continue
+				
+			if _is_blocking_for_player(c):
+				_clear_blocking_in_room_opening(c)
 
 func _door_start_cell() -> Vector2i:
 	# DoorArea is already positioned in world space
@@ -1191,6 +1219,23 @@ func is_near_door(x: int, y: int) -> bool:
 			if protected_cells.has(cell + Vector2i(ox, oy)):
 				return true
 	return false
+
+
+func _clear_blocking_in_room_opening(cell: Vector2i) -> void:
+	# Remove front walls + obstacles
+	%TileMapFrontFaceWall.set_cell(cell, -1)
+	%TileMapObstacles.set_cell(cell, -1)
+	
+	# Remove outlines ONLY if they are literally blocking the entry
+	%TileMapRoomOutline.set_cell(cell, -1)
+	%TileMapRoomDarkerOutline.set_cell(cell, -1)
+	
+	# Remove walls ONLY if they are directly blocking the entry
+	%TileMapWalls.set_cell(cell, -1)
+	
+	# Ensure floor exists
+	if not floor_positions.has(cell):
+		_add_floor(cell)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -2084,6 +2084,7 @@ animations = [{
 size = Vector2(26.165543, 26.399036)
 
 [node name="trapdoor_room" type="Node2D"]
+y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_63l4k")
 

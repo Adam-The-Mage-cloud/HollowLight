@@ -51,29 +51,25 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="Tallgrass" type="Area2D"]
-z_index = 1
-y_sort_enabled = true
 script = ExtResource("1_4tkku")
 
 [node name="TallGrassCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-1.1920929e-07, 2.5)
+position = Vector2(-1.1920929e-07, 5.5)
 scale = Vector2(0.613254, 0.613254)
 shape = SubResource("RectangleShape2D_verhq")
 debug_color = Color(0.720624, 0.477045, 0.127548, 0.42)
 
 [node name="Tallgrass" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-y_sort_enabled = true
 texture_filter = 1
-position = Vector2(0, -4.5)
+position = Vector2(0, -1.5)
 sprite_frames = SubResource("SpriteFrames_7wdkd")
 autoplay = "default"
 
 [node name="TallGrassShadow" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.3137255)
-z_index = -1
 use_parent_material = true
-position = Vector2(0, 5)
+position = Vector2(0, 8)
 scale = Vector2(1.25, 0.75)
 texture = SubResource("GradientTexture2D_fipd0")
 

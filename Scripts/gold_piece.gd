@@ -94,4 +94,4 @@ func _on_flash_timer_timeout() -> void:
 
 
 func _on_speed_accelerator_timeout() -> void:
-	speed += 1
+	speed += 5

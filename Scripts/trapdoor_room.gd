@@ -24,6 +24,7 @@ func _ready() :
 	%DoorArea.unlocked = true
 	
 	# Spawn Next Room :
+	EventBus.beacon_count_reset()
 	_spawn_next_room()
 
 
@@ -61,16 +62,13 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 
 
 func _spawn_next_room() :
-	await get_tree().process_frame
 	EventBus.last_room = false
 	var scene = load("res://Scenes/procedural_room.tscn")
 	var new_room = scene.instantiate()
 	new_room.door_origin = %DoorArea.global_position
 	new_room.z_index = 0
 	new_room.first_room = false
-	EventBus.total_rooms = 1
-	EventBus.game_over_chance = 0.0
-	EventBus.beacon_count_reset()
+	EventBus.total_rooms -= 1
 	
 	# Send Old Floor Positions :
 	var world_floor_positions: Array[Vector2] = []

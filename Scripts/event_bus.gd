@@ -25,6 +25,8 @@ signal new_crawl()
 
 signal spawn_sanctuary()
 
+signal last_room_loaded()
+
 
 var total_beacons_to_light = 0
 var beacons_lit = 0

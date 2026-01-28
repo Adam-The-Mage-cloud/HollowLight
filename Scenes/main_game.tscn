@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=4 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=117 format=4 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dlxqfcnlhtxox" path="res://pixelvignette1.jpg" id="6_r0mdn"]
 [ext_resource type="Texture2D" uid="uid://d1awoq62q6e2d" path="res://Artwork/Dash_Button.png" id="8_tpqse"]
 [ext_resource type="Texture2D" uid="uid://bv2t68o63xjhw" path="res://Artwork/Dash_Button_Pressed.png" id="9_c78sm"]
+[ext_resource type="Script" uid="uid://bww2124c8vmbs" path="res://Scripts/loading_overlay.gd" id="10_8k7o2"]
 [ext_resource type="Texture2D" uid="uid://dcrn4k4r624w8" path="res://Artwork/Arrowhead_Indicator.png" id="10_c78sm"]
 [ext_resource type="Script" uid="uid://cnyno3yuqeqci" path="res://Scripts/menu_controller.gd" id="10_hm1wn"]
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="10_sftma"]
@@ -46,6 +47,27 @@
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h0kr5"]
+shader = ExtResource("12_nkab7")
+shader_parameter/uv_offset = Vector2(0, 0)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8k7o2"]
+load_path = "res://.godot/imported/Space_Background_BIG.png-3ef92e20dd50795bf627e4bb28b4d130.ctex"
+
+[sub_resource type="GDScript" id="GDScript_3kmrm"]
+script/source = "extends TextureRect
+
+@export var scroll_speed = Vector2(0.0035, 0) # pixels per second
+var uv_offset = Vector2.ZERO
+
+func _process(delta):
+	uv_offset += scroll_speed * delta
+	material.set_shader_parameter(\"uv_offset\", uv_offset)
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8k7o2"]
+bg_color = Color(0.32977146, 0.67069614, 0.334023, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2wre"]
 shader = ExtResource("12_nkab7")
@@ -887,8 +909,13 @@ script = ExtResource("2_6y7pd")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_aqqks")
 
+[node name="EntitiesToBeDeleted" type="Node2D" parent="."]
+unique_name_in_owner = true
+
 [node name="RoomsToBeDeleted" type="Node2D" parent="."]
 unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
 
 [node name="the_sanctuary" parent="RoomsToBeDeleted" instance=ExtResource("43_h0kr5")]
 position = Vector2(69.22974, -37.91536)
@@ -964,6 +991,48 @@ texture_pressed = ExtResource("9_c78sm")
 
 [node name="Menus" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+layer = 31
+
+[node name="LoadingOverlay" type="Control" parent="Menus"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("10_8k7o2")
+
+[node name="LoadingBackground" type="TextureRect" parent="Menus/LoadingOverlay"]
+unique_name_in_owner = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_h0kr5")
+layout_mode = 0
+offset_left = -280.49078
+offset_top = -255.90231
+offset_right = 581.5092
+offset_bottom = 474.0977
+texture = SubResource("CompressedTexture2D_8k7o2")
+stretch_mode = 1
+script = SubResource("GDScript_3kmrm")
+
+[node name="LoadingProgressBar" type="ProgressBar" parent="Menus/LoadingOverlay"]
+unique_name_in_owner = true
+z_index = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 126.72681
+offset_top = 78.053246
+offset_right = 130.7268
+offset_bottom = 105.053246
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(31.249928, 0.8557089)
+theme_override_styles/fill = SubResource("StyleBoxFlat_8k7o2")
+show_percentage = false
 
 [node name="MenuController" type="Control" parent="Menus"]
 layout_mode = 3
@@ -997,6 +1066,7 @@ script = ExtResource("13_nkab7")
 
 [node name="LootScreen" type="Control" parent="Menus/MenuController"]
 unique_name_in_owner = true
+visible = false
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
 offset_right = 40.0
@@ -1333,7 +1403,7 @@ autostart = true
 
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]
 unique_name_in_owner = true
-position = Vector2(160.22475, 22.586071)
+position = Vector2(148.8969, 57.826347)
 collision_layer = 3
 collision_mask = 3
 
@@ -1372,6 +1442,7 @@ drag_right_margin = 0.0
 drag_bottom_margin = 0.0
 
 [node name="FogVignette" type="Sprite2D" parent="Brody/BrodyCam"]
+visible = false
 modulate = Color(0.15967038, 0.15967038, 0.1596703, 0.1254902)
 z_index = 10
 scale = Vector2(0.9, 1.1)

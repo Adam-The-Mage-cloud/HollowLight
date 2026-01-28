@@ -225,7 +225,7 @@ func drop_currency() :
 		for i in random_xp_amount : 
 			var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
 			xp.global_position = $".".global_position
-			get_tree().current_scene.call_deferred("add_child", xp)
+			get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", xp)
 			await get_tree().create_timer(0.008).timeout
 			
 		# Drop Gold :
@@ -233,10 +233,10 @@ func drop_currency() :
 		for i in random_gold_amount : 
 			var gold_piece = preload("res://Scenes/Currencies/gold_piece.tscn").instantiate()
 			gold_piece.global_position = $".".global_position
-			get_tree().current_scene.call_deferred("add_child", gold_piece)
+			get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", gold_piece)
 			await get_tree().create_timer(0.008).timeout
 			
 		# Drop Embers :
 		var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
 		ember.global_position = $".".global_position
-		get_tree().current_scene.call_deferred("add_child", ember)
+		get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", ember)

@@ -152,7 +152,7 @@ func drop_embers() :
 		# Drop Embers :
 		var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
 		ember.global_position = $".".global_position
-		get_tree().current_scene.call_deferred("add_child", ember)
+		get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", ember)
 
 
 func drop_xp() :
@@ -167,5 +167,5 @@ func drop_xp() :
 		for i in random_amount : 
 			var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
 			xp.global_position = $".".global_position
-			get_tree().current_scene.call_deferred("add_child", xp)
+			get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", xp)
 			await get_tree().create_timer(0.008).timeout

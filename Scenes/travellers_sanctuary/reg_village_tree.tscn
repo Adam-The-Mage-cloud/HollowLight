@@ -13,18 +13,14 @@ fill_from = Vector2(0.50155765, 0.46417445)
 fill_to = Vector2(0.894081, 0.10903427)
 
 [node name="reg_village_tree" type="Node2D"]
-z_index = 1
-y_sort_enabled = true
 texture_filter = 1
 
 [node name="Tree" type="Sprite2D" parent="."]
-y_sort_enabled = true
-position = Vector2(0, -60)
+position = Vector2(1, -67)
 texture = ExtResource("1_0kti5")
 
 [node name="TreeShadow" type="PointLight2D" parent="."]
-y_sort_enabled = true
-position = Vector2(0, 5.9999995)
+position = Vector2(0.99999994, -1)
 scale = Vector2(1.1173462, 1.09375)
 color = Color(1, 1, 1, 0.62352943)
 blend_mode = 1

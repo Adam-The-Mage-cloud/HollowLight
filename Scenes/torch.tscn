@@ -174,7 +174,6 @@ texture = SubResource("GradientTexture2D_h1t0l")
 
 [node name="TorchEnd" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-visible = false
 z_index = 1
 use_parent_material = true
 position = Vector2(14.372684, -13.538522)

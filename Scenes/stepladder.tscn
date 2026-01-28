@@ -42,3 +42,4 @@ sprite_frames = SubResource("SpriteFrames_m5nnk")
 [node name="Timer" type="Timer" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

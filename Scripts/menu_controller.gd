@@ -3,6 +3,7 @@ extends Control
 func _ready() :
 	# Player Spawns in Sanctuary :
 	EventBus.last_room_complete.connect(_on_dungeon_ended) 
+	EventBus.new_crawl.connect(_loading_screen) 
 	# REMOVE THIS WHEN IT'S READY :
 	#_on_dungeon_ended()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -261,3 +262,9 @@ func main_background_fadeout() :
 	MainMenuBackgroundFadeOut_tween.parallel().tween_property(%SpaceBackground, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await MainMenuBackgroundFadeOut_tween.finished
 	%Menus.visible = false
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Loading Screen :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func _loading_screen() :
+	pass

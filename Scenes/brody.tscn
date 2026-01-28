@@ -44,6 +44,8 @@ shader_parameter/wave_amplitude = 0.002
 shader_parameter/wave_longitude = 0.001
 shader_parameter/wave_speed = 1.24
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_niouw"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_jqmsd"]
 atlas = ExtResource("1_k4lj1")
 region = Rect2(33, 38, 23, 31)
@@ -298,8 +300,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_niouw"]
-
 [sub_resource type="Gradient" id="Gradient_7kbme"]
 offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
 colors = PackedColorArray(0, 0, 0, 0.14901961, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
@@ -399,22 +399,33 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_l2vdu")
 script = ExtResource("1_1lbbp")
 
-[node name="BrodySprite" type="AnimatedSprite2D" parent="."]
+[node name="BrodyHitbox" type="CollisionShape2D" parent="."]
+use_parent_material = true
+position = Vector2(0, 1)
+scale = Vector2(0.475, 0.475)
+shape = SubResource("CircleShape2D_niouw")
+
+[node name="Y-SortPivot" type="Marker2D" parent="."]
+y_sort_enabled = true
+position = Vector2(1, 9)
+
+[node name="BrodySprite" type="AnimatedSprite2D" parent="Y-SortPivot"]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
+position = Vector2(0, -11.999565)
 sprite_frames = SubResource("SpriteFrames_lgt8o")
 animation = &"stationary"
 autoplay = "stationary"
 
-[node name="antenna" type="AnimatedSprite2D" parent="BrodySprite"]
+[node name="antenna" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite"]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-2, -2)
 sprite_frames = SubResource("SpriteFrames_8t6bh")
 
-[node name="feet" type="AnimatedSprite2D" parent="BrodySprite"]
+[node name="feet" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite"]
 unique_name_in_owner = true
 z_index = 1
 z_as_relative = false
@@ -426,30 +437,18 @@ autoplay = "stationary"
 centered = false
 offset = Vector2(0, 10.5)
 
-[node name="BrodyHitbox" type="CollisionShape2D" parent="."]
-visible = false
-use_parent_material = true
-position = Vector2(-1, 4)
-scale = Vector2(0.475, 0.475)
-shape = SubResource("CircleShape2D_niouw")
-
-[node name="DashCooldown" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 0.55
-one_shot = true
-
-[node name="BrodyShadow" type="Sprite2D" parent="."]
+[node name="BrodyShadow" type="Sprite2D" parent="Y-SortPivot"]
 z_index = -2
 use_parent_material = true
-position = Vector2(-1.0723495, 8.999566)
+position = Vector2(-1.0723495, -2.999999)
 texture = SubResource("GradientTexture2D_k1o5k")
 
-[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="."]
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Y-SortPivot"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
-position = Vector2(-4.004395, 13.070337)
-rotation = 3.1415927
+position = Vector2(-4.004395, 1.0707731)
+rotation = -3.1415925
 scale = Vector2(0.05, 0.05)
 emitting = false
 amount = 16
@@ -458,12 +457,12 @@ one_shot = true
 preprocess = 1.09
 process_material = SubResource("ParticleProcessMaterial_vfjlh")
 
-[node name="FootStepParticlesRight" type="GPUParticles2D" parent="."]
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Y-SortPivot"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
-position = Vector2(1.644989, 12.997342)
-rotation = 3.1415927
+position = Vector2(1.644989, 0.997777)
+rotation = -3.1415925
 emitting = false
 amount = 16
 texture = ExtResource("3_vfjlh")
@@ -471,9 +470,9 @@ one_shot = true
 preprocess = 0.2
 process_material = SubResource("ParticleProcessMaterial_vfjlh")
 
-[node name="BloodSplatterParticles" type="GPUParticles2D" parent="."]
+[node name="BloodSplatterParticles" type="GPUParticles2D" parent="Y-SortPivot"]
 unique_name_in_owner = true
-position = Vector2(-1.0333595, 3.444538)
+position = Vector2(-1.0333595, -8.555027)
 emitting = false
 amount = 50
 lifetime = 0.5
@@ -481,10 +480,10 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_l2vdu")
 
-[node name="DarknessClearingParticles" type="GPUParticles2D" parent="."]
+[node name="DarknessClearingParticles" type="GPUParticles2D" parent="Y-SortPivot"]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(-1, -1)
+position = Vector2(-1, -12.999565)
 emitting = false
 amount = 4
 texture = ExtResource("4_l2vdu")
@@ -493,4 +492,9 @@ explosiveness = 0.24
 randomness = 0.12
 process_material = SubResource("ParticleProcessMaterial_s6v4d")
 
-[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
+[node name="DashCooldown" type="Timer" parent="Y-SortPivot"]
+unique_name_in_owner = true
+wait_time = 0.55
+one_shot = true
+
+[connection signal="timeout" from="Y-SortPivot/DashCooldown" to="." method="_on_dash_cooldown_timeout"]
