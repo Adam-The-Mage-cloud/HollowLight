@@ -39,7 +39,7 @@ material = SubResource("ShaderMaterial_xvl3v")
 script = ExtResource("1_1etqg")
 
 [node name="RadarCollisionArea" type="CollisionShape2D" parent="."]
-scale = Vector2(2.9605906, 2.9605906)
+scale = Vector2(3.2, 3.2)
 shape = SubResource("CircleShape2D_1etqg")
 
 [node name="XPSprite" type="AnimatedSprite2D" parent="."]

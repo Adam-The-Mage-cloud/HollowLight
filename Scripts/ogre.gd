@@ -52,7 +52,7 @@ func slash() :
 	%AxeArea.monitoring = false
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Brody" :
+	if body.name == "Brody" and get_parent().visible == true :
 		target = body
 		in_sight = true
 		footsteps()

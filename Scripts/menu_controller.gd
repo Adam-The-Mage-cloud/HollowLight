@@ -76,7 +76,7 @@ func animate_gold_gain():
 	white_tween.tween_property(%TotalGoldText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	# Update the actual stored value at the end
 	gained_gold_tween.finished.connect(func():
-		EventBus.total_acquired_goldpieces = end_value)
+		EventBus.total_acquired_goldpieces += end_value)
 		
 	await get_tree().create_timer(1.0).timeout
 	# When That Sequence is Finished, BEGIN XP ANIMATION :
@@ -108,7 +108,7 @@ func animate_xp_gain():
 	await tween_xp_bar(current_xp, new_xp_total)
 	
 	# Update Stored XP
-	EventBus.total_acquired_experience = new_xp_total
+	EventBus.total_acquired_experience += new_xp_total
 	EventBus.total_new_acquired_experience = 0
 	
 	# Signal for EventBus to begin the next menu (buttons!) :
@@ -219,7 +219,7 @@ func replayicon_flash_white() :
 
 func adventure_menu_fadeout() :
 	var AdventureScreenFade_tween = create_tween()
-	AdventureScreenFade_tween.tween_property(%AdventureScreen, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	AdventureScreenFade_tween.tween_property(%AdventureScreen, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await AdventureScreenFade_tween.finished
 	%AdventureScreen.visible = false
 
@@ -232,6 +232,11 @@ func _on_sanctuary_button_pressed() -> void:
 	adventure_menu_fadeout()
 	main_background_fadeout()
 	# Go To Sanctuary :
+	await get_tree().create_timer(0.25).timeout
+	%HomeH.play("default")
+	%HomeArrow.play("default")
+	%AdventureMenuTent.play("default")
+	
 	EventBus.spawn_the_sanctuary()
 
 func _on_replay_dungeon_button_pressed() -> void:
@@ -244,17 +249,24 @@ func _on_replay_dungeon_button_pressed() -> void:
 	adventure_menu_fadeout()
 	main_background_fadeout()
 	# Begin New Dungeon :
+	await get_tree().create_timer(0.25).timeout
+	%ReplayIcon.play("default")
+	%MovingPlayerTorch.play("default")
+	%Axes.play("default")
+	%ReplayLog.play("default")
+	
+	await get_tree().create_timer(0.6).timeout
 	EventBus.new_dungeon_crawl()
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # General Menu Fade Away :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func main_background_fadein() :
+	%Menus.visible = true
 	var MainMenuBackgroundFadeIn_tween = create_tween()
 	MainMenuBackgroundFadeIn_tween.parallel().tween_property(%EndOfDungeonMenu, "modulate", Color(1.0, 1.0, 1.0, 1.0), 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	MainMenuBackgroundFadeIn_tween.parallel().tween_property(%SpaceBackground, "modulate", Color(1.0, 1.0, 1.0, 1.0), 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await MainMenuBackgroundFadeIn_tween.finished
-	%Menus.visible = true
 
 func main_background_fadeout() :
 	var MainMenuBackgroundFadeOut_tween = create_tween()

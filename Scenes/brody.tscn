@@ -397,6 +397,8 @@ z_index = 2
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_l2vdu")
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("1_1lbbp")
 
 [node name="BrodyHitbox" type="CollisionShape2D" parent="."]
@@ -497,4 +499,10 @@ unique_name_in_owner = true
 wait_time = 0.55
 one_shot = true
 
+[node name="BounceCooldown" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.75
+one_shot = true
+
 [connection signal="timeout" from="Y-SortPivot/DashCooldown" to="." method="_on_dash_cooldown_timeout"]
+[connection signal="timeout" from="BounceCooldown" to="." method="_on_bounce_cooldown_timeout"]

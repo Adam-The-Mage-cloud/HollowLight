@@ -24,7 +24,7 @@ func _input(event):
 	if touchscreen_available == true :
 		if event is InputEventScreenTouch:
 			is_touchscreen = true
-			#%BrodyCam.zoom = Vector2(1.5, 1.5)
+			%BrodyCam.zoom = Vector2(1.5, 1.5)
 			%TouchScreenLayer.visible = true
 
 func _process(_delta: float) -> void: 

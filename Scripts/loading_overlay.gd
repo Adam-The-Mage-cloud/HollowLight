@@ -13,6 +13,7 @@ func hide_loading():
 	var finish_loading_tween = create_tween()
 	finish_loading_tween.tween_property(%LoadingProgressBar, "value", 100.0, 0.5)
 	await get_tree().create_timer(0.5).timeout
+	%LoadingProgressBar.value = 0.0
 	visible = false
 
 func continuously_set_progress():

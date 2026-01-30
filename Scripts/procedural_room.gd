@@ -38,7 +38,7 @@ var dungeon_outline_plant_spawn_chance = 2 # Where higher is rarer. and 1 is eve
 var room_complexity = -0.45 # -1 is super open, simple space (boss) / -0.05 is super complex, (tight)
 var floorcover_cluster_rate = 0.065 # The lower, the less clusters spawn in relation to the amount of floor tiles in the room
 var bits_and_bobs_spawn_rate = 0.02 # Like above, the lower, the less likely to spawn in relation to the amount of floor tiles in the room
-var obstacles_spawn_rate = 0.006 # The lower, the less obstacles are likely to spawn
+var obstacles_spawn_rate = 0.004 # The lower, the less obstacles are likely to spawn
 var floor_interactable_spawn_chance = 0.010  # (where 1.0 is 100% chance per floor tile)
 var max_wall_interactable_amount = 6000 # The max possible amount of wall interactables / number of floor tiles
 var stepladder_spawn_rate = 9 # Where 1 is every time and the greater from 1 it is, the less likely aka 1/2 or 1/3 or 1/8...
@@ -1011,7 +1011,7 @@ func generate_obstacles() -> void:
 				continue
 			
 			var atlas_x = randi_range(0, 5)
-			var atlas_y = randi_range(0, 1)
+			var atlas_y = randi_range(0, 2)
 			var alt = randi_range(0, 1)
 			%TileMapObstacles.set_cell(p, obstacle_source_id, Vector2i(atlas_x, atlas_y), alt)
 
@@ -1139,13 +1139,13 @@ func _ensure_door_corridor_clear() -> void:
 	var door_cell = _door_start_cell()
 
 	# How deep into the room we guarantee clearance
-	var depth = 6   # 6 tiles downward is plenty
+	var depth = 4   # 6 tiles downward is plenty
 
 	for i in range(depth):
 		var row = door_cell + Vector2i(0, i)
 
 		# Check a 2‑tile‑wide footprint (player width)
-		for ox in range(-1, 1):   # -1, 0, 1 → 3‑tile wide safety band
+		for ox in range(-1, 2):   # -1, 0, 1 → 3‑tile wide safety band
 			var c = row + Vector2i(ox, 0)
 
 			# Only clear if something is blocking AND it's inside the protected corridor
@@ -1158,9 +1158,9 @@ func _ensure_room_opening_clear() -> void:
 		return
 	
 	# The “bottom” of the room (closest to previous door)
-	var entry_cell: Vector2i = _get_lowest_floor_tile()
+	var entry_cell: Vector2i = _door_start_cell()
 	
-	var depth = 6        # how far upward to clear
+	var depth = 4        # how far upward to clear
 	var half_width = 1    # how wide the opening should be
 	
 	for i in range(depth):
@@ -1194,19 +1194,16 @@ func _is_blocking_for_player(cell: Vector2i) -> bool:
 		return true
 	if %TileMapObstacles.get_cell_source_id(cell) != -1:
 		return true
-	# You can add more here if needed (exterior plants, etc.)
+	# can add more here if needed (exterior plants, etc.)
 	return false
 
 func _clear_blocking_in_door_corridor(cell: Vector2i) -> void:
 	# Only clear tiles that are allowed to be removed in the doorway corridor
 	%TileMapFrontFaceWall.set_cell(cell, -1)
 	%TileMapObstacles.set_cell(cell, -1)
-
-	# DO NOT clear outlines or walls unless they are literally on the door tile
-	if cell == _door_start_cell():
-		%TileMapWalls.set_cell(cell, -1)
-		%TileMapRoomOutline.set_cell(cell, -1)
-		%TileMapRoomDarkerOutline.set_cell(cell, -1)
+	%TileMapRoomOutline.set_cell(cell, -1)
+	%TileMapRoomDarkerOutline.set_cell(cell, -1)
+	%TileMapWalls.set_cell(cell, -1)
 
 	# Ensure floor exists
 	if not floor_positions.has(cell):

@@ -16,6 +16,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	
 	currently_climbing = true
+	body.currently_climbing = true
 	
 	# If a previous tween exists, kill it
 	if climb_tween:
@@ -40,6 +41,7 @@ func _on_body_exited(body: Node2D) -> void:
 		return
 	
 	currently_climbing = false
+	body.currently_climbing = false
 	
 	# Stop shrink tween
 	if climb_tween:

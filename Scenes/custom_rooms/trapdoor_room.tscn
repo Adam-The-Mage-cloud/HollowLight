@@ -2144,14 +2144,14 @@ tile_set = SubResource("TileSet_g4rgj")
 
 [node name="TileMapObstacles" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-z_index = 2
+z_index = 1
 y_sort_enabled = true
 tile_set = SubResource("TileSet_rk5w2")
 
 [node name="TileMapBitsandBobs" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.92099476, 0.9209946, 0.9209946, 1)
-z_index = 2
+z_index = 1
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAATAAIAFAABAAAAAAARAAMAFAACAAEAAAANAP//FAAFAAAAAAASAP//FAAFAAAAAAA=")
 tile_set = SubResource("TileSet_cl6f4")
@@ -2204,6 +2204,7 @@ unique_name_in_owner = true
 
 [node name="DoorArea" type="StaticBody2D" parent="."]
 unique_name_in_owner = true
+z_index = 1
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_xguyw")
 position = Vector2(160, -0.07444763)

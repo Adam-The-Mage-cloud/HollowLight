@@ -1980,6 +1980,8 @@ texture_region_size = Vector2i(71, 63)
 1:0/0/physics_layer_0/polygon_1/points = PackedVector2Array(27.716751, 0.22374725, 23.475964, 0.25259972, 23.409607, -17.73201, 27.770157, -17.681965)
 1:0/1 = 1
 1:0/1/flip_h = true
+1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-26.50867, 0, -22.119816, -1.0533257, -21.944263, -13.693221, -26.157562, -13.517667, -27.035332, -1.7555408)
+1:0/1/physics_layer_0/polygon_1/points = PackedVector2Array(20.364277, -13.3421135, 23.699804, -12.464344, 23.699804, 0, 19.310951, 0.8777695)
 0:1/next_alternative_id = 2
 0:1/0 = 0
 0:1/0/y_sort_origin = 7
@@ -1989,37 +1991,87 @@ texture_region_size = Vector2i(71, 63)
 0:1/1/physics_layer_0/polygon_0/points = PackedVector2Array(-11.03544, 1.0419731, -5.0362015, -2.936469, 0.07893753, -3.9152923, 7.025425, -2.8417444, 11.098591, 2.0207958, 2.1628838, 9.125157, -1.910286, 7.0096364, -10.909142, 6.283413)
 2:0/next_alternative_id = 2
 2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.777706, 7.1977196, 5, -0.7022152, 12.991005, 5.9688416, 1.228878, 14.044331)
 2:0/1 = 1
 2:0/1/flip_h = true
+2:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-5.0910683, 13.868776, 11.05991, 13.342112, -3.1599731, 3.3355274)
 3:0/next_alternative_id = 2
 3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-13.373207, 0.9330139, 11.818184, 0.9330139, 11.507179, 12.440193, -13.684212, 13.684216)
 3:0/1 = 1
 3:0/1/flip_h = true
+3:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-14.5709915, 17.379858, 17.555412, 17.204302, 17.204304, 1.5799866, -16.502087, 1.4044323)
 3:1/next_alternative_id = 2
 3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-11.411017, 2.1066494, 12.815449, 1.7555408, 12.288788, 7.373274, -10.7088, 9.304369)
 3:1/1 = 1
 3:1/1/flip_h = true
+3:1/1/physics_layer_0/polygon_0/points = PackedVector2Array(-17.730965, 6.144394, 16.326532, 6.846609, 16.326532, -3.5110817, -15.975423, -2.9844208)
 4:1/next_alternative_id = 2
 4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.7399616, 11.762125, 5.9688416, 12.464342, 5.9688416, 6.846609, -5.9688396, 7.548826, -5.9688396, 10.533247)
 4:1/1 = 1
 4:1/1/flip_h = true
+4:1/1/physics_layer_0/polygon_0/points = PackedVector2Array(-11.891483, 14.567068, 9.513188, 14.368877, 6.639413, 8.125849, -10.206857, 8.324039)
 4:0/next_alternative_id = 2
 4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.915516, 6.846609, 5.7932854, 7.0221653, 5, -0.8777695, -5, -0.17555428)
 4:0/1 = 1
 4:0/1/flip_h = true
+4:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-11.693293, 9.711379, 10.107761, 10.10776, 9.612282, 0.6936693, -12.188772, 1.2882433)
 5:0/next_alternative_id = 2
 5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.7565937, 9.513187, 8.026752, 9.314997, 8.720421, 3.666542, -5, 3.1710625)
 5:0/1 = 1
 5:0/1/flip_h = true
+5:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-12.68425, 13.179729, 8.224943, 12.882441, 4.1620197, 5, -9.314997, 5.152977, -13.576112, 13.576111)
 5:1/next_alternative_id = 2
 5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, 5, 9.513187, 5.8466473, 9.513187, 2.3782978, -5, 1.9819145)
 5:1/1 = 1
 5:1/1/flip_h = true
+5:1/1/physics_layer_0/polygon_0/points = PackedVector2Array(-12.68425, 7.4321785, 8.819517, 7.7294655, 3.4683495, 3.2701588, -9.314997, 3.4683495)
 1:1/next_alternative_id = 2
 1:1/0 = 0
 1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-19.549957, -1.8459187, -8.762047, 4.736241, 11.666939, 5.525614, 18.934654, -1.734045, 24.024918, -1.174676, 19.844849, 10.672329, -19.465952, 10.893353, -24.975842, -1.2306128)
 1:1/1 = 1
 1:1/1/flip_h = true
+1:1/1/physics_layer_0/polygon_0/points = PackedVector2Array(-18.608738, 10.006586, 17.379856, 10.006586, 17.379856, 3.8621922, -18.78429, 5.2666245, -19.662062, 11.235464)
+0:2/next_alternative_id = 6
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9.83103, 19.486506, 10.357693, 18.784288, 10.006584, -13.342113, -10.533247, -12.991004)
+0:2/1 = 1
+0:2/1/flip_h = true
+0:2/1/physics_layer_0/polygon_0/points = PackedVector2Array(-9.304367, -14.044329, -10.006584, 10.006586, 8.9532585, 11.411016, 8.60215, -14.746545)
+1:2/next_alternative_id = 3
+1:2/0 = 0
+1:2/1 = 1
+1:2/1/flip_h = true
+2:2/next_alternative_id = 7
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4.0377445, 12.815451, 2.6333122, 13.342112, 3.1599731, 5, -5, 5)
+2:2/1 = 1
+2:2/1/flip_h = true
+2:2/1/physics_layer_0/polygon_0/points = PackedVector2Array(-3.1599731, 16.677639, 5.2666225, 16.502087, 5.2666225, 8.251043, -4.388853, 9.304367)
+3:2/next_alternative_id = 4
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10.182138, 11.762125, 10.533245, 11.235464, 9.831032, 5.617731, -10.884355, 5.9688396)
+3:2/0/physics_layer_0/polygon_1/points = PackedVector2Array(-16.67764, 12.6398945, -14.219883, 12.6398945, -14.219883, 17.730967, -17.204304, 17.730967)
+3:2/0/physics_layer_0/polygon_2/points = PackedVector2Array(13.868774, 17.906519, 17.204304, 17.906519, 17.204304, 13.517668, 14.219883, 14.219885)
+3:2/1 = 1
+3:2/1/flip_h = true
+3:2/1/physics_layer_0/polygon_0/points = PackedVector2Array(-16.853195, 8.602152, -13.675206, 8.224943, -14.368876, 15.359834, -17.341747, 14.76526)
+3:2/1/physics_layer_0/polygon_1/points = PackedVector2Array(14.368877, 9.909571, 17.242653, 9.810474, 17.04446, 16.84627, 13.873399, 16.449886)
+3:2/1/physics_layer_0/polygon_2/points = PackedVector2Array(-11.396006, 4.4593067, 11.495102, 5.3511686, 11.594196, 10.305953, -11.693293, 10.504145)
+4:2/next_alternative_id = 2
+4:2/0 = 0
+4:2/1 = 1
+4:2/1/flip_h = true
+5:2/next_alternative_id = 2
+5:2/0 = 0
+5:2/1 = 1
+5:2/1/flip_h = true
+2:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_x32xd"]
 tile_size = Vector2i(10, 10)
@@ -2943,14 +2995,14 @@ tile_set = SubResource("TileSet_1jqat")
 [node name="TileMapObstacles" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.72464263, 0.7246426, 0.7246426, 1)
-z_index = 2
+z_index = 1
 y_sort_enabled = true
 tile_set = SubResource("TileSet_x32xd")
 
 [node name="TileMapBitsandBobs" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.92099476, 0.9209946, 0.9209946, 1)
-z_index = 2
+z_index = 1
 y_sort_enabled = true
 tile_set = SubResource("TileSet_s86uy")
 
@@ -2971,10 +3023,12 @@ unique_name_in_owner = true
 
 [node name="WallInteractables" type="Node2D" parent="."]
 unique_name_in_owner = true
-z_index = 2
+z_index = 1
 
 [node name="FloorInteractables" type="Node2D" parent="."]
 unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
 
 [node name="Mist" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -3017,6 +3071,7 @@ unique_name_in_owner = true
 
 [node name="DoorArea" type="StaticBody2D" parent="."]
 unique_name_in_owner = true
+z_index = 1
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_vljhh")
 position = Vector2(160, -0.07444763)

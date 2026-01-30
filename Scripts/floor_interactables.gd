@@ -10,33 +10,54 @@ var type = 0
 var chosen_skin_number = 0
 # Type 1 = VASES / URNS
 var vase_type = 0
-var smashed = false
+var vase_smashed = false
 # Type 2 = CAMPFIRES
 var campfire_type = 0
 var alight = false
+# Type 3 = SACKS
+var sack_type = 0
+var sliced = false
+# Type 4 = CRATES
+var crate_type = 0
+var crate_smashed = false
+# Type 5 = BOTTLES
+var bottle_type = 0
+var bottle_smashed = false
 
 func _ready() :
 	# Randomly Pick Interactable Based off Theme and Then Type (if specified) : 
 	if EventBus.current_theme == 1 :
 		if type == 0 : # Then let's pick the item randomly :
-			type = randi_range(1, 2)
+			type = randi_range(1, 5)
 		
 		# Let's Begin :
 		if type == 1 : # VASES / URNS
-			chosen_skin_number = randi_range(1, 1)
+			chosen_skin_number = randi_range(1, 3)
 			%InteractableSprite.play("vase_" + str(chosen_skin_number))
 			vase_type = chosen_skin_number
 		
 		elif type == 2 : # CAMPFIRES
-			chosen_skin_number = randi_range(1, 2)
+			chosen_skin_number = randi_range(1, 3)
 			%InteractableSprite.play("campfire_" + str(chosen_skin_number))
+		
+		elif type == 3 : # SACKS
+			chosen_skin_number = randi_range(1, 2)
+			%InteractableSprite.play("sack_" + str(chosen_skin_number))
+		
+		elif type == 4 : # CRATES
+			chosen_skin_number = randi_range(1, 2)
+			%InteractableSprite.play("crate_" + str(chosen_skin_number))
+		
+		elif type == 5 : # BOTTLES
+			chosen_skin_number = randi_range(1, 20)
+			%InteractableSprite.play("bottle_" + str(chosen_skin_number))
 
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.name == "Torch" :
-		if type == 1 and smashed == false : # THEN VASE / URN SO :
+		if type == 1 and vase_smashed == false : # THEN VASE / URN SO :
 			# BREAK :
-			smashed = true
+			vase_smashed = true
 			drop_loot()
 			%VaseShatteredParticles.emitting = true
 			%InteractableSprite.play("vase_" + str(chosen_skin_number) + "_broken")
@@ -60,6 +81,27 @@ func _on_area_entered(area: Area2D) -> void:
 			elif chosen_skin_number == 2 :
 				%InteractableSprite.play("campfire_2_alight")
 				pass
+			
+		elif type == 3 and sliced == false : # THEN SACK SO :
+			# SLICE :
+			sliced = true
+			drop_loot()
+			%VaseShatteredParticles.emitting = true
+			%InteractableSprite.play("sack_" + str(chosen_skin_number) + "_sliced")
+		
+		elif type == 4 and crate_smashed == false : # THEN CRATE SO :
+			# BREAK :
+			crate_smashed = true
+			drop_loot()
+			%VaseShatteredParticles.emitting = true
+			%InteractableSprite.play("crate_" + str(chosen_skin_number) + "_smashed")
+		
+		elif type == 5 and bottle_smashed == false : # THEN BOTTLE SO :
+			# BREAK :
+			bottle_smashed = true
+			drop_loot()
+			%VaseShatteredParticles.emitting = true
+			%InteractableSprite.play("bottle_" + str(randi_range(1, 4)) + "_smashed")
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Extra Effect Functions :

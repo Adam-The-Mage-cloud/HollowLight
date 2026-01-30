@@ -6,7 +6,7 @@ var target
 var brody_position
 
 var direction
-var speed = 70
+var speed = 90
 
 var launch_radius: float = 24.0
 var launch_height: float = 16.0
@@ -94,4 +94,4 @@ func _on_flash_timer_timeout() -> void:
 
 
 func _on_speed_accelerator_timeout() -> void:
-	speed += 5
+	speed += 6.5
