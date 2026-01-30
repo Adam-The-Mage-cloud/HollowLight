@@ -1139,13 +1139,13 @@ func _ensure_door_corridor_clear() -> void:
 	var door_cell = _door_start_cell()
 
 	# How deep into the room we guarantee clearance
-	var depth = 4   # 6 tiles downward is plenty
+	var depth = 6   # 6 tiles downward is plenty
 
 	for i in range(depth):
 		var row = door_cell + Vector2i(0, i)
 
 		# Check a 2‑tile‑wide footprint (player width)
-		for ox in range(-1, 2):   # -1, 0, 1 → 3‑tile wide safety band
+		for ox in range(-1, 1):   # -1, 0, 1 → 3‑tile wide safety band
 			var c = row + Vector2i(ox, 0)
 
 			# Only clear if something is blocking AND it's inside the protected corridor
@@ -1160,7 +1160,7 @@ func _ensure_room_opening_clear() -> void:
 	# The “bottom” of the room (closest to previous door)
 	var entry_cell: Vector2i = _door_start_cell()
 	
-	var depth = 4        # how far upward to clear
+	var depth = 6        # how many tiles far upward to clear
 	var half_width = 1    # how wide the opening should be
 	
 	for i in range(depth):

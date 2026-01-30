@@ -20,6 +20,7 @@ var torch_equipped = true
 
 var bobbing = false
 var currently_climbing = false
+var bouncing = false
 var bounce_lock = 0.0 
 var bounce_cooldown_finished = true
 
@@ -72,7 +73,7 @@ func _physics_process(_delta: float) -> void:
 		# Animation switching
 		# ---------------------------------------------------------
 		if direction != Vector2.ZERO:
-			if dashing == false:
+			if dashing == false and bouncing == false:
 				moving()
 				%BrodySprite.play("moving")
 		else:
@@ -82,7 +83,7 @@ func _physics_process(_delta: float) -> void:
 		# ---------------------------------------------------------
 		# Antenna movement
 		# ---------------------------------------------------------
-		if direction != Vector2.ZERO:
+		if direction != Vector2.ZERO :
 			%antenna.rotation_degrees = lerp(%antenna.rotation_degrees, -40.0, 0.12)
 		else:
 			%antenna.rotation_degrees = lerp(%antenna.rotation_degrees, 0.0, 0.12)
@@ -132,11 +133,11 @@ func _physics_process(_delta: float) -> void:
 		# ---------------------------------------------------------
 		var collision = get_last_slide_collision()
 		if collision and bounce_cooldown_finished == true:
-
+			
 			var normal = collision.get_normal()
 			var speed = pre_velocity.length()
 			var speed_ratio = speed / max_speed
-
+			
 			# -----------------------------------------------------
 			# INTENTIONAL BOUNCE CONDITIONS
 			# -----------------------------------------------------
@@ -166,6 +167,10 @@ func _physics_process(_delta: float) -> void:
 			# -----------------------------------------------------
 			# Bounce is allowed — perform bounce
 			# -----------------------------------------------------
+			# Play Animation :
+			bouncing = true
+			%BrodySprite.play("roll")
+			
 			bounce_cooldown_finished = false
 			%BounceCooldown.start()
 
@@ -217,6 +222,8 @@ func _physics_process(_delta: float) -> void:
 			t.tween_property(%BrodySprite, "rotation_degrees", randf_range(-8, 8), 0.08)
 			t.tween_property(%BrodySprite, "scale", Vector2(1, 1), 0.12)
 			t.tween_property(%BrodySprite, "rotation_degrees", 0, 0.12)
+			await t.finished
+			bouncing = false
 
 # Movement INPUT :
 func get_move_direction() -> Vector2:
