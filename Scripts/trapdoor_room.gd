@@ -9,6 +9,7 @@ var frontwall_positions: Array[Vector2i] = []
 
 func _ready() :
 	$".".add_to_group("rooms")
+	%TileMapFloor.add_to_group("floors")
 	
 	# Build the Arrays from what tiles I've placed down customally :
 	# Analyse Floor

@@ -41,14 +41,17 @@ func _ready() :
 			%InteractableSprite.play("campfire_" + str(chosen_skin_number))
 		
 		elif type == 3 : # SACKS
+			%InteractableSprite.global_position.y += 3
 			chosen_skin_number = randi_range(1, 2)
 			%InteractableSprite.play("sack_" + str(chosen_skin_number))
 		
 		elif type == 4 : # CRATES
+			%InteractableSprite.global_position.y += 7
 			chosen_skin_number = randi_range(1, 2)
 			%InteractableSprite.play("crate_" + str(chosen_skin_number))
 		
 		elif type == 5 : # BOTTLES
+			%InteractableSprite.global_position += Vector2(2, 2)
 			chosen_skin_number = randi_range(1, 20)
 			%InteractableSprite.play("bottle_" + str(chosen_skin_number))
 
@@ -86,21 +89,21 @@ func _on_area_entered(area: Area2D) -> void:
 			# SLICE :
 			sliced = true
 			drop_loot()
-			%VaseShatteredParticles.emitting = true
+			%SackSliceParticles.emitting = true
 			%InteractableSprite.play("sack_" + str(chosen_skin_number) + "_sliced")
 		
 		elif type == 4 and crate_smashed == false : # THEN CRATE SO :
 			# BREAK :
 			crate_smashed = true
 			drop_loot()
-			%VaseShatteredParticles.emitting = true
+			%CrateBreakParticles.emitting = true
 			%InteractableSprite.play("crate_" + str(chosen_skin_number) + "_smashed")
 		
 		elif type == 5 and bottle_smashed == false : # THEN BOTTLE SO :
 			# BREAK :
 			bottle_smashed = true
 			drop_loot()
-			%VaseShatteredParticles.emitting = true
+			%GlassShatteringParticles.emitting = true
 			%InteractableSprite.play("bottle_" + str(randi_range(1, 4)) + "_smashed")
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

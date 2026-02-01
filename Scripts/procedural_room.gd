@@ -42,6 +42,10 @@ var obstacles_spawn_rate = 0.004 # The lower, the less obstacles are likely to s
 var floor_interactable_spawn_chance = 0.010  # (where 1.0 is 100% chance per floor tile)
 var max_wall_interactable_amount = 6000 # The max possible amount of wall interactables / number of floor tiles
 var stepladder_spawn_rate = 9 # Where 1 is every time and the greater from 1 it is, the less likely aka 1/2 or 1/3 or 1/8...
+var raggedize_level = 1.0 # Default at 0.25 where 0.0 is highly uniform and 1 is VERY ragged
+var walls_obstruction_frequency = 0.08 # Default at 0.05, where 1.0 is a much higher noise chance of spawning negative wall obstructions compared to 0 (next to none)
+var chamber_amount = randi_range(1, 7) # Default between 3 and 6, where more means a bigger cave
+var narrowness_widen_value = 1.5 # Default is 2, the higher, the wider each narrower part of a cave
 
 var beacon_amount = randi_range(1, 4)
 
@@ -78,6 +82,7 @@ func _ready() -> void:
 	# Door :
 	%DoorArea.material = %DoorArea.material.duplicate()
 	%DoorArea.add_to_group("doors")
+	%TileMapFloor.add_to_group("floors")
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
 	
 	# If last room then prepare Door to have light :
@@ -98,10 +103,10 @@ func _ready() -> void:
 	
 	# FLOOR GENERATION
 	generate_floor()
-	_smooth_floor(2)
 	_raggedize_edges()
-	_widen_narrow_passages()
+	_smooth_floor(5)
 	_ensure_reachable_floor()
+	_widen_narrow_passages()
 	generate_floor_variant_clusters()
 	
 	# NOW that floor exists, align room to previous door
@@ -153,7 +158,7 @@ func _choose_room_type_and_size() -> void:
 		height = randi_range(18, 30) * 1.25
 	else:
 		if room_type == 0:
-			room_type = randi_range(1, 9) * 1.25
+			room_type = randi_range(1, 9)
 			
 		match room_type:
 			1:
@@ -162,7 +167,10 @@ func _choose_room_type_and_size() -> void:
 			2:
 				width = randi_range(14, 20) * 1.25
 				height = randi_range(24, 40) * 1.25
-			3,4,5,6,7,8,9:
+			3, 4, 5: # Corridor
+				width = randi_range(7, 9) * 1.25
+				height = randi_range(9, 15) * 1.25
+			6,7,8,9:
 				width = randi_range(32, 52) * 1.25
 				height = randi_range(22, 36) * 1.25
 			_:
@@ -204,13 +212,13 @@ func generate_floor() -> void:
 
 	match room_type:
 		1:
-			_generate_cave_system()          # natural Stardew-like cave
+			_generate_cave_system()          # natural 
 		2:
 			_generate_cave_with_human_room() # cave + carved room
 		3:
 			_generate_mixed_cave()           # multiple chambers + rooms
 		_:
-			_generate_cave_system()
+			_generate_cave_system()     # heavily randomised cave look
 
 # This Function Generates Variants Within The Floor Using A Secondary Set Such As Dirt etc, then a 3rd Set Such as Clay, 
 # These have their own unique terrain ID's within %TileMapFloor e.g. regular stone = 0, dirt = 1, clay = 2
@@ -341,7 +349,7 @@ func get_tile_for_cluster(p: Vector2i, cluster: Dictionary) -> Vector2i:
 func _widen_narrow_passages() -> void:
 	var floor_set = build_floor_set()
 	var to_add = []
-	var widen_value = 2 # Default = 2 
+	var widen_value = narrowness_widen_value
 	for p in floor_positions:
 		var neighbors = 0
 		for d in [Vector2i(widen_value,0), Vector2i(-widen_value,0), Vector2i(0,widen_value), Vector2i(0,-widen_value)]:
@@ -391,7 +399,7 @@ func _ensure_reachable_floor() -> void:
 
 func _generate_cave_system() -> void:
 	var chambers: Array[Vector2i] = []
-	var chamber_count = randi_range(3, 6)
+	var chamber_count = chamber_amount
 
 	for i in range(chamber_count):
 		chambers.append(Vector2i(
@@ -486,7 +494,7 @@ func _carve_negative_space() -> void:
 	var noise = FastNoiseLite.new()
 	noise.seed = randi()
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	noise.frequency = 0.05
+	noise.frequency = walls_obstruction_frequency
 
 	for p in floor_positions.duplicate():
 		if noise.get_noise_2d(p.x, p.y) < room_complexity :
@@ -526,7 +534,7 @@ func _get_lowest_floor_tile() -> Vector2i:
 # POST-PROCESSING: SMOOTH + RAGGED EDGES
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-func _smooth_floor(iterations = 2) -> void:
+func _smooth_floor(iterations = 5) -> void:
 	if floor_positions.is_empty():
 		return
 		
@@ -556,7 +564,7 @@ func _raggedize_edges() -> void:
 			if floor_set.has(p + d):
 				neighbors += 1
 		# Edge tiles with few neighbors have a chance to be removed
-		if neighbors <= 2 and randf() < 0.25:
+		if neighbors <= 2 and randf() < raggedize_level:
 			to_remove.append(p)
 			
 	for p in to_remove:
@@ -834,6 +842,10 @@ func _generate_outline_layer(tilemap: TileMapLayer, source_id: int, offset: int)
 				continue
 			if protected_cells.has(npos + Vector2i(1, 0)):
 				continue
+			if protected_cells.has(npos + Vector2i(1, -2)):
+				continue
+			if protected_cells.has(npos + Vector2i(-1, -2)):
+				continue
 			
 			# Place outline tile
 			var atlas_x = randi_range(0, 3)
@@ -842,8 +854,8 @@ func _generate_outline_layer(tilemap: TileMapLayer, source_id: int, offset: int)
 			tilemap.set_cell(npos, source_id, Vector2i(atlas_x, atlas_y), alt)
 
 func generate_outline_layers_from_floor() -> void:
-	if first_room or theme != 1:
-		return
+	#if first_room or theme != 1:
+		#return
 	room_outline_source_id = 70
 	_generate_outline_layer(%TileMapRoomOutline, room_outline_source_id, 1)
 	_generate_outline_layer(%TileMapRoomDarkerOutline, room_outline_source_id, 3)
@@ -852,8 +864,8 @@ func generate_outline_layers_from_floor() -> void:
 func generate_exterior_plants_outline() -> void:
 	%TileMapExteriorPlants.clear()
 	
-	if theme != 1 or first_room:
-		return
+	#if theme != 1 or first_room:
+		#return
 	
 	var placed_plants = {}
 	var noise = FastNoiseLite.new()
@@ -974,7 +986,7 @@ func generate_frontfacing_wall_from_floor() -> void:
 	
 	for w in wall_positions:
 		var below = w + Vector2i(0, 1)
-		var above = w + Vector2i(0, -1)
+		var above = w + Vector2i(0, 0)
 		
 		if not floor_set.has(below):
 			continue
@@ -1139,13 +1151,13 @@ func _ensure_door_corridor_clear() -> void:
 	var door_cell = _door_start_cell()
 
 	# How deep into the room we guarantee clearance
-	var depth = 6   # 6 tiles downward is plenty
+	var depth = 12   # 6 tiles downward is plenty
 
 	for i in range(depth):
 		var row = door_cell + Vector2i(0, i)
 
 		# Check a 2‑tile‑wide footprint (player width)
-		for ox in range(-1, 1):   # -1, 0, 1 → 3‑tile wide safety band
+		for ox in range(0, 1):   # -1, 0, 1 → 3‑tile wide safety band
 			var c = row + Vector2i(ox, 0)
 
 			# Only clear if something is blocking AND it's inside the protected corridor
@@ -1158,16 +1170,15 @@ func _ensure_room_opening_clear() -> void:
 		return
 	
 	# The “bottom” of the room (closest to previous door)
-	var entry_cell: Vector2i = _door_start_cell()
+	var entry_cell: Vector2i = %TileMapFloor.local_to_map(to_local(door_origin))
 	
-	var depth = 6        # how many tiles far upward to clear
-	var half_width = 1    # how wide the opening should be
+	var depth = 7       # how many tiles far upward to clear
 	
 	for i in range(depth):
 		# Move UPWARD from the lowest tile
 		var row = entry_cell + Vector2i(0, -i)
 		
-		for ox in range(-half_width, half_width + 1):
+		for ox in range(0, 2):
 			var c = row + Vector2i(ox, 0)
 			
 			# Respect protected door area
@@ -1527,8 +1538,9 @@ func _on_all_beacons_lit() -> void:
 	if EventBus.current_room == self :
 		%DoorStopperCollision.set_deferred("disabled", true)
 		room_complete = true
-		#EventBus.rooms_completed += 1
-		# Door Flashes :
+		EventBus.beacon_count_reset()
+		# Door Flashes and Continues Flashing :
+		flash_white()
 		%DoorFlashingTimer.start()
 
 func _on_door_flashing_timer_timeout() -> void:

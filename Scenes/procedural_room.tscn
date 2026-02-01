@@ -3138,7 +3138,7 @@ shape = SubResource("RectangleShape2D_2vw2r")
 
 [node name="DoorFlashingTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 2.0
+wait_time = 1.6
 
 [connection signal="body_entered" from="DoorArea/DoorOpenArea" to="." method="_on_door_open_area_body_entered"]
 [connection signal="timeout" from="DoorFlashingTimer" to="." method="_on_door_flashing_timer_timeout"]

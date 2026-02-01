@@ -33,14 +33,14 @@ var beacons_lit = 0
 
 # Currency Variables :
 var total_current_darkness = 0.0
-var total_acquired_experience = 0
-var total_acquired_goldpieces = 0
+var total_acquired_experience: int = 0
+var total_acquired_goldpieces: int = 0
 
-var total_new_acquired_experience = 0
-var total_new_acquired_goldpieces = 0
+var total_new_acquired_experience: int = 0
+var total_new_acquired_goldpieces: int = 0
 
 # PLAYER STATS :
-var player_level = 1
+var player_level: int = 1
 
 # Rooms Completed / ENDGAME DECIDER :
 var current_room
@@ -55,6 +55,8 @@ var dungeon_crawl_button_available = false
 var current_theme = 1
 
 func _ready():
+	# Access Saved Data :
+	load_game()
 	EventBus.beacon_spawned.connect(_on_beacon_spawned)
 	EventBus.beacon_lit.connect(_on_beacon_lit)
 	
@@ -95,6 +97,7 @@ func last_room_passed() :
 	EventBus.total_beacons_to_light = 0
 	EventBus.total_beacons = 0
 	EventBus.last_room_complete.emit()
+	save_game()
 
 func open_the_travel_menu() :
 	EventBus.open_travel_menu.emit()
@@ -123,3 +126,49 @@ func beacon_count_reset() :
 # Sanctuary :
 func spawn_the_sanctuary() :
 	EventBus.spawn_sanctuary.emit()
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# SAVING AND LOADING :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Saved Data Inside a Dictionary :
+func get_save_data() -> Dictionary:
+	return {
+		"player_level": player_level,
+		"total_acquired_experience": total_acquired_experience,
+		"total_acquired_goldpieces": total_acquired_goldpieces,
+	}
+
+func apply_save_data(data: Dictionary):
+	player_level = data.get("player_level", 1)
+	total_acquired_experience = data.get("total_acquired_experience", 0)
+	total_acquired_goldpieces = data.get("total_acquired_goldpieces", 0)
+
+	print("Game loaded!")
+
+func save_game():
+	var save_path = "user://savegame.json"
+	var data = get_save_data()
+	var json_string = JSON.stringify(data)
+	
+	var file = FileAccess.open(save_path, FileAccess.WRITE)
+	if file:
+		file.store_string(json_string)
+		file.close()
+		print("Game saved!")
+
+func load_game():
+	var save_path = "user://savegame.json"
+
+	if not FileAccess.file_exists(save_path):
+		print("No save file found.")
+		return
+
+	var file = FileAccess.open(save_path, FileAccess.READ)
+	var content = file.get_as_text()
+	file.close()
+
+	var data = JSON.parse_string(content)
+	if typeof(data) == TYPE_DICTIONARY:
+		apply_save_data(data)

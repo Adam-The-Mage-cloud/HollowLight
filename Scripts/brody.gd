@@ -15,6 +15,9 @@ var accel = 900.0
 var friction = 700.0
 var max_speed = 80.0
 
+var last_safe_location = Vector2.ZERO
+var last_location = Vector2.ZERO
+
 var weapon_equipped = false
 var torch_equipped = true
 
@@ -465,3 +468,33 @@ func _on_dash_button_pressed() -> void:
 
 func _on_bounce_cooldown_timeout() -> void:
 	bounce_cooldown_finished = true
+
+
+func _on_check_brody_location_okay_timeout() -> void:
+	print (%BrodyMapStuckCollision.get_overlapping_areas().size())
+	# Check if player stuck inside something :
+	#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
+		#$".".global_position = last_safe_location
+	if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_areas().size() > 0 :
+		$".".global_position = last_safe_location
+	# Now check if player is not touching a floor tile :
+	if is_on_floor_tile() == false :
+		$".".global_position = last_safe_location
+	#if %FloorDetector.is_colliding() == false :
+		#$".".global_position = last_safe_location
+	else :
+		last_safe_location = $".".global_position
+	last_location = $".".global_position 
+
+func is_on_floor_tile() -> bool:
+	var check_pos = global_position + Vector2(0, 8)
+	
+	for tm in get_tree().get_nodes_in_group("floors"):
+		var local = tm.to_local(check_pos)
+		var cell = tm.local_to_map(local)
+		
+		var data = tm.get_cell_tile_data(cell)
+		if data != null:
+			return true
+	
+	return false

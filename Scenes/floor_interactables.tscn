@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://duajbyy6olgji"]
+[gd_scene load_steps=70 format=3 uid="uid://duajbyy6olgji"]
 
 [ext_resource type="Texture2D" uid="uid://dtg413hiy53ro" path="res://Artwork/Dungeon_Interactables.png" id="1_006lm"]
 [ext_resource type="Script" uid="uid://dwyxlb8vsdm24" path="res://Scripts/floor_interactables.gd" id="1_n14hj"]
@@ -589,7 +589,8 @@ scale_curve = SubResource("CurveTexture_mhh1w")
 color_ramp = SubResource("GradientTexture1D_0dv5e")
 
 [sub_resource type="Gradient" id="Gradient_0q5tm"]
-colors = PackedColorArray(0.39215687, 0.34509805, 0.4, 1, 0.70859015, 0.6589383, 0.7167585, 0)
+offsets = PackedFloat32Array(0, 0.6855346)
+colors = PackedColorArray(0.96368414, 0.9561381, 0.96490175, 1, 0.39242187, 0.30856204, 0.26995477, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_jf4kt"]
 gradient = SubResource("Gradient_0q5tm")
@@ -619,6 +620,76 @@ scale_min = 0.75
 scale_curve = SubResource("CurveTexture_6i4l4")
 color = Color(0.8042695, 0.7667956, 0.8103906, 1)
 color_ramp = SubResource("GradientTexture1D_jf4kt")
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n14hj"]
+gradient = SubResource("Gradient_0q5tm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0q5tm"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(3, 6, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(1, -40, 0)
+spread = 180.0
+initial_velocity_min = -70.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 80, 0)
+radial_accel_min = -7.170002
+radial_accel_max = 11.579997
+damping_min = 0.120000005
+damping_max = 0.36
+scale_min = 0.75
+scale_curve = SubResource("CurveTexture_6i4l4")
+color_ramp = SubResource("GradientTexture1D_n14hj")
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0q5tm"]
+gradient = SubResource("Gradient_0q5tm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6i4l4"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(3, 6, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(1, -40, 0)
+initial_velocity_max = 80.0
+gravity = Vector3(0, 80, 0)
+radial_accel_min = -7.170002
+radial_accel_max = 11.579997
+damping_min = 0.120000005
+damping_max = 0.36
+scale_min = 0.75
+scale_curve = SubResource("CurveTexture_6i4l4")
+color = Color(1, 0.8784314, 0.49411765, 1)
+color_ramp = SubResource("GradientTexture1D_0q5tm")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.09999997
+
+[sub_resource type="Gradient" id="Gradient_jf4kt"]
+offsets = PackedFloat32Array(0, 0.6855346)
+colors = PackedColorArray(0.4627451, 0.35686275, 0.28235295, 1, 0.39242187, 0.30856204, 0.26995477, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lsckk"]
+gradient = SubResource("Gradient_jf4kt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5un8a"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(7, 5, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(4, -10, 0)
+initial_velocity_min = -50.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 80, 0)
+radial_accel_min = -7.170002
+radial_accel_max = 11.579997
+damping_min = 0.120000005
+damping_max = 0.36
+scale_min = 0.75
+scale_curve = SubResource("CurveTexture_6i4l4")
+color = Color(0.75775176, 0.6300119, 0.5414565, 1)
+color_ramp = SubResource("GradientTexture1D_lsckk")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.09999997
 
 [sub_resource type="Gradient" id="Gradient_hph1r"]
 offsets = PackedFloat32Array(0.0946844, 0.7022222)
@@ -653,7 +724,7 @@ disabled = true
 [node name="InteractableSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_kudcs")
-animation = &"bottle_2"
+animation = &"vase_1"
 
 [node name="MainFlame" type="GPUParticles2D" parent="InteractableSprite"]
 unique_name_in_owner = true
@@ -684,6 +755,43 @@ one_shot = true
 explosiveness = 1.0
 randomness = 0.24
 process_material = SubResource("ParticleProcessMaterial_n14hj")
+
+[node name="GlassShatteringParticles" type="GPUParticles2D" parent="InteractableSprite"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(-1, 0)
+emitting = false
+amount = 120
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_0q5tm")
+
+[node name="SackSliceParticles" type="GPUParticles2D" parent="InteractableSprite"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(7, 4)
+rotation = 1.5707964
+emitting = false
+amount = 120
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_6i4l4")
+
+[node name="CrateBreakParticles" type="GPUParticles2D" parent="InteractableSprite"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(0, -2)
+emitting = false
+amount = 120
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 0.49
+process_material = SubResource("ParticleProcessMaterial_5un8a")
 
 [node name="FlameLight" type="PointLight2D" parent="."]
 unique_name_in_owner = true

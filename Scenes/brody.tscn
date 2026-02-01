@@ -407,6 +407,19 @@ position = Vector2(0, 1)
 scale = Vector2(0.475, 0.475)
 shape = SubResource("CircleShape2D_niouw")
 
+[node name="BrodyMapStuckCollision" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="BrodyCollisionCheck" type="CollisionShape2D" parent="BrodyMapStuckCollision"]
+use_parent_material = true
+position = Vector2(0, 1)
+scale = Vector2(0.475, 0.475)
+shape = SubResource("CircleShape2D_niouw")
+
+[node name="FloorDetector" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+collision_mask = 8388608
+
 [node name="Y-SortPivot" type="Marker2D" parent="."]
 y_sort_enabled = true
 position = Vector2(1, 9)
@@ -504,5 +517,9 @@ unique_name_in_owner = true
 wait_time = 0.75
 one_shot = true
 
+[node name="CheckBrodyLocationOkay" type="Timer" parent="."]
+autostart = true
+
 [connection signal="timeout" from="Y-SortPivot/DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="BounceCooldown" to="." method="_on_bounce_cooldown_timeout"]
+[connection signal="timeout" from="CheckBrodyLocationOkay" to="." method="_on_check_brody_location_okay_timeout"]

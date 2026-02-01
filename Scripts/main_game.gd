@@ -16,6 +16,9 @@ func _ready() :
 	EventBus.new_crawl.connect(_on_new_dungeon_crawl)
 	EventBus.spawn_sanctuary.connect(_on_spawning_sanctuary)
 	
+	print (EventBus.total_acquired_goldpieces)
+	print (EventBus.total_acquired_experience)
+	
 	# Start in Sanctuary :
 	_set_sanctuary_properties()
 
@@ -101,7 +104,7 @@ func _on_new_dungeon_crawl() :
 	# Start With Spawning Trapdoor Room :
 	var new_room = preload("res://Scenes/custom_rooms/trapdoor_room.tscn").instantiate()
 	new_room.z_index = 0
-	%Brody.global_position = new_room.global_position + Vector2(140, 14)
+	%Brody.global_position = new_room.global_position + Vector2(124, 16)
 	%RoomsToBeDeleted.call_deferred("add_child", new_room)
 	
 	# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :

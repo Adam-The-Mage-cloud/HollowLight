@@ -10,13 +10,15 @@ func _ready() :
 # LOOT SCREEN AFTER DUNGEON :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func _on_dungeon_ended() :
+	EventBus.save_game()
 	# Fade in Menu Background :
 	main_background_fadein()
 	# Fade in End of Dungeon Menu :
 	loot_menu_fadein()
 	%EndOfDungeonMenu.visible = true
-	# Display The Initial Previous Gold Count pre-encounter :
+	# Display The Initial Previous Gold Count pre-encounter and 0 for the newly acquired goldpieces :
 	%TotalGoldText.text = str(EventBus.total_acquired_goldpieces)
+	%GainedGoldText.text = str(0)
 	# BEGIN SERIES OF LOOT MENU ANIMATIONS:
 
 
@@ -49,6 +51,7 @@ func animate_gold_gain():
 	
 	# Gold Addon Animation :
 	var start_value = EventBus.total_acquired_goldpieces
+	print (start_value)
 	var end_value = start_value + EventBus.total_new_acquired_goldpieces
 	var gold_addon_duration = 2.0  # Seconds
 	var gold_addon_tween = create_tween()
@@ -74,9 +77,9 @@ func animate_gold_gain():
 	descale_tween.tween_property(%TotalGoldText, "scale", Vector2(0.75, 0.75), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	var white_tween = create_tween()
 	white_tween.tween_property(%TotalGoldText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	# Update the actual stored value at the end
-	gained_gold_tween.finished.connect(func():
-		EventBus.total_acquired_goldpieces += end_value)
+	
+	# ADDUP END GOLDPIECES
+	EventBus.total_acquired_goldpieces += end_value
 		
 	await get_tree().create_timer(1.0).timeout
 	# When That Sequence is Finished, BEGIN XP ANIMATION :

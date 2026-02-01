@@ -1,6 +1,8 @@
 extends Node2D
 
 func _ready() :
+	EventBus.save_game()
+	%SanctuaryMainFloor.add_to_group("floors")
 	arrows_pointing()
 
 func _on_torch_and_shield_body_entered(body: Node2D) -> void:
