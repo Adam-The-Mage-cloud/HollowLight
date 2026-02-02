@@ -29,6 +29,10 @@ func _process(delta: float) -> void:
 	if new_pos != old_pos and direction != Vector2.ZERO:
 		_on_movement_time_timer_timeout()
 	
+	# Footsteps
+	if direction != Vector2.ZERO :
+		footsteps_activated()
+	
 	global_position = new_pos
 
 
@@ -86,6 +90,13 @@ func check_direction_animation() -> void:
 	elif direction == Vector2(-1, 0):
 		%CliveSprite.play("moving_sideways")
 		scale.x = -1
+
+func footsteps_activated() :
+	while direction != Vector2.ZERO:
+		%FootStepParticlesLeft.emitting = true
+		await get_tree().create_timer(0.2).timeout
+		%FootStepParticlesRight.emitting = true
+		await get_tree().create_timer(0.2).timeout
 
 # ON BODY ENTERED (LOAD MENU)
 func load_dialogue() :

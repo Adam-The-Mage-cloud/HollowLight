@@ -19,6 +19,7 @@ func _on_dungeon_ended() :
 	# Display The Initial Previous Gold Count pre-encounter and 0 for the newly acquired goldpieces :
 	%TotalGoldText.text = str(EventBus.total_acquired_goldpieces)
 	%GainedGoldText.text = str(0)
+	%TotalXPText.text = str(EventBus.player_level)
 	# BEGIN SERIES OF LOOT MENU ANIMATIONS:
 
 

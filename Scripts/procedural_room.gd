@@ -37,7 +37,8 @@ var theme = 0
 var dungeon_outline_plant_spawn_chance = 2 # Where higher is rarer. and 1 is everytime
 var room_complexity = -0.45 # -1 is super open, simple space (boss) / -0.05 is super complex, (tight)
 var floorcover_cluster_rate = 0.065 # The lower, the less clusters spawn in relation to the amount of floor tiles in the room
-var bits_and_bobs_spawn_rate = 0.02 # Like above, the lower, the less likely to spawn in relation to the amount of floor tiles in the room
+var floorcover_frequency = 0.4 # Default is 0.4, where 1.0 is maximum frequency and 0.0 is minimum
+var bits_and_bobs_spawn_rate = 0.01 # Like above, the lower, the less likely to spawn in relation to the amount of floor tiles in the room
 var obstacles_spawn_rate = 0.004 # The lower, the less obstacles are likely to spawn
 var floor_interactable_spawn_chance = 0.010  # (where 1.0 is 100% chance per floor tile)
 var max_wall_interactable_amount = 6000 # The max possible amount of wall interactables / number of floor tiles
@@ -1048,8 +1049,8 @@ func generate_bitsandbobs() -> void:
 			continue
 		if %TileMapBitsandBobs.get_cell_source_id(pos) != -1:
 			continue
-		var atlas_x = randi_range(0, 4)
-		var atlas_y = randi_range(0, 0)
+		var atlas_x = randi_range(0, 5)
+		var atlas_y = randi_range(0, 2)
 		var alt = randi_range(0, 1)
 		%TileMapBitsandBobs.set_cell(pos, bitsandbobs_source_id, Vector2i(atlas_x, atlas_y), alt)
 
@@ -1060,13 +1061,18 @@ func generate_floorcover() -> void:
 	var categories = {
 		"cobwebs": 0,
 		"hay": 1,
-		"gold": 2,
-		"mushrooms": 3
+		"corn": 2,
+		"mushrooms": 3,
+		"pebbles": 4,
+		"moss": 5,
+		"bones": 6,
+		"wood_chippings": 7,
+		"gold": 8
 	}
 	var noise = FastNoiseLite.new()
 	noise.seed = randi()
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	noise.frequency = 0.4
+	noise.frequency = floorcover_frequency
 	noise.fractal_type = FastNoiseLite.FRACTAL_FBM
 	var cluster_count = int(floor_positions.size() * floorcover_cluster_rate)
 	
@@ -1111,24 +1117,44 @@ func generate_floorcover() -> void:
 
 func weighted_category_choice() -> String:
 	var roll = randf()
-	if roll < 0.10:
-		return "gold"
-	elif roll < 0.35:
-		return "hay"
-	elif roll < 0.75:
+	if roll < 0.15:
+		return "corn"
+	elif roll < 0.3:
 		return "mushrooms"
-	else:
+	elif roll < 0.45 :
 		return "cobwebs"
+	elif roll < 0.55:
+		return "hay"
+	elif roll < 0.65:
+		return "pebbles"
+	elif roll < 0.75:
+		return "moss"
+	elif roll < 0.85:
+		return "bones"
+	elif roll < 0.95:
+		return "wood_chippings"
+	else :
+		return "gold"
 
 func weighted_atlas_x(category: String) -> int:
 	match category:
 		"mushrooms":
 			return randi_range(0, 3)
-		"gold":
+		"corn":
 			return randi_range(0, 3)
 		"hay":
 			return randi_range(0, 3)
 		"cobwebs":
+			return randi_range(0, 3)
+		"pebbles":
+			return randi_range(0, 3)
+		"moss":
+			return randi_range(0, 3)
+		"bones":
+			return randi_range(0, 3)
+		"wood_chippings":
+			return randi_range(0, 3)
+		"gold" :
 			return randi_range(0, 3)
 		_:
 			return randi_range(0, 3)

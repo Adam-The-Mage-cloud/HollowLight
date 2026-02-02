@@ -312,14 +312,14 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="Gradient" id="Gradient_l2vdu"]
 colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_h1t0l"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_s6v4d"]
 gradient = SubResource("Gradient_l2vdu")
 
 [sub_resource type="Curve" id="Curve_rtueh"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_beu3c"]
+[sub_resource type="CurveTexture" id="CurveTexture_v4apm"]
 curve = SubResource("Curve_rtueh")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vfjlh"]
@@ -335,9 +335,9 @@ radial_accel_min = -5.000002
 radial_accel_max = 4.9999976
 scale_min = 0.049999997
 scale_max = 0.06
-scale_curve = SubResource("CurveTexture_beu3c")
+scale_curve = SubResource("CurveTexture_v4apm")
 color = Color(1, 1, 1, 0.8156863)
-color_ramp = SubResource("GradientTexture1D_h1t0l")
+color_ramp = SubResource("GradientTexture1D_s6v4d")
 turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
@@ -402,6 +402,7 @@ collision_mask = 5
 script = ExtResource("1_1lbbp")
 
 [node name="BrodyHitbox" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(0, 1)
 scale = Vector2(0.475, 0.475)
@@ -518,6 +519,7 @@ wait_time = 0.75
 one_shot = true
 
 [node name="CheckBrodyLocationOkay" type="Timer" parent="."]
+wait_time = 2.4
 autostart = true
 
 [connection signal="timeout" from="Y-SortPivot/DashCooldown" to="." method="_on_dash_cooldown_timeout"]

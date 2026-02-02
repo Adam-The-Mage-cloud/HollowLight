@@ -18,16 +18,25 @@ var angle_difference_to
 var heaviness
 var rotational_easer
 var left_side
+
 # Torch Properties Itself :
 var speed = 10.0
 var max_radius = 9.0             # Max bounds the torch can leave
 var return_speed = 8.0
+
+# Torch Stamina System & Weighty Feel :
+var rotation_stamina = 1.00        # Maximum Stamina
+var stamina_drain_rate = 0.8      # Stamina Drain rate (when rotated quickly)
+var stamina_recover_rate = 2.4    # Stamina Recovery rate (when not being rotated quickly)
+var min_heaviness = 0.15          # How heavy it feels at 0 stamina
+
 # Variables Needed For Flipping The Torch Once Axis Requirements Met :
-var flip_state := 1.0             # 1 = normal, -1 = flipped
-var flip_timer := 0.0             # Counts how long we've been in the flip zone
-var flip_delay := 0.12        # Indicates how long before flipping (tweak this)
-var flip_threshold := 0.2        # Indicates how downward before flip starts
-var flip_speed := 4.0             # Indicates how fast the flip animation happens
+var flip_state = 1.0             # 1 = normal, -1 = flipped
+var flip_timer = 0.0             # Counts how long we've been in the flip zone
+var flip_delay = 0.12        # Indicates how long before flipping (tweak this)
+var flip_threshold = 0.2        # Indicates how downward before flip starts
+var flip_speed = 4.0             # Indicates how fast the flip animation happens
+
 
 
 func _physics_process(delta: float) -> void:
@@ -51,32 +60,58 @@ func _physics_process(delta: float) -> void:
 	vertical_smoothness = lerp(return_speed, return_speed * 0.15, verticality)
 	global_position = global_position.lerp(target_position, delta * vertical_smoothness)
 	
-	# Makes the rotation more human, brings a level of heaviness to the torch :
+	# Weighty Stamina Fatigue System :
+	
+	# Target angle from aim direction 
 	target_angle = direction.angle()
+	
+	# How far off we currently are
 	angle_difference_to = abs(angle_difference(rotation, target_angle))
+	
+	# Rotation Stamina :
+	# How aggressively the player is trying to rotate the torch
+	var rotation_speed_request = angle_difference_to / max(delta, 0.0001)
+	
+	# Drain stamina when rotating fast :
+	if rotation_speed_request > 1.0:
+		rotation_stamina -= stamina_drain_rate * delta
+	else:
+		rotation_stamina += stamina_recover_rate * delta
+		
+	rotation_stamina = clamp(rotation_stamina, 0.0, 1.0)
+	
+	# Stamina affects heaviness (lower stamina = heavier)
+	var stamina_factor = lerp(min_heaviness, 1.0, rotation_stamina)
+	
+	# Heaviness Feel Logic :
+	# Heaviness based on angle difference
 	heaviness = clamp(1.0 - (angle_difference_to / PI), 0.2, 1.0)
 	
-	# This eases the rotation about to take place before it actually happens
+	# Stamina system and heaviness feel
+	heaviness *= stamina_factor
+	
+	# Easing rotation of the torch :
 	rotational_easer = (1.0 - pow(0.001, delta * speed)) * heaviness
 	
-	rotation = lerp_angle(rotation + 0.8, target_angle, rotational_easer)
+	# Apply rotation
+	rotation = lerp_angle(rotation, target_angle, rotational_easer)
 	
-	# This code below creates a natural human-like flip of the wrist for carrying the torch
+	# Wrist Flip (cool epic ninjago skills)
 	left_side = direction.x < -flip_threshold
-	# We need to count the time spent in the flip zone :
+	
 	if left_side:
 		flip_timer += delta
 	else:
 		flip_timer = 0.0
-	# Then we trigger the flip but only once our built-in delay exists
+		
 	if left_side and flip_timer > flip_delay:
-		flip_state = -1
+		flip_state = -1.0
 	elif not left_side:
-		flip_state = 1
-	# Now finally rotate
+		flip_state = 1.0
+		
 	scale.y = lerp(scale.y, flip_state, delta * flip_speed)
 	
-	# fuck me that was complicated as shite for no reason
+	# fuck me that was complicated as shite 
 
 
 func _get_aim_direction(centre: Vector2) -> Vector2:
@@ -85,7 +120,7 @@ func _get_aim_direction(centre: Vector2) -> Vector2:
 		return touch_stick.normalized()
 	
 	# Controller stick
-	var stick := Vector2(
+	var stick = Vector2(
 	Input.get_action_strength("aim_right") - Input.get_action_strength("aim_left"),
 	Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
 	)
@@ -93,7 +128,7 @@ func _get_aim_direction(centre: Vector2) -> Vector2:
 		return stick.normalized()
 	
 	# Mouse fallback
-	var mouse_dir := get_global_mouse_position() - centre
+	var mouse_dir = get_global_mouse_position() - centre
 	if mouse_dir.length() < 1.0:
 		return Vector2.ZERO
 	
@@ -101,7 +136,7 @@ func _get_aim_direction(centre: Vector2) -> Vector2:
 
 
 func _get_aim_distance(centre: Vector2, max_r: float) -> float:
-	var stick := Vector2(
+	var stick = Vector2(
 		Input.get_action_strength("aim_right") - Input.get_action_strength("aim_left"),
 		Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
 	)
@@ -111,7 +146,7 @@ func _get_aim_distance(centre: Vector2, max_r: float) -> float:
 		return clamp(stick.length() * max_r, 0.0, max_r)
 
 	# Mouse distance
-	var mouse_dist := (get_global_mouse_position() - centre).length()
+	var mouse_dist = (get_global_mouse_position() - centre).length()
 	return clamp(mouse_dist, 0.0, max_r)
 
 func now_unequipped() :

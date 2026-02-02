@@ -249,6 +249,9 @@ func get_move_direction() -> Vector2:
 func dash_ability():
 	if input_enabled == true:
 		if dash_available == true:
+			# Decrease size of collision body :
+			%BrodyHitbox.scale = Vector2(0.15, 0.15)
+			
 			bounce_cooldown_finished = true
 			
 			var original_mask = collision_mask
@@ -305,6 +308,7 @@ func dash_ability():
 			max_speed = 80.0
 			
 			# Reset state
+			%BrodyHitbox.scale = Vector2(0.475, 0.475)
 			collision_mask = original_mask
 			dashing = false
 			%feet.visible = true
