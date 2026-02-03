@@ -26,9 +26,9 @@ var return_speed = 8.0
 
 # Torch Stamina System & Weighty Feel :
 var rotation_stamina = 1.00        # Maximum Stamina
-var stamina_drain_rate = 0.8      # Stamina Drain rate (when rotated quickly)
-var stamina_recover_rate = 2.4    # Stamina Recovery rate (when not being rotated quickly)
-var min_heaviness = 0.15          # How heavy it feels at 0 stamina
+var stamina_drain_rate = 0.55      # Stamina Drain rate (when rotated quickly)
+var stamina_recover_rate = 4.0    # Stamina Recovery rate (when not being rotated quickly)
+var min_heaviness = 0.08          # How heavy it feels at 0 stamina
 
 # Variables Needed For Flipping The Torch Once Axis Requirements Met :
 var flip_state = 1.0             # 1 = normal, -1 = flipped

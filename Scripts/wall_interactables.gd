@@ -86,3 +86,9 @@ func _on_darkness_repeller_body_exited(body: Node2D) -> void:
 
 func _on_darkness_reducer_timeout() -> void:
 	EventBus.total_current_darkness -= 2
+
+
+func _on_body_entered(body: Node2D) -> void:
+	# Destroy if ontop of door :
+	if body.name == "DoorArea" :
+		queue_free()

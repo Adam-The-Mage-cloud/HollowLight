@@ -140,6 +140,7 @@ texture = SubResource("GradientTexture2D_ws8ji")
 unique_name_in_owner = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_entered"]
 [connection signal="body_exited" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_exited"]
 [connection signal="timeout" from="DarknessReducer" to="." method="_on_darkness_reducer_timeout"]

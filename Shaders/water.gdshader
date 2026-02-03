@@ -1,69 +1,56 @@
 shader_type canvas_item;
 
-// -----------------------------
-// TUNING
-// -----------------------------
-uniform float time_scale      : hint_range(0.0, 4.0)  = 1.0;
-uniform float ripple_strength : hint_range(0.0, 0.1)  = 0.02;
-uniform float ripple_density  : hint_range(1.0, 20.0) = 6.0;
-uniform float ripple_speed    : hint_range(0.1, 5.0)  = 1.0;
+uniform vec2 flow_speed = vec2(0.03, 0.0);
+uniform vec2 flow_speed_2 = vec2(0.01, 0.0);
+uniform float pixel_snap = 64.0;
+uniform float mix_strength = 0.35;
+uniform float brightness = 1.0;
 
-// Match this to your *screen* pixel size / zoom.
-// e.g. 16 for 16x16 tiles at 1x, 32 for 2x zoom, etc.
-uniform float pixel_size      : hint_range(1.0, 64.0) = 16.0;
+// Offset to sample your alternate water tile in the atlas
+uniform vec2 alt_uv_offset = vec2(0.0, 0.0);
 
-// Colors
-uniform vec3 shallow_color : source_color = vec3(0.16, 0.22, 0.20);
-uniform vec3 deep_color    : source_color = vec3(0.05, 0.10, 0.12);
+// --- Colour controls ---
+uniform vec3 water_color = vec3(0.55, 0.75, 1.0); // bright sky blue
+uniform float color_strength = 0.85;
 
-// Foam band along the island edge
-// foam_start = where the band begins in UV.y (0 = top, 1 = bottom)
-// foam_height = thickness of the band
-uniform float foam_start  : hint_range(0.0, 1.0) = 0.0;
-uniform float foam_height : hint_range(0.0, 0.5) = 0.08;
-uniform float foam_intensity : hint_range(0.0, 0.5) = 0.08;
+uniform vec3 sunset_tint = vec3(1.0, 0.75, 0.45); // warm golden-orange
+uniform float sunset_strength = 0.25;
 
-// Optional subtle shimmer
-uniform float shimmer_strength : hint_range(0.0, 1.0) = 0.2;
-
-// -----------------------------
-// HELPERS
-// -----------------------------
-float ordered_dither_4x4(ivec2 icoord) {
-	int d = (icoord.x % 4) + (icoord.y % 4) * 2;
-	return float(d) / 8.0;
-}
-
-// -----------------------------
-// MAIN
-// -----------------------------
 void fragment() {
-	// Pixel snapping for crisp, non‑shimmery motion
-	vec2 uv = floor(UV * pixel_size) / pixel_size;
-	float t = TIME * time_scale;
+    vec2 uv = UV;
 
-	// Depth fade (top = shallow, bottom = deep)
-	float depth = smoothstep(0.0, 1.0, uv.y);
-	vec3 base = mix(shallow_color, deep_color, depth);
+    // Pixel snapping for crisp pixel-art
+    uv = floor(uv * pixel_snap) / pixel_snap;
 
-	// Radial ripples (calm, pond‑like)
-	vec2 center = vec2(0.5, 0.5); // center of the TextureRect
-	float dist = distance(uv, center);
-	float ripple = sin(dist * ripple_density - t * ripple_speed) * ripple_strength;
-	base += ripple;
+    // Two scrolling UV layers
+    vec2 uv1 = uv + TIME * flow_speed;
+    vec2 uv2 = uv + TIME * flow_speed_2 + alt_uv_offset;
 
-	// Foam band near the island edge (assumed at top of rect)
-	// Adjust foam_start / foam_height in the inspector to line up with your shoreline tiles.
-	float foam = smoothstep(foam_start, foam_start + foam_height, uv.y);
-	base += foam * foam_intensity;
+    // Wrap UVs so they never leave 0–1
+    uv1 = fract(uv1);
+    uv2 = fract(uv2);
 
-	// Subtle shimmer using ordered dithering so it stays pixel‑art friendly
-	ivec2 icoord = ivec2(FRAGCOORD.xy);
-	float dither = ordered_dither_4x4(icoord);
-	float shimmer = sin((uv.x + uv.y) * 10.0 + t * 2.0);
-	shimmer = step(0.95, shimmer) * shimmer_strength;
-	shimmer *= step(dither, 0.5); // breaks it into chunky pixels
-	base += shimmer;
+    // Prevent sampling tile edges (fixes grey seams)
+    uv1 = clamp(uv1, 0.001, 0.999);
+    uv2 = clamp(uv2, 0.001, 0.999);
 
-	COLOR = vec4(base, 1.0);
+    // Sample atlas
+    vec4 c1 = texture(TEXTURE, uv1);
+    vec4 c2 = texture(TEXTURE, uv2);
+
+    // Blend the two layers
+    vec4 col = mix(c1, c2, mix_strength);
+
+    // Global brightness
+    col.rgb *= brightness;
+
+    // --- 1. Light sky-blue base ---
+    col.rgb = mix(col.rgb, water_color, color_strength);
+
+    // --- 2. Subtle sunset highlight on bright areas only ---
+    float luma = dot(col.rgb, vec3(0.299, 0.587, 0.114));
+    float highlight = smoothstep(0.6, 1.0, luma);
+    col.rgb = mix(col.rgb, sunset_tint, highlight * sunset_strength);
+
+    COLOR = col;
 }
