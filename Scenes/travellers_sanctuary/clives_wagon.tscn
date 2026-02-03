@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://bbdmbq7kdo6e4"]
+
+[ext_resource type="Texture2D" uid="uid://mdvsoefqomkd" path="res://Artwork/Sanctuary/Wagon_VFXed.png" id="1_maafo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ietnt"]
+size = Vector2(27.76164, 4.6612215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6c6u"]
+atlas = ExtResource("1_maafo")
+region = Rect2(0, 0, 106, 115)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r30qj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6c6u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ietnt"]
+
+[sub_resource type="Gradient" id="Gradient_4ma1k"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ietnt"]
+gradient = SubResource("Gradient_4ma1k")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="clives_wagon" type="CharacterBody2D"]
+texture_filter = 1
+
+[node name="WagonBodyCollision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-1.999999, -3.6345577)
+scale = Vector2(2.0235476, 2.0235476)
+shape = SubResource("RectangleShape2D_ietnt")
+
+[node name="WagonSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -30.5)
+sprite_frames = SubResource("SpriteFrames_r30qj")
+
+[node name="WagonArea" type="Area2D" parent="."]
+position = Vector2(-3, -18)
+
+[node name="WagonAreaCollision" type="CollisionShape2D" parent="WagonArea"]
+visible = false
+scale = Vector2(4.2851458, 4.2851458)
+shape = SubResource("CircleShape2D_ietnt")
+
+[node name="CliveShadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.6313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-0.99999994, 1)
+scale = Vector2(8.555046, 1.0227758)
+texture = SubResource("GradientTexture2D_ietnt")

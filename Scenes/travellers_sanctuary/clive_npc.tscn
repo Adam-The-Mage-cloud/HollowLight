@@ -1,10 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://bfgqfdxugrc4c"]
+[gd_scene load_steps=30 format=3 uid="uid://bfgqfdxugrc4c"]
 
 [ext_resource type="Script" uid="uid://ch5th8cq4hc18" path="res://Scripts/travellers_sanctuary/clive_npc.gd" id="1_68c2m"]
 [ext_resource type="Texture2D" uid="uid://betht5aagtd00" path="res://Artwork/Argorn_The_Trader.png" id="2_8fgcy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_68c2m"]
-size = Vector2(22, 19.77401)
+size = Vector2(22, 33.898304)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_csh2d"]
 atlas = ExtResource("2_8fgcy")
@@ -215,6 +215,16 @@ turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
 
+[sub_resource type="Gradient" id="Gradient_68c2m"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_68c2m"]
+gradient = SubResource("Gradient_68c2m")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="clive_npc" type="CharacterBody2D"]
 texture_filter = 1
 collision_layer = 5
@@ -222,7 +232,7 @@ collision_mask = 5
 script = ExtResource("1_68c2m")
 
 [node name="CliveCollision" type="CollisionShape2D" parent="."]
-position = Vector2(0.25, 2)
+position = Vector2(-1, -3)
 scale = Vector2(0.25, 0.708)
 shape = SubResource("RectangleShape2D_68c2m")
 
@@ -269,6 +279,14 @@ one_shot = true
 preprocess = 0.2
 explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_aqkh5")
+
+[node name="CliveShadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-1, 12)
+scale = Vector2(2, 0.5)
+texture = SubResource("GradientTexture2D_68c2m")
 
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_movement_timer_timeout"]
 [connection signal="timeout" from="MovementTimeTimer" to="." method="_on_movement_time_timer_timeout"]
