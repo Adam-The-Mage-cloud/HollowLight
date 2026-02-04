@@ -1,12 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://bbdmbq7kdo6e4"]
+[gd_scene load_steps=11 format=3 uid="uid://bbdmbq7kdo6e4"]
 
 [ext_resource type="Texture2D" uid="uid://mdvsoefqomkd" path="res://Artwork/Sanctuary/Wagon_VFXed.png" id="1_maafo"]
+[ext_resource type="Script" uid="uid://dptlbf5y0fido" path="res://Scripts/clives_wagon.gd" id="1_xmwam"]
+[ext_resource type="Texture2D" uid="uid://q1di1nxirob0" path="res://Artwork/Sanctuary/Wagon_VFXed_Highlighted.png" id="3_0pbew"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ietnt"]
 size = Vector2(27.76164, 4.6612215)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c6c6u"]
 atlas = ExtResource("1_maafo")
+region = Rect2(0, 0, 106, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fm8hj"]
+atlas = ExtResource("3_0pbew")
 region = Rect2(0, 0, 106, 115)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_r30qj"]
@@ -17,6 +23,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fm8hj")
+}],
+"loop": true,
+"name": &"highlighted",
 "speed": 5.0
 }]
 
@@ -34,6 +48,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="clives_wagon" type="CharacterBody2D"]
 texture_filter = 1
+script = ExtResource("1_xmwam")
 
 [node name="WagonBodyCollision" type="CollisionShape2D" parent="."]
 visible = false
@@ -42,9 +57,11 @@ scale = Vector2(2.0235476, 2.0235476)
 shape = SubResource("RectangleShape2D_ietnt")
 
 [node name="WagonSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(0, -30.5)
 sprite_frames = SubResource("SpriteFrames_r30qj")
+autoplay = "default"
 
 [node name="WagonArea" type="Area2D" parent="."]
 position = Vector2(-3, -18)
@@ -61,3 +78,6 @@ use_parent_material = true
 position = Vector2(-0.99999994, 1)
 scale = Vector2(8.555046, 1.0227758)
 texture = SubResource("GradientTexture2D_ietnt")
+
+[connection signal="body_entered" from="WagonArea" to="." method="_on_wagon_area_body_entered"]
+[connection signal="body_exited" from="WagonArea" to="." method="_on_wagon_area_body_exited"]

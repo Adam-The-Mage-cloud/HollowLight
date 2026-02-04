@@ -119,7 +119,7 @@ func random_speech() :
 	# Choose Speech Text Randomly :
 	var chosen_speech = randi_range(1, 16)
 	if chosen_speech == 1 :
-		%SpeechText.text = str("*hmph*, I miss my old Mary")
+		%SpeechText.text = str("*hmph*, I miss my old Bessie")
 	elif chosen_speech == 2 :
 		%SpeechText.text = str("*sigh*, I never thought I'd see the day... ")
 	elif chosen_speech == 3 :

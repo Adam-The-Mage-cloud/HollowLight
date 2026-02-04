@@ -121,7 +121,7 @@ func burn_away() :
 # WORM BAT TAKING DAMAGE :
 func _on_worm_bat_hitbox_area_entered(area: Area2D) -> void:
 		# Knockback and 1/3 burnt flash from Torch
-	if area.name == "Torch" or area.name == "mystic_sword" :
+	if area.name == "Torch" or area.name == "mystic_sword" or area.name == "winged_torch" :
 		target_captured = false
 		var knockback_direction = (global_position - area.global_position).normalized()
 		var knockback_movement = create_tween()

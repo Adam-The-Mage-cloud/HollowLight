@@ -1,0 +1,167 @@
+[gd_scene load_steps=18 format=3 uid="uid://dsul3l1nnmbum"]
+
+[ext_resource type="Texture2D" uid="uid://bvs20bo27bmj" path="res://Artwork/Winged_Torch_Spritesheet.png" id="1_cht3l"]
+[ext_resource type="Script" uid="uid://xpcpa4aoktqn" path="res://Scripts/winged_torch.gd" id="1_lsfw2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wlbu3"]
+size = Vector2(6.212308, 5.656855)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cht3l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsfw2"]
+atlas = ExtResource("1_cht3l")
+region = Rect2(2, 2, 19, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnh03"]
+atlas = ExtResource("1_cht3l")
+region = Rect2(22, 2, 19, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pet2"]
+atlas = ExtResource("1_cht3l")
+region = Rect2(42, 2, 19, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svnn6"]
+atlas = ExtResource("1_cht3l")
+region = Rect2(62, 2, 19, 19)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_54sr7"]
+animations = [{
+"frames": [{
+"duration": 2.4,
+"texture": SubResource("AtlasTexture_lsfw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnh03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pet2")
+}, {
+"duration": 2.4,
+"texture": SubResource("AtlasTexture_svnn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pet2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnh03")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_cht3l"]
+offsets = PackedFloat32Array(0, 0.998195)
+colors = PackedColorArray(0.492081, 1.89515e-06, 2.40654e-07, 1, 1, 0.725456, 0.293907, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0dv5e"]
+gradient = SubResource("Gradient_cht3l")
+
+[sub_resource type="Curve" id="Curve_lsfw2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_mhh1w"]
+curve = SubResource("Curve_lsfw2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mnh03"]
+lifetime_randomness = 0.21
+particle_flag_rotate_y = true
+emission_shape_offset = Vector3(-0.65, 0, 0)
+emission_shape_scale = Vector3(1.5, 0.8, 1)
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(0, -1, 0)
+spread = 143.182
+flatness = 1.0
+radial_velocity_min = -8.00002
+radial_velocity_max = 7.99998
+gravity = Vector3(0, -20, 0)
+radial_accel_min = -15.0
+radial_accel_max = -15.0
+scale_curve = SubResource("CurveTexture_mhh1w")
+color_ramp = SubResource("GradientTexture1D_0dv5e")
+turbulence_noise_strength = 0.05
+turbulence_noise_scale = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8pet2"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.15, 0, 0)
+emission_shape_scale = Vector3(0.7, 0.6, 1)
+emission_shape = 1
+emission_sphere_radius = 5.5
+direction = Vector3(0, -1, 0)
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, -25, 0)
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+scale_curve = SubResource("CurveTexture_mhh1w")
+color_ramp = SubResource("GradientTexture1D_0dv5e")
+
+[sub_resource type="Gradient" id="Gradient_mgc0q"]
+offsets = PackedFloat32Array(0.0946844, 0.739203)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cet5x"]
+gradient = SubResource("Gradient_mgc0q")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="winged_torch" type="Area2D"]
+z_index = 4
+texture_filter = 1
+script = ExtResource("1_lsfw2")
+
+[node name="TorchCollision" type="CollisionShape2D" parent="."]
+position = Vector2(7, -4.7683716e-07)
+rotation = 1.5707964
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_wlbu3")
+
+[node name="EnemyRadar" type="Area2D" parent="."]
+collision_layer = 33554432
+collision_mask = 33554432
+
+[node name="RadarCollision" type="CollisionShape2D" parent="EnemyRadar"]
+scale = Vector2(4.4064755, 4.4064755)
+shape = SubResource("CircleShape2D_cht3l")
+
+[node name="TorchSprite" type="AnimatedSprite2D" parent="."]
+rotation = 2.3561945
+sprite_frames = SubResource("SpriteFrames_54sr7")
+autoplay = "default"
+frame_progress = 0.36277238
+
+[node name="MiniFlame" type="GPUParticles2D" parent="TorchSprite"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(-5, -4)
+rotation = 0.7853982
+scale = Vector2(0.707439, 0.707439)
+amount = 212
+amount_ratio = 0.8
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_mnh03")
+
+[node name="MiniFlameSecondary" type="GPUParticles2D" parent="TorchSprite/MiniFlame"]
+y_sort_enabled = true
+position = Vector2(-2.998591, 0.99953043)
+amount = 80
+amount_ratio = 0.8
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_8pet2")
+
+[node name="TorchLight" type="PointLight2D" parent="TorchSprite"]
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-4, -4)
+scale = Vector2(0.75, 0.75)
+color = Color(1, 0.4392157, 0.17254902, 1)
+energy = 2.0
+texture = SubResource("GradientTexture2D_cet5x")
+
+[connection signal="area_entered" from="EnemyRadar" to="." method="_on_enemy_radar_area_entered"]

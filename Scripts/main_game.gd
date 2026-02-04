@@ -80,6 +80,10 @@ func spawn_mystic_sword() :
 	var mystic_sword = preload("res://Scenes/mystic_sword.tscn").instantiate()
 	call_deferred("add_child", mystic_sword)
 
+func spawn_winged_torch() :
+	var winged_torch = preload("res://Scenes/winged_torch.tscn").instantiate()
+	call_deferred("add_child", winged_torch)
+
 func despawn_sidekick() :
 	for node in get_tree().get_nodes_in_group("PlayerSidekick"):
 		node.queue_free()

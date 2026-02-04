@@ -156,7 +156,7 @@ func shadow_form() :
 
 
 func _on_axe_area_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and lightable == true :
+	if area.name == "Torch" and lightable == true or area.name == "winged_torch" :
 		# Knockback:
 		speed = -50
 		global_position.y += randf_range(-3, 3)
@@ -168,7 +168,7 @@ func _on_axe_area_area_entered(area: Area2D) -> void:
 
 
 func _on_ogre_hit_box_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and lightable == true :
+	if area.name == "Torch" and lightable == true or area.name == "winged_torch" :
 		# Knockback:
 		speed = -50
 		var rotation_tween_1 = create_tween()

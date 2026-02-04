@@ -2132,14 +2132,17 @@ position = Vector2(31, 108)
 position = Vector2(4, 99)
 
 [node name="clives_wagon" parent="." instance=ExtResource("14_mfhby")]
+unique_name_in_owner = true
 z_index = 1
 position = Vector2(60, 22)
 
 [node name="ExclamationMark" type="Sprite2D" parent="clives_wagon"]
+unique_name_in_owner = true
 position = Vector2(16, -43)
 texture = ExtResource("12_tar0q")
 
 [node name="MoneySign" type="Sprite2D" parent="clives_wagon"]
+unique_name_in_owner = true
 position = Vector2(5, -43)
 texture = ExtResource("13_52ghv")
 

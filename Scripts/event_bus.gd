@@ -71,7 +71,6 @@ var current_theme = 1
 
 func _ready():
 	# Access Saved Data :
-	print (EventBus.equipped_sidekick)
 	load_game()
 	EventBus.beacon_spawned.connect(_on_beacon_spawned)
 	EventBus.beacon_lit.connect(_on_beacon_lit)
@@ -207,7 +206,8 @@ func load_game():
 		apply_save_data(data)
 		
 	# Needed Functions :
+	# > Spawn Sidekick :
 	if equipped_sidekick == "mystic_sword" :
 		get_tree().current_scene.spawn_mystic_sword()
 	elif equipped_sidekick == "winged_torch" :
-		pass
+		get_tree().current_scene.spawn_winged_torch()

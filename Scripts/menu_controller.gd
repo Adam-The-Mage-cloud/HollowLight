@@ -363,7 +363,6 @@ func _on_clive_item_1_button_pressed() -> void:
 			EventBus.mystic_sword_purchased = true
 			# Update Look of Item 1 Slot :
 			EventBus.equipped_sidekick = "mystic_sword"
-			$"../..".spawn_mystic_sword()
 			%CliveItem1Price.visible = false
 			%Item1BoughtTick.visible = true
 			%Item1Equipped.visible = true
@@ -374,10 +373,12 @@ func _on_clive_item_1_button_pressed() -> void:
 			#%Item3Equipped.visible = false
 			#%Item3Unequipped.visible = true
 			$"../..".despawn_sidekick()
+			$"../..".spawn_mystic_sword()
 			
 	else :
 		if EventBus.equipped_sidekick != "mystic_sword" :
 			# Just Equip :
+			$"../..".despawn_sidekick()
 			$"../..".spawn_mystic_sword()
 			EventBus.equipped_sidekick = "mystic_sword"
 			%Item1Equipped.visible = true
@@ -416,10 +417,13 @@ func _on_clive_item_2_button_pressed() -> void:
 			#%Item3Equipped.visible = false
 			#%Item3Unequipped.visible = true
 			$"../..".despawn_sidekick()
+			$"../..".spawn_winged_torch()
 			
 	else :
 		if EventBus.equipped_sidekick != "winged_torch" :
 			# Just Equip :
+			$"../..".despawn_sidekick()
+			$"../..".spawn_winged_torch()
 			EventBus.equipped_sidekick = "winged_torch"
 			%Item2Equipped.visible = true
 			%Item2Unequipped.visible = false
@@ -429,12 +433,12 @@ func _on_clive_item_2_button_pressed() -> void:
 			%Item1Unequipped.visible = true
 			#%Item3Equipped.visible = false
 			#%Item3Unequipped.visible = true
-			$"../..".despawn_sidekick()
 		else :
 			# Unequip :
 			EventBus.equipped_sidekick = "none"
 			%Item2Equipped.visible = false
 			%Item2Unequipped.visible = true
+			$"../..".despawn_sidekick()
 
 func _on_clive_item_3_button_pressed() -> void:
 	pass # Replace with function body.

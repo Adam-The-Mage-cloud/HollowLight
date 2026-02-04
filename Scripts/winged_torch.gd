@@ -5,17 +5,17 @@ enum State { ORBIT, SEEK, RETURN }
 @export var player: Node2D
 
 # Wandering around Brody behaviour :
-@export var wander_radius = 12.0
-@export var wander_speed = 1.2
-@export var leash_strength = 1.6
+@export var wander_radius = 240.0
+@export var wander_speed = 2.4
+@export var leash_strength = 2.4
 
 # Seeking behaviour variables :
-@export var seek_speed: float = 90.0
-@export var seek_accel: float = 240.0
+@export var seek_speed: float = 160.0
+@export var seek_accel: float = 160.0
 
 # Rotation and rotation bob variables :
-@export var turn_speed: float = 5.0
-@export var bob_amount: float = 4.0
+@export var turn_speed: float = 3.2
+@export var bob_amount: float = 1.0
 @export var bob_speed: float = 2.0
 
 var state: State = State.ORBIT
