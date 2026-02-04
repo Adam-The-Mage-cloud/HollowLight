@@ -33,6 +33,11 @@ signal last_room_loaded()
 var total_beacons_to_light = 0
 var beacons_lit = 0
 
+# Item Prices :
+# Uniques (one-time purchases) :
+var mystic_sword_price = 775
+var winged_torch_price = 1725
+
 # Currency Variables :
 var total_current_darkness = 0.0
 var total_acquired_experience: int = 0
@@ -44,7 +49,10 @@ var total_new_acquired_goldpieces: int = 0
 # PLAYER STATS :
 var player_level: int = 1
 
-# PURCHASES (CURRENT HELD PLAYER INVENTORY)
+# Currently Equipped Player Inventory :
+var equipped_sidekick
+
+# PURCHASES :
 var mystic_sword_purchased = false
 var winged_torch_purchased = false
 
@@ -63,6 +71,7 @@ var current_theme = 1
 
 func _ready():
 	# Access Saved Data :
+	print (EventBus.equipped_sidekick)
 	load_game()
 	EventBus.beacon_spawned.connect(_on_beacon_spawned)
 	EventBus.beacon_lit.connect(_on_beacon_lit)
@@ -152,13 +161,23 @@ func get_save_data() -> Dictionary:
 		"player_level": player_level,
 		"total_acquired_experience": total_acquired_experience,
 		"total_acquired_goldpieces": total_acquired_goldpieces,
+		"sidekick": equipped_sidekick,
+		
+		# Shop Purchases :
+		"mystic_sword_purchased": mystic_sword_purchased,
+		"winged_torch_purchased": winged_torch_purchased
 	}
 
 func apply_save_data(data: Dictionary):
 	player_level = data.get("player_level", 1)
 	total_acquired_experience = data.get("total_acquired_experience", 0)
 	total_acquired_goldpieces = data.get("total_acquired_goldpieces", 0)
-
+	equipped_sidekick = data.get("sidekick", "none")
+	
+	# Shop Purchases :
+	mystic_sword_purchased = data.get("mystic_sword_purchased", false)
+	winged_torch_purchased = data.get("winged_torch_purchased", false)
+	
 	print("Game loaded!")
 
 func save_game():
@@ -174,15 +193,21 @@ func save_game():
 
 func load_game():
 	var save_path = "user://savegame.json"
-
+	
 	if not FileAccess.file_exists(save_path):
 		print("No save file found.")
 		return
-
+		
 	var file = FileAccess.open(save_path, FileAccess.READ)
 	var content = file.get_as_text()
 	file.close()
-
 	var data = JSON.parse_string(content)
+	
 	if typeof(data) == TYPE_DICTIONARY:
 		apply_save_data(data)
+		
+	# Needed Functions :
+	if equipped_sidekick == "mystic_sword" :
+		get_tree().current_scene.spawn_mystic_sword()
+	elif equipped_sidekick == "winged_torch" :
+		pass

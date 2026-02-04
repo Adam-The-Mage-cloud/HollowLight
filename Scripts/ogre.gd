@@ -187,6 +187,16 @@ func _on_ogre_hit_box_area_entered(area: Area2D) -> void:
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
+	
+	# Player Pets :
+	# Mystic Sword Bloody Knockback :
+	elif area.name == "mystic_sword" and lightable == false :
+		global_position.y += randf_range(-3, 3)
+		global_position.x += randf_range(-3, 3)
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 32, 1.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		flash_white()
 
 func flash_white() :
 	var tween = create_tween()

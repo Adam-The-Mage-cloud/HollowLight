@@ -376,6 +376,8 @@ z_index = 2
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_4j2he")
+collision_layer = 33554433
+collision_mask = 33554433
 script = ExtResource("2_4j2he")
 
 [node name="OnFireLight" type="PointLight2D" parent="."]

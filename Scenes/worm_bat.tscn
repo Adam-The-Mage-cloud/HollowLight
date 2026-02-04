@@ -151,6 +151,8 @@ z_index = 2
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_6xhtv")
+collision_layer = 33554433
+collision_mask = 33554433
 script = ExtResource("1_w1irv")
 
 [node name="WormBatCollision1" type="CollisionShape2D" parent="."]

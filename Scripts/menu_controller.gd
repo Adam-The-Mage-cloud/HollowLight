@@ -274,52 +274,179 @@ func _on_replay_dungeon_button_pressed() -> void:
 # CLIVES SHOP (Uniques [Gems & Gold]) :
 # >>>
 func open_clives_shop() :
+	# Set Item Prices :
+	set_item_prices()
+	
 	# Update Gold & XP Values :
 	%TotalGoldTextClives.text = str(EventBus.total_acquired_goldpieces)
 	%TotalXPTextClives.text = str(EventBus.player_level)
 	
 	# Fade-IN Adventure Menu :
+	%DashButton.visible = false
+	%TouchScreenPress2.visible = false
 	%Menus.visible = true
 	%CliveShopScreen.visible = true
+	check_clive_shop_status()
 	clive_shop_fadein()
 	
 	# Animate All The Different Sprites To Move UP/DOWN etc :
 	animate_winged_torch()
 	animate_mystic_sword()
 
+func check_clive_shop_status() :
+	if EventBus.mystic_sword_purchased == true :
+		%CliveItem1Price.visible = false
+		%Item1BoughtTick.visible = true
+		if EventBus.equipped_sidekick == "mystic_sword" :
+			# Show as Equipped :
+			%Item1Equipped.visible = true
+			%Item1Unequipped.visible = false
+		else :
+			# Show as Unequipped :
+			%Item1Equipped.visible = false
+			%Item1Unequipped.visible = true
+		
+	if EventBus.winged_torch_purchased == true :
+		%CliveItem2Price.visible = false
+		%Item2BoughtTick.visible = true
+		if EventBus.equipped_sidekick == "winged_torch" :
+			# Show as Equipped :
+			%Item2Equipped.visible = true
+			%Item2Unequipped.visible = false
+		else :
+			# Show as Unequipped :
+			%Item2Equipped.visible = false
+			%Item2Unequipped.visible = true
+
 func clive_shop_fadein() :
 	%CliveShopScreen.visible = true
 	var AdventureScreenFade_tween = create_tween()
 	AdventureScreenFade_tween.tween_property(%CliveShopScreen, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
+func set_item_prices() :
+	if EventBus.mystic_sword_purchased == false :
+		%CliveItem1Price.text = str(EventBus.mystic_sword_price) + "g"
+	if EventBus.winged_torch_purchased == false :
+		%CliveItem2Price.text = str(EventBus.winged_torch_price) + "g"
+
 func animate_winged_torch() :
 	if EventBus.winged_torch_purchased == false :
 		while %CliveShopScreen.visible == true :
 			var MovingWingedTorch_tween = create_tween()
-			MovingWingedTorch_tween.tween_property(%WingedTorch, "position", Vector2(14.0, 100.0), 0.75).set_trans(Tween.TRANS_LINEAR)
+			MovingWingedTorch_tween.tween_property(%WingedTorch, "position", Vector2(14.0, 100.0), 3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			# When Moved Up, Move Down :
 			await MovingWingedTorch_tween.finished
 			replayicon_flash_white()
 			var MovingWingedTorchDOWN_tween = create_tween()
-			MovingWingedTorchDOWN_tween.tween_property(%WingedTorch, "position", Vector2(14, 103.5), 2.25).set_trans(Tween.TRANS_LINEAR)
+			MovingWingedTorchDOWN_tween.tween_property(%WingedTorch, "position", Vector2(14, 103.5), 3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			await MovingWingedTorchDOWN_tween.finished
 
 func animate_mystic_sword() :
 	if EventBus.mystic_sword_purchased == false :
 		while %CliveShopScreen.visible == true :
 			var MovingMysticFlyingSword_tween = create_tween()
-			MovingMysticFlyingSword_tween.tween_property(%MysticFlyingSword, "position", Vector2(16.16, 82.75), 0.75).set_trans(Tween.TRANS_LINEAR)
+			MovingMysticFlyingSword_tween.tween_property(%MysticFlyingSword, "position", Vector2(16.16, 82.75), 2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			# When Moved Up, Move Down :
 			await MovingMysticFlyingSword_tween.finished
 			replayicon_flash_white()
 			var MovingMysticFlyingSwordDOWN_tween = create_tween()
-			MovingMysticFlyingSwordDOWN_tween.tween_property(%MysticFlyingSword, "position", Vector2(16.16, 85), 2.25).set_trans(Tween.TRANS_LINEAR)
+			MovingMysticFlyingSwordDOWN_tween.tween_property(%MysticFlyingSword, "position", Vector2(16.16, 85), 2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			await MovingMysticFlyingSwordDOWN_tween.finished
+
+# BUY / EQUIP MYSTIC SWORD :
+func _on_clive_item_1_button_pressed() -> void:
+	if EventBus.mystic_sword_purchased == false :
+		# Purchase & Equip mystic_sword
+		if EventBus.total_acquired_goldpieces >= EventBus.mystic_sword_price :
+			EventBus.total_acquired_goldpieces -= EventBus.mystic_sword_price
+			%TotalGoldTextClives.text = str(EventBus.total_acquired_goldpieces)
+			EventBus.mystic_sword_purchased = true
+			# Update Look of Item 1 Slot :
+			EventBus.equipped_sidekick = "mystic_sword"
+			$"../..".spawn_mystic_sword()
+			%CliveItem1Price.visible = false
+			%Item1BoughtTick.visible = true
+			%Item1Equipped.visible = true
+			
+			# Show Other Sidekick Slots as Unequipped :
+			%Item2Equipped.visible = false
+			%Item2Unequipped.visible = true
+			#%Item3Equipped.visible = false
+			#%Item3Unequipped.visible = true
+			$"../..".despawn_sidekick()
+			
+	else :
+		if EventBus.equipped_sidekick != "mystic_sword" :
+			# Just Equip :
+			$"../..".spawn_mystic_sword()
+			EventBus.equipped_sidekick = "mystic_sword"
+			%Item1Equipped.visible = true
+			%Item1Unequipped.visible = false
+			
+			# Show Other Sidekick Slots as Unequipped :
+			%Item2Equipped.visible = false
+			%Item2Unequipped.visible = true
+			#%Item3Equipped.visible = false
+			#%Item3Unequipped.visible = true
+			$"../..".despawn_sidekick()
+		else :
+			# Unequip :
+			$"../..".despawn_sidekick()
+			EventBus.equipped_sidekick = "none"
+			%Item1Equipped.visible = false
+			%Item1Unequipped.visible = true
+		
+
+# BUY / EQUIP WINGED TORCH :
+func _on_clive_item_2_button_pressed() -> void:
+	if EventBus.winged_torch_purchased == false :
+		# Purchase & Equip winged_torch
+		if EventBus.total_acquired_goldpieces >= EventBus.winged_torch_price:
+			EventBus.total_acquired_goldpieces -= EventBus.winged_torch_price
+			%TotalGoldTextClives.text = str(EventBus.total_acquired_goldpieces)
+			EventBus.winged_torch_purchased = true
+			# Update Look of Item 2 Slot :
+			EventBus.equipped_sidekick = "winged_torch"
+			%CliveItem2Price.visible = false
+			%Item2BoughtTick.visible = true
+			
+			# Show Other Sidekick Slots as Unequipped :
+			%Item1Equipped.visible = false
+			%Item1Unequipped.visible = true
+			#%Item3Equipped.visible = false
+			#%Item3Unequipped.visible = true
+			$"../..".despawn_sidekick()
+			
+	else :
+		if EventBus.equipped_sidekick != "winged_torch" :
+			# Just Equip :
+			EventBus.equipped_sidekick = "winged_torch"
+			%Item2Equipped.visible = true
+			%Item2Unequipped.visible = false
+			
+			# Show Other Sidekick Slots as Unequipped :
+			%Item1Equipped.visible = false
+			%Item1Unequipped.visible = true
+			#%Item3Equipped.visible = false
+			#%Item3Unequipped.visible = true
+			$"../..".despawn_sidekick()
+		else :
+			# Unequip :
+			EventBus.equipped_sidekick = "none"
+			%Item2Equipped.visible = false
+			%Item2Unequipped.visible = true
+
+func _on_clive_item_3_button_pressed() -> void:
+	pass # Replace with function body.
+
 # >>>
 # GENERAL CLOSE BUTTON :
 # >>>
 func _on_close_menu_button_pressed() -> void:
 	# SHOPS :
+	EventBus.save_game()
+	%DashButton.visible = true
+	%TouchScreenPress2.visible = true
 	# > For Clives Shop :
 	%CliveShopScreen.visible = false
 	var AdventureScreenFade_tween = create_tween()

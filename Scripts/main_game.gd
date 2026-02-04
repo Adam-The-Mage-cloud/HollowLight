@@ -73,6 +73,16 @@ func _on_worm_bat_chance_timeout() -> void:
 
 func _on_darkness_checker_timeout() -> void:
 	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + darkness_increase_per_second, 1.0, 100.0)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# SPAWN WEAPONS / SIDEKICKS :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+func spawn_mystic_sword() :
+	var mystic_sword = preload("res://Scenes/mystic_sword.tscn").instantiate()
+	call_deferred("add_child", mystic_sword)
+
+func despawn_sidekick() :
+	for node in get_tree().get_nodes_in_group("PlayerSidekick"):
+		node.queue_free()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # GAMEPLAY EVENTS :

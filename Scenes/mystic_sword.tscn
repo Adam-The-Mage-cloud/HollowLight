@@ -1,0 +1,133 @@
+[gd_scene load_steps=17 format=3 uid="uid://b636m4gfblk32"]
+
+[ext_resource type="Script" uid="uid://ldk3xtsxokeu" path="res://Scripts/mystic_sword.gd" id="1_pvwgn"]
+[ext_resource type="Texture2D" uid="uid://bmaekt6roos27" path="res://Artwork/Clive's_Wagon_Flying_Sword_Sprite.png" id="2_pvwgn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pvwgn"]
+size = Vector2(16.363962, 4.2426405)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pvwgn"]
+
+[sub_resource type="Gradient" id="Gradient_pvwgn"]
+colors = PackedColorArray(0.49019608, 0, 0.6039216, 1, 0.23782721, 0.8781734, 0.9392194, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_poeqy"]
+gradient = SubResource("Gradient_pvwgn")
+
+[sub_resource type="Curve" id="Curve_wyyia"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_7gjjo"]
+curve = SubResource("Curve_wyyia")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dxkh6"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.65, 0, 0)
+emission_shape_scale = Vector3(1.6, 4, 1)
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(0, -1, 0)
+spread = 143.182
+flatness = 1.0
+radial_velocity_min = -8.00002
+radial_velocity_max = 7.99998
+gravity = Vector3(0, -20, 0)
+radial_accel_min = -15.0
+radial_accel_max = -15.0
+scale_curve = SubResource("CurveTexture_7gjjo")
+color_ramp = SubResource("GradientTexture1D_poeqy")
+turbulence_noise_strength = 0.05
+turbulence_noise_scale = 1.0
+
+[sub_resource type="Gradient" id="Gradient_udroe"]
+colors = PackedColorArray(0.49019608, 0, 0.6039216, 1, 0.23921569, 0.8784314, 0.9411765, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4aa02"]
+gradient = SubResource("Gradient_udroe")
+
+[sub_resource type="Curve" id="Curve_co8r3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_aaals"]
+curve = SubResource("Curve_co8r3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qihij"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.15, 0, 0)
+emission_shape_scale = Vector3(0.7, 0.6, 1)
+emission_shape = 1
+emission_sphere_radius = 5.5
+direction = Vector3(0, -1, 0)
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+scale_curve = SubResource("CurveTexture_aaals")
+color_ramp = SubResource("GradientTexture1D_4aa02")
+
+[sub_resource type="Gradient" id="Gradient_mgc0q"]
+offsets = PackedFloat32Array(0.0946844, 0.739203)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pvwgn"]
+gradient = SubResource("Gradient_mgc0q")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="mystic_sword" type="Area2D"]
+z_index = 4
+texture_filter = 1
+rotation = 0.7853982
+script = ExtResource("1_pvwgn")
+
+[node name="SwordCollision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(4.0000005, 4.0000005)
+rotation = 0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_pvwgn")
+
+[node name="EnemyRadar" type="Area2D" parent="."]
+collision_layer = 33554432
+collision_mask = 33554432
+
+[node name="RadarCollision" type="CollisionShape2D" parent="EnemyRadar"]
+scale = Vector2(4.4064755, 4.4064755)
+shape = SubResource("CircleShape2D_pvwgn")
+
+[node name="SwordSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_pvwgn")
+
+[node name="MysticParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
+position = Vector2(-0.7071066, -0.70710754)
+rotation = -0.800334
+amount = 265
+amount_ratio = 0.24
+process_material = SubResource("ParticleProcessMaterial_dxkh6")
+
+[node name="MysticParticlesSecondary" type="GPUParticles2D" parent="MysticParticles"]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(-0.8231964, 7.7667465)
+amount = 100
+amount_ratio = 0.24
+process_material = SubResource("ParticleProcessMaterial_qihij")
+
+[node name="SwordLight" type="PointLight2D" parent="."]
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-4, -4)
+color = Color(0.23921569, 0.8784314, 0.9411765, 1)
+energy = 2.0
+texture = SubResource("GradientTexture2D_pvwgn")
+
+[connection signal="area_entered" from="EnemyRadar" to="." method="_on_enemy_radar_area_entered"]
