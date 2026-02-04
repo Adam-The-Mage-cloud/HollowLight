@@ -468,6 +468,8 @@ func _on_dash_button_pressed() -> void:
 	dash_ability()
 	if EventBus.dungeon_crawl_button_available == true:
 		EventBus.new_dungeon_crawl()
+	elif EventBus.clives_shop_interactable == true:
+		EventBus.clives_shop_available()
 
 
 func _on_bounce_cooldown_timeout() -> void:

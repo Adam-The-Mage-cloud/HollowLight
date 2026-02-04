@@ -4,6 +4,10 @@ func _ready() :
 	# Player Spawns in Sanctuary :
 	EventBus.last_room_complete.connect(_on_dungeon_ended) 
 	EventBus.new_crawl.connect(_loading_screen) 
+	
+	# Shops :
+	EventBus.open_clives_shop.connect(open_clives_shop)
+	
 	# REMOVE THIS WHEN IT'S READY :
 	#_on_dungeon_ended()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -261,6 +265,66 @@ func _on_replay_dungeon_button_pressed() -> void:
 	
 	await get_tree().create_timer(0.6).timeout
 	EventBus.new_dungeon_crawl()
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# OPEN SHOPS :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# >>>
+# CLIVES SHOP (Uniques [Gems & Gold]) :
+# >>>
+func open_clives_shop() :
+	# Update Gold & XP Values :
+	%TotalGoldTextClives.text = str(EventBus.total_acquired_goldpieces)
+	%TotalXPTextClives.text = str(EventBus.player_level)
+	
+	# Fade-IN Adventure Menu :
+	%Menus.visible = true
+	%CliveShopScreen.visible = true
+	clive_shop_fadein()
+	
+	# Animate All The Different Sprites To Move UP/DOWN etc :
+	animate_winged_torch()
+	animate_mystic_sword()
+
+func clive_shop_fadein() :
+	%CliveShopScreen.visible = true
+	var AdventureScreenFade_tween = create_tween()
+	AdventureScreenFade_tween.tween_property(%CliveShopScreen, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func animate_winged_torch() :
+	if EventBus.winged_torch_purchased == false :
+		while %CliveShopScreen.visible == true :
+			var MovingWingedTorch_tween = create_tween()
+			MovingWingedTorch_tween.tween_property(%WingedTorch, "position", Vector2(14.0, 100.0), 0.75).set_trans(Tween.TRANS_LINEAR)
+			# When Moved Up, Move Down :
+			await MovingWingedTorch_tween.finished
+			replayicon_flash_white()
+			var MovingWingedTorchDOWN_tween = create_tween()
+			MovingWingedTorchDOWN_tween.tween_property(%WingedTorch, "position", Vector2(14, 103.5), 2.25).set_trans(Tween.TRANS_LINEAR)
+			await MovingWingedTorchDOWN_tween.finished
+
+func animate_mystic_sword() :
+	if EventBus.mystic_sword_purchased == false :
+		while %CliveShopScreen.visible == true :
+			var MovingMysticFlyingSword_tween = create_tween()
+			MovingMysticFlyingSword_tween.tween_property(%MysticFlyingSword, "position", Vector2(16.16, 82.75), 0.75).set_trans(Tween.TRANS_LINEAR)
+			# When Moved Up, Move Down :
+			await MovingMysticFlyingSword_tween.finished
+			replayicon_flash_white()
+			var MovingMysticFlyingSwordDOWN_tween = create_tween()
+			MovingMysticFlyingSwordDOWN_tween.tween_property(%MysticFlyingSword, "position", Vector2(16.16, 85), 2.25).set_trans(Tween.TRANS_LINEAR)
+			await MovingMysticFlyingSwordDOWN_tween.finished
+# >>>
+# GENERAL CLOSE BUTTON :
+# >>>
+func _on_close_menu_button_pressed() -> void:
+	# SHOPS :
+	# > For Clives Shop :
+	%CliveShopScreen.visible = false
+	var AdventureScreenFade_tween = create_tween()
+	AdventureScreenFade_tween.tween_property(%CliveShopScreen, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # General Menu Fade Away :

@@ -20,6 +20,8 @@ signal new_room
 signal last_room_complete()
 signal open_travel_menu()
 
+signal open_clives_shop()
+
 # NEW GAME / GO TO SANCTUARY Signals :
 signal new_crawl()
 
@@ -42,6 +44,10 @@ var total_new_acquired_goldpieces: int = 0
 # PLAYER STATS :
 var player_level: int = 1
 
+# PURCHASES (CURRENT HELD PLAYER INVENTORY)
+var mystic_sword_purchased = false
+var winged_torch_purchased = false
+
 # Rooms Completed / ENDGAME DECIDER :
 var current_room
 var game_over_chance = 0.0
@@ -50,6 +56,7 @@ var total_rooms = 0.0
 
 # Sanctuary Buttons :
 var dungeon_crawl_button_available = false
+var clives_shop_interactable = false
 
 # Theme Indicator
 var current_theme = 1
@@ -127,6 +134,13 @@ func beacon_count_reset() :
 func spawn_the_sanctuary() :
 	EventBus.spawn_sanctuary.emit()
 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# OPEN SHOPS :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# > Clives Shop (Uniques for Gems & Gold) :
+func clives_shop_available() :
+	EventBus.open_clives_shop.emit()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # SAVING AND LOADING :

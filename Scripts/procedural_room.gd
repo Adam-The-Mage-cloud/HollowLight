@@ -1050,7 +1050,7 @@ func generate_bitsandbobs() -> void:
 		if %TileMapBitsandBobs.get_cell_source_id(pos) != -1:
 			continue
 		var atlas_x = randi_range(0, 5)
-		var atlas_y = randi_range(0, 2)
+		var atlas_y = randi_range(0, 3)
 		var alt = randi_range(0, 1)
 		%TileMapBitsandBobs.set_cell(pos, bitsandbobs_source_id, Vector2i(atlas_x, atlas_y), alt)
 
@@ -1067,7 +1067,8 @@ func generate_floorcover() -> void:
 		"moss": 5,
 		"bones": 6,
 		"wood_chippings": 7,
-		"gold": 8
+		"gold": 8,
+		"blood": 9
 	}
 	var noise = FastNoiseLite.new()
 	noise.seed = randi()
@@ -1123,6 +1124,8 @@ func weighted_category_choice() -> String:
 		return "mushrooms"
 	elif roll < 0.45 :
 		return "cobwebs"
+	elif roll < 0.5 :
+		return "blood"
 	elif roll < 0.55:
 		return "hay"
 	elif roll < 0.65:
@@ -1155,6 +1158,8 @@ func weighted_atlas_x(category: String) -> int:
 		"wood_chippings":
 			return randi_range(0, 3)
 		"gold" :
+			return randi_range(0, 3)
+		"blood" :
 			return randi_range(0, 3)
 		_:
 			return randi_range(0, 3)
