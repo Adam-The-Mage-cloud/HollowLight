@@ -135,10 +135,12 @@ func _on_worm_bat_hitbox_area_entered(area: Area2D) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
 		target_captured = true
-		while target_captured == true :
+		while target_captured == true and body.brody_saved == false :
 			body.caught_by_wormbat($".")
 			body.global_position = $".".global_position
-			await get_tree().create_timer(0.1).timeout
+			if randi_range(1, 48) == 12 :
+				target_captured = false
+			await get_tree().process_frame
 
 
 func _on_body_exited(_body: Node2D) -> void:

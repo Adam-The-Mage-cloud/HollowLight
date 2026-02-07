@@ -12495,6 +12495,7 @@ flip_h = true
 metadata/_edit_use_anchors_ = true
 
 [node name="DarknessChecker" type="Timer" parent="DarknessLayer/DarknessEffect"]
+wait_time = 0.1
 autostart = true
 
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]

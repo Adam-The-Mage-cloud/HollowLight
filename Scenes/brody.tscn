@@ -518,10 +518,5 @@ unique_name_in_owner = true
 wait_time = 0.75
 one_shot = true
 
-[node name="CheckBrodyLocationOkay" type="Timer" parent="."]
-wait_time = 2.4
-autostart = true
-
 [connection signal="timeout" from="Y-SortPivot/DashCooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="BounceCooldown" to="." method="_on_bounce_cooldown_timeout"]
-[connection signal="timeout" from="CheckBrodyLocationOkay" to="." method="_on_check_brody_location_okay_timeout"]

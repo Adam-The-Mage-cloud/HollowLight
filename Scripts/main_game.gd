@@ -3,9 +3,9 @@ extends Node2D
 var Shadow_Cloud = preload("res://Scenes/the_shadow.tscn")
 
 var is_touchscreen = false
-var touchscreen_available = true
+var touchscreen_available = false
 
-var darkness_increase_per_second = 3.5
+var darkness_increase_per_second = 5.0
 
 var room_finished = false
 
@@ -28,7 +28,7 @@ func _input(event):
 		if event is InputEventScreenTouch:
 			is_touchscreen = true
 			%BrodyCam.zoom = Vector2(1.5, 1.5)
-			%TouchScreenLayer.visible = true
+			%TouchScreenLayer.visible = false
 
 func _process(_delta: float) -> void: 
 	%DarknessEffect.modulate.a = EventBus.total_current_darkness / 100
@@ -72,7 +72,7 @@ func _on_worm_bat_chance_timeout() -> void:
 
 
 func _on_darkness_checker_timeout() -> void:
-	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + darkness_increase_per_second, 1.0, 100.0)
+	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + (darkness_increase_per_second / 10), 1.0, 100.0)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # SPAWN WEAPONS / SIDEKICKS :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

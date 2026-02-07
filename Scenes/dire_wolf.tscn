@@ -1,0 +1,347 @@
+[gd_scene load_steps=35 format=3 uid="uid://cnx8kj5ldb85k"]
+
+[ext_resource type="Texture2D" uid="uid://hy6ltbrijhps" path="res://Artwork/Dire_Wolf.png" id="1_f8eah"]
+[ext_resource type="Script" uid="uid://ds8gnm6t5605i" path="res://Scripts/dire_wolf.gd" id="1_lbcxa"]
+[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_uqdjj"]
+[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_wok0b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wok0b"]
+shader = ExtResource("1_uqdjj")
+shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Vector3(0.01, 0.01, 0.01)
+shader_parameter/susceptible_flash_amount = 0.0
+shader_parameter/susceptible_flash_color = Vector3(0.2, 0.03, 0.03)
+shader_parameter/burn_amount = 0.0
+shader_parameter/burn_noise = ExtResource("2_wok0b")
+shader_parameter/burn_edge_width = 1.0
+shader_parameter/burn_edge_color = Vector3(0.95, 0.4, 0.09)
+shader_parameter/char_width = 0.08
+shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
+shader_parameter/crumble_strength = 1.0
+shader_parameter/crumble_fade = 0.6
+
+[sub_resource type="Gradient" id="Gradient_mgc0q"]
+offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uqdjj"]
+gradient = SubResource("Gradient_mgc0q")
+width = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f8eah"]
+size = Vector2(156, 139)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbcxa"]
+size = Vector2(47.5, 23.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wok0b"]
+size = Vector2(41, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wok0b"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(103, 35, 42, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvbul"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(103, 6, 42, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5xut"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(29, 6, 42, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vd0eh"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(29, 35, 42, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3a31v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wok0b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvbul")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y5xut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vd0eh")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvbul")
+}],
+"loop": true,
+"name": &"stationary",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_li07g"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(9, 68, 71, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hov43"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_li07g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3a31v"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(154, 70, 66, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_te42h"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(155, 70, 66, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ipta"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(156, 70, 66, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aa1p8"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(86, 70, 66, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_te42h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3a31v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_te42h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ipta")
+}],
+"loop": true,
+"name": &"biting",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aa1p8")
+}],
+"loop": true,
+"name": &"normal",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hov43"]
+atlas = ExtResource("1_f8eah")
+region = Rect2(155, 4, 70, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ipta"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hov43")
+}],
+"loop": true,
+"name": &"darkness",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f8eah"]
+radius = 15.553073
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_uqdjj"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_yvbul"]
+colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uw55x"]
+gradient = SubResource("Gradient_yvbul")
+
+[sub_resource type="Curve" id="Curve_li07g"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_n5x3l"]
+curve = SubResource("Curve_li07g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wok0b"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 4, 1)
+emission_shape = 3
+emission_box_extents = Vector3(6, 8, 1)
+direction = Vector3(0, 0, 0)
+spread = 55.0
+initial_velocity_min = -100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -10.000002
+radial_accel_max = 9.999997
+scale_min = 0.79999995
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_n5x3l")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_uw55x")
+turbulence_enabled = true
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yvbul"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_li07g"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 4, 1)
+emission_shape = 3
+emission_box_extents = Vector3(6, 8, 1)
+direction = Vector3(0, 0, 0)
+spread = 55.0
+initial_velocity_min = -100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -10.000002
+radial_accel_max = 9.999997
+scale_min = 0.79999995
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_n5x3l")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_uw55x")
+turbulence_enabled = true
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uqdjj"]
+size = Vector2(38.67527, 53.02255)
+
+[node name="dire_wolf" type="Area2D"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_wok0b")
+script = ExtResource("1_lbcxa")
+
+[node name="OnFireLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(22.04757, -0.91290855)
+enabled = false
+color = Color(1, 0.4627451, 0.21960784, 0.60784316)
+energy = 4.8
+texture = SubResource("GradientTexture2D_uqdjj")
+
+[node name="DireWolfVisibility" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(5.5, 2)
+shape = SubResource("RectangleShape2D_f8eah")
+
+[node name="WolfHitboxArea" type="Area2D" parent="."]
+position = Vector2(-6.5, 3.5)
+
+[node name="WolfHitboxCollision" type="CollisionShape2D" parent="WolfHitboxArea"]
+position = Vector2(7.25, -1.75)
+shape = SubResource("RectangleShape2D_lbcxa")
+
+[node name="WolfPhysicsBox" type="CharacterBody2D" parent="."]
+position = Vector2(-6.5, 3.5)
+collision_layer = 0
+collision_mask = 0
+
+[node name="WolfPhysicsCollision" type="CollisionShape2D" parent="WolfPhysicsBox"]
+position = Vector2(9.500001, -4.4999995)
+scale = Vector2(0.12951846, 0.13040169)
+shape = SubResource("RectangleShape2D_wok0b")
+
+[node name="DireWolfSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(0, 3.5)
+sprite_frames = SubResource("SpriteFrames_3a31v")
+animation = &"stationary"
+frame_progress = 0.65897787
+
+[node name="TailPivot" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-7, 0)
+
+[node name="DireWolfTail" type="AnimatedSprite2D" parent="TailPivot"]
+use_parent_material = true
+position = Vector2(-12, 2.5)
+sprite_frames = SubResource("SpriteFrames_hov43")
+
+[node name="DireWolfHead" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(20.5, -2)
+sprite_frames = SubResource("SpriteFrames_te42h")
+animation = &"biting"
+frame_progress = 0.20295176
+
+[node name="DireWolfShadowSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+use_parent_material = true
+position = Vector2(-3, 3)
+sprite_frames = SubResource("SpriteFrames_6ipta")
+animation = &"darkness"
+
+[node name="BiteArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(24, -1)
+
+[node name="BiteCollision" type="CollisionShape2D" parent="BiteArea"]
+position = Vector2(-5, 2)
+scale = Vector2(1.195244, 1.195244)
+shape = SubResource("CircleShape2D_f8eah")
+
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(-8.500002, 14.500002)
+rotation = -3.1415925
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = SubResource("CompressedTexture2D_uqdjj")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_wok0b")
+
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(8.499999, 15.500002)
+rotation = -3.1415925
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = SubResource("CompressedTexture2D_yvbul")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_li07g")
+
+[node name="LungeArea" type="Area2D" parent="."]
+position = Vector2(24, 0)
+
+[node name="LungeAreaCollision" type="CollisionShape2D" parent="LungeArea"]
+position = Vector2(7, -3.500001)
+scale = Vector2(1.6030916, 1.6030916)
+shape = SubResource("RectangleShape2D_uqdjj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="area_entered" from="WolfHitboxArea" to="." method="_on_wolf_hitbox_area_area_entered"]
+[connection signal="body_entered" from="BiteArea" to="." method="_on_bite_area_body_entered"]
+[connection signal="body_entered" from="LungeArea" to="." method="_on_lunge_area_body_entered"]
+[connection signal="body_exited" from="LungeArea" to="." method="_on_lunge_area_body_exited"]

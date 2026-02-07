@@ -26,12 +26,15 @@ shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
 
-[sub_resource type="Gradient" id="Gradient_mgc0q"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xdnku"]
+size = Vector2(231.93118, 140)
+
+[sub_resource type="Gradient" id="Gradient_3xn72"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
 colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vc312"]
-gradient = SubResource("Gradient_mgc0q")
+gradient = SubResource("Gradient_3xn72")
 width = 32
 fill = 1
 fill_from = Vector2(0.5, 0.5)
@@ -246,9 +249,6 @@ width = 36
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xdnku"]
-size = Vector2(231.93118, 140)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5uq8"]
 size = Vector2(14.566326, 14.594847)
 
@@ -380,6 +380,11 @@ collision_layer = 33554433
 collision_mask = 33554433
 script = ExtResource("2_4j2he")
 
+[node name="visibility_collision" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-17.965591, 2)
+shape = SubResource("RectangleShape2D_xdnku")
+
 [node name="OnFireLight" type="PointLight2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-1.9524307, -0.91290855)
@@ -445,11 +450,6 @@ z_index = -2
 use_parent_material = true
 position = Vector2(-0.73835754, 21.166542)
 texture = SubResource("GradientTexture2D_uw55x")
-
-[node name="visibility_collision" type="CollisionShape2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(-17.965591, 2)
-shape = SubResource("RectangleShape2D_xdnku")
 
 [node name="AxePivot" type="Marker2D" parent="."]
 unique_name_in_owner = true

@@ -19,4 +19,4 @@ func hide_loading():
 func continuously_set_progress():
 	while visible == true :
 		%LoadingProgressBar.value += randi_range(1, 7)
-		await get_tree().create_timer(randi_range(0.1, 1.2)).timeout
+		await get_tree().create_timer(randf_range(0.1, 1.2)).timeout

@@ -6,6 +6,7 @@ var direction
 
 var target
 
+var shadow = false
 var pinatered = false
 
 var bobbing = false
@@ -21,22 +22,23 @@ func _ready() :
 	randomize()
 
 func _physics_process(delta: float) -> void:
-	# Moving : )
-	if brody_position != null :
-		brody_position = target.global_position
-		direction = (brody_position - global_position).normalized()
-		# Potentially Flip Horizontally :
-		if brody_position.x > global_position.x :
-			$".".scale.x = -1
-		else :
-			$".".scale.x = 1
-		# Now we have the direction to Brody we can move towards it with :
-		if global_position.distance_to(brody_position) > 10 :
-			%OgreSprite.play("moving")
-			position += delta * speed * direction
-		else :
-			%OgreSprite.play("stationary")
-		# move to brody
+	if get_parent().visible == true :
+		# Moving : )
+		if brody_position != null :
+			brody_position = target.global_position
+			direction = (brody_position - global_position).normalized()
+			# Potentially Flip Horizontally :
+			if brody_position.x > global_position.x :
+				$".".scale.x = -1
+			else :
+				$".".scale.x = 1
+			# Now we have the direction to Brody we can move towards it with :
+			if global_position.distance_to(brody_position) > 10 :
+				%OgreSprite.play("moving")
+				position += delta * speed * direction
+			else :
+				%OgreSprite.play("stationary")
+			# move to brody
 
 func slash() :
 	var slash_tween = create_tween()
@@ -52,7 +54,7 @@ func slash() :
 	%AxeArea.monitoring = false
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Brody" and get_parent().visible == true :
+	if body.name == "Brody" :
 		target = body
 		in_sight = true
 		footsteps()
@@ -127,7 +129,7 @@ func breathing() :
 		breathing()
 
 func _on_axe_area_body_entered(body: Node2D) -> void:
-	if body.name == "Brody" :
+	if body.name == "Brody" and get_parent().visible == true and shadow == false :
 		body.ogre_slashed($".")
 
 func _on_all_beacons_lit() :
@@ -136,6 +138,7 @@ func _on_all_beacons_lit() :
 	# Drop Gold at this point?
 
 func shadow_form() :
+	shadow = true
 	var first_flash = create_tween()
 	first_flash.tween_property(material, "shader_parameter/susceptible_flash_amount", 1.0, 0.1)
 	first_flash.tween_property(material, "shader_parameter/susceptible_flash_amount", 0.0, 0.2)

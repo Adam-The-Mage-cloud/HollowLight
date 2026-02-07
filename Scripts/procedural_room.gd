@@ -1346,15 +1346,22 @@ func place_spawn_points() -> void:
 
 func monster_spawns() -> void:
 	if theme == 1:
-		var random_monster_picker = randi_range(1, 1) 
-		if random_monster_picker == 1 : # Then Ogre :
-			var ogre_amount = randi_range(1, 3)
-			for i in range(ogre_amount):
-				var new_ogre = preload("res://Scenes/ogre.tscn").instantiate()
-				var rand = randi_range(1, spawnpoints)
-				var spawn_node = %SpawnPoints.get_child(rand - 1)
-				new_ogre.global_position = spawn_node.global_position
-				call_deferred("add_child", new_ogre)
+		var random_monster_room_picker = randi_range(1, 1) # 1 = ogre dog room
+		if random_monster_room_picker == 1 : # Then Ogre Room :
+			var monster_amount = randi_range(1, 3)
+			for i in range(monster_amount):
+				if randi_range(1, 2) == 1 : # Then Ogre :
+					var new_ogre = preload("res://Scenes/ogre.tscn").instantiate()
+					var rand = randi_range(1, spawnpoints)
+					var spawn_node = %SpawnPoints.get_child(rand - 1)
+					new_ogre.global_position = spawn_node.global_position
+					call_deferred("add_child", new_ogre)
+				else : # Then Dire Wolf :
+					var new_dire_wolf = preload("res://Scenes/dire_wolf.tscn").instantiate()
+					var rand = randi_range(1, spawnpoints)
+					var spawn_node = %SpawnPoints.get_child(rand - 1)
+					new_dire_wolf.global_position = spawn_node.global_position
+					call_deferred("add_child", new_dire_wolf)
 
 func beacon_spawns() -> void:
 	if theme == 1:

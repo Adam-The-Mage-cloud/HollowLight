@@ -15,6 +15,7 @@ var accel = 900.0
 var friction = 700.0
 var max_speed = 80.0
 
+var brody_saved = false
 var last_safe_location = Vector2.ZERO
 var last_location = Vector2.ZERO
 
@@ -31,6 +32,7 @@ var dash_available = true
 var dashing = false
 
 func _ready():
+	_on_check_brody_location_okay()
 	breathing()
 
 
@@ -413,25 +415,25 @@ func flash_white():
 
 
 func darkness_consuming():
-	EventBus.total_current_darkness -= 4
+	EventBus.total_current_darkness += 4
 
 
 func caught_by_wormbat(wormbat):
-	EventBus.total_current_darkness -= 1
+	EventBus.total_current_darkness += 1
 	flash_white()
 	blood_splatter()
 	basic_knockback(wormbat)
 
 
 func got_torch_wraithed(torch_wraith):
-	EventBus.total_current_darkness -= 1
+	EventBus.total_current_darkness += 1
 	flash_white()
 	blood_splatter()
 	basic_knockback(torch_wraith)
 
 
 func ogre_slashed(ogre):
-	EventBus.total_current_darkness -= 2
+	EventBus.total_current_darkness += 2
 	flash_white()
 	blood_splatter()
 	if currently_climbing == false :
@@ -442,6 +444,14 @@ func ogre_slashed(ogre):
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		crushed()
 
+func slowed() :
+	EventBus.total_current_darkness += 2
+	flash_white()
+	blood_splatter()
+	var initial_speed = speed
+	speed = speed / 3
+	await get_tree().create_timer(0.8).timeout
+	speed = initial_speed
 
 func basic_knockback(entity):
 	if currently_climbing == false :
@@ -450,6 +460,13 @@ func basic_knockback(entity):
 		var knockback_direction = (global_position - entity.global_position).normalized()
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 2, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func massive_knockback(entity) :
+	global_position.y += randf_range(-3, 3)
+	global_position.x += randf_range(-3, 3)
+	var knockback_direction = (global_position - entity.global_position).normalized()
+	var knockback_movement = create_tween()
+	knockback_movement.tween_property(self, "position", position + knockback_direction * 12, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 
 # Beacon Reactions :
@@ -476,21 +493,26 @@ func _on_bounce_cooldown_timeout() -> void:
 	bounce_cooldown_finished = true
 
 
-func _on_check_brody_location_okay_timeout() -> void:
-	print (%BrodyMapStuckCollision.get_overlapping_areas().size())
-	# Check if player stuck inside something :
-	#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
-		#$".".global_position = last_safe_location
-	if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_areas().size() > 0 :
-		$".".global_position = last_safe_location
-	# Now check if player is not touching a floor tile :
-	if is_on_floor_tile() == false :
-		$".".global_position = last_safe_location
-	#if %FloorDetector.is_colliding() == false :
-		#$".".global_position = last_safe_location
-	else :
-		last_safe_location = $".".global_position
-	last_location = $".".global_position 
+func _on_check_brody_location_okay() :
+	while(1) :
+		if dashing == false :
+			print (%BrodyMapStuckCollision.get_overlapping_areas().size())
+			# Check if player stuck inside something :
+			#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
+				#$".".global_position = last_safe_location
+			if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_areas().size() > 0 :
+				$".".global_position = last_safe_location
+				brody_saved = true
+			# Now check if player is not touching a floor tile :
+			if is_on_floor_tile() == false :
+				$".".global_position = last_safe_location
+			#if %FloorDetector.is_colliding() == false :
+				#$".".global_position = last_safe_location
+			else :
+				last_safe_location = $".".global_position
+				brody_saved = false
+			last_location = $".".global_position 
+		await get_tree().process_frame
 
 func is_on_floor_tile() -> bool:
 	var check_pos = global_position + Vector2(0, 8)
