@@ -17,6 +17,7 @@ signal goldpiece_acquired(gold_piece)
 signal new_room
 
 # MENU Signals :
+signal player_deaded()
 signal last_room_complete()
 signal open_travel_menu()
 
@@ -32,6 +33,8 @@ signal last_room_loaded()
 
 var total_beacons_to_light = 0
 var beacons_lit = 0
+
+var death_played = false
 
 # Item Prices :
 # Uniques (one-time purchases) :
@@ -81,6 +84,15 @@ func _ready():
 	
 	EventBus.new_room.connect(_on_new_room)
 
+func player_died() :
+	EventBus.beacons_lit = 0
+	EventBus.total_beacons_to_light = 0
+	EventBus.total_beacons = 0
+	EventBus.total_current_darkness = 0
+	EventBus.total_new_acquired_experience = 0
+	EventBus.total_new_acquired_goldpieces = 0
+	EventBus.player_deaded.emit()
+
 func _on_beacon_spawned() :
 	total_beacons_to_light += 1
 
@@ -111,6 +123,7 @@ func last_room_passed() :
 	EventBus.beacons_lit = 0
 	EventBus.total_beacons_to_light = 0
 	EventBus.total_beacons = 0
+	EventBus.total_current_darkness = 0
 	EventBus.last_room_complete.emit()
 	save_game()
 

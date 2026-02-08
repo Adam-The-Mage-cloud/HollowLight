@@ -2,6 +2,7 @@ extends Node2D
 
 func _ready() :
 	EventBus.save_game()
+	EventBus.total_current_darkness = 0
 	%SanctuaryMainFloor.add_to_group("floors")
 	arrows_pointing()
 	wagon_signs_pointing()

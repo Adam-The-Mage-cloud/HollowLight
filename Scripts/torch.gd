@@ -3,6 +3,8 @@ extends Area2D
 var equipped = true
 var minitorch_now_on = true
 
+var original_position = Vector2.ZERO
+
 # Touchscreen :
 var touch_stick = Vector2.ZERO
 
@@ -148,6 +150,39 @@ func _get_aim_distance(centre: Vector2, max_r: float) -> float:
 	# Mouse distance
 	var mouse_dist = (get_global_mouse_position() - centre).length()
 	return clamp(mouse_dist, 0.0, max_r)
+
+func get_lost() -> void:
+	original_position = position
+
+	# Random direction away from Brody
+	var angle = randf_range(0.0, TAU)
+	var direction = Vector2(cos(angle), sin(angle)).normalized()
+
+	# How far the torch flies
+	var distance = randf_range(40.0, 80.0)
+
+	# Final landing spot
+	var target_position = original_position + direction * distance
+
+	# Random spin
+	var spin_amount = randf_range(180.0, 540.0)
+
+	# Create tween
+	var tween = create_tween()
+
+	# Fling outward (fast)
+	tween.tween_property(self, "position", target_position, 0.25)\
+		.set_trans(Tween.TRANS_CUBIC)\
+		.set_ease(Tween.EASE_OUT)
+
+	# Add rotation while flying
+	tween.parallel().tween_property(self, "rotation_degrees", rotation_degrees + spin_amount, 0.25)
+
+	# Small bounce / settle on the floor
+	tween.tween_property(self, "position:y", target_position.y + 6.0, 0.15)\
+		.set_trans(Tween.TRANS_BOUNCE)\
+		.set_ease(Tween.EASE_OUT)
+
 
 func now_unequipped() :
 	equipped = false

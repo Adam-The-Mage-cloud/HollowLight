@@ -45,7 +45,7 @@ func brazier_lit() :
 
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and visible == true :
+	if area.name == "Torch" and get_parent().visible == true :
 		brazier_lit()
 		%FlashingTimer.stop()
 

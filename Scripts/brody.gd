@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 var squashed = false
+var brody_hittable = true
 
 # Touchscreen :
 var touch_move = Vector2.ZERO
@@ -413,45 +414,69 @@ func flash_white():
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
 
+func make_darkness_invisible() :
+	%Shadow.visible = false
+
+func make_darkness_visible() :
+	%Shadow.visible = true
+
+func lose_torch() :
+	%TouchScreenLayer.visible = false
+	%Torch.get_lost()
 
 func darkness_consuming():
+	%Shadow.apply_darkness_damage()
 	EventBus.total_current_darkness += 4
 
 
 func caught_by_wormbat(wormbat):
-	EventBus.total_current_darkness += 1
-	flash_white()
-	blood_splatter()
-	basic_knockback(wormbat)
+	if brody_hittable == true :
+		brody_hittable = false
+		%AttackedCooldown.start()
+		EventBus.total_current_darkness += 1
+		%Shadow.apply_darkness_damage()
+		flash_white()
+		blood_splatter()
+		basic_knockback(wormbat)
 
 
 func got_torch_wraithed(torch_wraith):
-	EventBus.total_current_darkness += 1
-	flash_white()
-	blood_splatter()
-	basic_knockback(torch_wraith)
+	if brody_hittable == true :
+		brody_hittable = false
+		%AttackedCooldown.start()
+		EventBus.total_current_darkness += 1
+		%Shadow.apply_darkness_damage()
+		flash_white()
+		blood_splatter()
+		basic_knockback(torch_wraith)
 
 
 func ogre_slashed(ogre):
-	EventBus.total_current_darkness += 2
-	flash_white()
-	blood_splatter()
-	if currently_climbing == false :
-		global_position.y += randf_range(-3, 3)
-		global_position.x += randf_range(-3, 3)
-		var knockback_direction = (global_position - ogre.global_position).normalized()
-		var knockback_movement = create_tween()
-		knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		crushed()
+	if brody_hittable == true :
+		brody_hittable = false
+		%AttackedCooldown.start()
+		EventBus.total_current_darkness += 2
+		flash_white()
+		blood_splatter()
+		if currently_climbing == false :
+			global_position.y += randf_range(-3, 3)
+			global_position.x += randf_range(-3, 3)
+			var knockback_direction = (global_position - ogre.global_position).normalized()
+			var knockback_movement = create_tween()
+			knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			crushed()
 
 func slowed() :
-	EventBus.total_current_darkness += 2
-	flash_white()
-	blood_splatter()
-	var initial_speed = speed
-	speed = speed / 3
-	await get_tree().create_timer(0.8).timeout
-	speed = initial_speed
+	if brody_hittable == true :
+		brody_hittable = false
+		%AttackedCooldown.start()
+		EventBus.total_current_darkness += 2
+		flash_white()
+		blood_splatter()
+		var initial_speed = speed
+		speed = speed / 3
+		await get_tree().create_timer(0.8).timeout
+		speed = initial_speed
 
 func basic_knockback(entity):
 	if currently_climbing == false :
@@ -485,6 +510,7 @@ func _on_dash_button_pressed() -> void:
 	dash_ability()
 	if EventBus.dungeon_crawl_button_available == true:
 		EventBus.new_dungeon_crawl()
+		make_darkness_visible()
 	elif EventBus.clives_shop_interactable == true:
 		EventBus.clives_shop_available()
 
@@ -526,3 +552,7 @@ func is_on_floor_tile() -> bool:
 			return true
 	
 	return false
+
+
+func _on_attacked_cooldown_timeout() -> void:
+	brody_hittable = true

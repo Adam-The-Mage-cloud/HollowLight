@@ -283,7 +283,7 @@ func try_lunge():
 			pass
 		else :
 			lunge()
-		await get_tree().create_timer(randf_range(0.4, 0.65)).timeout
+		await get_tree().create_timer(randf_range(0.7, 1.4)).timeout
 		try_lunge()
 
 func _on_lunge_area_body_exited(body: Node2D) -> void:

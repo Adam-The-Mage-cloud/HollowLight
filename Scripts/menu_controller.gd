@@ -3,6 +3,7 @@ extends Control
 func _ready() :
 	# Player Spawns in Sanctuary :
 	EventBus.last_room_complete.connect(_on_dungeon_ended) 
+	EventBus.player_deaded.connect(_on_player_died)
 	EventBus.new_crawl.connect(_loading_screen) 
 	
 	# Shops :
@@ -26,6 +27,24 @@ func _on_dungeon_ended() :
 	%TotalXPText.text = str(EventBus.player_level)
 	# BEGIN SERIES OF LOOT MENU ANIMATIONS:
 
+func _on_player_died() -> void:
+	EventBus.save_game()
+
+	# Fade in the background (if you still want this visual)
+	main_background_fadein()
+
+	# Hide gameplay UI
+	%TouchScreenLayer.visible = false
+
+	# Skip loot screen entirely:
+	%LootScreen.visible = false
+	%XPOutlineFlasher.visible = false
+	%TotalGoldText.visible = false
+	%GainedGoldText.visible = false
+	%TotalXPText.visible = false
+
+	# Go straight to the travel menu
+	open_adventure_menu()
 
 func loot_menu_fadein() :
 	%LootScreen.visible = true
@@ -245,6 +264,9 @@ func _on_sanctuary_button_pressed() -> void:
 	%HomeArrow.play("default")
 	%AdventureMenuTent.play("default")
 	
+	%Brody.make_darkness_invisible()
+	EventBus.death_played = false
+	EventBus.total_current_darkness = 0
 	EventBus.spawn_the_sanctuary()
 
 func _on_replay_dungeon_button_pressed() -> void:
@@ -264,6 +286,9 @@ func _on_replay_dungeon_button_pressed() -> void:
 	%ReplayLog.play("default")
 	
 	await get_tree().create_timer(0.6).timeout
+	%Brody.make_darkness_visible()
+	EventBus.death_played = false
+	EventBus.total_current_darkness = 0
 	EventBus.new_dungeon_crawl()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

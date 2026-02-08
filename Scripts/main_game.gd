@@ -2,10 +2,10 @@ extends Node2D
 
 var Shadow_Cloud = preload("res://Scenes/the_shadow.tscn")
 
-var is_touchscreen = false
-var touchscreen_available = false
+var is_touchscreen = true
+var touchscreen_available = true
 
-var darkness_increase_per_second = 5.0
+var darkness_increase_per_second = 4.5
 
 var room_finished = false
 
@@ -28,7 +28,7 @@ func _input(event):
 		if event is InputEventScreenTouch:
 			is_touchscreen = true
 			%BrodyCam.zoom = Vector2(1.5, 1.5)
-			%TouchScreenLayer.visible = false
+			%TouchScreenLayer.visible = true
 
 func _process(_delta: float) -> void: 
 	%DarknessEffect.modulate.a = EventBus.total_current_darkness / 100
@@ -139,6 +139,7 @@ func _on_new_dungeon_crawl() :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  # SANCTUARY :
 func _on_spawning_sanctuary() :
+	delete_current_memory()
 	_set_sanctuary_properties()
 	var new_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
 	new_sanctuary.z_index = 0
