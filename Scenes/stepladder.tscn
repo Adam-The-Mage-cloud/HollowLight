@@ -2,13 +2,25 @@
 
 [ext_resource type="Script" uid="uid://c5qrs3krqwsjf" path="res://Scripts/stepladder.gd" id="1_3w34e"]
 [ext_resource type="Texture2D" uid="uid://cudc2nwav6a7v" path="res://Artwork/Dungeon_Ladder.png" id="1_8xkrw"]
-[ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="2_7k7yd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3w34e"]
 size = Vector2(41, 26)
 
+[sub_resource type="Shader" id="Shader_3w34e"]
+code = "shader_type canvas_item;
+
+uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+    vec4 tex = texture(TEXTURE, UV);
+    vec4 flashed = mix(tex, vec4(1.0, 1.0, 1.0, tex.a), flash_amount);
+
+    // Preserve modulate by multiplying instead of overwriting
+    COLOR = flashed * COLOR;
+}"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m5nnk"]
-shader = ExtResource("2_7k7yd")
+shader = SubResource("Shader_3w34e")
 shader_parameter/flash_amount = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7k7yd"]

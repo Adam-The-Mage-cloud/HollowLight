@@ -77,6 +77,7 @@ var height = 18
 
 func _ready() -> void:
 	randomize()
+	
 	$".".add_to_group("rooms")
 	EventBus.total_rooms += 1
 	# Door :
@@ -105,6 +106,7 @@ func _ready() -> void:
 	
 	# FLOOR GENERATION
 	generate_floor()
+	diversify_room_with_scalers()
 	_raggedize_edges()
 	_smooth_floor(5)
 	_ensure_reachable_floor()
@@ -152,6 +154,21 @@ func _ready() -> void:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ROOM TYPE + SIZE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+func diversify_room_with_scalers() :
+	dungeon_outline_plant_spawn_chance = randf_range(1.5, 2.5) # Where higher is rarer. and 1 is everytime
+	room_complexity = randf_range(-0.25, 0.75) # -1 is super open, simple space (boss) / -0.05 is super complex, (tight)
+	floorcover_cluster_rate = randf_range(0.05, 0.1) # The lower, the less clusters spawn in relation to the amount of floor tiles in the room
+	floorcover_frequency = randf_range(0.25, 0.55) # Default is 0.4, where 1.0 is maximum frequency and 0.0 is minimum
+	bits_and_bobs_spawn_rate = randf_range(0.005, 0.015) # Like above, the lower, the less likely to spawn in relation to the amount of floor tiles in the room
+	obstacles_spawn_rate = randf_range(0.002, 0.006) # The lower, the less obstacles are likely to spawn
+	floor_interactable_spawn_chance = randf_range(0.05, 0.015) # (where 1.0 is 100% chance per floor tile)
+	max_wall_interactable_amount = randi_range(4000, 8000) # The max possible amount of wall interactables / number of floor tiles
+	stepladder_spawn_rate = 9 # Where 1 is every time and the greater from 1 it is, the less likely aka 1/2 or 1/3 or 1/8...
+	raggedize_level = randf_range(0.5, 1.0) # Default at 0.25 where 0.0 is highly uniform and 1 is VERY ragged
+	walls_obstruction_frequency = randf_range(0.06, 0.1) # Default at 0.05, where 1.0 is a much higher noise chance of spawning negative wall obstructions compared to 0 (next to none)
+	chamber_amount = randi_range(1, 7) # Default between 3 and 6, where more means a bigger cave
+	narrowness_widen_value = randf_range(1.5, 3.5) # Default is 2, the higher, the wider each narrower part of a cave
 
 func _choose_room_type_and_size() -> void:
 	if first_room:
@@ -817,11 +834,11 @@ func themify() :
 
 func themify_particular(entity) :
 	if EventBus.current_theme == 2 :
-		entity.self_modulate = Color(0.067, 0.988, 0.988)
+		entity.modulate = Color(0.067, 0.988, 0.988)
 	elif EventBus.current_theme == 3 :
-		entity.self_modulate = Color(0.976, 0.192, 0.298, 1.0)
+		entity.modulate = Color(0.976, 0.192, 0.298, 1.0)
 	elif EventBus.current_theme == 4 :
-		entity.self_modulate = Color(0.0, 0.306, 0.078, 1.0)
+		entity.modulate = Color(0.0, 0.306, 0.078, 1.0)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1414,14 +1431,12 @@ func monster_spawns() -> void:
 					var rand = randi_range(1, spawnpoints)
 					var spawn_node = %SpawnPoints.get_child(rand - 1)
 					new_ogre.global_position = spawn_node.global_position
-					themify_particular(new_ogre)
 					call_deferred("add_child", new_ogre)
 				else : # Then Dire Wolf :
 					var new_dire_wolf = preload("res://Scenes/dire_wolf.tscn").instantiate()
 					var rand = randi_range(1, spawnpoints)
 					var spawn_node = %SpawnPoints.get_child(rand - 1)
 					new_dire_wolf.global_position = spawn_node.global_position
-					themify_particular(new_dire_wolf)
 					call_deferred("add_child", new_dire_wolf)
 
 func beacon_spawns() -> void:
@@ -1432,7 +1447,6 @@ func beacon_spawns() -> void:
 			var spawn_node = %SpawnPoints.get_child(rand - 1)
 			new_beacon.global_position = spawn_node.global_position
 			new_beacon.visible = false
-			themify_particular(new_beacon)
 			get_node("Beacons").add_child(new_beacon)
 
 # Stepladder :
@@ -1474,7 +1488,6 @@ func generate_wall_interactables():
 			# Valid position → spawn torch
 			var new_walltorch = preload("res://Scenes/wall_interactables.tscn").instantiate()
 			new_walltorch.global_position = pos
-			themify_particular(new_walltorch)
 			%WallInteractables.add_child(new_walltorch)
 			
 			placed_positions.append(pos)
@@ -1512,7 +1525,6 @@ func generate_floor_interactables() -> void:
 		var scene = preload("res://Scenes/floor_interactables.tscn")
 		var inst = scene.instantiate()
 		inst.global_position = world_pos
-		themify_particular(inst)
 		%FloorInteractables.add_child(inst)
 	
 		# Mark tile as used

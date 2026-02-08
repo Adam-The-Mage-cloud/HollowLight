@@ -106,7 +106,7 @@ y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_hy64k")
 animation = &"walltorch_1"
 
-[node name="MainFlame" type="GPUParticles2D" parent="WallInteractableSprite"]
+[node name="MainFlame" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
@@ -117,7 +117,7 @@ amount_ratio = 0.4
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_hy64k")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="WallInteractableSprite/MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(-0.2045064, 1.2581568)

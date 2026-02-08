@@ -127,14 +127,14 @@ sprite_frames = SubResource("SpriteFrames_mjyeq")
 animation = &"lit"
 autoplay = "unlit"
 
-[node name="MainFlame" type="GPUParticles2D" parent="BrazierSprite"]
+[node name="MainFlame" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-0.17158508, 4.5794516)
 amount = 265
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_mjyeq")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="BrazierSprite/MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
 unique_name_in_owner = true
 position = Vector2(-0.2045064, 2.2326136)
 amount = 100

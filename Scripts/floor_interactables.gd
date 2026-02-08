@@ -27,6 +27,13 @@ var bottle_smashed = false
 func _ready() :
 	# Randomly Pick Interactable Based off Theme and Then Type (if specified) : 
 	#if EventBus.current_theme == 1 :
+		if EventBus.current_theme == 2 :
+			%InteractableSprite.modulate = Color(0.067, 0.988, 0.988)
+		elif EventBus.current_theme == 3 :
+			%InteractableSprite.modulate = Color(0.976, 0.192, 0.298, 1.0)
+		elif EventBus.current_theme == 4 :
+			%InteractableSprite.modulate = Color(0.0, 0.306, 0.078, 1.0)
+		
 		if type == 0 : # Then let's pick the item randomly :
 			type = randi_range(1, 5)
 		

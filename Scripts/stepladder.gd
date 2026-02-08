@@ -5,6 +5,14 @@ var currently_climbing = false
 var climb_tween: Tween = null
 
 func _ready() :
+	# Themify :
+	if EventBus.current_theme == 2 :
+		modulate = Color(0.067, 0.988, 0.988)
+	elif EventBus.current_theme == 3 :
+		modulate = Color(0.976, 0.192, 0.298, 1.0)
+	elif EventBus.current_theme == 4 :
+		modulate = Color(0.0, 0.306, 0.078, 1.0)
+		
 	flash_white()
 
 

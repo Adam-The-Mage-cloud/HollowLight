@@ -4,6 +4,7 @@ var lit = false
 
 func _ready() :
 	material = $".".material.duplicate()
+	
 	%BrazierSprite.play("unlit")
 	%MainFlame.emitting = false
 	%MainFlameSecondary.emitting = false
