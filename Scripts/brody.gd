@@ -537,7 +537,6 @@ func _on_check_brody_location_okay() :
 			else :
 				last_safe_location = $".".global_position
 				brody_saved = false
-			last_location = $".".global_position 
 		await get_tree().process_frame
 
 func is_on_floor_tile() -> bool:

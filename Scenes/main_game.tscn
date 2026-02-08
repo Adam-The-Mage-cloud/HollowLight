@@ -12495,8 +12495,8 @@ flip_h = true
 metadata/_edit_use_anchors_ = true
 
 [node name="DarknessChecker" type="Timer" parent="DarknessLayer/DarknessEffect"]
+unique_name_in_owner = true
 wait_time = 0.1
-autostart = true
 
 [node name="Brody" parent="." instance=ExtResource("2_upa5u")]
 unique_name_in_owner = true
@@ -12569,8 +12569,8 @@ autostart = true
 [connection signal="pressed" from="Menus/MenuController/CliveShopScreen/CliveItem1Button" to="Menus/MenuController" method="_on_clive_item_1_button_pressed"]
 [connection signal="pressed" from="Menus/MenuController/CliveShopScreen/CliveItem2Button" to="Menus/MenuController" method="_on_clive_item_2_button_pressed"]
 [connection signal="pressed" from="Menus/MenuController/CliveShopScreen/CliveItem3Button" to="Menus/MenuController" method="_on_clive_item_3_button_pressed"]
-[connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_flash_timer_timeout"]
 [connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_timer_timeout"]
+[connection signal="timeout" from="GameplayUI/IndicatorDirector/FlashTimer" to="GameplayUI/IndicatorDirector" method="_on_flash_timer_timeout"]
 [connection signal="timeout" from="DarknessLayer/DarknessEffect/DarknessChecker" to="." method="_on_darkness_checker_timeout"]
 [connection signal="timeout" from="ShadowSpawnTimer" to="." method="_on_shadow_spawn_timer_timeout"]
 [connection signal="timeout" from="TorchWraithChance" to="." method="_on_torch_wraith_chance_timeout"]

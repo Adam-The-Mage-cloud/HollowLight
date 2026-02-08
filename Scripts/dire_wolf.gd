@@ -269,6 +269,7 @@ func shadow_form() :
 	%DireWolfShadowSprite.visible = true
 	%DireWolfHead.visible = false
 	%DireWolfSprite.visible = false
+	
 	%TailPivot.visible = false
 
 func _on_lunge_area_body_entered(body):
@@ -326,7 +327,7 @@ func _on_bite_area_body_entered(body: Node2D) -> void:
 		target_captured = true
 		while target_captured == true and body.brody_saved == false :
 			body.global_position = %BiteArea.global_position
-			if randi_range(1, 48) == 12 :
+			if randi_range(1, 32) == 12 :
 				target_captured = false
 			await get_tree().process_frame
 		body.massive_knockback(self)

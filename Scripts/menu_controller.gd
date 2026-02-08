@@ -103,7 +103,7 @@ func animate_gold_gain():
 	white_tween.tween_property(%TotalGoldText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
 	# ADDUP END GOLDPIECES
-	EventBus.total_acquired_goldpieces += end_value
+	EventBus.total_acquired_goldpieces = end_value
 		
 	await get_tree().create_timer(1.0).timeout
 	# When That Sequence is Finished, BEGIN XP ANIMATION :
@@ -135,7 +135,7 @@ func animate_xp_gain():
 	await tween_xp_bar(current_xp, new_xp_total)
 	
 	# Update Stored XP
-	EventBus.total_acquired_experience += new_xp_total
+	EventBus.total_acquired_experience = new_xp_total
 	EventBus.total_new_acquired_experience = 0
 	
 	# Signal for EventBus to begin the next menu (buttons!) :

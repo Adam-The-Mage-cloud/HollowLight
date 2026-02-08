@@ -31,7 +31,6 @@ var already_opened = false
 var spawnpoints = 10
 
 var room_type = 0
-var theme = 0
 
 # Room Spawn Modifiers :
 var dungeon_outline_plant_spawn_chance = 2 # Where higher is rarer. and 1 is everytime
@@ -94,13 +93,15 @@ func _ready() -> void:
 		%FinishLight3.enabled = true
 		# Emit a signal to tell the loading screen it's pretty much ready :
 		EventBus.last_room_loaded.emit()
-		if theme == 1 : # Then DarkSteel Door! :
-			%DoorSprite.play("DarkSteelFinishDoor")
+		#if EventBus.current_theme == 1 : # Then DarkSteel Door! :
+		%DoorSprite.play("DarkSteelFinishDoor")
 	
 	_choose_room_type_and_size()
-	# Randomly Pick Theme and Let The Rest of The Game Know :
-	theme = randi_range(1, 1)
-	EventBus.current_theme = theme
+	
+	# Adjust Room For Theme:
+	themify()
+	
+	
 	
 	# FLOOR GENERATION
 	generate_floor()
@@ -202,10 +203,10 @@ func _add_floor(p: Vector2i) -> void:
 	if floor_positions.has(p):
 		return
 	floor_positions.append(p)
-	if theme == 1:
-		var atlas_x = randi_range(0, 3)
-		var alt = randi_range(0, 3)
-		%TileMapFloor.set_cell(p, 0, Vector2i(atlas_x, 0), alt)
+	#if EventBus.current_theme == 1:
+	var atlas_x = randi_range(0, 3)
+	var alt = randi_range(0, 3)
+	%TileMapFloor.set_cell(p, 0, Vector2i(atlas_x, 0), alt)
 
 func generate_floor() -> void:
 	floor_positions.clear()
@@ -229,82 +230,82 @@ func generate_floor_variant_clusters():
 	noise.seed = randi()
 	noise.frequency = 0.12
 	
-	if theme == 1 : # DIRT CLUSTER AND THEN CLAY WITHIN THE DIRT
-		# DIRT :
-		var cluster_count = randi_range(5, 10)
-		var clay_cluster_count = randi_range(3, 6)
+	#if EventBus.current_theme == 1 : # DIRT CLUSTER AND THEN CLAY WITHIN THE DIRT
+	# DIRT :
+	var cluster_count = randi_range(5, 10)
+	var clay_cluster_count = randi_range(3, 6)
+		
+	for i in range(cluster_count):
+		var center = floor_positions.pick_random()
+		
+		# 1. Build cluster set using random walk and our globally declared dirt cluster array
+		var walker = center
+		dirt_cluster[walker] = true
+		
+		var steps = randi_range(4, 24)  # how big/small the clusters are!
+		
+		for s in range(steps):
+			var dir = [
+				Vector2i.LEFT,
+				Vector2i.RIGHT,
+				Vector2i.UP,
+				Vector2i.DOWN
+			].pick_random()
 			
-		for i in range(cluster_count):
-			var center = floor_positions.pick_random()
+			walker += dir
 			
-			# 1. Build cluster set using random walk and our globally declared dirt cluster array
-			var walker = center
-			dirt_cluster[walker] = true
+			var radius = randi_range(2, 3)
 			
-			var steps = randi_range(4, 24)  # how big/small the clusters are!
+			for dx in range(-radius, radius + 1):
+				for dy in range(-radius, radius + 1):
+					var np = walker + Vector2i(dx, dy)
+					if floor_positions.has(np):
+						var n = noise.get_noise_2d(np.x, np.y)
+						if n > randf() * 0.35: # irregular threshold
+							dirt_cluster[np] = true
+	# CLAY (Generating Within Dirt) :
+	for i in range(clay_cluster_count):
+		var center = dirt_cluster.keys().pick_random()
+		
+		var walker = center
+		clay_cluster[walker] = true
+		
+		var steps = randi_range(100, 120)
+		
+		for s in range(steps):
+			var dir = [
+				Vector2i.LEFT,
+				Vector2i.RIGHT,
+				Vector2i.UP,
+				Vector2i.DOWN
+			].pick_random()
 			
-			for s in range(steps):
-				var dir = [
-					Vector2i.LEFT,
-					Vector2i.RIGHT,
-					Vector2i.UP,
-					Vector2i.DOWN
-				].pick_random()
-				
-				walker += dir
-				
-				var radius = randi_range(2, 3)
-				
-				for dx in range(-radius, radius + 1):
-					for dy in range(-radius, radius + 1):
-						var np = walker + Vector2i(dx, dy)
-						if floor_positions.has(np):
-							var n = noise.get_noise_2d(np.x, np.y)
-							if n > randf() * 0.35: # irregular threshold
-								dirt_cluster[np] = true
-		# CLAY (Generating Within Dirt) :
-		for i in range(clay_cluster_count):
-			var center = dirt_cluster.keys().pick_random()
+			walker += dir
 			
-			var walker = center
-			clay_cluster[walker] = true
+			# Only allow clay to grow inside dirt
+			if not dirt_cluster.has(walker):
+				continue
 			
-			var steps = randi_range(100, 120)
+			var radius = randi_range(1, 1)
 			
-			for s in range(steps):
-				var dir = [
-					Vector2i.LEFT,
-					Vector2i.RIGHT,
-					Vector2i.UP,
-					Vector2i.DOWN
-				].pick_random()
-				
-				walker += dir
-				
-				# Only allow clay to grow inside dirt
-				if not dirt_cluster.has(walker):
-					continue
-				
-				var radius = randi_range(1, 1)
-				
-				for dx in range(-radius, radius + 1):
-					for dy in range(-radius, radius + 1):
-						var np = walker + Vector2i(dx, dy)
-						# Only place clay if all 4 neighbours are dirt too
-						if dirt_cluster.has(np) and dirt_cluster.has(np + Vector2i.LEFT) and dirt_cluster.has(np + Vector2i.RIGHT) and dirt_cluster.has(np + Vector2i.UP) and dirt_cluster.has(np + Vector2i.DOWN):
-							var n = noise.get_noise_2d(np.x, np.y)
-							if n > randf() * 0.05:
-								clay_cluster[np] = true
-			
-		# Autotile The Dirt Cluster :
-		for p in dirt_cluster.keys():
-			var atlas = get_tile_for_cluster(p, dirt_cluster)
-			%TileMapFloor.set_cell(p, 1, atlas)
-			
-		# Autotile The Clay Clusters Within Dirt :
-		for p in clay_cluster.keys():
-			var atlas = get_tile_for_cluster(p, clay_cluster)
-			%TileMapFloor.set_cell(p, 2, atlas)
+			for dx in range(-radius, radius + 1):
+				for dy in range(-radius, radius + 1):
+					var np = walker + Vector2i(dx, dy)
+					# Only place clay if all 4 neighbours are dirt too
+					if dirt_cluster.has(np) and dirt_cluster.has(np + Vector2i.LEFT) and dirt_cluster.has(np + Vector2i.RIGHT) and dirt_cluster.has(np + Vector2i.UP) and dirt_cluster.has(np + Vector2i.DOWN):
+						var n = noise.get_noise_2d(np.x, np.y)
+						if n > randf() * 0.05:
+							clay_cluster[np] = true
+		
+	# Autotile The Dirt Cluster :
+	for p in dirt_cluster.keys():
+		var atlas = get_tile_for_cluster(p, dirt_cluster)
+		%TileMapFloor.set_cell(p, 1, atlas)
+		
+	# Autotile The Clay Clusters Within Dirt :
+	for p in clay_cluster.keys():
+		var atlas = get_tile_for_cluster(p, clay_cluster)
+		%TileMapFloor.set_cell(p, 2, atlas)
 
 # THIS IS ALWAYS DELETABLE IF IT DOESN'T WORK BUT THIS BASICALLY ALLOWS US TO SORT WHAT TILE SHOULD BE PLACED WHERE BY HAND RATHER THAN RELYING ON THE GODOT AUTOTILER :
 func get_tile_for_cluster(p: Vector2i, cluster: Dictionary) -> Vector2i:
@@ -644,8 +645,8 @@ func generate_walls_from_floor() -> void:
 	%TileMapUnderWalls.clear()
 	wall_positions.clear()
 	
-	if theme != 1:
-		return
+	#if EventBus.current_theme != 1:
+		#return
 		
 	wall_source_id = 30
 	var floor_set = build_floor_set()
@@ -674,8 +675,8 @@ func generate_walls_from_floor() -> void:
 func generate_wall_corners_from_floor() -> void:
 	%TileMapWallCorners.clear()
 	
-	if theme != 1:
-		return
+	#if EventBus.current_theme != 1:
+		#return
 		
 	corner_source_id = 40
 	var floor_set = build_floor_set()
@@ -763,6 +764,64 @@ func generate_underwall_ring() -> void:
 			var atlas_y = 0
 			var alt = randi_range(0, 3)
 			%TileMapUnderWalls.set_cell(pos, 30, Vector2i(atlas_x, atlas_y), alt)
+
+func themify() :
+	if EventBus.current_theme == 2 : # Ice
+		%TileMapFrontFaceWall.modulate = Color(0.004, 0.929, 0.855, 1.0)
+		%TileMapRoomOutline.modulate = Color(0.004, 0.582, 0.582, 1.0)
+		%TileMapRoomDarkerOutline.modulate = Color(0.002, 0.431, 0.431, 1.0)
+		%TileMapFloor.modulate = Color(0.067, 0.988, 0.988)
+		# Maybes :
+		%TileMapObstacles.modulate = Color(0.067, 0.988, 0.988) # maybe not
+		%TileMapBitsandBobs.modulate = Color(0.067, 0.988, 0.988) # maybe not
+		%TileMapFloorCover.modulate = Color(0.067, 0.988, 0.988) # maybe not
+		%TileMapExteriorPlants.modulate = Color(0.517, 0.999, 0.996, 1.0)
+		%EnvironmentalLights.modulate = Color(0.067, 0.988, 0.988)
+		#%WallInteractables.modulate = Color(0.067, 0.988, 0.988)
+		#%FloorInteractables.modulate = Color(0.067, 0.988, 0.988)
+		%Mist.modulate = Color(0.067, 0.988, 0.988)
+		%DoorArea.modulate = Color(0.067, 0.988, 0.988)
+	
+	if EventBus.current_theme == 3 : # Hell
+		%TileMapFrontFaceWall.modulate = Color(0.995, 0.552, 0.554, 1.0)
+		%TileMapRoomOutline.modulate = Color(0.779, 0.078, 0.207, 1.0)
+		%TileMapRoomDarkerOutline.modulate = Color(0.506, 0.03, 0.12, 1.0)
+		%TileMapFloor.modulate = Color(0.976, 0.192, 0.298, 1.0)
+		# Maybes :
+		%TileMapObstacles.modulate = Color(0.976, 0.192, 0.298, 1.0) # maybe not
+		%TileMapBitsandBobs.modulate = Color(0.976, 0.192, 0.298, 1.0) # maybe not
+		%TileMapFloorCover.modulate = Color(0.976, 0.192, 0.298, 1.0) # maybe not
+		%TileMapExteriorPlants.modulate = Color(0.992, 0.435, 0.454, 1.0)
+		%EnvironmentalLights.modulate = Color(0.976, 0.192, 0.298, 1.0)
+		#%WallInteractables.modulate = Color(0.976, 0.192, 0.298, 1.0)
+		#%FloorInteractables.modulate = Color(0.976, 0.192, 0.298, 1.0)
+		%Mist.modulate = Color(0.976, 0.192, 0.298, 1.0)
+		%DoorArea.modulate = Color(0.976, 0.192, 0.298, 1.0)
+	
+	
+	if EventBus.current_theme == 4 : # Overgrown
+		%TileMapFrontFaceWall.modulate = Color(0.0, 0.373, 0.103, 1.0)
+		%TileMapRoomOutline.modulate = Color(0.0, 0.26, 0.061, 1.0)
+		%TileMapRoomDarkerOutline.modulate = Color(0.0, 0.154, 0.024, 1.0)
+		%TileMapFloor.modulate = Color(0.0, 0.306, 0.078, 1.0)
+		# Maybes :
+		%TileMapObstacles.modulate = Color(0.0, 0.306, 0.078, 1.0) # maybe not
+		%TileMapBitsandBobs.modulate = Color(0.0, 0.306, 0.078, 1.0) # maybe not
+		%TileMapFloorCover.modulate = Color(0.0, 0.306, 0.078, 1.0) # maybe not
+		%TileMapExteriorPlants.modulate = Color(0.0, 0.306, 0.078, 1.0)
+		%EnvironmentalLights.modulate = Color(0.0, 0.306, 0.078, 1.0)
+		#%WallInteractables.modulate = Color(0.0, 0.306, 0.078, 1.0)
+		#%FloorInteractables.modulate = Color(0.0, 0.306, 0.078, 1.0)
+		%Mist.modulate = Color(0.0, 0.306, 0.078, 1.0)
+		%DoorArea.modulate = Color(0.0, 0.306, 0.078, 1.0)
+
+func themify_particular(entity) :
+	if EventBus.current_theme == 2 :
+		entity.self_modulate = Color(0.067, 0.988, 0.988)
+	elif EventBus.current_theme == 3 :
+		entity.self_modulate = Color(0.976, 0.192, 0.298, 1.0)
+	elif EventBus.current_theme == 4 :
+		entity.self_modulate = Color(0.0, 0.306, 0.078, 1.0)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -772,8 +831,8 @@ func generate_underwall_ring() -> void:
 
 func _generate_outline_layer(tilemap: TileMapLayer, source_id: int, offset: int) -> void:
 	tilemap.clear()
-	if theme != 1:
-		return
+	#if EventBus.current_theme != 1:
+		#return
 		
 	var old_floor_set = build_previous_floor_set()
 	var old_frontwall_set = build_previous_frontfacingwalls_set()
@@ -855,7 +914,7 @@ func _generate_outline_layer(tilemap: TileMapLayer, source_id: int, offset: int)
 			tilemap.set_cell(npos, source_id, Vector2i(atlas_x, atlas_y), alt)
 
 func generate_outline_layers_from_floor() -> void:
-	#if first_room or theme != 1:
+	#if first_room or EventBus.current_theme != 1:
 		#return
 	room_outline_source_id = 70
 	_generate_outline_layer(%TileMapRoomOutline, room_outline_source_id, 1)
@@ -865,7 +924,7 @@ func generate_outline_layers_from_floor() -> void:
 func generate_exterior_plants_outline() -> void:
 	%TileMapExteriorPlants.clear()
 	
-	#if theme != 1 or first_room:
+	#if EventBus.current_theme != 1 or first_room:
 		#return
 	
 	var placed_plants = {}
@@ -979,8 +1038,8 @@ func generate_frontfacing_wall_from_floor() -> void:
 	%TileMapFrontFaceWall.clear()
 	previous_frontwall_world_positions.clear()
 	
-	if theme != 1:
-		return
+	#if EventBus.current_theme != 1:
+		#return
 	
 	wall_source_id = 80
 	var floor_set = build_floor_set()
@@ -1015,8 +1074,8 @@ func generate_frontfacing_wall_from_floor() -> void:
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 func generate_obstacles() -> void:
-	if theme != 1:
-		return
+	#if EventBus.current_theme != 1:
+		#return
 	obstacle_source_id = 10
 	for p in floor_positions:
 		if randf() < obstacles_spawn_rate:
@@ -1039,8 +1098,8 @@ func is_near_obstacle(pos: Vector2i, radius = 2) -> bool:
 
 
 func generate_bitsandbobs() -> void:
-	if theme != 1:
-		return
+	#if EventBus.current_theme != 1:
+		#return
 	bitsandbobs_source_id = 20
 	var attempts = int(floor_positions.size() * bits_and_bobs_spawn_rate)
 	for i in range(attempts):
@@ -1055,8 +1114,8 @@ func generate_bitsandbobs() -> void:
 		%TileMapBitsandBobs.set_cell(pos, bitsandbobs_source_id, Vector2i(atlas_x, atlas_y), alt)
 
 func generate_floorcover() -> void:
-	if theme != 1:
-		return
+	#if EventBus.current_theme != 1:
+		#return
 	var floorcover_source_id = 60
 	var categories = {
 		"cobwebs": 0,
@@ -1345,7 +1404,7 @@ func place_spawn_points() -> void:
 		spawn_node.global_position = world_pos
 
 func monster_spawns() -> void:
-	if theme == 1:
+	#if EventBus.current_theme == 1:
 		var random_monster_room_picker = randi_range(1, 1) # 1 = ogre dog room
 		if random_monster_room_picker == 1 : # Then Ogre Room :
 			var monster_amount = randi_range(1, 3)
@@ -1355,30 +1414,35 @@ func monster_spawns() -> void:
 					var rand = randi_range(1, spawnpoints)
 					var spawn_node = %SpawnPoints.get_child(rand - 1)
 					new_ogre.global_position = spawn_node.global_position
+					themify_particular(new_ogre)
 					call_deferred("add_child", new_ogre)
 				else : # Then Dire Wolf :
 					var new_dire_wolf = preload("res://Scenes/dire_wolf.tscn").instantiate()
 					var rand = randi_range(1, spawnpoints)
 					var spawn_node = %SpawnPoints.get_child(rand - 1)
 					new_dire_wolf.global_position = spawn_node.global_position
+					themify_particular(new_dire_wolf)
 					call_deferred("add_child", new_dire_wolf)
 
 func beacon_spawns() -> void:
-	if theme == 1:
+	#if EventBus.current_theme == 1:
 		for i in range(beacon_amount):
 			var new_beacon = preload("res://Scenes/brazier.tscn").instantiate()
 			var rand = randi_range(1, spawnpoints)
 			var spawn_node = %SpawnPoints.get_child(rand - 1)
 			new_beacon.global_position = spawn_node.global_position
+			new_beacon.visible = false
+			themify_particular(new_beacon)
 			get_node("Beacons").add_child(new_beacon)
 
 # Stepladder :
 func spawn_stepladder() :
-	if theme == 1:
+	#if EventBus.current_theme == 1:
 		var new_stepladder = preload("res://Scenes/stepladder.tscn").instantiate()
 		var rand = randi_range(1, spawnpoints)
 		var spawn_node = %SpawnPoints.get_child(rand - 1)
 		new_stepladder.global_position = spawn_node.global_position
+		themify_particular(new_stepladder)
 		add_child(new_stepladder)
 
 func generate_wall_interactables():
@@ -1410,6 +1474,7 @@ func generate_wall_interactables():
 			# Valid position → spawn torch
 			var new_walltorch = preload("res://Scenes/wall_interactables.tscn").instantiate()
 			new_walltorch.global_position = pos
+			themify_particular(new_walltorch)
 			%WallInteractables.add_child(new_walltorch)
 			
 			placed_positions.append(pos)
@@ -1447,14 +1512,15 @@ func generate_floor_interactables() -> void:
 		var scene = preload("res://Scenes/floor_interactables.tscn")
 		var inst = scene.instantiate()
 		inst.global_position = world_pos
+		themify_particular(inst)
 		%FloorInteractables.add_child(inst)
 	
 		# Mark tile as used
 		used[p] = true
 
 func moonlight_spawns():
-	if theme != 1:
-		return
+	#if EventBus.current_theme != 1:
+		#return
 	
 	if floor_positions.is_empty():
 		return

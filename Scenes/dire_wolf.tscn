@@ -224,6 +224,8 @@ turbulence_noise_speed_random = 0.85
 size = Vector2(38.67527, 53.02255)
 
 [node name="dire_wolf" type="Area2D"]
+z_index = 2
+y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_wok0b")
 script = ExtResource("1_lbcxa")

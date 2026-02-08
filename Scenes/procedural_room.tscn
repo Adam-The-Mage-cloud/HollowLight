@@ -2932,7 +2932,7 @@ texture_region_size = Vector2i(23, 31)
 tile_size = Vector2i(10, 10)
 sources/60 = SubResource("TileSetAtlasSource_xc6uf")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vmobn"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_spy0k"]
 texture = ExtResource("10_qnclt")
 margins = Vector2i(33, 38)
 separation = Vector2i(1, 1)
@@ -3374,7 +3374,7 @@ texture_region_size = Vector2i(47, 63)
 tile_size = Vector2i(10, 10)
 custom_data_layer_0/name = "brightness_seed"
 custom_data_layer_0/type = 3
-sources/90 = SubResource("TileSetAtlasSource_vmobn")
+sources/90 = SubResource("TileSetAtlasSource_spy0k")
 
 [sub_resource type="Shader" id="Shader_5aitk"]
 code = "shader_type canvas_item;

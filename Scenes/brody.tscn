@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://chadpnqf4f2xn"]
+[gd_scene load_steps=44 format=3 uid="uid://chadpnqf4f2xn"]
 
 [ext_resource type="Script" uid="uid://bwjcjoh73w2jp" path="res://Scripts/brody.gd" id="1_1lbbp"]
 [ext_resource type="Texture2D" uid="uid://dq14dnh50xbj" path="res://Artwork/Orb.png" id="1_k4lj1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c3blldrekyiky" path="res://Scripts/brodyshadow.gd" id="4_cd0il"]
 [ext_resource type="Texture2D" uid="uid://b28j8m15a6ijg" path="res://Artwork/Particles/Positive_Particle_Small.png" id="4_l2vdu"]
 [ext_resource type="Texture2D" uid="uid://cja70tkheanvb" path="res://Artwork/Darkness_Particle.png" id="5_s6v4d"]
+[ext_resource type="FontFile" uid="uid://6phwuvbfmw4m" path="res://Artwork/Fonts/PixelatedEleganceRegular-ovyAA.ttf" id="5_v4apm"]
 
 [sub_resource type="Shader" id="Shader_vfjlh"]
 code = "shader_type canvas_item;
@@ -467,7 +468,6 @@ offset = Vector2(0, 10.5)
 
 [node name="Shadow" type="Sprite2D" parent="Y-SortPivot"]
 unique_name_in_owner = true
-visible = false
 position = Vector2(-2, -7)
 texture = ExtResource("5_s6v4d")
 script = ExtResource("4_cd0il")
@@ -535,6 +535,23 @@ process_material = SubResource("ParticleProcessMaterial_s6v4d")
 unique_name_in_owner = true
 wait_time = 0.55
 one_shot = true
+
+[node name="FadedText" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+z_index = 12
+offset_left = -5.0
+offset_top = -21.0
+offset_right = 135.0
+offset_bottom = 27.0
+theme_override_colors/default_color = Color(0.5176471, 0.011764706, 0, 0.8784314)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("5_v4apm")
+theme_override_font_sizes/normal_font_size = 17
+text = "\"In The Darkness You Faded...\""
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BounceCooldown" type="Timer" parent="."]
 unique_name_in_owner = true

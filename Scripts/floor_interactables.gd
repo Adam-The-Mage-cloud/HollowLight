@@ -26,7 +26,7 @@ var bottle_smashed = false
 
 func _ready() :
 	# Randomly Pick Interactable Based off Theme and Then Type (if specified) : 
-	if EventBus.current_theme == 1 :
+	#if EventBus.current_theme == 1 :
 		if type == 0 : # Then let's pick the item randomly :
 			type = randi_range(1, 5)
 		

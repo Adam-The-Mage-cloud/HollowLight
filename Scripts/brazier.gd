@@ -13,6 +13,7 @@ func _ready() :
 func now_visible() :
 	EventBus.emit_signal("beacon_spawned")
 	add_to_group("braziers")
+	visible = true
 
 func brazier_lit() :
 	if lit == false :
@@ -45,7 +46,7 @@ func brazier_lit() :
 
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and get_parent().visible == true :
+	if area.name == "Torch" and $".".visible == true :
 		brazier_lit()
 		%FlashingTimer.stop()
 

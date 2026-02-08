@@ -97,6 +97,7 @@ func _on_dungeon_ended() :
 	# If any rooms around, delete them :
 	delete_current_memory()
 	# STOP TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
+	%DarknessChecker.stop()
 	%ShadowSpawnTimer.stop()
 	%TorchWraithChance.stop()
 	%WormBatChance.stop()
@@ -122,6 +123,7 @@ func _on_new_dungeon_crawl() :
 	%RoomsToBeDeleted.call_deferred("add_child", new_room)
 	
 	# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
+	%DarknessChecker.start()
 	%ShadowSpawnTimer.start()
 	%TorchWraithChance.start()
 	%WormBatChance.start()

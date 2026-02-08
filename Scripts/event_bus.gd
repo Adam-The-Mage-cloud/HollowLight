@@ -136,6 +136,7 @@ func open_the_travel_menu() :
 
 # DUNGEONS :
 func new_dungeon_crawl() :
+	EventBus.current_theme = randi_range(1, 4)
 	total_current_darkness = 0.0
 	total_new_acquired_experience = 0
 	total_new_acquired_goldpieces = 0
