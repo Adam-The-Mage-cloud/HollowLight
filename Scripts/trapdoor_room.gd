@@ -83,6 +83,7 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" and not already_opened and room_complete:
 		%DoorFlashingTimer.stop()
 		already_opened = true
+		%DoorBreakParticles.emitting = true
 		%DoorArea.remove_from_group("doors")
 		%DoorArea.unlocked = true
 		%DoorSprite.play("DarkSteelSmashed")

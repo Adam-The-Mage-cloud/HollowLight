@@ -29,12 +29,12 @@ shader_parameter/crumble_fade = 0.6
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xdnku"]
 size = Vector2(231.93118, 140)
 
-[sub_resource type="Gradient" id="Gradient_3xn72"]
+[sub_resource type="Gradient" id="Gradient_4ma1k"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
 colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_vc312"]
-gradient = SubResource("Gradient_3xn72")
+gradient = SubResource("Gradient_4ma1k")
 width = 32
 fill = 1
 fill_from = Vector2(0.5, 0.5)
@@ -229,7 +229,7 @@ animations = [{
 [sub_resource type="Gradient" id="Gradient_t5uq8"]
 colors = PackedColorArray(0, 0.54901963, 0.5803922, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_7kbme"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3xn72"]
 gradient = SubResource("Gradient_t5uq8")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t5uq8"]
@@ -237,14 +237,14 @@ particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(2, 1, 1)
 gravity = Vector3(0, 98, 0)
-color_ramp = SubResource("GradientTexture1D_7kbme")
+color_ramp = SubResource("GradientTexture1D_3xn72")
 
-[sub_resource type="Gradient" id="Gradient_4ma1k"]
+[sub_resource type="Gradient" id="Gradient_h4run"]
 offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
 colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_uw55x"]
-gradient = SubResource("Gradient_4ma1k")
+gradient = SubResource("Gradient_h4run")
 width = 36
 fill = 1
 fill_from = Vector2(0.5, 0.5)
@@ -285,7 +285,7 @@ animations = [{
 [sub_resource type="Gradient" id="Gradient_xdnku"]
 colors = PackedColorArray(0.10351987, 0, 0, 1, 1.2160255, 0.44119722, 0.53568846, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_t5uq8"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6pwe3"]
 gradient = SubResource("Gradient_xdnku")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xdnku"]
@@ -294,7 +294,7 @@ particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(8, 1, 1)
 gravity = Vector3(0, 98, 0)
-color_ramp = SubResource("GradientTexture1D_t5uq8")
+color_ramp = SubResource("GradientTexture1D_6pwe3")
 
 [sub_resource type="Animation" id="Animation_xdnku"]
 length = 0.001
@@ -339,14 +339,14 @@ size = Vector2(22.603645, 28.664043)
 [sub_resource type="Gradient" id="Gradient_uw55x"]
 colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_uw55x"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nk7xg"]
 gradient = SubResource("Gradient_uw55x")
 
 [sub_resource type="Curve" id="Curve_n5x3l"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_n5x3l"]
+[sub_resource type="CurveTexture" id="CurveTexture_ejjyv"]
 curve = SubResource("Curve_n5x3l")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7kbme"]
@@ -363,9 +363,9 @@ radial_accel_min = -10.000002
 radial_accel_max = 9.999997
 scale_min = 0.79999995
 scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_n5x3l")
+scale_curve = SubResource("CurveTexture_ejjyv")
 color = Color(1, 1, 1, 0.8156863)
-color_ramp = SubResource("GradientTexture1D_uw55x")
+color_ramp = SubResource("GradientTexture1D_nk7xg")
 turbulence_enabled = true
 turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508

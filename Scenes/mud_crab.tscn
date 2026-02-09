@@ -1,0 +1,464 @@
+[gd_scene load_steps=45 format=3 uid="uid://cickrdkft6tma"]
+
+[ext_resource type="Script" uid="uid://uusi0j0e50rq" path="res://Scripts/mud_crab.gd" id="1_f72kl"]
+[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_snf3b"]
+[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_snf3b"]
+[ext_resource type="Texture2D" uid="uid://flq6u4clrt25" path="res://Artwork/Mud_crab.png" id="3_f72kl"]
+[ext_resource type="Texture2D" uid="uid://eougmh3elcw" path="res://Artwork/Crab_Shadow.png" id="4_f72kl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cd1xg"]
+shader = ExtResource("1_snf3b")
+shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Vector3(0.01, 0.01, 0.01)
+shader_parameter/susceptible_flash_amount = 0.0
+shader_parameter/susceptible_flash_color = Vector3(0.2, 0.03, 0.03)
+shader_parameter/burn_amount = 0.0
+shader_parameter/burn_noise = ExtResource("2_snf3b")
+shader_parameter/burn_edge_width = 1.0
+shader_parameter/burn_edge_color = Vector3(0.95, 0.4, 0.09)
+shader_parameter/char_width = 0.08
+shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
+shader_parameter/crumble_strength = 1.0
+shader_parameter/crumble_fade = 0.6
+
+[sub_resource type="Gradient" id="Gradient_snf3b"]
+offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k3g2l"]
+gradient = SubResource("Gradient_snf3b")
+width = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22fag"]
+atlas = ExtResource("3_f72kl")
+region = Rect2(125, 16, 8, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xi6jh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22fag")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ms1r"]
+atlas = ExtResource("3_f72kl")
+region = Rect2(89, 16, 8, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5fgwn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ms1r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71vx6"]
+atlas = ExtResource("3_f72kl")
+region = Rect2(108, 15, 8, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k3g2l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71vx6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jptrx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22fag")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u3xgj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71vx6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_77hu5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ms1r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxb5i"]
+atlas = ExtResource("4_f72kl")
+region = Rect2(0, 0, 41, 43)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3jc7w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cxb5i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snf3b"]
+atlas = ExtResource("3_f72kl")
+region = Rect2(9, 4, 71, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wiqsa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snf3b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_cd1xg"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nnchh"]
+gradient = SubResource("Gradient_cd1xg")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uyya3"]
+size = Vector2(14.566326, 14.594847)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f72kl"]
+atlas = ExtResource("3_f72kl")
+region = Rect2(9, 68, 71, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c5tqv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f72kl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_snf3b"]
+size = Vector2(14.566326, 14.594847)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cd1xg"]
+atlas = ExtResource("3_f72kl")
+region = Rect2(9, 36, 71, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cxb5i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd1xg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_e3rqa"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_lm62p"]
+colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cxb5i"]
+gradient = SubResource("Gradient_lm62p")
+
+[sub_resource type="Curve" id="Curve_xf4jn"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_22fag"]
+curve = SubResource("Curve_xf4jn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ltaep"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 4, 1)
+emission_shape = 3
+emission_box_extents = Vector3(6, 8, 1)
+direction = Vector3(0, 0, 0)
+spread = 55.0
+initial_velocity_min = -100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -10.000002
+radial_accel_max = 9.999997
+scale_min = 0.79999995
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_22fag")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_cxb5i")
+turbulence_enabled = true
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ay3fa"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_udxmv"]
+colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xi6jh"]
+gradient = SubResource("Gradient_udxmv")
+
+[sub_resource type="Curve" id="Curve_gkc5r"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_7ms1r"]
+curve = SubResource("Curve_gkc5r")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_glfq1"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 4, 1)
+emission_shape = 3
+emission_box_extents = Vector3(6, 8, 1)
+direction = Vector3(0, 0, 0)
+spread = 55.0
+initial_velocity_min = -100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -10.000002
+radial_accel_max = 9.999997
+scale_min = 0.79999995
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_7ms1r")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_xi6jh")
+turbulence_enabled = true
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_71vx6"]
+size = Vector2(231.93118, 140)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jptrx"]
+radius = 10.484831
+height = 23.92313
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f72kl"]
+size = Vector2(33.763275, 26.858974)
+
+[node name="mud_crab" type="Area2D"]
+z_index = 2
+y_sort_enabled = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_cd1xg")
+script = ExtResource("1_f72kl")
+
+[node name="VisualPivot" type="Marker2D" parent="."]
+use_parent_material = true
+rotation = 1.5707964
+
+[node name="OnFireLight" type="PointLight2D" parent="VisualPivot"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-1.9524307, -0.91290855)
+enabled = false
+color = Color(1, 0.4627451, 0.21960784, 0.60784316)
+energy = 4.8
+texture = SubResource("GradientTexture2D_k3g2l")
+
+[node name="LegR1" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(9.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_xi6jh")
+
+[node name="LegR2" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(9.5, 3.5)
+sprite_frames = SubResource("SpriteFrames_5fgwn")
+
+[node name="LegR3" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(7.472, 5.5)
+sprite_frames = SubResource("SpriteFrames_k3g2l")
+
+[node name="LegL1" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-12.5, 1.488)
+rotation = -3.1415925
+scale = Vector2(1, -1)
+sprite_frames = SubResource("SpriteFrames_jptrx")
+
+[node name="LegL2" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-11.5, 3.5)
+rotation = -3.1415925
+scale = Vector2(1, -1)
+sprite_frames = SubResource("SpriteFrames_u3xgj")
+
+[node name="LegL3" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-11.5, 5.5)
+rotation = -3.1415925
+scale = Vector2(1, -1)
+sprite_frames = SubResource("SpriteFrames_77hu5")
+
+[node name="CrabShadowSprite" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+visible = false
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-3, 2)
+sprite_frames = SubResource("SpriteFrames_3jc7w")
+
+[node name="CrabSprite" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_wiqsa")
+
+[node name="CrabShadow" type="Sprite2D" parent="VisualPivot/CrabSprite"]
+z_index = -2
+use_parent_material = true
+position = Vector2(-1.6167068, 5.0788927)
+scale = Vector2(1.9868677, 1.0933094)
+texture = SubResource("GradientTexture2D_nnchh")
+
+[node name="PincerPivotL" type="Marker2D" parent="VisualPivot"]
+unique_name_in_owner = true
+z_index = 1
+use_parent_material = true
+position = Vector2(5.105667, -0.5557194)
+
+[node name="PincerLArea" type="Area2D" parent="VisualPivot/PincerPivotL"]
+unique_name_in_owner = true
+
+[node name="PincerLHitbox" type="CollisionShape2D" parent="VisualPivot/PincerPivotL/PincerLArea"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-10.231579, -8.225887)
+rotation = 0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_uyya3")
+
+[node name="CrabPincerL" type="AnimatedSprite2D" parent="VisualPivot/PincerPivotL"]
+unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-12.105667, -9.444281)
+sprite_frames = SubResource("SpriteFrames_c5tqv")
+
+[node name="PincerPivotR" type="Marker2D" parent="VisualPivot"]
+unique_name_in_owner = true
+z_index = 1
+use_parent_material = true
+position = Vector2(-7.817932, -1.1114388)
+
+[node name="PincerRArea" type="Area2D" parent="VisualPivot/PincerPivotR"]
+position = Vector2(18.007538, 0)
+
+[node name="PincerRHitbox" type="CollisionShape2D" parent="VisualPivot/PincerPivotR/PincerRArea"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-7.334896, -7.761)
+rotation = 0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_snf3b")
+
+[node name="CrabPincerR" type="AnimatedSprite2D" parent="VisualPivot/PincerPivotR"]
+z_index = 1
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(12.796204, -7.8885612)
+sprite_frames = SubResource("SpriteFrames_cxb5i")
+
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="VisualPivot"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(-11.664238, 4.537712)
+rotation = -3.1415925
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = SubResource("CompressedTexture2D_e3rqa")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_ltaep")
+
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="VisualPivot"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(7, 5.0000005)
+rotation = -3.1415925
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = SubResource("CompressedTexture2D_ay3fa")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_glfq1")
+
+[node name="visibility_collision" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-0.72935486, -0.39392114)
+scale = Vector2(0.29921463, 0.47869903)
+shape = SubResource("RectangleShape2D_71vx6")
+
+[node name="CrabHitBox" type="Area2D" parent="."]
+
+[node name="CrabCollision" type="CollisionShape2D" parent="CrabHitBox"]
+use_parent_material = true
+position = Vector2(-1.152092, 1.052784)
+shape = SubResource("CapsuleShape2D_jptrx")
+
+[node name="PincerActivationArea" type="Area2D" parent="."]
+
+[node name="PincerActivationCollision" type="CollisionShape2D" parent="PincerActivationArea"]
+use_parent_material = true
+position = Vector2(26.25153, -1.0932975)
+shape = SubResource("RectangleShape2D_f72kl")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="body_entered" from="VisualPivot/PincerPivotL/PincerLArea" to="." method="_on_pincer_l_area_body_entered"]
+[connection signal="body_entered" from="VisualPivot/PincerPivotR/PincerRArea" to="." method="_on_pincer_r_area_body_entered"]
+[connection signal="area_entered" from="CrabHitBox" to="." method="_on_crab_hit_box_area_entered"]
+[connection signal="body_entered" from="PincerActivationArea" to="." method="_on_pincer_activation_area_body_entered"]

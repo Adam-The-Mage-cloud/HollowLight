@@ -560,6 +560,8 @@ one_shot = true
 
 [node name="AttackedCooldown" type="Timer" parent="."]
 unique_name_in_owner = true
+wait_time = 0.6
+one_shot = true
 
 [connection signal="timeout" from="Y-SortPivot/Shadow/FullShadowChecker" to="Y-SortPivot/Shadow" method="_on_full_shadow_checker_timeout"]
 [connection signal="timeout" from="Y-SortPivot/DashCooldown" to="." method="_on_dash_cooldown_timeout"]

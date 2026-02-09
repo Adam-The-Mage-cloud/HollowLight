@@ -1,0 +1,306 @@
+[gd_scene load_steps=37 format=3 uid="uid://calcwa6h6p7s7"]
+
+[ext_resource type="Script" uid="uid://dclgdmv75uqvq" path="res://Scripts/grindstonter.gd" id="1_4uh28"]
+[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_eluae"]
+[ext_resource type="Texture2D" uid="uid://4tppfmjt3y0b" path="res://Artwork/Grindstonter.png" id="2_4uh28"]
+[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_kagbw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kagbw"]
+shader = ExtResource("1_eluae")
+shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Vector3(0.01, 0.01, 0.01)
+shader_parameter/susceptible_flash_amount = 0.0
+shader_parameter/susceptible_flash_color = Vector3(0.2, 0.03, 0.03)
+shader_parameter/burn_amount = 0.0
+shader_parameter/burn_noise = ExtResource("2_kagbw")
+shader_parameter/burn_edge_width = 1.0
+shader_parameter/burn_edge_color = Vector3(0.95, 0.4, 0.09)
+shader_parameter/char_width = 0.08
+shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
+shader_parameter/crumble_strength = 1.0
+shader_parameter/crumble_fade = 0.6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7b2kr"]
+size = Vector2(231.93118, 140)
+
+[sub_resource type="Gradient" id="Gradient_3xn72"]
+offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4uh28"]
+gradient = SubResource("Gradient_3xn72")
+width = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2uxqy"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(137, 14, 9, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eluae"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2uxqy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eluae"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(15, 14, 9, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kagbw"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(70, 14, 9, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxi2k"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(81, 14, 9, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11utu"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(92, 14, 9, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3s6m"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(103, 14, 9, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_108b6"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(48, 14, 9, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74jia"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(37, 14, 9, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfror"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(26, 14, 9, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2oy5t"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(114, 14, 9, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4uh28"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(125, 14, 9, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kagbw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eluae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kagbw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxi2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11utu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3s6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_108b6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74jia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfror")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2oy5t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4uh28")
+}],
+"loop": true,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_4ma1k"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mxi2k"]
+gradient = SubResource("Gradient_4ma1k")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xfror"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_2uxqy"]
+colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3tbeh"]
+gradient = SubResource("Gradient_2uxqy")
+
+[sub_resource type="Curve" id="Curve_ldt01"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_d86hk"]
+curve = SubResource("Curve_ldt01")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_epu36"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 4, 1)
+emission_shape = 3
+emission_box_extents = Vector3(6, 8, 1)
+direction = Vector3(0, 0, 0)
+spread = 55.0
+initial_velocity_min = -100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -10.000002
+radial_accel_max = 9.999997
+scale_min = 0.79999995
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_d86hk")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_3tbeh")
+turbulence_enabled = true
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jl12u"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_dp6lg"]
+colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ou08u"]
+gradient = SubResource("Gradient_dp6lg")
+
+[sub_resource type="Curve" id="Curve_lpojv"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_8ccbf"]
+curve = SubResource("Curve_lpojv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nsh21"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 4, 1)
+emission_shape = 3
+emission_box_extents = Vector3(6, 8, 1)
+direction = Vector3(0, 0, 0)
+spread = 55.0
+initial_velocity_min = -100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -10.000002
+radial_accel_max = 9.999997
+scale_min = 0.79999995
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_8ccbf")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_ou08u")
+turbulence_enabled = true
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bq8wf"]
+radius = 10.484831
+height = 23.92313
+
+[node name="grindstonter" type="Area2D"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_kagbw")
+script = ExtResource("1_4uh28")
+
+[node name="visibility_collision" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-0.72935486, -0.39392114)
+scale = Vector2(0.7691713, 1.23056)
+shape = SubResource("RectangleShape2D_7b2kr")
+
+[node name="VisualPivot" type="Marker2D" parent="."]
+use_parent_material = true
+
+[node name="OnFireLight" type="PointLight2D" parent="VisualPivot"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-1.9524307, -0.91290855)
+enabled = false
+color = Color(1, 0.4627451, 0.21960784, 0.60784316)
+energy = 4.8
+texture = SubResource("GradientTexture2D_4uh28")
+
+[node name="GrindShadowSprite" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+visible = false
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-3, 2)
+sprite_frames = SubResource("SpriteFrames_eluae")
+
+[node name="GrindSprite" type="AnimatedSprite2D" parent="VisualPivot"]
+unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_kagbw")
+autoplay = "default"
+frame_progress = 0.65083414
+
+[node name="GrindShadow" type="Sprite2D" parent="VisualPivot/GrindSprite"]
+z_index = -2
+use_parent_material = true
+position = Vector2(0, 3)
+texture = SubResource("GradientTexture2D_mxi2k")
+
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="VisualPivot"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(0, 8)
+rotation = -3.1415925
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = SubResource("CompressedTexture2D_xfror")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_epu36")
+
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="VisualPivot"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(0, 5)
+rotation = -3.1415925
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = SubResource("CompressedTexture2D_jl12u")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_nsh21")
+
+[node name="GrindHitBox" type="Area2D" parent="."]
+
+[node name="GrindCollision" type="CollisionShape2D" parent="GrindHitBox"]
+use_parent_material = true
+shape = SubResource("CapsuleShape2D_bq8wf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="area_entered" from="GrindHitBox" to="." method="_on_grind_hit_box_area_entered"]
+[connection signal="body_entered" from="GrindHitBox" to="." method="_on_grind_hit_box_body_entered"]

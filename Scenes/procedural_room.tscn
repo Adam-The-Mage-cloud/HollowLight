@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://crssqr3d5ml2q"]
+[gd_scene load_steps=55 format=3 uid="uid://crssqr3d5ml2q"]
 
 [ext_resource type="Script" uid="uid://wdphlyeqrkxh" path="res://Scripts/procedural_room.gd" id="1_bbfjf"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4rtng"]
@@ -3470,6 +3470,40 @@ fill = 2
 fill_from = Vector2(0.48433048, 0.43874645)
 fill_to = Vector2(0.94871795, 0.84900284)
 
+[sub_resource type="Gradient" id="Gradient_4yqbe"]
+offsets = PackedFloat32Array(0, 0.6855346)
+colors = PackedColorArray(0.4627451, 0.35686275, 0.28235295, 1, 0.39242187, 0.30856204, 0.26995477, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t264i"]
+gradient = SubResource("Gradient_4yqbe")
+
+[sub_resource type="Curve" id="Curve_sity7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.87309635, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kk80f"]
+curve = SubResource("Curve_sity7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eomwv"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(16, 20, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(4, -10, 0)
+initial_velocity_min = -50.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 80, 0)
+radial_accel_min = -7.170002
+radial_accel_max = 11.579997
+damping_min = 0.120000005
+damping_max = 0.36
+scale_min = 0.75
+scale_curve = SubResource("CurveTexture_kk80f")
+color = Color(0.75775176, 0.6300119, 0.5414565, 1)
+color_ramp = SubResource("GradientTexture1D_t264i")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.09999997
+
 [node name="procedural_room" type="Node2D"]
 y_sort_enabled = true
 texture_filter = 1
@@ -3656,6 +3690,18 @@ enabled = false
 color = Color(1, 1, 0.67058825, 1)
 energy = 5.0
 texture = SubResource("GradientTexture2D_t264i")
+
+[node name="DoorBreakParticles" type="GPUParticles2D" parent="DoorArea"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(0, -19.925552)
+emitting = false
+amount = 120
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 0.49
+process_material = SubResource("ParticleProcessMaterial_eomwv")
 
 [node name="DoorOpenArea" type="Area2D" parent="DoorArea"]
 

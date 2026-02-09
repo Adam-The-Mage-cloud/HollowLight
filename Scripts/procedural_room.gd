@@ -1426,18 +1426,31 @@ func monster_spawns() -> void:
 		if random_monster_room_picker == 1 : # Then Ogre Room :
 			var monster_amount = randi_range(1, 3)
 			for i in range(monster_amount):
-				if randi_range(1, 2) == 1 : # Then Ogre :
+				var monster_picker = randi_range(1, 4)
+				if monster_picker == 1 : # Then Ogre :
 					var new_ogre = preload("res://Scenes/ogre.tscn").instantiate()
 					var rand = randi_range(1, spawnpoints)
 					var spawn_node = %SpawnPoints.get_child(rand - 1)
 					new_ogre.global_position = spawn_node.global_position
 					call_deferred("add_child", new_ogre)
-				else : # Then Dire Wolf :
+				elif monster_picker == 2 : # Then Dire Wolf :
 					var new_dire_wolf = preload("res://Scenes/dire_wolf.tscn").instantiate()
 					var rand = randi_range(1, spawnpoints)
 					var spawn_node = %SpawnPoints.get_child(rand - 1)
 					new_dire_wolf.global_position = spawn_node.global_position
 					call_deferred("add_child", new_dire_wolf)
+				elif monster_picker == 3 : # Then MudCrab :
+					var new_mudcrab = preload("res://Scenes/mud_crab.tscn").instantiate()
+					var rand = randi_range(1, spawnpoints)
+					var spawn_node = %SpawnPoints.get_child(rand - 1)
+					new_mudcrab.global_position = spawn_node.global_position
+					call_deferred("add_child", new_mudcrab)
+				elif monster_picker == 4 : # Then Grindstonter :
+					var new_grindstonter = preload("res://Scenes/grindstonter.tscn").instantiate()
+					var rand = randi_range(1, spawnpoints)
+					var spawn_node = %SpawnPoints.get_child(rand - 1)
+					new_grindstonter.global_position = spawn_node.global_position
+					call_deferred("add_child", new_grindstonter)
 
 func beacon_spawns() -> void:
 	#if EventBus.current_theme == 1:
@@ -1693,6 +1706,7 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 	
 	else :
 		already_opened = true
+		%DoorBreakParticles.emitting = true
 		%DoorFlashingTimer.stop()
 		%DoorArea.remove_from_group("doors")
 		%DoorArea.unlocked = true

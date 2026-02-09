@@ -466,6 +466,7 @@ func ogre_slashed(ogre):
 			knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			crushed()
 
+
 func slowed() :
 	if brody_hittable == true :
 		brody_hittable = false
@@ -478,25 +479,48 @@ func slowed() :
 		await get_tree().create_timer(0.8).timeout
 		speed = initial_speed
 
+
 func basic_knockback(entity):
-	if currently_climbing == false :
-		global_position.y += randf_range(-2, 2)
-		global_position.x += randf_range(-2, 2)
-		var knockback_direction = (global_position - entity.global_position).normalized()
-		var knockback_movement = create_tween()
-		knockback_movement.tween_property(self, "position", position + knockback_direction * 2, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	if brody_hittable == true :
+		brody_hittable = false
+		%AttackedCooldown.start()
+		if currently_climbing == false :
+			var knockback_direction = (global_position - entity.global_position).normalized()
+			var knockback_movement = create_tween()
+			knockback_movement.tween_property(self, "position", position + knockback_direction * 2, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
 
 func massive_knockback(entity) :
-	global_position.y += randf_range(-3, 3)
-	global_position.x += randf_range(-3, 3)
-	var knockback_direction = (global_position - entity.global_position).normalized()
-	var knockback_movement = create_tween()
-	knockback_movement.tween_property(self, "position", position + knockback_direction * 12, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	if brody_hittable == true :
+		brody_hittable = false
+		%AttackedCooldown.start()
+		var knockback_direction = (global_position - entity.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 12, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+
+func crab_punch(entity) :
+	if brody_hittable == true :
+		brody_hittable = false
+		%AttackedCooldown.start()
+		var knockback_direction = (global_position - entity.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 24, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+
+func grindstone_bounce(entity) :
+	if brody_hittable == true :
+		brody_hittable = false
+		%AttackedCooldown.start()
+		var knockback_direction = (global_position - entity.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 36, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 
 # Beacon Reactions :
 func resting():
 	%DarknessClearingParticles.emitting = true
+
 
 func nolonger_resting():
 	%DarknessClearingParticles.emitting = false
@@ -505,6 +529,7 @@ func nolonger_resting():
 # TOUCHSCREEN REACTIONS :
 func _on_touch_screen_press_2_move_stick_changed(vec: Variant) -> void:
 	touch_move = vec
+
 
 func _on_dash_button_pressed() -> void:
 	dash_ability()
