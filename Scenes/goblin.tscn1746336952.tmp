@@ -363,7 +363,6 @@ script = ExtResource("1_fkbyy")
 
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true
-use_parent_material = true
 
 [node name="GoblinHead" type="AnimatedSprite2D" parent="Visuals"]
 unique_name_in_owner = true
@@ -376,6 +375,7 @@ sprite_frames = SubResource("SpriteFrames_wpiyv")
 
 [node name="GoblinLegL" type="AnimatedSprite2D" parent="Visuals"]
 unique_name_in_owner = true
+z_index = 4
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_gbw3e")
 use_parent_material = true
@@ -384,6 +384,7 @@ sprite_frames = SubResource("SpriteFrames_2gt0r")
 
 [node name="GoblinLegR" type="AnimatedSprite2D" parent="Visuals"]
 unique_name_in_owner = true
+z_index = 4
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_o6mmh")
 use_parent_material = true

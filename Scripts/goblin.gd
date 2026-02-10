@@ -37,15 +37,15 @@ func _ready() -> void:
 	# Random Weapon Chooser:
 	goblin_type = randi_range(1, 2)
 	if goblin_type == 1 : # Then Archer :
-		%MeleeArea.queue_free()
-		%SlashArea.queue_free()
-		%GoblinMelee.queue_free()
+		%SlashArea.monitoring = false
+		%GoblinMelee.visible = false
 		if randi_range(1, 2) == 1 : # Crossbow :
 			%GoblinRanged.play("crossbow")
 		else :
 			%GoblinRanged.play("bow")
 			
 	elif goblin_type == 2 : # Then Melee :
+		%GoblinRanged.visible = false
 		var weapon_picker = randi_range(1, 3)
 		if weapon_picker == 1 :
 			%GoblinMelee.play("axe")
@@ -79,11 +79,12 @@ func _physics_process(delta: float) -> void:
 	# Aim pivot only when not attacking
 	if not attacking:
 		%WeaponPivot.look_at(brody_position)
-		if new_facing < 0:
-			%WeaponPivot.rotation += PI
-			%WeaponPivot.scale.x = -new_facing
-		else :
-			%WeaponPivot.scale.x = -new_facing
+		if bow_or_melee != - 1 :
+			if new_facing < 0:
+				%WeaponPivot.rotation += PI
+				%WeaponPivot.scale.x = -new_facing
+			else :
+				%WeaponPivot.scale.x = -new_facing
 
 
 func slash() -> void:
@@ -186,25 +187,40 @@ func _on_slash_area_body_exited(body: Node2D) -> void:
 	if body.name == "Brody" :
 		out_of_range = true
 
+
 func fire_at_will() :
-	bow_or_melee = -1
-	pass
+	while get_parent().visible == true:
+		bow_or_melee = -1
+		var goblin_arrow = preload("res://Scenes/goblin_arrow.tscn").instantiate()
+		goblin_arrow.position = %GoblinRanged.position + Vector2(-3, 0)
+		%GoblinRanged.call_deferred("add_child", goblin_arrow)
+		
+		#goblin_arrow.draw_back()
+		await get_tree().create_timer(2).timeout
+		# Reparent :
+		var arrow_position = goblin_arrow.global_position
+		var target_angle = goblin_arrow.global_rotation_degrees
+		await get_tree().create_timer(0.05).timeout
+		%GoblinRanged.remove_child(goblin_arrow)
+		
+		#goblin_arrow.top_level = true
+		get_tree().current_scene.add_child(goblin_arrow)
+		goblin_arrow.global_position = arrow_position
+		
+		# LOOSE :
+		goblin_arrow.apply_angle(target_angle)
+		goblin_arrow.fly()
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Brody":
+	if body.name == "Brody"and in_sight == false :
 		target = body
 		in_sight = true
 		footsteps()
+		move_feet()
 		realistic_movement()
 		if goblin_type == 1 :
 			fire_at_will()
-
-
-func _on_body_exited(body: Node2D) -> void:
-	if body == target:
-		in_sight = false
-		target = null
 
 
 func realistic_movement() -> void:
@@ -217,12 +233,7 @@ func realistic_movement() -> void:
 		head_tween.tween_property(%GoblinHead, "rotation_degrees", -2.0, 0.15)
 		head_tween.tween_property(%GoblinHead, "rotation_degrees", 2.0, 0.3)
 		head_tween.tween_property(%GoblinHead, "rotation_degrees", 0.0, 0.15)
-
-		var visual_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		visual_tween.tween_property(%GoblinMelee, "rotation_degrees", -randf_range(2.0, 5.0), 0.15)
-		visual_tween.tween_property(%GoblinMelee, "rotation_degrees", randf_range(2.0, 5.0), 0.3)
-		visual_tween.tween_property(%GoblinMelee, "rotation_degrees", 0.0, 0.15)
-
+		
 		# Soft bob
 		var bob_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		bob_tween.tween_property(self, "global_position:y", global_position.y + 1.5, 0.35)
@@ -237,18 +248,50 @@ func footsteps() -> void:
 	if _doing_footsteps:
 		return
 	_doing_footsteps = true
-
+	
 	while in_sight:
 		%FootStepParticlesLeft.emitting = true
 		await get_tree().create_timer(0.33).timeout
 		%FootStepParticlesLeft.emitting = false
-
+		
 		%FootStepParticlesRight.emitting = true
 		await get_tree().create_timer(0.33).timeout
 		%FootStepParticlesRight.emitting = false
-
+	
 	_doing_footsteps = false
 
+func move_feet():
+	var left_rest = %GoblinLegL.position
+	var right_rest = %GoblinLegR.position
+
+	while get_parent().visible:
+
+		# LEFT LEG (up while right goes down)
+		var left = create_tween()
+		left.tween_property(
+			%GoblinLegL, "position",
+			left_rest + Vector2(0.5, -2.0), 0.48
+		).set_trans(Tween.TRANS_SINE)
+		left.tween_property(
+			%GoblinLegL, "position",
+			left_rest + Vector2(-0.5, 1.0), 0.48
+		).set_trans(Tween.TRANS_SINE)
+		left.tween_property(%GoblinLegL, "position", left_rest, 0.1)
+
+		# RIGHT LEG (down while left goes up)
+		var right = create_tween()
+		right.tween_property(
+			%GoblinLegR, "position",
+			right_rest + Vector2(0.5, 2.0), 0.48
+		).set_trans(Tween.TRANS_SINE)
+		right.tween_property(
+			%GoblinLegR, "position",
+			right_rest + Vector2(-0.5, -1.0), 0.48
+		).set_trans(Tween.TRANS_SINE)
+		right.tween_property(%GoblinLegR, "position", right_rest, 0.1)
+
+		# Wait for one full cycle
+		await get_tree().create_timer(0.9).timeout
 
 func breathing() -> void:
 	if bobbing:
@@ -290,12 +333,12 @@ func shadow_form() :
 	speed = 50
 	%FootStepParticlesLeft.visible = false
 	%FootStepParticlesRight.visible = false
-	%GoblinHeadShadow.visible = true
 	%GoblinShadowSprite.visible = true
-	%GoblinMeleeShadow.visible = true
 	%GoblinHead.visible = false
 	%GoblinSprite.visible = false
-	%GoblinMelee.visible = false
+	%WeaponPivot.visible = false
+	%GoblinLegL.visible = false
+	%GoblinLegR.visible = false
 
 
 func _on_goblin_hit_box_area_entered(area: Area2D) -> void:
