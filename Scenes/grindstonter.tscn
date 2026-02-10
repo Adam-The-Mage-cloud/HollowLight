@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://calcwa6h6p7s7"]
+[gd_scene load_steps=38 format=3 uid="uid://calcwa6h6p7s7"]
 
 [ext_resource type="Script" uid="uid://dclgdmv75uqvq" path="res://Scripts/grindstonter.gd" id="1_4uh28"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_eluae"]
@@ -48,49 +48,56 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4uh28"]
+atlas = ExtResource("2_4uh28")
+region = Rect2(70, 10, 10, 20)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_eluae"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(15, 14, 9, 15)
+region = Rect2(81, 10, 10, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kagbw"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(70, 14, 9, 15)
+region = Rect2(59, 10, 10, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mxi2k"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(81, 14, 9, 15)
+region = Rect2(92, 10, 10, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_11utu"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(92, 14, 9, 15)
+region = Rect2(103, 10, 10, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n3s6m"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(103, 14, 9, 15)
+region = Rect2(48, 10, 10, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_108b6"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(48, 14, 9, 15)
+region = Rect2(37, 10, 10, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_74jia"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(37, 14, 9, 15)
+region = Rect2(26, 10, 10, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfror"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(26, 14, 9, 15)
+region = Rect2(114, 10, 10, 20)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2oy5t"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tbeh"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(114, 14, 9, 15)
+region = Rect2(15, 10, 10, 20)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4uh28"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldt01"]
 atlas = ExtResource("2_4uh28")
-region = Rect2(125, 14, 9, 15)
+region = Rect2(125, 10, 10, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kagbw"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4uh28")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_eluae")
 }, {
@@ -116,10 +123,10 @@ animations = [{
 "texture": SubResource("AtlasTexture_xfror")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2oy5t")
+"texture": SubResource("AtlasTexture_3tbeh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4uh28")
+"texture": SubResource("AtlasTexture_ldt01")
 }],
 "loop": true,
 "name": &"default",
@@ -213,10 +220,12 @@ turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bq8wf"]
-radius = 10.484831
+radius = 8.281926
 height = 23.92313
 
 [node name="grindstonter" type="Area2D"]
+z_index = 2
+y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_kagbw")
 script = ExtResource("1_4uh28")
@@ -254,7 +263,7 @@ y_sort_enabled = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_kagbw")
 autoplay = "default"
-frame_progress = 0.65083414
+frame_progress = 0.28334454
 
 [node name="GrindShadow" type="Sprite2D" parent="VisualPivot/GrindSprite"]
 z_index = -2
@@ -298,6 +307,8 @@ process_material = SubResource("ParticleProcessMaterial_nsh21")
 
 [node name="GrindCollision" type="CollisionShape2D" parent="GrindHitBox"]
 use_parent_material = true
+position = Vector2(-0.39156342, 1.6084423)
+scale = Vector2(0.845214, 0.845214)
 shape = SubResource("CapsuleShape2D_bq8wf")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

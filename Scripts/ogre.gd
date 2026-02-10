@@ -218,7 +218,7 @@ func burn() :
 	# Drop Currencies :
 	drop_currency()
 	
-	var tween2 := create_tween()
+	var tween2 = create_tween()
 	tween2.tween_property(material, "shader_parameter/burn_amount", 1.0, 1.0)
 	
 	var lighttween = create_tween()

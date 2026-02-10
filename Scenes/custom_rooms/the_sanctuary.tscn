@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=30 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
 [ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://35ng0qhbrjqr" path="res://Artwork/Sanctuary/Exclamation_Mark.png" id="12_tar0q"]
 [ext_resource type="Texture2D" uid="uid://cs3dyt0iuh7jo" path="res://Artwork/Sanctuary/Dollar_Sign.png" id="13_52ghv"]
 [ext_resource type="PackedScene" uid="uid://bbdmbq7kdo6e4" path="res://Scenes/travellers_sanctuary/clives_wagon.tscn" id="14_mfhby"]
+[ext_resource type="PackedScene" uid="uid://bdukdo4isrqc0" path="res://Scenes/goblin.tscn" id="17_52ghv"]
 
 [sub_resource type="Gradient" id="Gradient_lps57"]
 offsets = PackedFloat32Array(0.38222224, 1)
@@ -2167,6 +2168,9 @@ unique_name_in_owner = true
 z_index = 1
 position = Vector2(177, -9)
 texture = ExtResource("10_bsgyg")
+
+[node name="goblin" parent="." instance=ExtResource("17_52ghv")]
+position = Vector2(154, 72)
 
 [connection signal="body_entered" from="TorchAndShield" to="." method="_on_torch_and_shield_body_entered"]
 [connection signal="body_exited" from="TorchAndShield" to="." method="_on_torch_and_shield_body_exited"]
