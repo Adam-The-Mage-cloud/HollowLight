@@ -545,7 +545,7 @@ func _on_bounce_cooldown_timeout() -> void:
 
 
 func _on_check_brody_location_okay() :
-	while(1) :
+	while is_instance_valid(self) :
 		if dashing == false :
 			print (%BrodyMapStuckCollision.get_overlapping_areas().size())
 			# Check if player stuck inside something :

@@ -5,6 +5,9 @@ var brody_position
 var direction
 var velocity = Vector2.ZERO
 
+var last_location
+var last_safe_location
+var monster_saved = false
 
 var target
 var out_of_range = true
@@ -385,3 +388,36 @@ func drop_currency() :
 		var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
 		ember.global_position = $".".global_position
 		get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", ember)
+
+# CHECK ENEMY WITHIN MAP BOUNDS :
+func _on_check_location_okay() :
+	while is_instance_valid(self) :
+		print (%MapStuckCollision.get_overlapping_areas().size())
+		# Check if player stuck inside something :
+		#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
+			#$".".global_position = last_safe_location
+		if last_location == $".".global_position and %MapStuckCollision.get_overlapping_areas().size() > 0 :
+			$".".global_position = last_safe_location
+			monster_saved = true
+		# Now check if player is not touching a floor tile :
+		if is_on_floor_tile() == false :
+			$".".global_position = last_safe_location
+		#if %FloorDetector.is_colliding() == false :
+			#$".".global_position = last_safe_location
+		else :
+			last_safe_location = $".".global_position
+			monster_saved = false
+		await get_tree().process_frame
+
+func is_on_floor_tile() -> bool:
+	var check_pos = global_position + Vector2(0, 8)
+	
+	for tm in get_tree().current_scene.get_nodes_in_group("floors"):
+		var local = tm.to_local(check_pos)
+		var cell = tm.local_to_map(local)
+		
+		var data = tm.get_cell_tile_data(cell)
+		if data != null:
+			return true
+	
+	return false

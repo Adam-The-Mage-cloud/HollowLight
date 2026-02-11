@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cickrdkft6tma"]
+[gd_scene load_steps=46 format=3 uid="uid://cickrdkft6tma"]
 
 [ext_resource type="Script" uid="uid://uusi0j0e50rq" path="res://Scripts/mud_crab.gd" id="1_f72kl"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_snf3b"]
@@ -271,6 +271,8 @@ height = 23.92313
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f72kl"]
 size = Vector2(33.763275, 26.858974)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_snf3b"]
+
 [node name="mud_crab" type="Area2D"]
 z_index = 2
 y_sort_enabled = true
@@ -455,6 +457,15 @@ shape = SubResource("CapsuleShape2D_jptrx")
 use_parent_material = true
 position = Vector2(26.25153, -1.0932975)
 shape = SubResource("RectangleShape2D_f72kl")
+
+[node name="MapStuckCollision" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision"]
+use_parent_material = true
+position = Vector2(3.1169586, -1.6778545)
+scale = Vector2(0.475, 0.475)
+shape = SubResource("CircleShape2D_snf3b")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

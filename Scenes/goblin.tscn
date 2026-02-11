@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://bdukdo4isrqc0"]
+[gd_scene load_steps=58 format=3 uid="uid://bdukdo4isrqc0"]
 
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_2gt0r"]
 [ext_resource type="Script" uid="uid://ur2dkh4f5cow" path="res://Scripts/goblin.gd" id="1_fkbyy"]
@@ -147,7 +147,7 @@ animations = [{
 [sub_resource type="Gradient" id="Gradient_tbm5p"]
 colors = PackedColorArray(0, 0.54901963, 0.5803922, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_j40lr"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2gt0r"]
 gradient = SubResource("Gradient_tbm5p")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xw773"]
@@ -155,24 +155,24 @@ particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(2, 1, 1)
 gravity = Vector3(0, 98, 0)
-color_ramp = SubResource("GradientTexture1D_j40lr")
+color_ramp = SubResource("GradientTexture1D_2gt0r")
 
-[sub_resource type="Gradient" id="Gradient_h4run"]
+[sub_resource type="Gradient" id="Gradient_o6mmh"]
 offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
 colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sna4k"]
-gradient = SubResource("Gradient_h4run")
+gradient = SubResource("Gradient_o6mmh")
 width = 36
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="Gradient" id="Gradient_4ma1k"]
+[sub_resource type="Gradient" id="Gradient_ep384"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
 colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ep384"]
-gradient = SubResource("Gradient_4ma1k")
+gradient = SubResource("Gradient_ep384")
 width = 32
 fill = 1
 fill_from = Vector2(0.5, 0.5)
@@ -180,14 +180,14 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="Gradient" id="Gradient_stqit"]
 colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ukoc"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ajbjq"]
 gradient = SubResource("Gradient_stqit")
 
 [sub_resource type="Curve" id="Curve_rrwqc"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_jmvk2"]
+[sub_resource type="CurveTexture" id="CurveTexture_p60ou"]
 curve = SubResource("Curve_rrwqc")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n2d0h"]
@@ -204,9 +204,9 @@ radial_accel_min = -10.000002
 radial_accel_max = 9.999997
 scale_min = 0.79999995
 scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_jmvk2")
+scale_curve = SubResource("CurveTexture_p60ou")
 color = Color(1, 1, 1, 0.8156863)
-color_ramp = SubResource("GradientTexture1D_3ukoc")
+color_ramp = SubResource("GradientTexture1D_ajbjq")
 turbulence_enabled = true
 turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
@@ -215,14 +215,14 @@ turbulence_noise_speed_random = 0.85
 [sub_resource type="Gradient" id="Gradient_lb24r"]
 colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_k0fiy"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wpiyv"]
 gradient = SubResource("Gradient_lb24r")
 
 [sub_resource type="Curve" id="Curve_5ecdi"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_35l8l"]
+[sub_resource type="CurveTexture" id="CurveTexture_m25tm"]
 curve = SubResource("Curve_5ecdi")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5shmn"]
@@ -239,9 +239,9 @@ radial_accel_min = -10.000002
 radial_accel_max = 9.999997
 scale_min = 0.79999995
 scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_35l8l")
+scale_curve = SubResource("CurveTexture_m25tm")
 color = Color(1, 1, 1, 0.8156863)
-color_ramp = SubResource("GradientTexture1D_k0fiy")
+color_ramp = SubResource("GradientTexture1D_wpiyv")
 turbulence_enabled = true
 turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
@@ -302,7 +302,7 @@ animations = [{
 [sub_resource type="Gradient" id="Gradient_nr45a"]
 colors = PackedColorArray(0.10351987, 0, 0, 1, 1.2160255, 0.44119722, 0.53568846, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_01f3m"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hfpgn"]
 gradient = SubResource("Gradient_nr45a")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jc5un"]
@@ -311,7 +311,7 @@ particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(8, 1, 1)
 gravity = Vector3(0, 98, 0)
-color_ramp = SubResource("GradientTexture1D_01f3m")
+color_ramp = SubResource("GradientTexture1D_hfpgn")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p60ou"]
 atlas = ExtResource("4_2gt0r")
@@ -353,6 +353,8 @@ animations = [{
 "name": &"crossbow",
 "speed": 0.5
 }]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2gt0r"]
 
 [node name="goblin" type="Area2D"]
 z_index = 2
@@ -408,7 +410,7 @@ sprite_frames = SubResource("SpriteFrames_su1ic")
 
 [node name="SlobberParticles" type="GPUParticles2D" parent="Visuals/GoblinSprite"]
 z_index = 4
-position = Vector2(-1.0429535, -8.518371)
+position = Vector2(-0.5806656, 0.89550877)
 amount = 2
 amount_ratio = 0.2
 process_material = SubResource("ParticleProcessMaterial_xw773")
@@ -531,6 +533,15 @@ rotation = 0.77129024
 amount = 1
 amount_ratio = 0.6081
 process_material = SubResource("ParticleProcessMaterial_jc5un")
+
+[node name="MapStuckCollision" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision"]
+use_parent_material = true
+position = Vector2(-0.90032196, 5.5523415)
+scale = Vector2(0.475, 0.475)
+shape = SubResource("CircleShape2D_2gt0r")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

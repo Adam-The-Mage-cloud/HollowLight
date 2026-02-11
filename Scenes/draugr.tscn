@@ -1,0 +1,563 @@
+[gd_scene load_steps=63 format=3 uid="uid://he3eyfbd0ckl"]
+
+[ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_8d0up"]
+[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_o150v"]
+[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_o150v"]
+[ext_resource type="Texture2D" uid="uid://dqjlqpsdsjxbi" path="res://Artwork/Ogre_Shadow.png" id="3_evh1o"]
+[ext_resource type="Script" uid="uid://b6q4g5ctrm6oq" path="res://Scripts/draugr.gd" id="3_omf3v"]
+[ext_resource type="Texture2D" uid="uid://c28n6sdgxa58o" path="res://Artwork/Draugr.png" id="4_8d0up"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omf3v"]
+shader = ExtResource("1_o150v")
+shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Vector3(0.01, 0.01, 0.01)
+shader_parameter/susceptible_flash_amount = 0.0
+shader_parameter/susceptible_flash_color = Vector3(0.2, 0.03, 0.03)
+shader_parameter/burn_amount = 0.0
+shader_parameter/burn_noise = ExtResource("2_o150v")
+shader_parameter/burn_edge_width = 1.0
+shader_parameter/burn_edge_color = Vector3(0.95, 0.4, 0.09)
+shader_parameter/char_width = 0.08
+shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
+shader_parameter/crumble_strength = 1.0
+shader_parameter/crumble_fade = 0.6
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8d0up"]
+shader = ExtResource("1_8d0up")
+shader_parameter/apply = false
+shader_parameter/amount = 0.5
+shader_parameter/wave_frequency = 0.2
+shader_parameter/wave_amplitude = 0.01
+shader_parameter/wave_longitude = 0.01
+shader_parameter/wave_speed = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3o81r"]
+atlas = ExtResource("4_8d0up")
+region = Rect2(47, 10, 23, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o150v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3o81r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_evh1o"]
+shader = ExtResource("1_8d0up")
+shader_parameter/apply = false
+shader_parameter/amount = 0.5
+shader_parameter/wave_frequency = 0.2
+shader_parameter/wave_amplitude = 0.01
+shader_parameter/wave_longitude = 0.01
+shader_parameter/wave_speed = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8d0up"]
+atlas = ExtResource("4_8d0up")
+region = Rect2(52, 39, 8, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_omf3v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8d0up")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37epx"]
+shader = ExtResource("1_8d0up")
+shader_parameter/apply = false
+shader_parameter/amount = 0.5
+shader_parameter/wave_frequency = 0.2
+shader_parameter/wave_amplitude = 0.01
+shader_parameter/wave_longitude = 0.01
+shader_parameter/wave_speed = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omf3v"]
+atlas = ExtResource("4_8d0up")
+region = Rect2(64, 38, 9, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vwevx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omf3v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nk7xg"]
+atlas = ExtResource("3_evh1o")
+region = Rect2(42, 125, 24, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejjyv"]
+atlas = ExtResource("3_evh1o")
+region = Rect2(90, 125, 24, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ma1k"]
+atlas = ExtResource("3_evh1o")
+region = Rect2(30, 45, 50, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eil10"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nk7xg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejjyv")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ma1k")
+}],
+"loop": true,
+"name": &"stationary",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37epx"]
+atlas = ExtResource("4_8d0up")
+region = Rect2(15, 10, 23, 47)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3o81r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37epx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_uwv77"]
+colors = PackedColorArray(0, 0.54901963, 0.5803922, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_j40lr"]
+gradient = SubResource("Gradient_uwv77")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8d0up"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(2, 1, 1)
+gravity = Vector3(0, 98, 0)
+color_ramp = SubResource("GradientTexture1D_j40lr")
+
+[sub_resource type="Gradient" id="Gradient_h4run"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o150v"]
+gradient = SubResource("Gradient_h4run")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_4ma1k"]
+offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_evh1o"]
+gradient = SubResource("Gradient_4ma1k")
+width = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_omf3v"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_37epx"]
+colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vwevx"]
+gradient = SubResource("Gradient_37epx")
+
+[sub_resource type="Curve" id="Curve_eil10"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_cglnr"]
+curve = SubResource("Curve_eil10")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0v06x"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 4, 1)
+emission_shape = 3
+emission_box_extents = Vector3(6, 8, 1)
+direction = Vector3(0, 0, 0)
+spread = 55.0
+initial_velocity_min = -100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -10.000002
+radial_accel_max = 9.999997
+scale_min = 0.79999995
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_cglnr")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_vwevx")
+turbulence_enabled = true
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bveh4"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_apte0"]
+colors = PackedColorArray(0.20266199, 0.20260054, 0.24950713, 1, 0.14410567, 0.14411148, 0.17842314, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_atew0"]
+gradient = SubResource("Gradient_apte0")
+
+[sub_resource type="Curve" id="Curve_uwv77"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_c4cu0"]
+curve = SubResource("Curve_uwv77")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wb0ma"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8, 4, 1)
+emission_shape = 3
+emission_box_extents = Vector3(6, 8, 1)
+direction = Vector3(0, 0, 0)
+spread = 55.0
+initial_velocity_min = -100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+radial_accel_min = -10.000002
+radial_accel_max = 9.999997
+scale_min = 0.79999995
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_c4cu0")
+color = Color(1, 1, 1, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_atew0")
+turbulence_enabled = true
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f48ns"]
+radius = 11.092087
+height = 53.238144
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6sdh"]
+size = Vector2(231.93118, 140)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2762"]
+size = Vector2(21.525187, 14.145694)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_evh1o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o150v"]
+atlas = ExtResource("4_8d0up")
+region = Rect2(83, 36, 61, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evh1o"]
+atlas = ExtResource("4_8d0up")
+region = Rect2(13, 70, 61, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8d0up"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o150v")
+}],
+"loop": true,
+"name": &"greataxe",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_evh1o")
+}],
+"loop": true,
+"name": &"greatfalchion",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_o150v"]
+colors = PackedColorArray(0.10351987, 0, 0, 1, 1.2160255, 0.44119722, 0.53568846, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_evh1o"]
+gradient = SubResource("Gradient_o150v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_omf3v"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(8, 1, 1)
+gravity = Vector3(0, 98, 0)
+color_ramp = SubResource("GradientTexture1D_evh1o")
+
+[sub_resource type="Gradient" id="Gradient_evh1o"]
+offsets = PackedFloat32Array(0, 0.49019608, 1)
+colors = PackedColorArray(0.72464263, 0.72464263, 0.72464246, 1, 0.4147039, 0.414704, 0.41470385, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_omf3v"]
+gradient = SubResource("Gradient_evh1o")
+
+[sub_resource type="Curve" id="Curve_evh1o"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_omf3v"]
+curve = SubResource("Curve_evh1o")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_evh1o"]
+particle_flag_disable_z = true
+direction = Vector3(0.6, 0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 400, 0)
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_omf3v")
+color = Color(1, 0.96123606, 0.9209994, 0.33333334)
+color_ramp = SubResource("GradientTexture1D_omf3v")
+hue_variation_min = 0.049999975
+hue_variation_max = 0.09999997
+
+[sub_resource type="Gradient" id="Gradient_omf3v"]
+offsets = PackedFloat32Array(0, 0.49019608, 1)
+colors = PackedColorArray(0.46358675, 0.46358675, 0.4635867, 1, 0.4147039, 0.414704, 0.41470385, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_37epx"]
+gradient = SubResource("Gradient_omf3v")
+
+[sub_resource type="Curve" id="Curve_vwevx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_eil10"]
+curve = SubResource("Curve_vwevx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cglnr"]
+particle_flag_disable_z = true
+direction = Vector3(0.6, 0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 400, 0)
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_eil10")
+color = Color(0.7162962, 0.7162962, 0.7162962, 0.8784314)
+color_ramp = SubResource("GradientTexture1D_37epx")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_omf3v"]
+
+[node name="draugr" type="Area2D"]
+z_index = 2
+y_sort_enabled = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_omf3v")
+script = ExtResource("3_omf3v")
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+
+[node name="DraugrHead" type="AnimatedSprite2D" parent="Visuals"]
+unique_name_in_owner = true
+z_index = 3
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_8d0up")
+use_parent_material = true
+position = Vector2(0, -11.5)
+sprite_frames = SubResource("SpriteFrames_o150v")
+
+[node name="DraugrLegL" type="AnimatedSprite2D" parent="Visuals"]
+unique_name_in_owner = true
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_evh1o")
+use_parent_material = true
+position = Vector2(-3.5, 19.48784)
+sprite_frames = SubResource("SpriteFrames_omf3v")
+
+[node name="DraugrLegR" type="AnimatedSprite2D" parent="Visuals"]
+unique_name_in_owner = true
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_37epx")
+use_parent_material = true
+position = Vector2(4, 18.48784)
+sprite_frames = SubResource("SpriteFrames_vwevx")
+
+[node name="DraugrShadowSprite" type="AnimatedSprite2D" parent="Visuals"]
+unique_name_in_owner = true
+visible = false
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-1.5, 9.5)
+sprite_frames = SubResource("SpriteFrames_eil10")
+animation = &"moving"
+autoplay = "moving"
+
+[node name="DraugrSprite" type="AnimatedSprite2D" parent="Visuals"]
+unique_name_in_owner = true
+y_sort_enabled = true
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_3o81r")
+
+[node name="SlobberParticles" type="GPUParticles2D" parent="Visuals/DraugrSprite"]
+z_index = 4
+position = Vector2(-1.0429535, -8.518371)
+amount = 2
+amount_ratio = 0.2
+process_material = SubResource("ParticleProcessMaterial_8d0up")
+
+[node name="DraugrShadow" type="Sprite2D" parent="Visuals/DraugrSprite"]
+z_index = -2
+use_parent_material = true
+position = Vector2(0.7014619, 19.369846)
+scale = Vector2(2.2459843, -0.71853536)
+texture = SubResource("GradientTexture2D_o150v")
+
+[node name="OnFireLight" type="PointLight2D" parent="Visuals"]
+unique_name_in_owner = true
+position = Vector2(-1.9524307, -0.91290855)
+enabled = false
+color = Color(1, 0.4627451, 0.21960784, 0.60784316)
+energy = 4.8
+texture = SubResource("GradientTexture2D_evh1o")
+
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Visuals"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(-5.7664375, 20.24764)
+rotation = -3.1415925
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = SubResource("CompressedTexture2D_omf3v")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_0v06x")
+
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Visuals"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(3.4432755, 19.612272)
+rotation = -3.1415925
+scale = Vector2(0.1, 0.1)
+emitting = false
+amount = 16
+texture = SubResource("CompressedTexture2D_bveh4")
+lifetime = 0.4
+one_shot = true
+preprocess = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_wb0ma")
+
+[node name="DraugrHitBox" type="Area2D" parent="Visuals"]
+visible = false
+
+[node name="DraugrCollision" type="CollisionShape2D" parent="Visuals/DraugrHitBox"]
+position = Vector2(0.23049927, -0.23566437)
+shape = SubResource("CapsuleShape2D_f48ns")
+
+[node name="visibility_collision" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0.49372864, 1.0653381)
+scale = Vector2(1.3826877, 1.3826877)
+shape = SubResource("RectangleShape2D_j6sdh")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+unique_name_in_owner = true
+z_index = 2
+use_parent_material = true
+position = Vector2(-0.9914627, 2.3530025)
+
+[node name="MeleeArea" type="Area2D" parent="WeaponPivot"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(19.50521, 24.427662)
+monitoring = false
+
+[node name="MeleeHitbox" type="CollisionShape2D" parent="WeaponPivot/MeleeArea"]
+position = Vector2(5.69499, -9.105448)
+rotation = 0.6475181
+scale = Vector2(1.340658, 1.0288072)
+shape = SubResource("RectangleShape2D_n2762")
+
+[node name="SlashArea" type="Area2D" parent="WeaponPivot"]
+unique_name_in_owner = true
+position = Vector2(0.9914627, -2.3530025)
+
+[node name="slash_time_collision" type="CollisionShape2D" parent="WeaponPivot/SlashArea"]
+position = Vector2(1.0682483, 2.907408)
+scale = Vector2(5.91039, 4.8234906)
+shape = SubResource("CircleShape2D_evh1o")
+
+[node name="DraugrMelee" type="AnimatedSprite2D" parent="WeaponPivot"]
+unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(31, 13.147299)
+sprite_frames = SubResource("SpriteFrames_8d0up")
+animation = &"greataxe"
+
+[node name="BloodParticles" type="GPUParticles2D" parent="WeaponPivot/DraugrMelee"]
+z_index = 4
+position = Vector2(-19.194324, -1.5123577)
+rotation = 0.77129024
+amount = 1
+amount_ratio = 0.6081
+process_material = SubResource("ParticleProcessMaterial_omf3v")
+
+[node name="SparkParticles" type="GPUParticles2D" parent="WeaponPivot/DraugrMelee"]
+unique_name_in_owner = true
+z_index = 7
+position = Vector2(-6.7059746, 14.734507)
+emitting = false
+amount = 24
+lifetime = 1.14
+speed_scale = 0.45
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_evh1o")
+
+[node name="GrindParticles" type="GPUParticles2D" parent="WeaponPivot/DraugrMelee"]
+unique_name_in_owner = true
+z_index = 7
+position = Vector2(-6.7059746, 14.734507)
+amount = 72
+lifetime = 1.14
+speed_scale = 0.45
+explosiveness = 0.15
+process_material = SubResource("ParticleProcessMaterial_cglnr")
+
+[node name="MapStuckCollision" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision"]
+use_parent_material = true
+position = Vector2(0.009796143, 13.053505)
+scale = Vector2(0.475, 0.475)
+shape = SubResource("CircleShape2D_omf3v")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="area_entered" from="Visuals/DraugrHitBox" to="." method="_on_draugr_hit_box_area_entered"]
+[connection signal="body_entered" from="WeaponPivot/MeleeArea" to="." method="_on_melee_area_body_entered"]
+[connection signal="body_entered" from="WeaponPivot/SlashArea" to="." method="_on_slash_area_body_entered"]
+[connection signal="body_entered" from="WeaponPivot/SlashArea" to="WeaponPivot/SlashArea" method="_on_body_entered"]
+[connection signal="body_exited" from="WeaponPivot/SlashArea" to="." method="_on_slash_area_body_exited"]
+[connection signal="body_exited" from="WeaponPivot/SlashArea" to="WeaponPivot/SlashArea" method="_on_body_exited"]

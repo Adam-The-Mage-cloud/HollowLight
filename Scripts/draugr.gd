@@ -1,15 +1,19 @@
 extends Area2D
 
-var in_sight = false
-var brody_position
-var direction
+const REST_ANGLE_RIGHT = 90
+const REST_ANGLE_LEFT = 0
 
 var last_location
 var last_safe_location
 var monster_saved = false
 
+var in_sight = false
+var brody_position
+var direction
+
+var start_angle = REST_ANGLE_LEFT
 var melee_pivot_offset
-var new_facing
+var new_facing = 1
 var last_facing_scale_x = 1
 var bow_or_melee = 1          # If bow then -1 just to make sure it's not flipped
 
@@ -22,7 +26,7 @@ var bobbing = false
 
 var attacking = false
 
-var goblin_type
+var draugr_weapon_type = 1
 
 var lightable = false
 
@@ -39,143 +43,123 @@ func _ready() -> void:
 	melee_pivot_offset = %WeaponPivot.position
 	
 	# Random Weapon Chooser:
-	goblin_type = randi_range(1, 2)
-	if goblin_type == 1 : # Then Archer :
-		%SlashArea.monitoring = false
-		%GoblinMelee.visible = false
-		if randi_range(1, 2) == 1 : # Crossbow :
-			%GoblinRanged.play("crossbow")
-		else :
-			%GoblinRanged.play("bow")
-			
-	elif goblin_type == 2 : # Then Melee :
-		%GoblinRanged.visible = false
-		var weapon_picker = randi_range(1, 3)
-		if weapon_picker == 1 :
-			%GoblinMelee.play("axe")
-		elif weapon_picker == 2 :
-			%GoblinMelee.play("club")
-		elif weapon_picker == 3 :
-			%GoblinMelee.play("pick")
+	draugr_weapon_type = randi_range(1, 2)
+	if draugr_weapon_type == 1 : # great-falchion :
+		%DraugrMelee.play("greatfalchion")
+		%SparkParticles.position = Vector2(2.524, 10.304)
+		%GrindParticles.position = Vector2(2.524, 10.304)
+	elif draugr_weapon_type == 2 : # great-axe :
+		%DraugrMelee.play("greataxe")
+		%SparkParticles.position = Vector2(2.524, 10.304)
+		%GrindParticles.position = Vector2(-6.7, 14.735)
 
 
 func _physics_process(delta: float) -> void:
 	if not get_parent().visible:
 		return
-
 	if not target:
 		return
 
 	brody_position = target.global_position
 	direction = (brody_position - global_position).normalized()
 
-	new_facing = 1 * bow_or_melee
+	# Determine facing
+	new_facing = 1
 	if brody_position.x < global_position.x:
-		new_facing = -1 * bow_or_melee
+		new_facing = -1
 
-	# Flip ONLY the visuals, not the pivot
+	# Flip ONLY the visuals
 	%Visuals.scale.x = new_facing
 
 	# Movement
 	if global_position.distance_to(brody_position) > 10.0:
 		position += direction * speed * delta
 
-	# Aim pivot only when not attacking
+	var pivot = %WeaponPivot
+
+	# --- DRAGGING POSE WHEN NOT ATTACKING ---
 	if not attacking:
-		%WeaponPivot.look_at(brody_position)
-		if bow_or_melee != - 1 :
-			if new_facing < 0:
-				%WeaponPivot.rotation += PI
-				%WeaponPivot.scale.x = -new_facing
-			else :
-				%WeaponPivot.scale.x = -new_facing
+		# Always drag bottom-right relative to sprite
+		var drag_angle = deg_to_rad(0) * new_facing
+		pivot.rotation = drag_angle
+		
+		if new_facing == 1:
+			start_angle = REST_ANGLE_RIGHT
+		else:
+			start_angle = REST_ANGLE_LEFT
+			
+		pivot.rotation_degrees = start_angle
 
 
 func slash() -> void:
 	attacking = true
-
+	await get_tree().process_frame
+	
 	var pivot = %WeaponPivot
-	var visual = %GoblinMelee
+	var visual = %DraugrMelee
 	var slash_tween = create_tween()
-
-	# Capture stable baseline
-	var base_rot = pivot.rotation_degrees
-
-	# Facing direction
+	
 	var dir = new_facing
-
-	# --- CONTROLLED VARIATION ---
-	var anticipation_amount = randf_range(70, 120)   # degrees
-	var impact_amount       = randf_range(120, 160)   # degrees
-	var follow_through      = randf_range(140, 160)   # degrees
-
-	# Weapon exaggeration
-	var weapon_anticipation = anticipation_amount * 2
-	var weapon_impact       = -impact_amount * 2
-
+	
+	# --- ANGLES ---
+	var up_angle = 0
+	var slam_angle = 0
+	
+	if dir == 1:
+		up_angle = -30        # overhead upswing
+		slam_angle = 140      # heavy downward chop
+	else:
+		up_angle = 210        # overhead upswing mirrored
+		slam_angle = -40      # heavy downward chop mirrored
+	
+	var anticipation = 12 * dir
+	var upswing_time = 0.25
+	var slam_time = 0.35
+	var recovery_time = 0.35
+	
 	visual.rotation_degrees = 0
-
-	# --- 1. ANTICIPATION (pull back) ---
-	if abs(pivot.rotation_degrees - base_rot) >= 15.0 or abs(pivot.rotation_degrees - base_rot) <= -15.0 :
-		slash_tween.tween_property(
-			visual, "rotation_degrees",
-			weapon_anticipation * dir / 6, 0.36
-		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-
-		slash_tween.parallel().tween_property(
-			pivot, "rotation_degrees",
-			base_rot + anticipation_amount * dir, 0.36
-		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	
-	elif pivot.rotation_degrees <= 90 :
-		slash_tween.tween_property(
-			visual, "rotation_degrees",
-			weapon_anticipation * dir / 6, 0.36
-		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-
-		slash_tween.parallel().tween_property(
-			pivot, "rotation_degrees",
-			base_rot + anticipation_amount * dir, 0.36
-		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-
-	# --- 2. IMPACT (fast, heavy) ---
+	# 0. Snap to start
+	pivot.rotation_degrees = start_angle
+	
+	# 1. Anticipation dip
 	slash_tween.tween_property(
-		visual, "rotation_degrees",
-		weapon_impact * dir / 6, 0.24
+		pivot, "rotation_degrees",
+		start_angle - anticipation,
+		0.3
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	
+	# 2. Upswing to overhead
+	slash_tween.tween_property(
+		pivot, "rotation_degrees",
+		up_angle,
+		upswing_time
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	# 3. Downward slam
+	slash_tween.tween_property(
+		pivot, "rotation_degrees",
+		slam_angle,
+		slam_time
 	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	
-	speed *= 3
-
-	slash_tween.parallel().tween_property(
-		pivot, "rotation_degrees",
-		base_rot - impact_amount * dir * 1.4, 0.3
-	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-
-	# --- 3. FOLLOW-THROUGH (loose, sloppy goblin recovery) ---
-	slash_tween.tween_property(
-		visual, "rotation_degrees",
-		follow_through * dir / 6, 0.5
-	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-	slash_tween.parallel().tween_property(
-		pivot, "rotation_degrees",
-		base_rot + follow_through * 0.3 * dir, 0.5
-	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-	# --- 4. RETURN TO NEUTRAL (smooth, not instant) ---
+	
+	# 4. Recovery to resting angle
 	slash_tween.tween_property(
 		pivot, "rotation_degrees",
-		base_rot, 0.4
-	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-
-	# Hitbox
-	await get_tree().create_timer(0.15).timeout
-	speed /= 3
+		start_angle,
+		recovery_time
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	# Hitbox timing
+	await get_tree().create_timer(0.1).timeout
 	%MeleeArea.monitoring = true
-	await get_tree().create_timer(0.25).timeout
+	await slash_tween.finished
+	%SparkParticles.emitting = true
 	%MeleeArea.monitoring = false
-
+	
 	attacking = false
+	realistic_movement()
 
 
 func _on_slash_area_body_entered(body: Node2D) -> void:
@@ -192,30 +176,6 @@ func _on_slash_area_body_exited(body: Node2D) -> void:
 		out_of_range = true
 
 
-func fire_at_will() :
-	while get_parent().visible == true:
-		bow_or_melee = -1
-		var goblin_arrow = preload("res://Scenes/goblin_arrow.tscn").instantiate()
-		goblin_arrow.position = %GoblinRanged.position + Vector2(-3, 0)
-		%GoblinRanged.call_deferred("add_child", goblin_arrow)
-		
-		#goblin_arrow.draw_back()
-		await get_tree().create_timer(2).timeout
-		# Reparent :
-		var arrow_position = goblin_arrow.global_position
-		var target_angle = goblin_arrow.global_rotation_degrees
-		await get_tree().create_timer(0.05).timeout
-		%GoblinRanged.remove_child(goblin_arrow)
-		
-		#goblin_arrow.top_level = true
-		get_tree().current_scene.add_child(goblin_arrow)
-		goblin_arrow.global_position = arrow_position
-		
-		# LOOSE :
-		goblin_arrow.apply_angle(target_angle)
-		goblin_arrow.fly()
-
-
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Brody"and in_sight == false :
 		target = body
@@ -223,8 +183,10 @@ func _on_body_entered(body: Node2D) -> void:
 		footsteps()
 		move_feet()
 		realistic_movement()
-		if goblin_type == 1 :
-			fire_at_will()
+
+func _on_body_exited(body: Node2D) -> void:
+	in_sight = false
+	#target = null
 
 
 func realistic_movement() -> void:
@@ -232,16 +194,31 @@ func realistic_movement() -> void:
 		return
 	_doing_movement = true
 
-	while in_sight:
-		var head_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-		head_tween.tween_property(%GoblinHead, "rotation_degrees", -2.0, 0.15)
-		head_tween.tween_property(%GoblinHead, "rotation_degrees", 2.0, 0.3)
-		head_tween.tween_property(%GoblinHead, "rotation_degrees", 0.0, 0.15)
+	while in_sight and not attacking:
 		
-		# Soft bob
+		# Head sway
+		var head_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		head_tween.tween_property(%DraugrHead, "rotation_degrees", -2.0, 0.15)
+		head_tween.tween_property(%DraugrHead, "rotation_degrees", 2.0, 0.3)
+		head_tween.tween_property(%DraugrHead, "rotation_degrees", 0.0, 0.15)
+
+		# Body bob
 		var bob_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		bob_tween.tween_property(self, "global_position:y", global_position.y + 1.5, 0.35)
 		bob_tween.tween_property(self, "global_position:y", global_position.y, 0.35)
+
+		# Weapon bob (heavy drag)
+		var weapon_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		weapon_tween.tween_property(
+			%WeaponPivot, "rotation_degrees",
+			start_angle + (randf_range(3, 7) * -new_facing),
+			0.35
+		)
+		weapon_tween.tween_property(
+			%WeaponPivot, "rotation_degrees",
+			start_angle,
+			0.35
+		)
 
 		await get_tree().create_timer(randf_range(0.75, 1.25)).timeout
 
@@ -265,37 +242,37 @@ func footsteps() -> void:
 	_doing_footsteps = false
 
 func move_feet():
-	var left_rest = %GoblinLegL.position
-	var right_rest = %GoblinLegR.position
+	var left_rest = %DraugrLegL.position
+	var right_rest = %DraugrLegR.position
 
 	while get_parent().visible:
 
 		# LEFT LEG (up while right goes down)
 		var left = create_tween()
 		left.tween_property(
-			%GoblinLegL, "position",
-			left_rest + Vector2(0.5, -2.0), 0.48
+			%DraugrLegL, "position",
+			left_rest + Vector2(0.5, -2.0), 0.72
 		).set_trans(Tween.TRANS_SINE)
 		left.tween_property(
-			%GoblinLegL, "position",
-			left_rest + Vector2(-0.5, 1.0), 0.48
+			%DraugrLegL, "position",
+			left_rest + Vector2(-0.5, 1.0), 0.72
 		).set_trans(Tween.TRANS_SINE)
-		left.tween_property(%GoblinLegL, "position", left_rest, 0.1)
+		left.tween_property(%DraugrLegL, "position", left_rest, 0.72)
 
 		# RIGHT LEG (down while left goes up)
 		var right = create_tween()
 		right.tween_property(
-			%GoblinLegR, "position",
-			right_rest + Vector2(0.5, 2.0), 0.48
+			%DraugrLegR, "position",
+			right_rest + Vector2(0.5, 2.0), 0.72
 		).set_trans(Tween.TRANS_SINE)
 		right.tween_property(
-			%GoblinLegR, "position",
-			right_rest + Vector2(-0.5, -1.0), 0.48
+			%DraugrLegR, "position",
+			right_rest + Vector2(-0.5, -1.0), 0.72
 		).set_trans(Tween.TRANS_SINE)
-		right.tween_property(%GoblinLegR, "position", right_rest, 0.1)
+		right.tween_property(%DraugrLegR, "position", right_rest, 0.72)
 
 		# Wait for one full cycle
-		await get_tree().create_timer(0.9).timeout
+		await get_tree().create_timer(1.4).timeout
 
 func breathing() -> void:
 	if bobbing:
@@ -308,13 +285,13 @@ func breathing() -> void:
 	var up_offset = 0.4
 	var down_offset = -0.4
 
-	breathe.tween_property(%GoblinSprite, "position:y", %GoblinSprite.position.y + up_offset, 0.7)
+	breathe.tween_property(%DraugrSprite, "position:y", %DraugrSprite.position.y + up_offset, 0.7)
 	breathe.parallel().tween_property(%WeaponPivot, "position:y", %WeaponPivot.position.y + up_offset, 0.7)
-	breathe.parallel().tween_property(%GoblinHead, "position:y", %GoblinHead.position.y + up_offset, 0.7)
+	breathe.parallel().tween_property(%DraugrHead, "position:y", %DraugrHead.position.y + up_offset, 0.7)
 
-	breathe.tween_property(%GoblinSprite, "position:y", %GoblinSprite.position.y + down_offset, 0.7)
+	breathe.tween_property(%DraugrSprite, "position:y", %DraugrSprite.position.y + down_offset, 0.7)
 	breathe.parallel().tween_property(%WeaponPivot, "position:y", %WeaponPivot.position.y + down_offset, 0.7)
-	breathe.parallel().tween_property(%GoblinHead, "position:y", %GoblinHead.position.y + down_offset, 0.7)
+	breathe.parallel().tween_property(%DraugrHead, "position:y", %DraugrHead.position.y + down_offset, 0.7)
 
 func _on_melee_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" and get_parent().visible == true and shadow == false :
@@ -337,15 +314,15 @@ func shadow_form() :
 	speed = 50
 	%FootStepParticlesLeft.visible = false
 	%FootStepParticlesRight.visible = false
-	%GoblinShadowSprite.visible = true
-	%GoblinHead.visible = false
-	%GoblinSprite.visible = false
+	%DraugrShadowSprite.visible = true
+	%DraugrHead.visible = false
+	%DraugrSprite.visible = false
 	%WeaponPivot.visible = false
-	%GoblinLegL.visible = false
-	%GoblinLegR.visible = false
+	%DraugrLegL.visible = false
+	%DraugrLegR.visible = false
 
 
-func _on_goblin_hit_box_area_entered(area: Area2D) -> void:
+func _on_draugr_hit_box_area_entered(area: Area2D) -> void:
 	if area.name == "Torch" and lightable == true or area.name == "winged_torch" :
 		# Knockback:
 		speed = -50

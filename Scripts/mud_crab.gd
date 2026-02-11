@@ -7,6 +7,10 @@ var original_left_pincer_transform
 var original_right_pincer_rotation
 var original_right_pincer_transform
 
+var last_location
+var last_safe_location
+var monster_saved = false
+
 var in_sight = false
 var brody_position
 var direction
@@ -343,3 +347,37 @@ func _on_pincer_l_area_body_entered(body: Node2D) -> void:
 				await get_tree().process_frame
 			body.crab_punch(self)
 			body.slowed()
+
+
+# CHECK ENEMY WITHIN MAP BOUNDS :
+func _on_check_location_okay() :
+	while is_instance_valid(self) :
+		print (%MapStuckCollision.get_overlapping_areas().size())
+		# Check if player stuck inside something :
+		#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
+			#$".".global_position = last_safe_location
+		if last_location == $".".global_position and %MapStuckCollision.get_overlapping_areas().size() > 0 :
+			$".".global_position = last_safe_location
+			monster_saved = true
+		# Now check if player is not touching a floor tile :
+		if is_on_floor_tile() == false :
+			$".".global_position = last_safe_location
+		#if %FloorDetector.is_colliding() == false :
+			#$".".global_position = last_safe_location
+		else :
+			last_safe_location = $".".global_position
+			monster_saved = false
+		await get_tree().process_frame
+
+func is_on_floor_tile() -> bool:
+	var check_pos = global_position + Vector2(0, 8)
+	
+	for tm in get_tree().current_scene.get_nodes_in_group("floors"):
+		var local = tm.to_local(check_pos)
+		var cell = tm.local_to_map(local)
+		
+		var data = tm.get_cell_tile_data(cell)
+		if data != null:
+			return true
+	
+	return false

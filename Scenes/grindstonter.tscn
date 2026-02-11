@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://calcwa6h6p7s7"]
+[gd_scene load_steps=39 format=3 uid="uid://calcwa6h6p7s7"]
 
 [ext_resource type="Script" uid="uid://dclgdmv75uqvq" path="res://Scripts/grindstonter.gd" id="1_4uh28"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_eluae"]
@@ -223,6 +223,8 @@ turbulence_noise_speed_random = 0.85
 radius = 8.281926
 height = 23.92313
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4uh28"]
+
 [node name="grindstonter" type="Area2D"]
 z_index = 2
 y_sort_enabled = true
@@ -310,6 +312,15 @@ use_parent_material = true
 position = Vector2(-0.39156342, 1.6084423)
 scale = Vector2(0.845214, 0.845214)
 shape = SubResource("CapsuleShape2D_bq8wf")
+
+[node name="MapStuckCollision" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision"]
+use_parent_material = true
+position = Vector2(-0.15789032, 1.363081)
+scale = Vector2(0.475, 0.475)
+shape = SubResource("CircleShape2D_4uh28")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

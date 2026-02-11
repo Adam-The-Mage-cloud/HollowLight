@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://0g8pb6puuqkw"]
+[gd_scene load_steps=55 format=3 uid="uid://0g8pb6puuqkw"]
 
 [ext_resource type="Texture2D" uid="uid://bks8x1mw2ipnv" path="res://Artwork/Ogre.png" id="1_3blal"]
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_8jiyc"]
@@ -371,6 +371,8 @@ turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ma1k"]
+
 [node name="ogre" type="Area2D"]
 z_index = 2
 y_sort_enabled = true
@@ -534,6 +536,15 @@ one_shot = true
 preprocess = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_7kbme")
+
+[node name="MapStuckCollision" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision"]
+use_parent_material = true
+position = Vector2(-2, 19)
+scale = Vector2(0.475, 0.475)
+shape = SubResource("CircleShape2D_4ma1k")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

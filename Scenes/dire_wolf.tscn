@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cnx8kj5ldb85k"]
+[gd_scene load_steps=36 format=3 uid="uid://cnx8kj5ldb85k"]
 
 [ext_resource type="Texture2D" uid="uid://hy6ltbrijhps" path="res://Artwork/Dire_Wolf.png" id="1_f8eah"]
 [ext_resource type="Script" uid="uid://ds8gnm6t5605i" path="res://Scripts/dire_wolf.gd" id="1_lbcxa"]
@@ -223,6 +223,8 @@ turbulence_noise_speed_random = 0.85
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uqdjj"]
 size = Vector2(38.67527, 53.02255)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wok0b"]
+
 [node name="dire_wolf" type="Area2D"]
 z_index = 2
 y_sort_enabled = true
@@ -341,6 +343,15 @@ position = Vector2(24, 0)
 position = Vector2(7, -3.500001)
 scale = Vector2(1.6030916, 1.6030916)
 shape = SubResource("RectangleShape2D_uqdjj")
+
+[node name="MapStuckCollision" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision"]
+use_parent_material = true
+position = Vector2(23, -3)
+scale = Vector2(0.475, 0.475)
+shape = SubResource("CircleShape2D_wok0b")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="area_entered" from="WolfHitboxArea" to="." method="_on_wolf_hitbox_area_area_entered"]
