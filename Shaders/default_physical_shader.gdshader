@@ -1,5 +1,9 @@
 shader_type canvas_item;
 
+// Theme Tint Colour :
+uniform vec3 tint_color : source_color = vec3(1.0, 1.0, 1.0);
+uniform float tint_amount : hint_range(0.0, 1.0) = 0.0;
+
 // -------------------------
 // Fire Flash (ignition burst)
 // -------------------------
@@ -132,5 +136,10 @@ void fragment() {
 	    // overlay it on top of whatever out_color currently is
 	    out_color.rgb = mix(out_color.rgb, s_mix, s_curve);
 	}
+	
+	if (tint_amount > 0.0) {
+    out_color.rgb = mix(out_color.rgb, tint_color, tint_amount);
+}
+
     COLOR = out_color;
 }

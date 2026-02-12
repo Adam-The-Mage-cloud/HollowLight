@@ -138,7 +138,7 @@ func _physics_process(_delta: float) -> void:
 		# Collision + Intentional Bounce System
 		# ---------------------------------------------------------
 		var collision = get_last_slide_collision()
-		if collision and bounce_cooldown_finished == true:
+		if collision and bounce_cooldown_finished == true and dashing == true :
 			
 			var normal = collision.get_normal()
 			var speed = pre_velocity.length()
@@ -546,8 +546,6 @@ func _on_bounce_cooldown_timeout() -> void:
 
 func _on_check_brody_location_okay() :
 	while is_instance_valid(self) :
-		if dashing == false :
-			print (%BrodyMapStuckCollision.get_overlapping_areas().size())
 			# Check if player stuck inside something :
 			#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
 				#$".".global_position = last_safe_location
@@ -556,24 +554,26 @@ func _on_check_brody_location_okay() :
 				brody_saved = true
 			# Now check if player is not touching a floor tile :
 			if is_on_floor_tile() == false :
-				$".".global_position = last_safe_location
+				if dashing == false :
+					$".".global_position = last_safe_location
 			#if %FloorDetector.is_colliding() == false :
 				#$".".global_position = last_safe_location
 			else :
 				last_safe_location = $".".global_position
 				brody_saved = false
-		await get_tree().process_frame
+			await get_tree().process_frame
 
 func is_on_floor_tile() -> bool:
-	var check_pos = global_position + Vector2(0, 8)
+	var check_pos = global_position + Vector2(0, 0)
 	
 	for tm in get_tree().get_nodes_in_group("floors"):
-		var local = tm.to_local(check_pos)
-		var cell = tm.local_to_map(local)
-		
-		var data = tm.get_cell_tile_data(cell)
-		if data != null:
-			return true
+		if tm.get_parent().visible == true :
+			var local = tm.to_local(check_pos)
+			var cell = tm.local_to_map(local)
+			
+			var data = tm.get_cell_tile_data(cell)
+			if data != null:
+				return true
 	
 	return false
 

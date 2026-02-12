@@ -39,6 +39,7 @@ func _ready() -> void:
 	randomize()
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
 	material = material.duplicate()
+	set_tint()
 	breathing()
 	melee_pivot_offset = %WeaponPivot.position
 	
@@ -53,6 +54,22 @@ func _ready() -> void:
 		%SparkParticles.position = Vector2(2.524, 10.304)
 		%GrindParticles.position = Vector2(-6.7, 14.735)
 
+func set_tint() :
+	if EventBus.current_theme == 2 : # Ice :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.067, 0.988, 0.988))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.12)
+	elif EventBus.current_theme == 3 : # Hell :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.976, 0.192, 0.298, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.12)
+	elif EventBus.current_theme == 4 : # Overgrown :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.0, 0.306, 0.078, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.12)
 
 func _physics_process(delta: float) -> void:
 	if not get_parent().visible:
@@ -323,7 +340,7 @@ func shadow_form() :
 
 
 func _on_draugr_hit_box_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and lightable == true or area.name == "winged_torch" :
+	if area.name == "Torch" and lightable == true or area.name == "winged_torch" and lightable == true :
 		# Knockback:
 		speed = -50
 		var rotation_tween_1 = create_tween()
@@ -412,7 +429,6 @@ var out_of_range = true
 # CHECK ENEMY WITHIN MAP BOUNDS :
 func _on_check_location_okay() :
 	while is_instance_valid(self) :
-		print (%MapStuckCollision.get_overlapping_areas().size())
 		# Check if player stuck inside something :
 		#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
 			#$".".global_position = last_safe_location

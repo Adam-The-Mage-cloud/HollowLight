@@ -1,18 +1,22 @@
-[gd_scene load_steps=55 format=3 uid="uid://crssqr3d5ml2q"]
+[gd_scene load_steps=61 format=3 uid="uid://crssqr3d5ml2q"]
 
 [ext_resource type="Script" uid="uid://wdphlyeqrkxh" path="res://Scripts/procedural_room.gd" id="1_bbfjf"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4rtng"]
 [ext_resource type="Texture2D" uid="uid://dxnhs6niv54yx" path="res://Artwork/Gray_Dungeon_Cobble_Wall.png" id="2_8s45h"]
 [ext_resource type="Texture2D" uid="uid://cywdleye4u8mm" path="res://Artwork/Gray_Dungeon_Tileset_10x10.png" id="2_a0xh1"]
 [ext_resource type="Texture2D" uid="uid://bncc1qcmom8x0" path="res://Artwork/Gray_Dungeon_Tileset_10x10_Walls.png" id="2_oguce"]
+[ext_resource type="Texture2D" uid="uid://dr3jxd08mi7vy" path="res://Artwork/Messy_Cobble_Wall.png" id="3_kk80f"]
 [ext_resource type="Texture2D" uid="uid://dljnv5g52rq7i" path="res://Artwork/Dungeon_Bits_&_Bobs.png" id="3_yngn0"]
 [ext_resource type="Texture2D" uid="uid://ccte21ux3x8en" path="res://Artwork/Gray_Dungeon_Tileset_10x10_Corners.png" id="4_goocm"]
+[ext_resource type="Texture2D" uid="uid://ddbuqn50w06u6" path="res://Artwork/_Wooden_Plank_Room_Wall.png" id="4_kk80f"]
 [ext_resource type="Texture2D" uid="uid://d1ehv3e2vqgjq" path="res://Artwork/Dungeon_Obstacles_.png" id="4_yngn0"]
 [ext_resource type="Texture2D" uid="uid://dymjg44nnmi2q" path="res://Artwork/Dungeon_Floor_Cover.png" id="5_57jhf"]
+[ext_resource type="Texture2D" uid="uid://cxmot0ywe1yhf" path="res://Artwork/Stone_Wall.png" id="5_eomwv"]
 [ext_resource type="Texture2D" uid="uid://y4xg73ej8luu" path="res://Artwork/Dirt_Dungeon_Tileset_10x10.png" id="6_vmobn"]
 [ext_resource type="Texture2D" uid="uid://dplop73jtwqut" path="res://Artwork/Lighter_Clay_Tileset_10x10.png" id="7_4yqbe"]
 [ext_resource type="Texture2D" uid="uid://dd14ejrwjs3ma" path="res://Artwork/Dungeon_Doors.png" id="8_2vw2r"]
 [ext_resource type="Texture2D" uid="uid://uskr4udq314c" path="res://Artwork/Plant_Tileset_Tinted.png" id="10_qnclt"]
+[ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="16_eomwv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qnclt"]
 texture = ExtResource("2_4rtng")
@@ -44,10 +48,108 @@ texture_region_size = Vector2i(14, 34)
 0:0/1 = 1
 0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.548826, -10.7088, 7.1977196, -11.411017, 6.8376026, 11.891484, -6.639412, 11.99058)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3cvy4"]
+texture = ExtResource("3_kk80f")
+margins = Vector2i(4, 0)
+texture_region_size = Vector2i(14, 34)
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.9367, -7.3330817, 7.1348896, -7.0357947, 6.738508, 11.594198, -6.8376036, 11.594198)
+0:0/1 = 1
+0:0/1/flip_h = true
+0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-6.9367, -6.5403166, 6.8376026, -6.342125, 6.738508, 11.197815, -6.738508, 10.801432)
+1:0/next_alternative_id = 2
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.8376036, -5.450263, 6.738508, -5.152976, 6.5403156, 10.900528, -6.9367, 11.197815)
+1:0/1 = 1
+1:0/1/flip_h = true
+1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-6.936699, -9.01771, 7.333082, -8.918613, 6.8376036, 11.495102, -6.9367, 11.197815)
+2:0/next_alternative_id = 2
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.936699, -6.342125, 6.936699, -6.5403166, 7.1348915, 10.504145, -6.639412, 10.206858)
+2:0/1 = 1
+2:0/1/flip_h = true
+2:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-6.8376036, -8.819517, 6.936699, -8.819517, 6.8376036, 12.287868, -6.7385073, 12.386963)
+3:0/next_alternative_id = 2
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.5403166, -4.6574974, 6.8376026, -5.2520723, 7.1348896, 10.305954, -6.9367, 9.909571)
+3:0/1 = 1
+3:0/1/flip_h = true
+3:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -8.3240385, 7.233986, -8.3240385, 6.738508, 12.585155, -6.8376036, 12.783345)
+4:0/next_alternative_id = 2
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.639412, -5.6484547, 6.5403156, -5.7475505, 6.8376026, 9.90957, -6.8376036, 9.711379)
+4:0/1 = 1
+4:0/1/flip_h = true
+4:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.134891, -8.621326, 6.936699, -8.52223, 6.936699, 12.386963, -6.7385077, 12.585154)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5aitk"]
+texture = ExtResource("4_kk80f")
+margins = Vector2i(2, 0)
+texture_region_size = Vector2i(14, 34)
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -11.098719, 6.8376026, -10.900527, 7.035795, 9.017709, -7.1348906, 9.017709)
+0:0/1 = 1
+0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-6.9367, -11.098719, 6.8376026, -11.197814, 6.639412, 12.287867, -6.738508, 12.386963)
+1:0/next_alternative_id = 2
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.233987, -11.495101, 7.035795, -10.999622, 6.936699, 10.702335, -6.738508, 10.206858)
+1:0/1 = 1
+1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -11.396006, 6.639412, -11.098719, 6.936699, 12.981537, -6.9367, 12.783346)
+2:0/next_alternative_id = 2
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.134891, -11.891484, 6.639412, -11.594196, 7.233986, 11.792389, -6.738508, 11.396006)
+2:0/1 = 1
+2:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-6.9367, -11.891484, 6.8376026, -11.396006, 6.8376026, 11.693293, -7.035795, 11.495102)
+3:0/next_alternative_id = 2
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.134891, -12.188771, 6.936699, -11.891484, 6.8376026, 12.089676, -6.639412, 11.99058)
+3:0/1 = 1
+3:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.233987, -11.693293, 7.035795, -11.594196, 6.639412, 11.396006, -6.441221, 11.594198)
+4:0/next_alternative_id = 2
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -12.287867, 7.1348896, -11.891484, 6.738508, 12.089676, -6.8376036, 11.792389)
+4:0/1 = 1
+4:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-6.9367, -12.585154, 6.8376026, -12.486058, 6.738508, 12.585154, -6.9367, 12.585154)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1jqat"]
+texture = ExtResource("5_eomwv")
+margins = Vector2i(2, 0)
+texture_region_size = Vector2i(14, 34)
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -11.495101, 7.035795, -10.801432, 6.936699, 11.792389, -6.9367, 11.693293)
+0:0/1 = 1
+0:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.134891, -10.702335, 6.936699, -10.008665, 7.035795, 11.693293, -6.8376036, 11.495102)
+1:0/next_alternative_id = 2
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -11.098719, 6.738508, -10.801432, 7.035795, 12.68425, -6.8376036, 12.585154)
+1:0/1 = 1
+1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.134891, -10.801432, 6.8376026, -10.405048, 6.8376026, 11.891485, -6.738508, 11.891485)
+2:0/next_alternative_id = 2
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.333082, -13.080632, 6.8376026, -12.882441, 6.639412, 11.693293, -7.035795, 12.287867)
+2:0/1 = 1
+2:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-6.9367, -11.495101, 6.936699, -10.801432, 7.1348896, 12.783346, -6.8376036, 12.188772)
+3:0/next_alternative_id = 2
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -11.99058, 7.1348896, -10.801432, 6.639412, 12.287867, -6.8376036, 12.188772)
+3:0/1 = 1
+3:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -11.296909, 7.1348896, -10.405048, 6.8376026, 10.999622, -7.035795, 10.999622)
+4:0/next_alternative_id = 2
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.035795, -11.594196, 6.639412, -10.999622, 6.738508, 12.486059, -7.233987, 11.693293)
+4:0/1 = 1
+4:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-7.233987, -11.396006, 7.035795, -10.305953, 7.1348896, 11.594198, -6.9367, 11.197815)
+
 [sub_resource type="TileSet" id="TileSet_vmobn"]
 tile_size = Vector2i(10, 10)
 physics_layer_0/collision_layer = 1
 sources/80 = SubResource("TileSetAtlasSource_qnclt")
+sources/81 = SubResource("TileSetAtlasSource_3cvy4")
+sources/82 = SubResource("TileSetAtlasSource_5aitk")
+sources/83 = SubResource("TileSetAtlasSource_1jqat")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4yqbe"]
 texture = ExtResource("2_8s45h")
@@ -3376,19 +3478,10 @@ custom_data_layer_0/name = "brightness_seed"
 custom_data_layer_0/type = 3
 sources/90 = SubResource("TileSetAtlasSource_spy0k")
 
-[sub_resource type="Shader" id="Shader_5aitk"]
-code = "shader_type canvas_item;
-
-uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
-
-void fragment() {
-    vec4 tex = texture(TEXTURE, UV);
-    COLOR = mix(tex, vec4(1.0, 1.0, 1.0, tex.a), flash_amount);
-}
-"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vljhh"]
-shader = SubResource("Shader_5aitk")
+shader = ExtResource("16_eomwv")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
 shader_parameter/flash_amount = 0.0
 
 [sub_resource type="GDScript" id="GDScript_3fph8"]
@@ -3398,6 +3491,28 @@ var unlocked = false
 
 func _ready() -> void:
 	unlocked = false
+	set_tint()
+
+func set_tint() :
+	if EventBus.current_theme == 1 : # Reg :
+		material.set_shader_parameter(\"tint_color\", Color(1.0, 1.0, 1.0, 1.0))
+		# Set tint strength
+		material.set_shader_parameter(\"tint_amount\", 0.02)
+	elif EventBus.current_theme == 2 : # Ice :
+		# Set tint color (RGB)
+		material.set_shader_parameter(\"tint_color\", Color(0.067, 0.988, 0.988))
+		# Set tint strength
+		material.set_shader_parameter(\"tint_amount\", 0.02)
+	elif EventBus.current_theme == 3 : # Hell :
+		# Set tint color (RGB)
+		material.set_shader_parameter(\"tint_color\", Color(0.976, 0.192, 0.298, 1.0))
+		# Set tint strength
+		material.set_shader_parameter(\"tint_amount\", 0.02)
+	elif EventBus.current_theme == 4 : # Overgrown :
+		# Set tint color (RGB)
+		material.set_shader_parameter(\"tint_color\", Color(0.0, 0.306, 0.078, 1.0))
+		# Set tint strength
+		material.set_shader_parameter(\"tint_amount\", 0.02)
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vw2r"]

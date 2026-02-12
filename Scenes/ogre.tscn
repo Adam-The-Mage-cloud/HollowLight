@@ -13,6 +13,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4j2he"]
 shader = ExtResource("1_n5x3l")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.1200000057
 shader_parameter/flash_amount = 0.0
 shader_parameter/flash_color = Vector3(0.01, 0.01, 0.01)
 shader_parameter/susceptible_flash_amount = 0.0

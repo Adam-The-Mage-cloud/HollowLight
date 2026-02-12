@@ -22,8 +22,31 @@ var speed = 12
 func _ready() :
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
 	material = material.duplicate()
+	set_tint()
 	breathing()
 	randomize()
+
+func set_tint() :
+	if EventBus.current_theme == 1 : # Reg :
+		material.set_shader_parameter("tint_color", Color(1.0, 1.0, 1.0, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.12)
+	elif EventBus.current_theme == 2 : # Ice :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.067, 0.988, 0.988))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.12)
+	elif EventBus.current_theme == 3 : # Hell :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.976, 0.192, 0.298, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.12)
+	elif EventBus.current_theme == 4 : # Overgrown :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.0, 0.306, 0.078, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.36)
+
 
 func _physics_process(delta: float) -> void:
 	if get_parent().visible == true :
@@ -163,7 +186,7 @@ func shadow_form() :
 
 
 func _on_axe_area_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and lightable == true or area.name == "winged_torch" :
+	if area.name == "Torch" and lightable == true or area.name == "winged_torch" and lightable == true :
 		# Knockback:
 		speed = -50
 		global_position.y += randf_range(-3, 3)
@@ -175,7 +198,7 @@ func _on_axe_area_area_entered(area: Area2D) -> void:
 
 
 func _on_ogre_hit_box_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and lightable == true or area.name == "winged_torch" :
+	if area.name == "Torch" and lightable == true or area.name == "winged_torch" and lightable == true :
 		# Knockback:
 		speed = -50
 		var rotation_tween_1 = create_tween()
@@ -262,7 +285,6 @@ func drop_currency() :
 # CHECK ENEMY WITHIN MAP BOUNDS :
 func _on_check_location_okay() :
 	while is_instance_valid(self) :
-		print (%MapStuckCollision.get_overlapping_areas().size())
 		# Check if player stuck inside something :
 		#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
 			#$".".global_position = last_safe_location

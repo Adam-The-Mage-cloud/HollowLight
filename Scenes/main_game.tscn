@@ -606,6 +606,8 @@ load_path = "res://.godot/imported/Xp_Outline.png-dcae8a9431120524db76c5be15e8ea
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jbexl"]
 shader = ExtResource("10_sftma")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
 shader_parameter/flash_amount = 0.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_g6spl"]
@@ -11782,6 +11784,8 @@ gradient = SubResource("Gradient_0goto")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_erobn"]
 shader = ExtResource("10_sftma")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
 shader_parameter/flash_amount = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vc13p"]

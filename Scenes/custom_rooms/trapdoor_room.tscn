@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://uskr4udq314c" path="res://Artwork/Plant_Tileset_Tinted.png" id="10_63l4k"]
 [ext_resource type="Texture2D" uid="uid://dd14ejrwjs3ma" path="res://Artwork/Dungeon_Doors.png" id="10_sfbms"]
 [ext_resource type="PackedScene" uid="uid://bdmwq41laaxdd" path="res://Scenes/wall_interactables.tscn" id="11_2roga"]
+[ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="12_aqyf8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u2t4q"]
 texture = ExtResource("1_u2t4q")
@@ -2460,19 +2461,10 @@ custom_data_layer_0/name = "brightness_seed"
 custom_data_layer_0/type = 3
 sources/90 = SubResource("TileSetAtlasSource_aqyf8")
 
-[sub_resource type="Shader" id="Shader_4rtng"]
-code = "shader_type canvas_item;
-
-uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
-
-void fragment() {
-    vec4 tex = texture(TEXTURE, UV);
-    COLOR = mix(tex, vec4(1.0, 1.0, 1.0, tex.a), flash_amount);
-}
-"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xguyw"]
-shader = SubResource("Shader_4rtng")
+shader = ExtResource("12_aqyf8")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
 shader_parameter/flash_amount = 0.0
 
 [sub_resource type="GDScript" id="GDScript_hjyhh"]
@@ -2482,6 +2474,28 @@ var unlocked = false
 
 func _ready() -> void:
 	unlocked = false
+	set_tint()
+
+func set_tint() :
+	if EventBus.current_theme == 1 : # Reg :
+		material.set_shader_parameter(\"tint_color\", Color(1.0, 1.0, 1.0, 1.0))
+		# Set tint strength
+		material.set_shader_parameter(\"tint_amount\", 0.02)
+	elif EventBus.current_theme == 2 : # Ice :
+		# Set tint color (RGB)
+		material.set_shader_parameter(\"tint_color\", Color(0.067, 0.988, 0.988))
+		# Set tint strength
+		material.set_shader_parameter(\"tint_amount\", 0.02)
+	elif EventBus.current_theme == 3 : # Hell :
+		# Set tint color (RGB)
+		material.set_shader_parameter(\"tint_color\", Color(0.976, 0.192, 0.298, 1.0))
+		# Set tint strength
+		material.set_shader_parameter(\"tint_amount\", 0.02)
+	elif EventBus.current_theme == 4 : # Overgrown :
+		# Set tint color (RGB)
+		material.set_shader_parameter(\"tint_color\", Color(0.0, 0.306, 0.078, 1.0))
+		# Set tint strength
+		material.set_shader_parameter(\"tint_amount\", 0.02)
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ky8y2"]

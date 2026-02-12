@@ -166,7 +166,7 @@ func diversify_room_with_scalers() :
 	max_wall_interactable_amount = randi_range(4000, 8000) # The max possible amount of wall interactables / number of floor tiles
 	stepladder_spawn_rate = 9 # Where 1 is every time and the greater from 1 it is, the less likely aka 1/2 or 1/3 or 1/8...
 	raggedize_level = randf_range(0.5, 1.0) # Default at 0.25 where 0.0 is highly uniform and 1 is VERY ragged
-	walls_obstruction_frequency = randf_range(0.06, 0.1) # Default at 0.05, where 1.0 is a much higher noise chance of spawning negative wall obstructions compared to 0 (next to none)
+	walls_obstruction_frequency = randf_range(0.03, 0.075) # Default at 0.05, where 1.0 is a much higher noise chance of spawning negative wall obstructions compared to 0 (next to none)
 	chamber_amount = randi_range(1, 7) # Default between 3 and 6, where more means a bigger cave
 	narrowness_widen_value = randf_range(1.5, 3.5) # Default is 2, the higher, the wider each narrower part of a cave
 
@@ -401,7 +401,7 @@ func _ensure_reachable_floor() -> void:
 	
 	while queue.size() > 0:
 		var p = queue.pop_front()
-		for d in [Vector2i(1,0), Vector2i(-1,0), Vector2i(0,1), Vector2i(0,-1)]:
+		for d in [Vector2i(1,0), Vector2i(-1,0), Vector2i(0,1), Vector2i(0,-1), Vector2i(1,0), Vector2i(-1,0)]:
 			var n = p + d
 			if floor_set.has(n) and not visited.has(n):
 				visited[n] = true
@@ -1054,11 +1054,19 @@ func too_close_to_other_plants(placed_plants: Dictionary, pos: Vector2i, radius 
 func generate_frontfacing_wall_from_floor() -> void:
 	%TileMapFrontFaceWall.clear()
 	previous_frontwall_world_positions.clear()
-	
+		
 	#if EventBus.current_theme != 1:
 		#return
-	
-	wall_source_id = 80
+	# Random wall texture picker :
+	var random_wall_picker = randi_range(1, 4)
+	if random_wall_picker == 1 : # Mineshaft
+		wall_source_id = 80
+	elif random_wall_picker == 2 : # Cobblestone Ragged
+		wall_source_id = 81
+	elif random_wall_picker == 3 : # Wood Planked Room
+		wall_source_id = 82
+	elif random_wall_picker == 4 : # Clean Stone Wall
+		wall_source_id = 83
 	var floor_set = build_floor_set()
 	
 	for w in wall_positions:
@@ -1314,7 +1322,7 @@ func _is_blocking_for_player(cell: Vector2i) -> bool:
 		return true
 	# can add more here if needed (exterior plants, etc.)
 	return false
-
+AND here
 func _clear_blocking_in_door_corridor(cell: Vector2i) -> void:
 	# Only clear tiles that are allowed to be removed in the doorway corridor
 	%TileMapFrontFaceWall.set_cell(cell, -1)
@@ -1335,7 +1343,7 @@ func is_near_door(x: int, y: int) -> bool:
 				return true
 	return false
 
-
+all round here
 func _clear_blocking_in_room_opening(cell: Vector2i) -> void:
 	# Remove front walls + obstacles
 	%TileMapFrontFaceWall.set_cell(cell, -1)
@@ -1742,7 +1750,18 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 			EventBus.current_room = next_room
 			next_room.visible = true
 			
-			# Tell EventBus How many beacons are in the next room, by getting ebacons to activate :
+			# Special Event Spawns :
+			#Money Goblin :
+			if randi_range(1, 24) == 12 :
+				print ("yayay")
+				var new_money_goblin = preload("res://Scenes/money_goblin.tscn").instantiate()
+				var rand = randi_range(1, spawnpoints)
+				var spawn_node = %SpawnPoints.get_child(rand - 1)
+				new_money_goblin.global_position = spawn_node.global_position + Vector2(0, -200)
+				print (new_money_goblin.global_position)
+				%SpawnPoints.call_deferred("add_child", new_money_goblin)
+			
+			# Tell EventBus How many beacons are in the next room, by getting beacons to activate :
 			var new_rooms_beacons = next_room.get_node("Beacons").get_children()
 			for i in new_rooms_beacons :
 				i.now_visible()

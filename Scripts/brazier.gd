@@ -4,11 +4,34 @@ var lit = false
 
 func _ready() :
 	material = $".".material.duplicate()
+	set_tint()
 	
 	%BrazierSprite.play("unlit")
 	%MainFlame.emitting = false
 	%MainFlameSecondary.emitting = false
 	%BrazierLight.enabled = false
+
+func set_tint() :
+	if EventBus.current_theme == 1 : # Reg :
+		material.set_shader_parameter("tint_color", Color(1.0, 1.0, 1.0, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.04)
+	elif EventBus.current_theme == 2 : # Ice :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.067, 0.988, 0.988))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.04)
+	elif EventBus.current_theme == 3 : # Hell :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.976, 0.192, 0.298, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.04)
+	elif EventBus.current_theme == 4 : # Overgrown :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.0, 0.306, 0.078, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.04)
+
 
 # This function is to stop braziers being counted before they are visible (blocking doors and the player from succeeding) :
 func now_visible() :

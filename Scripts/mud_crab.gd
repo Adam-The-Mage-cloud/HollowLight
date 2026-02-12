@@ -32,6 +32,7 @@ var speed = 12
 func _ready() :
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
 	material = material.duplicate()
+	set_tint()
 	breathing()
 	randomize()
 	
@@ -52,6 +53,23 @@ func _ready() :
 	original_left_pincer_transform = %PincerPivotL.position
 	original_right_pincer_rotation = %PincerPivotR.rotation_degrees
 	original_right_pincer_transform = %PincerPivotR.position
+
+func set_tint() :
+	if EventBus.current_theme == 2 : # Ice :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.067, 0.988, 0.988))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.12)
+	elif EventBus.current_theme == 3 : # Hell :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.976, 0.192, 0.298, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.12)
+	elif EventBus.current_theme == 4 : # Overgrown :
+		# Set tint color (RGB)
+		material.set_shader_parameter("tint_color", Color(0.0, 0.306, 0.078, 1.0))
+		# Set tint strength
+		material.set_shader_parameter("tint_amount", 0.12)
 
 func _physics_process(delta: float) -> void:
 	if get_parent().visible == true :
@@ -81,7 +99,6 @@ func _on_body_exited(body: Node2D) -> void:
 
 func realistic_movement():
 	while in_sight:
-		print("moving")
 		brody_position = target.global_position
 		
 		# Animate all legs at once
@@ -217,7 +234,7 @@ func shadow_form() :
 
 
 func _on_crab_hit_box_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and lightable == true or area.name == "winged_torch" :
+	if area.name == "Torch" and lightable == true or area.name == "winged_torch" and lightable == true :
 		# Knockback:
 		speed = -50
 		var rotation_tween_1 = create_tween()
@@ -352,7 +369,6 @@ func _on_pincer_l_area_body_entered(body: Node2D) -> void:
 # CHECK ENEMY WITHIN MAP BOUNDS :
 func _on_check_location_okay() :
 	while is_instance_valid(self) :
-		print (%MapStuckCollision.get_overlapping_areas().size())
 		# Check if player stuck inside something :
 		#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
 			#$".".global_position = last_safe_location
