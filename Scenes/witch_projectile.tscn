@@ -1,0 +1,201 @@
+[gd_scene load_steps=26 format=3 uid="uid://d4jbt81lf5owf"]
+
+[ext_resource type="Shader" uid="uid://c0poycp7tjy45" path="res://Shaders/witch_projectile.gdshader" id="1_d78rm"]
+[ext_resource type="Script" uid="uid://cp38sagg54qhr" path="res://Scripts/witch_projectile.gd" id="1_fqq64"]
+[ext_resource type="Texture2D" uid="uid://b7aecg4npab65" path="res://Artwork/Witch.png" id="2_fqq64"]
+[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_ot23d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ot23d"]
+shader = ExtResource("1_d78rm")
+shader_parameter/reveal = 1.0
+shader_parameter/noise_tex = ExtResource("2_ot23d")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fqq64"]
+size = Vector2(3.0149994, 5.3531647)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d78rm"]
+atlas = ExtResource("2_fqq64")
+region = Rect2(40, 81, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ot23d"]
+atlas = ExtResource("2_fqq64")
+region = Rect2(54, 81, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wduqe"]
+atlas = ExtResource("2_fqq64")
+region = Rect2(26, 82, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d78rm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d78rm")
+}],
+"loop": true,
+"name": &"Fire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ot23d")
+}],
+"loop": true,
+"name": &"Ice",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wduqe")
+}],
+"loop": true,
+"name": &"Mystic",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_ot23d"]
+offsets = PackedFloat32Array(0, 0.998195)
+colors = PackedColorArray(0.492081, 1.89515e-06, 2.40654e-07, 1, 1, 0.725456, 0.293907, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wduqe"]
+gradient = SubResource("Gradient_ot23d")
+
+[sub_resource type="Curve" id="Curve_h845u"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_5qgdy"]
+curve = SubResource("Curve_h845u")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_urf80"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.15, 0, 0)
+emission_shape_scale = Vector3(0.7, 0.6, 1)
+emission_shape = 1
+emission_sphere_radius = 5.5
+direction = Vector3(0, -1, 0)
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, -25, 0)
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+scale_curve = SubResource("CurveTexture_5qgdy")
+color_ramp = SubResource("GradientTexture1D_wduqe")
+
+[sub_resource type="Gradient" id="Gradient_h845u"]
+offsets = PackedFloat32Array(0, 0.998195)
+colors = PackedColorArray(0.49019608, 0, 0.70980394, 1, 1, 0.8575601, 0.96199805, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5qgdy"]
+gradient = SubResource("Gradient_h845u")
+
+[sub_resource type="Curve" id="Curve_urf80"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_3k3pa"]
+curve = SubResource("Curve_urf80")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d0ln0"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.15, 0, 0)
+emission_shape_scale = Vector3(1.2, 1, 1)
+emission_shape = 1
+emission_sphere_radius = 5.5
+direction = Vector3(0, -1, 0)
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, -15, 0)
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+scale_curve = SubResource("CurveTexture_3k3pa")
+color_ramp = SubResource("GradientTexture1D_5qgdy")
+
+[sub_resource type="Gradient" id="Gradient_wduqe"]
+offsets = PackedFloat32Array(0, 0.998195)
+colors = PackedColorArray(0.21291658, 0.59796363, 0.7773519, 1, 0.86763984, 0.99503034, 0.99627465, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h845u"]
+gradient = SubResource("Gradient_wduqe")
+
+[sub_resource type="Curve" id="Curve_5qgdy"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_urf80"]
+curve = SubResource("Curve_5qgdy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3k3pa"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.15, 0, 0)
+emission_shape_scale = Vector3(0.8, 0.8, 1)
+emission_shape = 1
+emission_sphere_radius = 5.5
+direction = Vector3(0, 0, 0)
+spread = 180.0
+flatness = 0.246
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.2351742e-06
+radial_accel_max = 4.9999976
+scale_curve = SubResource("CurveTexture_urf80")
+color_ramp = SubResource("GradientTexture1D_h845u")
+
+[node name="witch_projectile" type="Area2D"]
+z_index = 8
+y_sort_enabled = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_ot23d")
+script = ExtResource("1_fqq64")
+
+[node name="BallCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.028606415)
+shape = SubResource("RectangleShape2D_fqq64")
+
+[node name="BallSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_d78rm")
+animation = &"Fire"
+
+[node name="FireParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+z_index = -1
+y_sort_enabled = true
+position = Vector2(1, -1)
+emitting = false
+amount = 100
+amount_ratio = 0.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_urf80")
+
+[node name="MysticParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+z_index = -1
+y_sort_enabled = true
+emitting = false
+amount = 100
+amount_ratio = 0.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_d0ln0")
+
+[node name="IceParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+z_index = -1
+y_sort_enabled = true
+emitting = false
+amount = 100
+amount_ratio = 0.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_3k3pa")
+
+[node name="DespawnTimer" type="Timer" parent="."]
+wait_time = 5.5
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]

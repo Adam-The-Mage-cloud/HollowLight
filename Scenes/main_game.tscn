@@ -1,4 +1,4 @@
-[gd_scene load_steps=162 format=4 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=161 format=4 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
@@ -48,7 +48,6 @@
 [ext_resource type="Texture2D" uid="uid://bxamsscnkd23u" path="res://Artwork/Menus/Clives Shop/Clive_s_Wagon_Flying_Sword.png" id="40_dsbp1"]
 [ext_resource type="Texture2D" uid="uid://byxuk5ovt0me2" path="res://Artwork/Menus/Clives Shop/Close_Button.png" id="41_0goto"]
 [ext_resource type="Texture2D" uid="uid://bjvtylb32bsl0" path="res://Artwork/Menus/Clives Shop/Close_Button_Highlighted_.png" id="42_nqvgg"]
-[ext_resource type="PackedScene" uid="uid://bklfhm2tp32pr" path="res://Scenes/custom_rooms/the_sanctuary.tscn" id="43_h0kr5"]
 [ext_resource type="Texture2D" uid="uid://oumbcd3qxmkv" path="res://Artwork/Menus/Clives Shop/Unlocked_Tick.png" id="43_nqvgg"]
 [ext_resource type="Texture2D" uid="uid://bnnil1ip1c4bv" path="res://Artwork/Menus/Clives Shop/Clive_s_Wagon_Shop_Equipped.png" id="44_c8pbd"]
 [ext_resource type="Texture2D" uid="uid://cufu30m5h2vca" path="res://Artwork/Menus/Clives Shop/Clive_s_Wagon_Shop_Unequipped.png" id="45_pp62r"]
@@ -11830,9 +11829,6 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
-
-[node name="the_sanctuary" parent="RoomsToBeDeleted" instance=ExtResource("43_h0kr5")]
-position = Vector2(69.22974, -37.91536)
 
 [node name="TouchScreenLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

@@ -1322,7 +1322,7 @@ func _is_blocking_for_player(cell: Vector2i) -> bool:
 		return true
 	# can add more here if needed (exterior plants, etc.)
 	return false
-AND here
+#AND here
 func _clear_blocking_in_door_corridor(cell: Vector2i) -> void:
 	# Only clear tiles that are allowed to be removed in the doorway corridor
 	%TileMapFrontFaceWall.set_cell(cell, -1)
@@ -1343,7 +1343,7 @@ func is_near_door(x: int, y: int) -> bool:
 				return true
 	return false
 
-all round here
+#all round here
 func _clear_blocking_in_room_opening(cell: Vector2i) -> void:
 	# Remove front walls + obstacles
 	%TileMapFrontFaceWall.set_cell(cell, -1)
@@ -1404,6 +1404,8 @@ func position_door() -> void:
 	for ox in range(-1, 2):
 		for oy in range(-3, 2):
 			wall_map.set_cell(door_cell + Vector2i(ox, oy), -1)
+			# and set as floor instead :
+			%TileMapFloor.set_cell(door_cell + Vector2i(ox, oy), 0, Vector2i(randi_range(0, 3), 0), randi_range(0, 1))
 	
 	new_door_y = door_tile.y
 
@@ -1434,7 +1436,7 @@ func monster_spawns() -> void:
 		if random_monster_room_picker == 1 : # Then Ogre Room :
 			var monster_amount = randi_range(1, 3)
 			for i in range(monster_amount):
-				var monster_picker = randi_range(1, 6)
+				var monster_picker = randi_range(1, 7)
 				if monster_picker == 1 : # Then Ogre :
 					var new_ogre = preload("res://Scenes/ogre.tscn").instantiate()
 					var rand = randi_range(1, spawnpoints)
@@ -1471,6 +1473,12 @@ func monster_spawns() -> void:
 					var spawn_node = %SpawnPoints.get_child(rand - 1)
 					new_draugr.global_position = spawn_node.global_position
 					call_deferred("add_child", new_draugr)
+				elif monster_picker == 7 : # Then Witch :
+					var new_witch = preload("res://Scenes/witch.tscn").instantiate()
+					var rand = randi_range(1, spawnpoints)
+					var spawn_node = %SpawnPoints.get_child(rand - 1)
+					new_witch.global_position = spawn_node.global_position
+					call_deferred("add_child", new_witch)
 
 func beacon_spawns() -> void:
 	#if EventBus.current_theme == 1:

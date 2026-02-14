@@ -18,9 +18,21 @@ func _ready() :
 	
 	print (EventBus.total_acquired_goldpieces)
 	print (EventBus.total_acquired_experience)
+	EventBus.total_acquired_experience = 20
 	
-	# Start in Sanctuary :
-	_set_sanctuary_properties()
+	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
+	if EventBus.total_acquired_experience == 0 :
+		var intro_room = preload("res://Scenes/custom_rooms/intro_room.tscn").instantiate()
+		intro_room.z_index = 0
+		%Brody.global_position = intro_room.global_position + Vector2(124, 16)
+		%RoomsToBeDeleted.add_child(intro_room)
+	
+	else :
+		# Start in Sanctuary :
+		var spawn_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
+		spawn_sanctuary.global_position = Vector2(69.23, -37.915)
+		%RoomsToBeDeleted.add_child(spawn_sanctuary)
+		_set_sanctuary_properties()
 
 # Wait For Touchscreen to be Pressed to turn on touchscreen settings :
 func _input(event):
