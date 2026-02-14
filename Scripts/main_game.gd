@@ -30,7 +30,7 @@ func _ready() :
 	else :
 		# Start in Sanctuary :
 		var spawn_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
-		spawn_sanctuary.global_position = Vector2(69.23, -37.915)
+		spawn_sanctuary.global_position = Vector2(-140.0, -75.0)
 		%RoomsToBeDeleted.add_child(spawn_sanctuary)
 		_set_sanctuary_properties()
 

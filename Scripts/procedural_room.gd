@@ -69,6 +69,81 @@ var door_origin = Vector2.ZERO
 var new_door_y = 99999
 var width = 32
 var height = 18
+
+# Monster Spawning Dictionary :
+var SPAWN_GROUPS = {
+	1: { # Goblin / Ogre / Wolf room
+		"weights": {
+			"goblin": 2,
+			"ogre": 1,
+			"dire_wolf": 1
+		},
+		"min_multiplier": 1,
+		"max_multiplier": 3
+	},
+	2: { # Draugr / Machines
+		"weights": {
+			"draugr": 2,
+			"grindstonter": 1
+		},
+		"min_multiplier": 1,
+		"max_multiplier": 2
+	},
+	3: { # Witches only
+		"weights": {
+			"witch": 3
+		},
+		"min_multiplier": 1,
+		"max_multiplier": 2
+	},
+	4: { # Goblins / Mudcrabs
+		"weights": {
+			"goblin": 3,
+			"mud_crab": 1,
+		},
+		"min_multiplier": 2,
+		"max_multiplier": 3
+	},
+	5: { # Wolves
+		"weights": {
+			"dire_wolf": 2,
+		},
+		"min_multiplier": 1,
+		"max_multiplier": 2
+	},
+	6: { # Draugr / Mudcrab
+		"weights": {
+			"draugr": 2,
+			"mud_crab": 1
+		},
+		"min_multiplier": 1,
+		"max_multiplier": 2
+	},
+	7: { # Draugr / Witch
+		"weights": {
+			"draugr": 2,
+			"witch": 1
+		},
+		"min_multiplier": 1,
+		"max_multiplier": 2
+	},
+	8: { # Wolf / Mudcrab
+		"weights": {
+			"dire_wolf": 1,
+			"mud_crab": 1
+		},
+		"min_multiplier": 1,
+		"max_multiplier": 2
+	},
+	9: { # Machines / Mudcrab
+		"weights": {
+			"grindstonter": 2,
+			"mud_crab": 1
+		},
+		"min_multiplier": 2,
+		"max_multiplier": 3
+	}}
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1430,55 +1505,46 @@ func place_spawn_points() -> void:
 		var world_pos = get_tree().current_scene.to_global(local_pixel)
 		spawn_node.global_position = world_pos
 
+# ~~~~~~~~~~~~~
+# Monster Spawning
+
 func monster_spawns() -> void:
-	#if EventBus.current_theme == 1:
-		var random_monster_room_picker = randi_range(1, 1) # 1 = ogre dog room
-		if random_monster_room_picker == 1 : # Then Ogre Room :
-			var monster_amount = randi_range(1, 3)
-			for i in range(monster_amount):
-				var monster_picker = randi_range(1, 7)
-				if monster_picker == 1 : # Then Ogre :
-					var new_ogre = preload("res://Scenes/ogre.tscn").instantiate()
-					var rand = randi_range(1, spawnpoints)
-					var spawn_node = %SpawnPoints.get_child(rand - 1)
-					new_ogre.global_position = spawn_node.global_position
-					call_deferred("add_child", new_ogre)
-				elif monster_picker == 2 : # Then Dire Wolf :
-					var new_dire_wolf = preload("res://Scenes/dire_wolf.tscn").instantiate()
-					var rand = randi_range(1, spawnpoints)
-					var spawn_node = %SpawnPoints.get_child(rand - 1)
-					new_dire_wolf.global_position = spawn_node.global_position
-					call_deferred("add_child", new_dire_wolf)
-				elif monster_picker == 3 : # Then MudCrab :
-					var new_mudcrab = preload("res://Scenes/mud_crab.tscn").instantiate()
-					var rand = randi_range(1, spawnpoints)
-					var spawn_node = %SpawnPoints.get_child(rand - 1)
-					new_mudcrab.global_position = spawn_node.global_position
-					call_deferred("add_child", new_mudcrab)
-				elif monster_picker == 4 : # Then Grindstonter :
-					var new_grindstonter = preload("res://Scenes/grindstonter.tscn").instantiate()
-					var rand = randi_range(1, spawnpoints)
-					var spawn_node = %SpawnPoints.get_child(rand - 1)
-					new_grindstonter.global_position = spawn_node.global_position
-					call_deferred("add_child", new_grindstonter)
-				elif monster_picker == 5 : # Then Goblin :
-					var new_goblin = preload("res://Scenes/goblin.tscn").instantiate()
-					var rand = randi_range(1, spawnpoints)
-					var spawn_node = %SpawnPoints.get_child(rand - 1)
-					new_goblin.global_position = spawn_node.global_position
-					call_deferred("add_child", new_goblin)
-				elif monster_picker == 6 : # Then Draugr :
-					var new_draugr = preload("res://Scenes/draugr.tscn").instantiate()
-					var rand = randi_range(1, spawnpoints)
-					var spawn_node = %SpawnPoints.get_child(rand - 1)
-					new_draugr.global_position = spawn_node.global_position
-					call_deferred("add_child", new_draugr)
-				elif monster_picker == 7 : # Then Witch :
-					var new_witch = preload("res://Scenes/witch.tscn").instantiate()
-					var rand = randi_range(1, spawnpoints)
-					var spawn_node = %SpawnPoints.get_child(rand - 1)
-					new_witch.global_position = spawn_node.global_position
-					call_deferred("add_child", new_witch)
+	var group = SPAWN_GROUPS.get(room_type)
+	
+	if group == null:
+		return
+	
+	var amount = randi_range((group["min_multiplier"] + width + height) / 20, (group["max_multiplier"] + width + height) / 15 + 2) 
+	
+	for i in range(amount):
+		var monster_name = weighted_pick(group["weights"])
+		spawn_monster(monster_name)
+
+func spawn_monster(monster_name: String) -> void:
+	var scene_path = "res://Scenes/%s.tscn" % monster_name
+	var monster = load(scene_path).instantiate()
+	
+	var rand = randi_range(0, %SpawnPoints.get_child_count() - 1)
+	var spawn_node = %SpawnPoints.get_child(rand)
+	
+	monster.global_position = spawn_node.global_position
+	call_deferred("add_child", monster)
+
+func weighted_pick(weights: Dictionary) -> String:
+	var total = 0
+	for w in weights.values():
+		total += w
+	
+	var roll = randi_range(1, total)
+	var cumulative = 0
+	
+	for monster_name in weights.keys():
+		cumulative += weights[monster_name]
+		if roll <= cumulative:
+			return monster_name
+	
+	return weights.keys()[0] # fallback
+# ~~~~~~~~~~~~~
 
 func beacon_spawns() -> void:
 	#if EventBus.current_theme == 1:
