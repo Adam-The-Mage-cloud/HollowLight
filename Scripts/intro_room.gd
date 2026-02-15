@@ -4,6 +4,13 @@ var already_opened = false
 var room_complete = true
 var last_room = false
 
+# Flashing Allocator :
+var knight_flashing = false
+var torch_flashing = false
+var door_flashing = false
+
+var speech = 1
+
 var floor_positions: Array[Vector2i] = []
 var frontwall_positions: Array[Vector2i] = []
 
@@ -30,6 +37,66 @@ func _ready() :
 	EventBus.beacon_count_reset()
 	_spawn_next_room()
 	
+	await get_tree().create_timer(5.00).timeout
+	knight_flashing = true
+	speech = 1
+	speecher()
+	
+	await get_tree().create_timer(4.2).timeout
+	speech = 2
+	speecher()
+	
+	await get_tree().create_timer(4.2).timeout
+	speech = 3
+	speecher()
+	
+	await get_tree().create_timer(4.2).timeout
+	knight_flashing = false
+	torch_flashing = true
+	speech = 4
+	speecher()
+	
+	await get_tree().create_timer(4.2).timeout
+	# Play Button Tutorial :
+
+func speecher() :
+	# Intialise Bubble & Text :
+	%SpeechBubbleSprite.visible = true
+	%SpeechBubbleSprite.scale = Vector2(0.85, 0.85)
+	%SpeechBubbleSprite.modulate.a = 0.0
+	# Choose Speech Text :
+	if speech == 1 :
+		%SpeechText.text = str("my body is broken little Orblit...")
+	if speech == 2 :
+		%SpeechText.text = str("I go to dine in the halls of my forebears...")
+	if speech == 3 :
+		%SpeechText.text = str("You must get out of here...")
+	if speech == 4 :
+		%SpeechText.text = str("Pick up my torch, GO!")
+	
+	# Activate Speech Bubble Tween :
+	var speech_bubble_tween = create_tween()
+	speech_bubble_tween.set_parallel(true)
+	
+	speech_bubble_tween.tween_property(%SpeechBubbleSprite, "scale", Vector2(2, 2), 0.14).set_ease(Tween.EASE_OUT)
+	speech_bubble_tween.tween_property(%SpeechBubbleSprite, "modulate:a", 1.0, 0.14).set_ease(Tween.EASE_OUT)
+	
+	await get_tree().create_timer(4).timeout
+	var speech_tween_2 = create_tween()
+	speech_tween_2.set_parallel(true)
+	
+	speech_tween_2.tween_property(%SpeechBubbleSprite, "scale", Vector2(0.9, 0.9), 0.12).set_ease(Tween.EASE_IN)
+	speech_tween_2.tween_property(%SpeechBubbleSprite, "modulate:a", 0.0, 0.12).set_ease(Tween.EASE_IN)
+	
+	await get_tree().create_timer(0.12).timeout
+	%SpeechBubbleSprite.visible = false
+
+func flash_white(entity) :
+	var tween = create_tween()
+	tween.tween_property(entity.material, "shader_parameter/flash_amount", 1.0, 0.3)
+	
+	# Fade back down
+	tween.tween_property(entity.material, "shader_parameter/flash_amount", 0.0, 0.3)
 
 func themify() :
 	if EventBus.current_theme == 2 : # Ice
@@ -144,3 +211,12 @@ func _spawn_next_room() :
 	
 	await get_tree().process_frame
 	get_tree().current_scene.get_node("RoomsToBeDeleted").call_deferred("add_child", new_room)
+
+
+func _on_flash_allocator_timeout() -> void:
+	if knight_flashing == true :
+		flash_white(%FallenTank)
+	elif torch_flashing == true :
+		flash_white(%TorchShield)
+	elif door_flashing == true :
+		flash_white(%DoorArea)

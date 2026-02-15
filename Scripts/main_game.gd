@@ -18,13 +18,13 @@ func _ready() :
 	
 	print (EventBus.total_acquired_goldpieces)
 	print (EventBus.total_acquired_experience)
-	EventBus.total_acquired_experience = 20
+	EventBus.total_acquired_experience = 0
 	
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
 	if EventBus.total_acquired_experience == 0 :
 		var intro_room = preload("res://Scenes/custom_rooms/intro_room.tscn").instantiate()
 		intro_room.z_index = 0
-		%Brody.global_position = intro_room.global_position + Vector2(124, 16)
+		%Brody.global_position = intro_room.global_position + Vector2(160, 72)
 		%RoomsToBeDeleted.add_child(intro_room)
 	
 	else :
