@@ -333,11 +333,13 @@ func initialise_swap_tool():
 		torch_equipped = false
 		weapon_equipped = true
 		%Torch.now_unequipped()
-		%weapon.now_equipped()
+		#%Weapon.minitorch_on()
+		#%Weapon.now_equipped()
 	else:
 		weapon_equipped = false
 		torch_equipped = true
-		%weapon.now_unequipped()
+		#%Weapon.now_unequipped()
+		#%Weapon.minitorch_off()
 		%Torch.now_equipped()
 
 

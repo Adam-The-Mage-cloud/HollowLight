@@ -181,8 +181,10 @@ func fade_lootscreen() :
 	var LootScreenFade_tween = create_tween()
 	LootScreenFade_tween.tween_property(%LootScreen, "modulate", Color(1.0, 1.0, 1.0, 0.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	# Open Adventure Menu! :
-	open_adventure_menu()
-
+	if EventBus.intro == false :
+		open_adventure_menu()
+	else :
+		_on_sanctuary_button_pressed()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # OPEN ADVENTURE Menu AND ITS ANIMATIONS :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -260,6 +262,7 @@ func _on_sanctuary_button_pressed() -> void:
 	main_background_fadeout()
 	# Go To Sanctuary :
 	await get_tree().create_timer(0.25).timeout
+	%TouchScreenPress1.visible = false
 	%HomeH.play("default")
 	%HomeArrow.play("default")
 	%AdventureMenuTent.play("default")

@@ -6,6 +6,12 @@ func _ready() :
 	%SanctuaryMainFloor.add_to_group("floors")
 	arrows_pointing()
 	wagon_signs_pointing()
+	
+	if EventBus.intro == true :
+		play_sanctuary_tutorial()
+
+func play_sanctuary_tutorial() :
+	pass
 
 func _on_torch_and_shield_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" : 

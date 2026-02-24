@@ -15,6 +15,9 @@ var floor_positions: Array[Vector2i] = []
 var frontwall_positions: Array[Vector2i] = []
 
 func _ready() :
+	EventBus.intro = true
+	EventBus.game_over_chance = 0.25
+	
 	$".".add_to_group("rooms")
 	%TileMapFloor.add_to_group("floors")
 	
@@ -56,8 +59,73 @@ func _ready() :
 	speech = 4
 	speecher()
 	
-	await get_tree().create_timer(4.2).timeout
-	# Play Button Tutorial :
+	await get_tree().create_timer(10.0).timeout
+	var bg = %ManualBackground
+	
+	# Start slightly above and transparent
+	bg.modulate.a = 0.0
+	bg.position.y -= 20
+	
+	var t = create_tween()
+	t.set_parallel(true)
+	
+	# Fade in
+	t.tween_property(bg, "modulate:a", 1.0, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+	# Slide down into place
+	t.tween_property(bg, "position:y", bg.position.y + 20, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+	await t.finished
+	await get_tree().create_timer(9.0).timeout
+	
+	# Fade and slide back up
+	var t2 = create_tween()
+	t2.set_parallel(true)
+	
+	t2.tween_property(bg, "modulate:a", 0.0, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		
+	t2.tween_property(bg, "position:y", bg.position.y - 20, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	
+	await t2.finished
+	
+	var bgm = %MonsterBackground
+	
+	# Start slightly above and transparent
+	bgm.modulate.a = 0.0
+	bgm.position.y -= 20
+	
+	var tm = create_tween()
+	tm.set_parallel(true)
+	
+	# Fade in
+	tm.tween_property(bgm, "modulate:a", 1.0, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+	# Slide down into place
+	tm.tween_property(bgm, "position:y", bgm.position.y + 20, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+	await tm.finished
+	await get_tree().create_timer(9.0).timeout
+	
+	# Fade and slide back up
+	var t2m = create_tween()
+	t2m.set_parallel(true)
+	
+	t2m.tween_property(bgm, "modulate:a", 0.0, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		
+	t2m.tween_property(bgm, "position:y", bg.position.y - 20, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		
+	# DOOR NOW OPENABLE :
+	%DoorCollision.disabled = false
+	door_flashing = true
+	flash_white(%DoorArea)
 
 func speecher() :
 	# Intialise Bubble & Text :

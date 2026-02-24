@@ -18,15 +18,91 @@ func _ready() :
 	
 	print (EventBus.total_acquired_goldpieces)
 	print (EventBus.total_acquired_experience)
-	EventBus.total_acquired_experience = 0
 	
+	#EventBus.total_acquired_experience = 0
+	#EventBus.total_acquired_goldpieces = 0
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
 	if EventBus.total_acquired_experience == 0 :
+		EventBus.intro = true
 		var intro_room = preload("res://Scenes/custom_rooms/intro_room.tscn").instantiate()
 		intro_room.z_index = 0
 		%Brody.global_position = intro_room.global_position + Vector2(160, 72)
 		%RoomsToBeDeleted.add_child(intro_room)
-	
+		
+		# AWAIT PLAYER MOVEMENT TO BE REENABLED :
+		%Torch.visible = false
+		touchscreen_available = false
+		%Brody.input_enabled = true
+		
+		var cam = %BrodyCam
+		
+		# Zoom in
+		cam.zoom = Vector2(2.0, 2.0)
+		cam.offset = Vector2(24.0, -8.0)
+		
+		await get_tree().create_timer(18.0).timeout
+		# Tween camera back to default
+		var camera_tween = create_tween()
+		camera_tween.tween_property(cam, "zoom", Vector2(1.5, 1.5), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween.tween_property(cam, "offset", Vector2(0.0, 0.0), 1.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		%Torch.visible = true
+		
+		%Brody.input_enabled = true
+		touchscreen_available = true
+		
+		# Move Joystick :
+		await get_tree().create_timer(2.0).timeout
+		var movement_fadeintween = create_tween()
+		movement_fadeintween.tween_property(%MoveJoystickText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.5)
+		
+		%TouchScreenLayer.visible = true
+		%TorchJoystickSpriteHighlighted.visible = false
+		%TorchJoystickSprite.visible = false
+		%DashButton.visible = false
+		%BrodyJoystickSpriteHighlighted.visible = true
+		%BrodyJoystickSprite.visible = true
+		%BrodyJoystickSpriteHighlighted.z_index = 1
+		
+		await movement_fadeintween.finished 
+		await get_tree().create_timer(0.5).timeout
+		var movement_fadeouttween = create_tween()
+		movement_fadeouttween.tween_property(%MoveJoystickText, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1.5)
+		
+		# Torch Joystick :
+		await get_tree().create_timer(1.5).timeout
+		var torch_fadeintween = create_tween()
+		torch_fadeintween.tween_property(%TorchJoystickText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.5)
+		
+		%TorchJoystickSpriteHighlighted.visible = true
+		%BrodyJoystickSpriteHighlighted.visible = false
+		%TorchJoystickSprite.visible = true
+		%BrodyJoystickSpriteHighlighted.z_index = -2
+		%TorchJoystickSpriteHighlighted.z_index = 1
+		
+		await torch_fadeintween.finished 
+		await get_tree().create_timer(0.5).timeout
+		var torch_fadeouttween = create_tween()
+		torch_fadeouttween.tween_property(%TorchJoystickText, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1.5)
+		
+		# Dash Joystick :
+		await get_tree().create_timer(1.5).timeout
+		var dash_fadeintween = create_tween()
+		dash_fadeintween.tween_property(%DashButtonText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.5)
+		
+		%DashHighlighted.visible = true
+		%DashButton.visible = true
+		touchscreen_available = true
+		%TorchJoystickSpriteHighlighted.z_index = -2
+		%BrodyCam.zoom = Vector2(1.5, 1.5)
+		
+		await dash_fadeintween.finished 
+		await get_tree().create_timer(0.5).timeout
+		var dash_fadeouttween = create_tween()
+		dash_fadeouttween.tween_property(%DashButtonText, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1.5)
+		
+		await get_tree().create_timer(1.5).timeout
+		%DashHighlighted.visible = false
+	   
 	else :
 		# Start in Sanctuary :
 		var spawn_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
@@ -39,6 +115,7 @@ func _input(event):
 	if touchscreen_available == true :
 		if event is InputEventScreenTouch:
 			is_touchscreen = true
+			EventBus.touchscreen_enacted = true
 			%BrodyCam.zoom = Vector2(1.5, 1.5)
 			%TouchScreenLayer.visible = true
 
@@ -139,6 +216,8 @@ func _on_new_dungeon_crawl() :
 	%ShadowSpawnTimer.start()
 	%TorchWraithChance.start()
 	%WormBatChance.start()
+	# Brody Cam :
+	%BrodyCam.zoom = Vector2(1.5, 1.5)
 	# Give Brody His Torch/Weapons :
 	%Torch.visible = true
 	# Turn ON DarknessLayer Effect :
@@ -165,6 +244,8 @@ func _set_sanctuary_properties() :
 	%ShadowSpawnTimer.stop()
 	%TorchWraithChance.stop()
 	%WormBatChance.stop()
+	# Camera :
+	%BrodyCam.zoom = Vector2(1.0, 1.0)
 	# Give Brody His Torch/Weapons :
 	%Torch.visible = false
 	# Turn ON DarknessLayer Effect :
@@ -172,8 +253,9 @@ func _set_sanctuary_properties() :
 	# Turn ON GameplayUI :
 	%GameplayUI.visible = false
 	# Enable ability for Touchscreen Controls (Temporarily) 
-	touchscreen_available = true
+	touchscreen_available = false
 	%TouchScreenLayer.visible = true
+	%TorchJoystickSpriteHighlighted.visible = false
 	%TorchJoystickBase.visible = false
 	%TorchJoystickSprite.visible = false
 

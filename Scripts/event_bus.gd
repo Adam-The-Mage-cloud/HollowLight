@@ -30,6 +30,7 @@ signal spawn_sanctuary()
 
 signal last_room_loaded()
 
+var touchscreen_enacted = false
 
 var total_beacons_to_light = 0
 var beacons_lit = 0
@@ -60,6 +61,7 @@ var mystic_sword_purchased = false
 var winged_torch_purchased = false
 
 # Rooms Completed / ENDGAME DECIDER :
+var intro = false
 var current_room
 var game_over_chance = 0.0
 var last_room = false
@@ -118,6 +120,8 @@ func _on_new_room() :
 	if randf_range(0, 1) < game_over_chance :
 		if total_rooms >= 5 : # 7
 			last_room = true
+		elif intro == true :
+			last_room = true
 
 func last_room_passed() :
 	EventBus.beacons_lit = 0
@@ -136,6 +140,10 @@ func open_the_travel_menu() :
 
 # DUNGEONS :
 func new_dungeon_crawl() :
+	if touchscreen_enacted == true :
+		%TouchScreenPress1.visible = true
+		%TorchJoystickBase.visible = true
+		%TorchJoystickSprite.visible = true
 	EventBus.current_theme = randi_range(1, 4)
 	total_current_darkness = 0.0
 	total_new_acquired_experience = 0
