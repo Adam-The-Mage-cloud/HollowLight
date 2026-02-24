@@ -25,10 +25,13 @@ signal open_clives_shop()
 
 # NEW GAME / GO TO SANCTUARY Signals :
 signal new_crawl()
+signal new_dungeon_touchscreen
 
 signal spawn_sanctuary()
 
 signal last_room_loaded()
+
+signal camera_reset()
 
 var touchscreen_enacted = false
 
@@ -95,6 +98,9 @@ func player_died() :
 	EventBus.total_new_acquired_goldpieces = 0
 	EventBus.player_deaded.emit()
 
+func return_camera() :
+	EventBus.camera_reset.emit()
+
 func _on_beacon_spawned() :
 	total_beacons_to_light += 1
 
@@ -141,9 +147,7 @@ func open_the_travel_menu() :
 # DUNGEONS :
 func new_dungeon_crawl() :
 	if touchscreen_enacted == true :
-		%TouchScreenPress1.visible = true
-		%TorchJoystickBase.visible = true
-		%TorchJoystickSprite.visible = true
+		EventBus.new_dungeon_touchscreen.emit()
 	EventBus.current_theme = randi_range(1, 4)
 	total_current_darkness = 0.0
 	total_new_acquired_experience = 0

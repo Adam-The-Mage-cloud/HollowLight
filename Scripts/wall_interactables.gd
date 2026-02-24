@@ -53,6 +53,14 @@ func _on_area_entered(area: Area2D) -> void:
 		elif type == 2 : # THEN PAINTING :
 			# DO NOTHING :
 			pass
+	elif EventBus.intro == true :
+		# ALIGHT WALLTORCH :
+		%DarknessRepellerCollision.call_deferred("set_disabled", false)
+		alight = true
+		%WallTorchLight.enabled = true
+		alight_flame()
+		%MainFlame.emitting = true
+		%MainFlameSecondary.emitting = true
 
 
 # Extra Effect Functions :

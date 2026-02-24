@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 	# Update corruption
 	corruption = EventBus.total_current_darkness / 100.0
 	%Shadow.modulate.a = corruption
-
+	
 	# --- JITTER WHEN TAKING DAMAGE ---
 	if jitter_timer > 0.0:
 		jitter_timer -= delta
@@ -38,28 +38,28 @@ func _process(delta: float) -> void:
 		)
 	else:
 		%Shadow.position = default_position
-
+		
 	# --- RECOVERY WHILE GLITCHING ---
 	if _do_full_transform and not _death_locked and EventBus.total_current_darkness < 99.5:
 		_recover_from_shadow_glitch()
 		return
-
+		
 	# --- FULL TRANSFORMATION MOTION ---
 	if _do_full_transform:
 		var brody = %BrodySprite
 		var shadow = %Shadow
-
+		
 		# Brody shaking
 		var shake_strength = 1.5
 		brody.position = _brody_original_pos + Vector2(
 			randf_range(-shake_strength, shake_strength),
 			randf_range(-shake_strength, shake_strength)
 		)
-
+		
 		# Shadow drifting
 		var t = Time.get_ticks_msec() * 0.002
 		var drift_strength = _corruption_level * 6.0
-
+		
 		shadow.position = _shadow_original_pos + Vector2(
 			sin(t * 1.3) * drift_strength,
 			cos(t * 0.9) * drift_strength
@@ -67,49 +67,50 @@ func _process(delta: float) -> void:
 
 
 func _on_full_shadow_checker_timeout() -> void:
-	# If we've already died once, clamp darkness and bail
-	if EventBus.death_played == true:
-		EventBus.total_current_darkness = 0
-		return
+	if EventBus.intro == false :
+		# If we've already died once, clamp darkness and bail
+		if EventBus.death_played == true:
+			EventBus.total_current_darkness = 0
+			return
 
-	# Only start if fully dark
-	if EventBus.total_current_darkness < 99.5:
-		return
+		# Only start if fully dark
+		if EventBus.total_current_darkness < 99.5:
+			return
 
-	var brody = %BrodySprite
-	var shadow = %Shadow
+		var brody = %BrodySprite
+		var shadow = %Shadow
 
-	# Store original positions
-	_brody_original_pos = brody.position
-	_shadow_original_pos = shadow.position
+		# Store original positions
+		_brody_original_pos = brody.position
+		_shadow_original_pos = shadow.position
 
-	# Store corruption level for drifting motion
-	_corruption_level = EventBus.total_current_darkness / 100.0
+		# Store corruption level for drifting motion
+		_corruption_level = EventBus.total_current_darkness / 100.0
 
-	# Enable shaking + drifting
-	_do_full_transform = true
-	_death_locked = false
+		# Enable shaking + drifting
+		_do_full_transform = true
+		_death_locked = false
 
-	# Fade Brody out
-	_death_tween = create_tween()
-	_death_tween.tween_property(brody, "modulate:a", 0.0, 2.5)\
-		.set_trans(Tween.TRANS_QUAD)\
-		.set_ease(Tween.EASE_IN)
+		# Fade Brody out
+		_death_tween = create_tween()
+		_death_tween.tween_property(brody, "modulate:a", 0.0, 2.5)\
+			.set_trans(Tween.TRANS_QUAD)\
+			.set_ease(Tween.EASE_IN)
 
-	# After fade, lock death and start animation
-	_death_tween.tween_interval(1.0)
-	_death_tween.tween_callback(func():
-		_death_locked = true
-		play_death_animation()
-	)
+		# After fade, lock death and start animation
+		_death_tween.tween_interval(1.0)
+		_death_tween.tween_callback(func():
+			_death_locked = true
+			play_death_animation()
+		)
 
-	# When finished, stop everything (only if not recovered)
-	_death_tween.finished.connect(func():
-		_do_full_transform = false
-		set_process(false)
-		brody.position = _brody_original_pos
-		shadow.position = _shadow_original_pos
-	)
+		# When finished, stop everything (only if not recovered)
+		_death_tween.finished.connect(func():
+			_do_full_transform = false
+			set_process(false)
+			brody.position = _brody_original_pos
+			shadow.position = _shadow_original_pos
+		)
 
 
 func _recover_from_shadow_glitch() -> void:

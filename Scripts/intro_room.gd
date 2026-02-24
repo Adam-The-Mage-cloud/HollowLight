@@ -40,7 +40,40 @@ func _ready() :
 	EventBus.beacon_count_reset()
 	_spawn_next_room()
 	
-	await get_tree().create_timer(5.00).timeout
+	await get_tree().create_timer(2.00).timeout
+	# Open Eyes Animation (Shader for Animatable Shape and Tweens) :
+	var mat = %EyeLids.material
+	var tween = create_tween()
+	
+	# Start closed
+	mat.set("shader_parameter/open_amount", 0.02)
+	
+	# 1. Fast snap open
+	tween.tween_property(mat, "shader_parameter/open_amount", 0.85, 0.5)\
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		
+	# 2. Overshoot (open a bit too far)
+	tween.tween_property(mat, "shader_parameter/open_amount", 1.0, 0.3)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+	# 3. Settle back to natural open
+	tween.tween_property(mat, "shader_parameter/open_amount", 0.9, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		
+	# 4. Tiny blink after a short delay
+	tween.tween_interval(0.3)
+	
+	tween.parallel().tween_property(mat, "shader_parameter/open_amount", 0.7, 0.72)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		
+	tween.parallel().tween_property(mat, "shader_parameter/open_amount", 1.0, 0.72)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		
+	tween.parallel().tween_property(mat, "shader_parameter/fade", 0.0, 0.72)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	# START DIALOGUE :
+	await get_tree().create_timer(2.00).timeout
 	knight_flashing = true
 	speech = 1
 	speecher()
@@ -119,7 +152,7 @@ func _ready() :
 	t2m.tween_property(bgm, "modulate:a", 0.0, 0.5)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		
-	t2m.tween_property(bgm, "position:y", bg.position.y - 20, 0.5)\
+	t2m.tween_property(bgm, "position:y", bgm.position.y - 20, 0.5)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 		
 	# DOOR NOW OPENABLE :

@@ -15,12 +15,9 @@ func _ready() :
 	EventBus.last_room_complete.connect(_on_dungeon_ended)
 	EventBus.new_crawl.connect(_on_new_dungeon_crawl)
 	EventBus.spawn_sanctuary.connect(_on_spawning_sanctuary)
+	EventBus.camera_reset.connect(camera_reset)
+	EventBus.new_dungeon_touchscreen.connect(new_dungeon_touchscreen)
 	
-	print (EventBus.total_acquired_goldpieces)
-	print (EventBus.total_acquired_experience)
-	
-	#EventBus.total_acquired_experience = 0
-	#EventBus.total_acquired_goldpieces = 0
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
 	if EventBus.total_acquired_experience == 0 :
 		EventBus.intro = true
@@ -34,13 +31,30 @@ func _ready() :
 		touchscreen_available = false
 		%Brody.input_enabled = true
 		
+		# MAX DARKNESS BUT NOT DEADABLE :
+		EventBus.total_current_darkness = 60.0
+		
 		var cam = %BrodyCam
 		
 		# Zoom in
 		cam.zoom = Vector2(2.0, 2.0)
 		cam.offset = Vector2(24.0, -8.0)
 		
-		await get_tree().create_timer(18.0).timeout
+		var camera_tween2 = create_tween()
+		camera_tween2.tween_property(cam, "zoom", Vector2(1.5, 1.5), 6.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		await camera_tween2.finished
+		var camera_tween3 = create_tween().set_parallel(true)
+		camera_tween3.tween_property(cam, "zoom", Vector2(1.75, 1.75), 8.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween3.tween_property(cam, "offset", Vector2(30, -20), 8.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		await camera_tween3.finished
+		var camera_tween4 = create_tween().set_parallel(true)
+		camera_tween4.tween_property(cam, "zoom", Vector2(1.5, 1.5), 4.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween4.tween_property(cam, "offset", Vector2(0, 0), 4.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		await camera_tween4.finished
+		
 		# Tween camera back to default
 		var camera_tween = create_tween()
 		camera_tween.tween_property(cam, "zoom", Vector2(1.5, 1.5), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
@@ -162,6 +176,13 @@ func _on_worm_bat_chance_timeout() -> void:
 
 func _on_darkness_checker_timeout() -> void:
 	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + (darkness_increase_per_second / 10), 1.0, 100.0)
+
+# CAMERA RESET :
+func camera_reset() :
+	%BrodyCam.enabled = true
+	touchscreen_available = true
+	%TouchScreenLayer.visible = true
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # SPAWN WEAPONS / SIDEKICKS :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -211,22 +232,61 @@ func _on_new_dungeon_crawl() :
 	%Brody.global_position = new_room.global_position + Vector2(124, 16)
 	%RoomsToBeDeleted.call_deferred("add_child", new_room)
 	
-	# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
-	%DarknessChecker.start()
-	%ShadowSpawnTimer.start()
-	%TorchWraithChance.start()
-	%WormBatChance.start()
-	# Brody Cam :
-	%BrodyCam.zoom = Vector2(1.5, 1.5)
-	# Give Brody His Torch/Weapons :
-	%Torch.visible = true
-	# Turn ON DarknessLayer Effect :
-	%DarknessLayer.visible = true
-	# Turn ON GameplayUI :
-	%GameplayUI.visible = true
-	# Enable ability for Touchscreen Controls (Temporarily) 
-	touchscreen_available = true
-	%TouchScreenLayer.visible = true
+	# If Intro Then Wait 6 Seconds Then Explain Darkness, Speed, Gold, XP :
+	if EventBus.player_level < 3 :
+		EventBus.intro = true
+		touchscreen_available = false
+		%TouchScreenLayer.visible = false
+		%BrodyCam.enabled = false
+		while EventBus.last_room == false :
+			await get_tree().create_timer(0.05).timeout
+		var helper = preload("res://Scenes/dungeon_helper.tscn").instantiate()
+		helper.global_position = %Brody.global_position + Vector2(0, 0)
+		call_deferred("add_child", helper)
+		
+		await get_tree().create_timer(17.0).timeout
+		# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
+		%DarknessChecker.start()
+		%ShadowSpawnTimer.start()
+		%TorchWraithChance.start()
+		%WormBatChance.start()
+		# Brody Cam :
+		%BrodyCam.zoom = Vector2(1.5, 1.5)
+		# Give Brody His Torch/Weapons :
+		%Torch.visible = true
+		# Turn ON DarknessLayer Effect :
+		%DarknessLayer.visible = true
+		# Turn ON GameplayUI :
+		%GameplayUI.visible = true
+		# Enable ability for Touchscreen Controls (Temporarily) 
+		touchscreen_available = true
+		%TouchScreenLayer.visible = true
+		%TorchJoystickBase.visible = true
+		%TorchJoystickSprite.visible = true
+		EventBus.intro = false
+		
+	else :
+		# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
+		%DarknessChecker.start()
+		%ShadowSpawnTimer.start()
+		%TorchWraithChance.start()
+		%WormBatChance.start()
+		# Brody Cam :
+		%BrodyCam.zoom = Vector2(1.5, 1.5)
+		# Give Brody His Torch/Weapons :
+		%Torch.visible = true
+		# Turn ON DarknessLayer Effect :
+		%DarknessLayer.visible = true
+		# Turn ON GameplayUI :
+		%GameplayUI.visible = true
+		# Enable ability for Touchscreen Controls (Temporarily) 
+		touchscreen_available = true
+		%TouchScreenLayer.visible = true
+		%TorchJoystickBase.visible = true
+		%TorchJoystickSprite.visible = true
+
+func new_dungeon_touchscreen() :
+	%TouchScreenPress1.visible = true
 	%TorchJoystickBase.visible = true
 	%TorchJoystickSprite.visible = true
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -240,6 +300,9 @@ func _on_spawning_sanctuary() :
 	%RoomsToBeDeleted.call_deferred("add_child", new_sanctuary)
 
 func _set_sanctuary_properties() :
+	# If Intro Set Camera :
+	if EventBus.intro == true :
+		%BrodyCam.enabled = false
 	# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
 	%ShadowSpawnTimer.stop()
 	%TorchWraithChance.stop()
