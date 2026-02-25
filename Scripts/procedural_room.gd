@@ -240,7 +240,7 @@ func diversify_room_with_scalers() :
 	floor_interactable_spawn_chance = randf_range(0.05, 0.015) # (where 1.0 is 100% chance per floor tile)
 	max_wall_interactable_amount = randi_range(4000, 8000) # The max possible amount of wall interactables / number of floor tiles
 	stepladder_spawn_rate = 9 # Where 1 is every time and the greater from 1 it is, the less likely aka 1/2 or 1/3 or 1/8...
-	raggedize_level = randf_range(0.5, 1.0) # Default at 0.25 where 0.0 is highly uniform and 1 is VERY ragged
+	raggedize_level = randf_range(0.5, 0.8) # Default at 0.25 where 0.0 is highly uniform and 1 is VERY ragged
 	walls_obstruction_frequency = randf_range(0.03, 0.075) # Default at 0.05, where 1.0 is a much higher noise chance of spawning negative wall obstructions compared to 0 (next to none)
 	chamber_amount = randi_range(1, 7) # Default between 3 and 6, where more means a bigger cave
 	narrowness_widen_value = randf_range(1.5, 3.5) # Default is 2, the higher, the wider each narrower part of a cave
@@ -1521,7 +1521,7 @@ func monster_spawns() -> void:
 		spawn_monster(monster_name)
 
 func spawn_monster(monster_name: String) -> void:
-	var scene_path = "res://Scenes/%s.tscn" % monster_name
+	var scene_path = "res://Scenes/Monsters/%s.tscn" % monster_name
 	var monster = load(scene_path).instantiate()
 	
 	var rand = randi_range(0, %SpawnPoints.get_child_count() - 1)
@@ -1828,7 +1828,7 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 			#Money Goblin :
 			if randi_range(1, 24) == 12 :
 				print ("yayay")
-				var new_money_goblin = preload("res://Scenes/money_goblin.tscn").instantiate()
+				var new_money_goblin = preload("res://Scenes/Monsters/money_goblin.tscn").instantiate()
 				var rand = randi_range(1, spawnpoints)
 				var spawn_node = %SpawnPoints.get_child(rand - 1)
 				new_money_goblin.global_position = spawn_node.global_position + Vector2(0, -200)

@@ -101,53 +101,55 @@ func _physics_process(delta: float) -> void:
 
 func fireatwill_hand1() :
 	while get_parent().visible == true and shadow == false :
-		var witch_projectile1 = preload("res://Scenes/witch_projectile.tscn").instantiate()
+		var witch_projectile1 = preload("res://Scenes/Monsters/witch_projectile.tscn").instantiate()
 		witch_projectile1.elemental_type = hand1_element 
 		witch_projectile1.position = %WitchHand1.position  + Vector2(-11, 0)
 		%WitchHand1.call_deferred("add_child", witch_projectile1)
 		#witch_projectile1.draw_back()
 		await get_tree().create_timer(2).timeout
-		if shadow == false :
-			push_hand_forward(%WitchHand1)
-			# Reparent :
-			var arrow_position = witch_projectile1.global_position
-			var target_angle = witch_projectile1.global_rotation_degrees
-			await get_tree().create_timer(0.05).timeout
-			%WitchHand1.remove_child(witch_projectile1)
-		
-		
-			#witch_projectile1.top_level = true
-			get_tree().current_scene.add_child(witch_projectile1)
-			witch_projectile1.global_position = arrow_position
+		if is_instance_valid(witch_projectile1) :
+			if shadow == false :
+				push_hand_forward(%WitchHand1)
+				# Reparent :
+				var arrow_position = witch_projectile1.global_position
+				var target_angle = witch_projectile1.global_rotation_degrees
+				await get_tree().create_timer(0.05).timeout
+				%WitchHand1.remove_child(witch_projectile1)
 			
-			# LOOSE :
-			witch_projectile1.apply_angle(target_angle)
-			witch_projectile1.fly()
+			
+				#witch_projectile1.top_level = true
+				get_tree().current_scene.add_child(witch_projectile1)
+				witch_projectile1.global_position = arrow_position
+				
+				# LOOSE :
+				witch_projectile1.apply_angle(target_angle)
+				witch_projectile1.fly()
 
 func fireatwill_hand2() :
 	while get_parent().visible == true and shadow == false:
-		var witch_projectile2 = preload("res://Scenes/witch_projectile.tscn").instantiate()
+		var witch_projectile2 = preload("res://Scenes/Monsters/witch_projectile.tscn").instantiate()
 		witch_projectile2.elemental_type = hand2_element 
 		witch_projectile2.position = %WitchHand2.position + Vector2(10, -2)
 		%WitchHand2.call_deferred("add_child", witch_projectile2)
 		#witch_projectile2.draw_back()
 		await get_tree().create_timer(2).timeout
-		if shadow == false :
-			push_hand_forward(%WitchHand2)
-			# Reparent :
-			var arrow_position = witch_projectile2.global_position
-			var target_angle = witch_projectile2.global_rotation_degrees
-			await get_tree().create_timer(0.05).timeout
-			%WitchHand2.remove_child(witch_projectile2)
-			
-			
-			#witch_projectile1.top_level = true
-			get_tree().current_scene.add_child(witch_projectile2)
-			witch_projectile2.global_position = arrow_position
-			
-			# LOOSE :
-			witch_projectile2.apply_angle(target_angle)
-			witch_projectile2.fly()
+		if is_instance_valid(witch_projectile2) :
+			if shadow == false :
+				push_hand_forward(%WitchHand2)
+				# Reparent :
+				var arrow_position = witch_projectile2.global_position
+				var target_angle = witch_projectile2.global_rotation_degrees
+				await get_tree().create_timer(0.05).timeout
+				%WitchHand2.remove_child(witch_projectile2)
+				
+				
+				#witch_projectile1.top_level = true
+				get_tree().current_scene.add_child(witch_projectile2)
+				witch_projectile2.global_position = arrow_position
+				
+				# LOOSE :
+				witch_projectile2.apply_angle(target_angle)
+				witch_projectile2.fly()
 
 func push_hand_forward(hand: Node2D, distance: float = 6.0, duration: float = 0.15) -> void:
 	# Forward in local space is along the pivot's -X (because of your look_at + flip logic)
@@ -330,8 +332,19 @@ func _on_witch_hit_box_area_entered(area: Area2D) -> void:
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 32, 1.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
+	
+	elif area.name == "brody_shield" :
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		flash_actual_white()
 
 func flash_white() :
+	var tween = create_tween()
+	tween.tween_property(material, "shader_parameter/tint_amount", 1.0, 0.05)
+	tween.tween_property(material, "shader_parameter/tint_amount", 0.12, 0.1)
+
+func flash_actual_white() :
 	var tween = create_tween()
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)

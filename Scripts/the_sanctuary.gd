@@ -2,13 +2,16 @@ extends Node2D
 
 func _ready() :
 	EventBus.save_game()
+	EventBus.sanctuary = true
 	EventBus.total_current_darkness = 0
 	%SanctuaryMainFloor.add_to_group("floors")
 	arrows_pointing()
 	wagon_signs_pointing()
+	tutorial_replay_floating()
 	
 	if EventBus.intro == true :
 		play_sanctuary_tutorial()
+
 
 func play_sanctuary_tutorial() :
 	%IntroCam.enabled = true
@@ -147,6 +150,9 @@ func play_sanctuary_tutorial() :
 	
 	get_tree().current_scene.get_node("Brody/BrodyCam").enabled = true
 	%IntroCam.enabled = false
+	EventBus.currently_interacting = false
+	EventBus.intro = false
+
 
 func _on_torch_and_shield_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" : 
@@ -162,6 +168,7 @@ func _on_torch_and_shield_body_exited(body: Node2D) -> void:
 		if get_node_or_null("%TorchAndShieldSprite") :
 			%TorchAndShieldSprite.play("default")
 
+
 func arrows_pointing() :
 	# Torch & Shield Arrow Tween:
 	while %TorchAndShieldArrow.visible == true :
@@ -172,6 +179,7 @@ func arrows_pointing() :
 		var torch_and_shield_down_tween = create_tween()
 		torch_and_shield_down_tween.tween_property(%TorchAndShieldArrow, "position", Vector2(177.0, -9.0), 0.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		await torch_and_shield_down_tween.finished
+
 
 func wagon_signs_pointing():
 	while %clives_wagon.visible:
@@ -193,3 +201,29 @@ func wagon_signs_pointing():
 		
 		await down_ex.finished
 		await down_dollar.finished
+
+
+func tutorial_replay_floating() :
+	while %TutorialReplay.visible:
+		var up_ex = create_tween()
+		up_ex.tween_property(%TutorialReplay, "position", %TutorialReplay.position + Vector2(2, -4), 2.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		# Wait for le both tweens du finieash :
+		await up_ex.finished
+		
+		var down_ex = create_tween()
+		down_ex.tween_property(%TutorialReplay, "position", %TutorialReplay.position - Vector2(2, -4), 2.4).set_trans(Tween.TRANS_SINE)#.set_ease(Tween.EASE_OUT)
+		
+		await down_ex.finished
+
+
+func _on_tutorial_replay_body_entered(body: Node2D) -> void:
+	if body.name == "Brody" :
+		%TutorialReplaySprite.play("highlighted")
+		EventBus.tutorial_replay_available = true
+
+
+func _on_tutorial_replay_body_exited(body: Node2D) -> void:
+	if body.name == "Brody" and is_instance_valid(%TutorialReplaySprite) :
+		%TutorialReplaySprite.play("default")
+		EventBus.tutorial_replay_available = false

@@ -8,6 +8,10 @@ func _on_body_entered(body: Node2D) -> void:
 		body.ogre_slashed(self)
 		body.massive_knockback(self)
 
+func _on_area_entered(area: Area2D) -> void:
+	if area.name == "brody_shield":
+		queue_free()
+
 func fly() :
 	var direction = Vector2.RIGHT.rotated(global_rotation)
 	var distance = 600

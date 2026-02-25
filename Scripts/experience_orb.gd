@@ -66,6 +66,7 @@ func _physics_process(delta: float) -> void:
 func _on_pickup_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
 		EventBus.emit_signal("experience_orb_acquired")
+		body.pickup_shake()
 		queue_free()
 
 

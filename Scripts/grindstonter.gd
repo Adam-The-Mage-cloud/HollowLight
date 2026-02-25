@@ -175,9 +175,18 @@ func _on_grind_hit_box_area_entered(area: Area2D) -> void:
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 32, 1.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
-
+	elif area.name == "brody_shield" :
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		flash_actual_white()
 
 func flash_white() :
+	var tween = create_tween()
+	tween.tween_property(material, "shader_parameter/tint_amount", 1.0, 0.05)
+	tween.tween_property(material, "shader_parameter/tint_amount", 0.12, 0.1)
+
+func flash_actual_white() :
 	var tween = create_tween()
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)

@@ -341,22 +341,52 @@ func _on_wolf_hitbox_area_area_entered(area: Area2D) -> void:
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 32, 1.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
+	elif area.name == "brody_shield" :
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		flash_actual_white()
+
 
 func _on_bite_area_body_entered(body: Node2D) -> void:
-	if body.name == "Brody" and get_parent().visible == true and shadow == false :
+	if body.name == "Brody" and get_parent().visible == true and shadow == false and body.brody_hittable == true :
 		target_captured = true
-		while target_captured == true and body.brody_saved == false :
-			body.global_position = %BiteArea.global_position
-			if randi_range(1, 32) == 12 :
+		
+		# Smooth pull tween
+		var t = create_tween()
+		t.set_trans(Tween.TRANS_SINE)
+		t.set_ease(Tween.EASE_OUT)
+		
+		# Pull Brody toward the bite point over 0.25 seconds
+		t.tween_property(body, "global_position", %BiteArea.global_position, 0.25)
+		
+		# Wait for the tween to finish
+		await t.finished
+		
+		# Now hold him in place gently (no teleporting)
+		while target_captured and not body.brody_saved:
+			# Soft follow instead of hard snap
+			body.global_position = body.global_position.lerp(%BiteArea.global_position, 0.4)
+			
+			# Random escape chance
+			if randi_range(1, 32) == 12:
 				target_captured = false
+		
 			await get_tree().process_frame
-		body.massive_knockback(self)
+		
 		body.slowed()
+
 
 func flash_white() :
 	var tween = create_tween()
+	tween.tween_property(material, "shader_parameter/tint_amount", 1.0, 0.05)
+	tween.tween_property(material, "shader_parameter/tint_amount", 0.12, 0.1)
+
+func flash_actual_white() :
+	var tween = create_tween()
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
+
 
 func burn() :
 	var tween1 = create_tween()

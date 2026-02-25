@@ -263,11 +263,24 @@ func _on_crab_hit_box_area_entered(area: Area2D) -> void:
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 32, 1.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
+	
+	elif area.name == "brody_shield" :
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		flash_actual_white()
+
 
 func flash_white() :
 	var tween = create_tween()
+	tween.tween_property(material, "shader_parameter/tint_amount", 1.0, 0.05)
+	tween.tween_property(material, "shader_parameter/tint_amount", 0.12, 0.1)
+
+func flash_actual_white() :
+	var tween = create_tween()
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
+
 
 func burn() :
 	var tween1 = create_tween()
@@ -325,7 +338,7 @@ func _on_pincer_activation_area_body_entered(body: Node2D) -> void:
 
 
 func _on_pincer_r_area_body_entered(body: Node2D) -> void:
-	if body.name == "Brody" and get_parent().visible == true and shadow == false :
+	if body.name == "Brody" and get_parent().visible == true and shadow == false and body.brody_hittable == true :
 		if randi_range(1,2) == 1 : # PUNCH BACK :
 			body.crab_punch(self)
 		else : # Grab and Spin :

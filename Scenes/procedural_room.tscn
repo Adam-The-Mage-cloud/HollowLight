@@ -145,7 +145,8 @@ texture_region_size = Vector2i(14, 34)
 
 [sub_resource type="TileSet" id="TileSet_vmobn"]
 tile_size = Vector2i(10, 10)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 67108865
+physics_layer_0/collision_mask = 67108865
 sources/80 = SubResource("TileSetAtlasSource_qnclt")
 sources/81 = SubResource("TileSetAtlasSource_3cvy4")
 sources/82 = SubResource("TileSetAtlasSource_5aitk")
@@ -968,7 +969,8 @@ separation = Vector2i(1, 1)
 
 [sub_resource type="TileSet" id="TileSet_t264i"]
 tile_size = Vector2i(10, 10)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 67108865
+physics_layer_0/collision_mask = 67108865
 sources/70 = SubResource("TileSetAtlasSource_4yqbe")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sity7"]

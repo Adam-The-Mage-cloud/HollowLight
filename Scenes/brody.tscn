@@ -427,6 +427,8 @@ shape = SubResource("CircleShape2D_niouw")
 [node name="BrodyMapStuckCollision" type="Area2D" parent="."]
 unique_name_in_owner = true
 visible = false
+collision_layer = 67108864
+collision_mask = 67108864
 
 [node name="BrodyCollisionCheck" type="CollisionShape2D" parent="BrodyMapStuckCollision"]
 use_parent_material = true
@@ -436,6 +438,7 @@ shape = SubResource("CircleShape2D_niouw")
 
 [node name="Y-SortPivot" type="Marker2D" parent="."]
 y_sort_enabled = true
+use_parent_material = true
 position = Vector2(1, 9)
 
 [node name="BrodySprite" type="AnimatedSprite2D" parent="Y-SortPivot"]
@@ -444,7 +447,7 @@ y_sort_enabled = true
 use_parent_material = true
 position = Vector2(0, -11.999565)
 sprite_frames = SubResource("SpriteFrames_lgt8o")
-animation = &"shadow"
+animation = &"stationary"
 autoplay = "stationary"
 
 [node name="antenna" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite"]
@@ -468,6 +471,7 @@ offset = Vector2(0, 10.5)
 
 [node name="Shadow" type="Sprite2D" parent="Y-SortPivot"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(-2, -7)
 texture = ExtResource("5_s6v4d")
 script = ExtResource("4_cd0il")

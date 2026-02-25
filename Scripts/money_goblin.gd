@@ -39,6 +39,7 @@ func _ready() -> void:
 	realistic_movement()
 	breathing()
 	shadow_form()
+	drop_backpack_gold_randomly()
 	target = global_position + Vector2(randf_range(-50, 50), randf_range(-50, 50))
 	brody_position = global_position + Vector2(0, randf_range(-3050, 3050)) 
 
@@ -193,6 +194,11 @@ func _on_goblin_hit_box_area_entered(area: Area2D) -> void:
 		var knockback_movement2 = create_tween()
 		knockback_movement2.tween_property(self, "position", position + knockback_direction2 * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		drop_backpack_gold()
+	elif area.name == "brody_shield" :
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		flash_white()
 
 func burn() :
 	var tween1 = create_tween()
@@ -228,12 +234,29 @@ func drop_backpack_gold() :
 		gold_piece.launch_radius = 7.0
 		get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", gold_piece)
 		await get_tree().create_timer(0.008).timeout
-	
+
+func drop_backpack_gold_randomly() :
+	# Drop Gold :
+	while (1) :
+		var random_gold_amount = randi_range(1, 3)
+		for i in random_gold_amount : 
+			var gold_piece = preload("res://Scenes/Currencies/gold_piece.tscn").instantiate()
+			gold_piece.global_position = %visibility_collision.global_position
+			gold_piece.launch_radius = 7.0
+			get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", gold_piece)
+			await get_tree().create_timer(0.008).timeout
+		await get_tree().create_timer(0.5).timeout
+
 
 func flash_white() :
 	var tween = create_tween()
+	tween.tween_property(material, "shader_parameter/tint_amount", 1.0, 0.05)
+	tween.tween_property(material, "shader_parameter/tint_amount", 0.12, 0.1)
+
+func flash_actual_white() :
+	var tween = create_tween()
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
-	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.6)
+	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
 
 
 func drop_currency() :

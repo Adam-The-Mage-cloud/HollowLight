@@ -1,13 +1,13 @@
 [gd_scene load_steps=36 format=3 uid="uid://cpj832hfxpjwi"]
 
-[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_63123"]
-[ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_d7c30"]
-[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_qnec0"]
-[ext_resource type="Script" uid="uid://beeiurjcksqoh" path="res://Scripts/money_goblin.gd" id="3_txws5"]
-[ext_resource type="Texture2D" uid="uid://dx4cq403w2yy8" path="res://Artwork/Money_Goblin.png" id="5_63123"]
+[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_k21im"]
+[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_ppl55"]
+[ext_resource type="Script" uid="uid://beeiurjcksqoh" path="res://Scripts/money_goblin.gd" id="3_4yrxw"]
+[ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="4_qy165"]
+[ext_resource type="Texture2D" uid="uid://dx4cq403w2yy8" path="res://Artwork/Money_Goblin.png" id="5_msl3c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qnec0"]
-shader = ExtResource("1_63123")
+shader = ExtResource("1_k21im")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 shader_parameter/tint_amount = 0.0
 shader_parameter/flash_amount = 0.0
@@ -15,7 +15,7 @@ shader_parameter/flash_color = Vector3(1, 1, 1)
 shader_parameter/susceptible_flash_amount = 0.0
 shader_parameter/susceptible_flash_color = Vector3(0.2, 0.03, 0.03)
 shader_parameter/burn_amount = 0.0
-shader_parameter/burn_noise = ExtResource("2_qnec0")
+shader_parameter/burn_noise = ExtResource("2_ppl55")
 shader_parameter/burn_edge_width = 1.0
 shader_parameter/burn_edge_color = Vector3(0.95, 0.4, 0.09)
 shader_parameter/char_width = 0.08
@@ -24,7 +24,7 @@ shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_63123"]
-shader = ExtResource("1_d7c30")
+shader = ExtResource("4_qy165")
 shader_parameter/apply = false
 shader_parameter/amount = 0.5
 shader_parameter/wave_frequency = 0.2
@@ -33,7 +33,7 @@ shader_parameter/wave_longitude = 0.01
 shader_parameter/wave_speed = 2.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qnec0"]
-atlas = ExtResource("5_63123")
+atlas = ExtResource("5_msl3c")
 region = Rect2(39, 29, 4, 4)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qnec0"]
@@ -48,7 +48,7 @@ animations = [{
 }]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_txws5"]
-shader = ExtResource("1_d7c30")
+shader = ExtResource("4_qy165")
 shader_parameter/apply = false
 shader_parameter/amount = 0.5
 shader_parameter/wave_frequency = 0.2
@@ -57,7 +57,7 @@ shader_parameter/wave_longitude = 0.01
 shader_parameter/wave_speed = 2.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_txws5"]
-atlas = ExtResource("5_63123")
+atlas = ExtResource("5_msl3c")
 region = Rect2(45, 29, 4, 4)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hnd7p"]
@@ -72,7 +72,7 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hnd7p"]
-atlas = ExtResource("5_63123")
+atlas = ExtResource("5_msl3c")
 region = Rect2(27, 1, 30, 36)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_c6p0n"]
@@ -205,7 +205,7 @@ size = Vector2(231.93118, 140)
 [node name="money_goblin" type="Area2D"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_qnec0")
-script = ExtResource("3_txws5")
+script = ExtResource("3_4yrxw")
 
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true

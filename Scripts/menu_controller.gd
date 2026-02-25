@@ -477,6 +477,7 @@ func _on_clive_item_3_button_pressed() -> void:
 func _on_close_menu_button_pressed() -> void:
 	# SHOPS :
 	EventBus.save_game()
+	EventBus.currently_interacting = false
 	%DashButton.visible = true
 	%TouchScreenPress2.visible = true
 	# > For Clives Shop :

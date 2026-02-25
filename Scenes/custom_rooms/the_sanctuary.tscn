@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=107 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
 [ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
@@ -21,12 +21,14 @@
 [ext_resource type="Texture2D" uid="uid://c01hqtrljk5ta" path="res://Artwork/Menus/AdventureMenu/Tent_Choose_Adventure_Page.png" id="19_5uj6u"]
 [ext_resource type="Texture2D" uid="uid://b63h8f8foljwk" path="res://Artwork/Menus/End_Of_Dungeon_Items.png" id="19_r38ba"]
 [ext_resource type="Texture2D" uid="uid://bxamsscnkd23u" path="res://Artwork/Menus/Clives Shop/Clive_s_Wagon_Flying_Sword.png" id="21_5rehm"]
+[ext_resource type="Texture2D" uid="uid://dlms66tqresj3" path="res://Artwork/Tutorial_Replay_Highlighted.png" id="21_ir7tl"]
 [ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="21_rxw26"]
 [ext_resource type="Texture2D" uid="uid://gvn6ngyfj4bq" path="res://Artwork/Cat_Air_Balloon.png" id="22_g8da1"]
 [ext_resource type="Texture2D" uid="uid://cn740secgxnfs" path="res://Artwork/Orb_Outfits.png" id="23_jw7cl"]
 [ext_resource type="Texture2D" uid="uid://cel72unrveckk" path="res://Artwork/Goblin.png" id="24_dumca"]
 [ext_resource type="Texture2D" uid="uid://1swlwkrgxoby" path="res://Artwork/Positive_Particle.png" id="24_jw7cl"]
 [ext_resource type="Texture2D" uid="uid://dq14dnh50xbj" path="res://Artwork/Orb.png" id="26_tyu56"]
+[ext_resource type="Texture2D" uid="uid://b4ono545808rb" path="res://Artwork/Tutorial_Replay.png" id="28_tyu56"]
 
 [sub_resource type="Gradient" id="Gradient_lps57"]
 offsets = PackedFloat32Array(0.38222224, 1)
@@ -251,6 +253,35 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0oo8m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ir7tl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bi17"]
+atlas = ExtResource("28_tyu56")
+region = Rect2(0, 0, 12, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pp1pn"]
+atlas = ExtResource("21_ir7tl")
+region = Rect2(0, 0, 12, 21)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ue0b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bi17")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pp1pn")
+}],
+"loop": true,
+"name": &"highlighted",
+"speed": 5.0
+}]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_52ghv"]
 load_path = "res://.godot/imported/End_Of_Dungeon_Menu.png-46bf14b231f9f253262f573808d8cb1c.ctex"
@@ -6344,6 +6375,22 @@ z_index = 1
 position = Vector2(177, -9)
 texture = ExtResource("10_bsgyg")
 
+[node name="TutorialReplay" type="Area2D" parent="."]
+unique_name_in_owner = true
+z_index = 4
+position = Vector2(6, -16)
+
+[node name="TutorialReplayCollision" type="CollisionShape2D" parent="TutorialReplay"]
+position = Vector2(116, -10)
+scale = Vector2(1.1754409, 1.1754409)
+shape = SubResource("CircleShape2D_ir7tl")
+
+[node name="TutorialReplaySprite" type="AnimatedSprite2D" parent="TutorialReplay"]
+unique_name_in_owner = true
+position = Vector2(116, -11)
+sprite_frames = SubResource("SpriteFrames_3ue0b")
+autoplay = "default"
+
 [node name="Tutorials" type="Node2D" parent="."]
 z_index = 40
 position = Vector2(-511, 54)
@@ -6585,3 +6632,5 @@ sprite_frames = SubResource("SpriteFrames_o3yq5")
 
 [connection signal="body_entered" from="TorchAndShield" to="." method="_on_torch_and_shield_body_entered"]
 [connection signal="body_exited" from="TorchAndShield" to="." method="_on_torch_and_shield_body_exited"]
+[connection signal="body_entered" from="TutorialReplay" to="." method="_on_tutorial_replay_body_entered"]
+[connection signal="body_exited" from="TutorialReplay" to="." method="_on_tutorial_replay_body_exited"]

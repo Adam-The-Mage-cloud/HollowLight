@@ -40,6 +40,10 @@ func _on_body_entered(body: Node2D) -> void:
 		body.ogre_slashed(self)
 		body.massive_knockback(self)
 
+func _on_area_entered(area: Area2D) -> void:
+	if area.name == "brody_shield":
+		queue_free()
+
 func fly() :
 	var max_deviation = deg_to_rad(16) # Max random deviation (in degrees)
 	var deviation = randf_range(-max_deviation, max_deviation)

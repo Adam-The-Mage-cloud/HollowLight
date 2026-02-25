@@ -1,4 +1,4 @@
-[gd_scene load_steps=197 format=4 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=192 format=4 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
@@ -54,9 +54,6 @@
 [ext_resource type="Texture2D" uid="uid://oumbcd3qxmkv" path="res://Artwork/Menus/Clives Shop/Unlocked_Tick.png" id="43_nqvgg"]
 [ext_resource type="Texture2D" uid="uid://bnnil1ip1c4bv" path="res://Artwork/Menus/Clives Shop/Clive_s_Wagon_Shop_Equipped.png" id="44_c8pbd"]
 [ext_resource type="Texture2D" uid="uid://cufu30m5h2vca" path="res://Artwork/Menus/Clives Shop/Clive_s_Wagon_Shop_Unequipped.png" id="45_pp62r"]
-[ext_resource type="PackedScene" uid="uid://ce7juc6ps3kwc" path="res://Scenes/brody_shield.tscn" id="53_n0tam"]
-[ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="55_6w8yb"]
-[ext_resource type="Script" uid="uid://5h7mssea0cx1" path="res://Scripts/brody_cam.gd" id="56_4rx7b"]
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 3
@@ -13857,21 +13854,6 @@ fill = 1
 fill_from = Vector2(0.48598132, 0.5140187)
 fill_to = Vector2(1, 1)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4rx7b"]
-atlas = ExtResource("55_6w8yb")
-region = Rect2(4, 45, 12, 27)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_c63pe"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4rx7b")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [sub_resource type="Curve2D" id="Curve2D_bb2iq"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -16.081474, -22.160593, 0, 0, 0, 0, 343.1082, -20.399, 0, 0, 0, 0, 343.8688, 163.98128, 0, 0, 0, 0, -16.271622, 163.39407, 0, 0, 0, 0, -16.65192, -22.160593)
@@ -14695,22 +14677,11 @@ position = Vector2(148.8969, 57.826347)
 collision_layer = 7
 collision_mask = 7
 
-[node name="brody_shield" parent="Brody" instance=ExtResource("53_n0tam")]
-unique_name_in_owner = true
-y_sort_enabled = true
-position = Vector2(0, 3)
-
 [node name="Torch" parent="Brody" instance=ExtResource("3_eoier")]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(-0.65, 3.5)
 rotation = 3.2253685
-
-[node name="ShieldStrap" type="AnimatedSprite2D" parent="Brody"]
-unique_name_in_owner = true
-position = Vector2(-5.8968964, 1.1736526)
-sprite_frames = SubResource("SpriteFrames_c63pe")
-autoplay = "default"
 
 [node name="RegularRoomPath" type="Path2D" parent="Brody"]
 position = Vector2(-155.62364, -61.112957)
@@ -14739,7 +14710,6 @@ drag_left_margin = 0.0
 drag_top_margin = 0.0
 drag_right_margin = 0.0
 drag_bottom_margin = 0.0
-script = ExtResource("56_4rx7b")
 
 [node name="FogVignette" type="Sprite2D" parent="Brody/BrodyCam"]
 visible = false

@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://ce7juc6ps3kwc"]
+
+[ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="1_5e5ks"]
+[ext_resource type="Script" uid="uid://b8yrdnykxjg7g" path="res://Scripts/brody_shield.gd" id="1_bcpb1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5e5ks"]
+size = Vector2(17, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcpb1"]
+atlas = ExtResource("1_5e5ks")
+region = Rect2(4, 12, 24, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kr4xc"]
+atlas = ExtResource("1_5e5ks")
+region = Rect2(17, 45, 24, 27)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bcpb1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcpb1")
+}],
+"loop": true,
+"name": &"DefaultShield",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kr4xc")
+}],
+"loop": true,
+"name": &"Holstered",
+"speed": 5.0
+}]
+
+[node name="brody_shield" type="Area2D"]
+z_index = -1
+texture_filter = 1
+script = ExtResource("1_bcpb1")
+
+[node name="ShieldCollision" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+use_parent_material = true
+position = Vector2(0.50000024, -1.9999995)
+shape = SubResource("RectangleShape2D_5e5ks")
+disabled = true
+
+[node name="ShieldSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(0, -4.5)
+sprite_frames = SubResource("SpriteFrames_bcpb1")
+animation = &"Holstered"

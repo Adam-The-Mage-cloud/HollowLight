@@ -1,12 +1,12 @@
 [gd_scene load_steps=36 format=3 uid="uid://cnx8kj5ldb85k"]
 
-[ext_resource type="Texture2D" uid="uid://hy6ltbrijhps" path="res://Artwork/Dire_Wolf.png" id="1_f8eah"]
-[ext_resource type="Script" uid="uid://ds8gnm6t5605i" path="res://Scripts/dire_wolf.gd" id="1_lbcxa"]
-[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_uqdjj"]
-[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_wok0b"]
+[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_gsga4"]
+[ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_dvi4l"]
+[ext_resource type="Script" uid="uid://ds8gnm6t5605i" path="res://Scripts/dire_wolf.gd" id="3_ls8ti"]
+[ext_resource type="Texture2D" uid="uid://hy6ltbrijhps" path="res://Artwork/Dire_Wolf.png" id="4_k8mu5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wok0b"]
-shader = ExtResource("1_uqdjj")
+shader = ExtResource("1_gsga4")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 shader_parameter/tint_amount = 0.0
 shader_parameter/flash_amount = 0.0
@@ -14,7 +14,7 @@ shader_parameter/flash_color = Vector3(0.01, 0.01, 0.01)
 shader_parameter/susceptible_flash_amount = 0.0
 shader_parameter/susceptible_flash_color = Vector3(0.2, 0.03, 0.03)
 shader_parameter/burn_amount = 0.0
-shader_parameter/burn_noise = ExtResource("2_wok0b")
+shader_parameter/burn_noise = ExtResource("2_dvi4l")
 shader_parameter/burn_edge_width = 1.0
 shader_parameter/burn_edge_color = Vector3(0.95, 0.4, 0.09)
 shader_parameter/char_width = 0.08
@@ -42,19 +42,19 @@ size = Vector2(47.5, 23.5)
 size = Vector2(41, 20)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wok0b"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(103, 35, 42, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yvbul"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(103, 6, 42, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y5xut"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(29, 6, 42, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vd0eh"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(29, 35, 42, 28)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3a31v"]
@@ -86,7 +86,7 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_li07g"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(9, 68, 71, 31)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hov43"]
@@ -101,19 +101,19 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3a31v"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(154, 70, 66, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_te42h"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(155, 70, 66, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6ipta"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(156, 70, 66, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aa1p8"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(86, 70, 66, 28)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_te42h"]
@@ -142,7 +142,7 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hov43"]
-atlas = ExtResource("1_f8eah")
+atlas = ExtResource("4_k8mu5")
 region = Rect2(155, 4, 70, 31)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6ipta"]
@@ -232,7 +232,7 @@ z_index = 2
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_wok0b")
-script = ExtResource("1_lbcxa")
+script = ExtResource("3_ls8ti")
 
 [node name="OnFireLight" type="PointLight2D" parent="."]
 unique_name_in_owner = true

@@ -212,25 +212,26 @@ func _on_slash_area_body_exited(body: Node2D) -> void:
 func fire_at_will() :
 	while get_parent().visible == true:
 		bow_or_melee = -1
-		var goblin_arrow = preload("res://Scenes/goblin_arrow.tscn").instantiate()
+		var goblin_arrow = preload("res://Scenes/Monsters/goblin_arrow.tscn").instantiate()
 		goblin_arrow.position = %GoblinRanged.position + Vector2(-3, 0)
 		%GoblinRanged.call_deferred("add_child", goblin_arrow)
 		
 		#goblin_arrow.draw_back()
 		await get_tree().create_timer(2).timeout
 		# Reparent :
-		var arrow_position = goblin_arrow.global_position
-		var target_angle = goblin_arrow.global_rotation_degrees
-		await get_tree().create_timer(0.05).timeout
-		%GoblinRanged.remove_child(goblin_arrow)
-		
-		#goblin_arrow.top_level = true
-		get_tree().current_scene.add_child(goblin_arrow)
-		goblin_arrow.global_position = arrow_position
-		
-		# LOOSE :
-		goblin_arrow.apply_angle(target_angle)
-		goblin_arrow.fly()
+		if is_instance_valid(goblin_arrow) :
+			var arrow_position = goblin_arrow.global_position
+			var target_angle = goblin_arrow.global_rotation_degrees
+			await get_tree().create_timer(0.05).timeout
+			%GoblinRanged.remove_child(goblin_arrow)
+			
+			#goblin_arrow.top_level = true
+			get_tree().current_scene.add_child(goblin_arrow)
+			goblin_arrow.global_position = arrow_position
+			
+			# LOOSE :
+			goblin_arrow.apply_angle(target_angle)
+			goblin_arrow.fly()
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -392,8 +393,19 @@ func _on_goblin_hit_box_area_entered(area: Area2D) -> void:
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 32, 1.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
+		
+	elif area.name == "brody_shield" :
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		flash_actual_white()
 
 func flash_white() :
+	var tween = create_tween()
+	tween.tween_property(material, "shader_parameter/tint_amount", 1.0, 0.05)
+	tween.tween_property(material, "shader_parameter/tint_amount", 0.12, 0.1)
+
+func flash_actual_white() :
 	var tween = create_tween()
 	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)

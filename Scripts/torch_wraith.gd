@@ -81,6 +81,10 @@ func _on_area_entered(area: Area2D) -> void:
 		# Take away 1/3 of health and some of appearance
 		health -= 1
 		burn_away()
+	elif area.name == "brody_shield" :
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func burn_away() :
 	# Flash effect

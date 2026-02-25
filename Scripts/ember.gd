@@ -2,7 +2,7 @@ extends Area2D
 
 var player_tracking = false
 var target
-var speed = 60
+var speed = 24
 
 
 func _ready():
@@ -38,6 +38,7 @@ func _on_body_exited(body: Node2D) -> void:
 func _on_pickup_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
 		EventBus.emit_signal("ember_acquired")
+		body.pickup_shake()
 		queue_free()
 
 func ember_animation():

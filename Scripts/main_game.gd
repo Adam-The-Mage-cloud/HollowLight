@@ -1,11 +1,11 @@
 extends Node2D
 
-var Shadow_Cloud = preload("res://Scenes/the_shadow.tscn")
+var Shadow_Cloud = preload("res://Scenes/Monsters/the_shadow.tscn")
 
 var is_touchscreen = true
 var touchscreen_available = true
 
-var darkness_increase_per_second = 4.5
+var darkness_increase_per_second = 3.0
 
 var room_finished = false
 
@@ -153,7 +153,7 @@ func _on_torch_wraith_chance_timeout() -> void:
 	if room_finished == false :
 		%RegularFollowPath.progress_ratio = randf_range(0, 1)
 		if randi_range(1, 5) == 3 :
-			var TorchWraith = preload("res://Scenes/torch_wraith.tscn").instantiate()
+			var TorchWraith = preload("res://Scenes/Monsters/torch_wraith.tscn").instantiate()
 			TorchWraith.global_position = %RegularFollowPath.global_position
 			TorchWraith.target = %Brody
 			%MonstersToBeGone.add_child(TorchWraith)
@@ -164,7 +164,7 @@ func _on_worm_bat_chance_timeout() -> void:
 	if room_finished == false :
 		%RegularFollowPath.progress_ratio = randf_range(0, 1)
 		if randi_range(1, 5) == 2 :
-			var WormBat = preload("res://Scenes/worm_bat.tscn").instantiate()
+			var WormBat = preload("res://Scenes/Monsters/worm_bat.tscn").instantiate()
 			WormBat.global_position = %RegularFollowPath.global_position
 			WormBat.target = %Brody
 			%MonstersToBeGone.add_child(WormBat)
@@ -231,6 +231,8 @@ func _on_new_dungeon_crawl() :
 	new_room.z_index = 0
 	%Brody.global_position = new_room.global_position + Vector2(124, 16)
 	%RoomsToBeDeleted.call_deferred("add_child", new_room)
+	
+	EventBus.sanctuary = false
 	
 	# If Intro Then Wait 6 Seconds Then Explain Darkness, Speed, Gold, XP :
 	if EventBus.player_level < 3 :

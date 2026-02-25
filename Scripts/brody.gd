@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 var squashed = false
 var brody_hittable = true
+var shaking = false
+var camera_shaking = false
 
 # Touchscreen :
 var touch_move = Vector2.ZERO
@@ -12,13 +14,19 @@ var momentum_tail = Vector2.ZERO
 var last_direction = Vector2.ZERO
 var steering_change_timer = 0.0
 var speed = 4000.0
+var shield_slowdown_speed = 1.0
 var accel = 900.0
 var friction = 700.0
-var max_speed = 80.0
+var max_speed = 72.0
+var knockback_velocity: Vector2 = Vector2.ZERO
+var knockback_decay = 64.0
+var knockback_control_reduction = 0.64
 
 var brody_saved = false
 var last_safe_location = Vector2.ZERO
 var last_location = Vector2.ZERO
+var safe_frames = 0
+const SAFE_FRAMES_REQUIRED = 4 
 
 var weapon_equipped = false
 var torch_equipped = true
@@ -33,24 +41,24 @@ var dash_available = true
 var dashing = false
 
 func _ready():
-	_on_check_brody_location_okay()
+	#_on_check_brody_location_okay()
 	breathing()
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if input_enabled == true:
 
 		# ---------------------------------------------------------
 		# Bounce lock timer
 		# ---------------------------------------------------------
 		if bounce_lock > 0.0:
-			bounce_lock -= _delta
+			bounce_lock -= delta
 
 		# ---------------------------------------------------------
 		# Tool switching
 		# ---------------------------------------------------------
 		if Input.is_action_just_pressed("tool_switch"):
-			initialise_swap_tool()
+			initialise_shield_equip()
 
 		# ---------------------------------------------------------
 		# Dash
@@ -73,7 +81,7 @@ func _physics_process(_delta: float) -> void:
 		last_direction = direction
 
 		if steering_change_timer > 0.0:
-			steering_change_timer -= _delta
+			steering_change_timer -= delta
 
 		# ---------------------------------------------------------
 		# Animation switching
@@ -109,25 +117,37 @@ func _physics_process(_delta: float) -> void:
 				velocity *= 0.96
 
 		# ---------------------------------------------------------
-		# Movement control (reduced during bounce)
+		# Movement control (reduced during bounce or knockback)
 		# ---------------------------------------------------------
 		var control = 0.24
+
+		# Reduce control during bounce
 		if bounce_lock > 0.0:
 			control = lerp(control, 0.0, 0.4)
 
-		velocity = velocity.lerp(direction * max_speed, control)
+		# Reduce control during knockback
+		if knockback_velocity.length() > 1.0:
+			control *= knockback_control_reduction
+
+		# Apply steering
+		velocity = velocity.lerp(direction * max_speed * shield_slowdown_speed, control)
 
 		# ---------------------------------------------------------
-		# Momentum tail (follow‑through)
+		# Apply knockback
+		# ---------------------------------------------------------
+		velocity += knockback_velocity
+
+		# Decay knockback
+		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, knockback_decay * delta)
+		
+		# ---------------------------------------------------------
+		# Momentum tail
 		# ---------------------------------------------------------
 		if momentum_tail.length() > 0.1:
 			velocity += momentum_tail
 			momentum_tail *= 0.94
-
-		# ---------------------------------------------------------
-		# Store pre‑collision velocity
-		# ---------------------------------------------------------
-		var pre_velocity = velocity
+			
+		var pre_velocity = velocity 
 
 		# ---------------------------------------------------------
 		# Move the body
@@ -230,6 +250,25 @@ func _physics_process(_delta: float) -> void:
 			t.tween_property(%BrodySprite, "rotation_degrees", 0, 0.12)
 			await t.finished
 			bouncing = false
+	# --- safety block at the end ---
+	var overlapping = %BrodyMapStuckCollision.get_overlapping_areas().size() > 0
+	var on_floor = is_on_floor_tile()
+
+	# If Brody is safe, increment counter
+	if not overlapping and on_floor:
+		safe_frames += 1
+		if safe_frames >= SAFE_FRAMES_REQUIRED:
+			last_safe_location = global_position
+			brody_saved = false
+
+	# If Brody is unsafe, restore and reset counter
+	elif (overlapping or not on_floor) and not dashing:
+		global_position = last_safe_location
+		velocity = Vector2.ZERO
+		knockback_velocity = Vector2.ZERO
+		brody_saved = true
+		safe_frames = 0
+
 
 # Movement INPUT :
 func get_move_direction() -> Vector2:
@@ -308,7 +347,7 @@ func dash_ability():
 				
 			await get_tree().create_timer(0.04).timeout
 			speed = 4000
-			max_speed = 80.0
+			max_speed = 72.0
 			
 			# Reset state
 			%BrodyHitbox.scale = Vector2(0.475, 0.475)
@@ -328,19 +367,17 @@ func moving():
 			await get_tree().create_timer(0.2).timeout
 
 
-func initialise_swap_tool():
-	if weapon_equipped == false:
-		torch_equipped = false
-		weapon_equipped = true
-		%Torch.now_unequipped()
-		#%Weapon.minitorch_on()
-		#%Weapon.now_equipped()
-	else:
-		weapon_equipped = false
-		torch_equipped = true
-		#%Weapon.now_unequipped()
-		#%Weapon.minitorch_off()
-		%Torch.now_equipped()
+func initialise_shield_equip():
+	if %brody_shield.equipped == false : # Equip :
+		%brody_shield.equipped = true
+		%brody_shield.unequipped = false
+		%brody_shield.z_index = 1
+		%ShieldStrap.visible = false
+		%brody_shield.shield_collision()
+	else : # Unequip :
+		%brody_shield.equipped = false
+		%ShieldStrap.visible = true
+		%brody_shield.z_index = -1
 
 
 func _on_dash_cooldown_timeout() -> void:
@@ -407,6 +444,71 @@ func crushed():
 		squashed = false
 
 
+func pickup_shake() :
+	if shaking == false :
+		shaking = true
+		var original = %BrodySprite.position
+		for i in 1:
+			%BrodySprite.position.x = original.x + randf_range(-0.5, 0.5)
+			await get_tree().create_timer(0.03).timeout
+		%BrodySprite.position = original
+		shaking = false
+
+
+func camera_shake():
+	if camera_shaking:
+		return
+	
+	camera_shaking = true
+	var original = %BrodyCam.offset
+	
+	var tween = create_tween()
+	
+	tween.tween_method(
+		func(v):
+			%BrodyCam.offset = original + Vector2(randf_range(-v, v), randf_range(-v, v))
+			, 4.0, 0.0, 0.25
+	)
+	
+	tween.tween_property(%BrodyCam, "offset", original, 0.1)
+	
+	await tween.finished
+	camera_shaking = false
+
+func camera_shake_small(intensity = 1.0):
+	if camera_shaking:
+		return
+	
+	camera_shaking = true
+	var original = %BrodyCam.offset
+	intensity = randf_range(0.2, 1.0)
+	
+	# Clamp intensity so enemies can't break the camera
+	intensity = clamp(intensity, 0.2, 1.0)
+	
+	# Max shake amount (scaled by intensity)
+	var max_shake = 1.5 * intensity   # very subtle
+	
+	var tween = create_tween()
+	
+	tween.tween_method(
+		func(v):
+			# v goes from max_shake → 0
+			var shake = Vector2(
+				randf_range(-v, v),
+				randf_range(-v, v)
+			)
+			%BrodyCam.offset = original + shake
+			,
+			max_shake, 0.0, 0.18 + (0.05 * intensity)  # duration scales slightly
+	)
+	
+	tween.tween_property(%BrodyCam, "offset", original, 0.08)
+	
+	await tween.finished
+	camera_shaking = false
+
+
 func blood_splatter():
 	%BloodSplatterParticles.emitting = true
 
@@ -439,6 +541,7 @@ func caught_by_wormbat(wormbat):
 		%Shadow.apply_darkness_damage()
 		flash_white()
 		blood_splatter()
+		camera_shake_small()
 		basic_knockback(wormbat)
 
 
@@ -450,6 +553,7 @@ func got_torch_wraithed(torch_wraith):
 		%Shadow.apply_darkness_damage()
 		flash_white()
 		blood_splatter()
+		camera_shake_small()
 		basic_knockback(torch_wraith)
 
 
@@ -460,12 +564,9 @@ func ogre_slashed(ogre):
 		EventBus.total_current_darkness += 2
 		flash_white()
 		blood_splatter()
+		camera_shake()
 		if currently_climbing == false :
-			global_position.y += randf_range(-3, 3)
-			global_position.x += randf_range(-3, 3)
-			var knockback_direction = (global_position - ogre.global_position).normalized()
-			var knockback_movement = create_tween()
-			knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			basic_knockback(ogre)
 			crushed()
 
 
@@ -476,47 +577,67 @@ func slowed() :
 		EventBus.total_current_darkness += 2
 		flash_white()
 		blood_splatter()
+		camera_shake_small()
 		var initial_speed = speed
-		speed = speed / 3
+		speed = speed * 0.33
 		await get_tree().create_timer(0.8).timeout
 		speed = initial_speed
 
 
 func basic_knockback(entity):
-	if brody_hittable == true :
+	if brody_hittable:
 		brody_hittable = false
+		flash_white()
 		%AttackedCooldown.start()
-		if currently_climbing == false :
-			var knockback_direction = (global_position - entity.global_position).normalized()
-			var knockback_movement = create_tween()
-			knockback_movement.tween_property(self, "position", position + knockback_direction * 2, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		var dir = (global_position - entity.global_position).normalized()
+		if %brody_shield.equipped == false :
+			knockback_velocity += dir * 24   # small push
+			camera_shake_small()
+		else :
+			knockback_velocity += dir * 8
 
 
-func massive_knockback(entity) :
-	if brody_hittable == true :
+func massive_knockback(entity):
+	if brody_hittable:
 		brody_hittable = false
+		flash_white()
+		camera_shake()
 		%AttackedCooldown.start()
-		var knockback_direction = (global_position - entity.global_position).normalized()
-		var knockback_movement = create_tween()
-		knockback_movement.tween_property(self, "position", position + knockback_direction * 12, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		var dir = (global_position - entity.global_position).normalized()
+		if %brody_shield.equipped == false :
+			knockback_velocity += dir * 49  # medium push
+		else :
+			knockback_velocity += dir * 14
 
 
-func crab_punch(entity) :
-	if brody_hittable == true :
+func crab_punch(entity):
+	if brody_hittable:
 		brody_hittable = false
+		flash_white()
 		%AttackedCooldown.start()
-		var knockback_direction = (global_position - entity.global_position).normalized()
-		var knockback_movement = create_tween()
-		knockback_movement.tween_property(self, "position", position + knockback_direction * 24, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		var dir = (global_position - entity.global_position).normalized()
+		if %brody_shield.equipped == false :
+			knockback_velocity += dir * 36  # strong push
+			camera_shake_small()
+		else :
+			knockback_velocity += dir * 12  # strong push
 
 
-func grindstone_bounce(entity) :
-	if brody_hittable == true :
+func grindstone_bounce(entity):
+	if brody_hittable:
 		brody_hittable = false
+		flash_white()
 		%AttackedCooldown.start()
-		var knockback_direction = (global_position - entity.global_position).normalized()
-		var knockback_movement = create_tween()
-		knockback_movement.tween_property(self, "position", position + knockback_direction * 36, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		var dir = (global_position - entity.global_position).normalized()
+		if %brody_shield.equipped == false :
+			knockback_velocity += dir * 64  # huge push
+			camera_shake()
+		else :
+			knockback_velocity += dir * 16  # huge push
 
 
 # Beacon Reactions :
@@ -535,35 +656,24 @@ func _on_touch_screen_press_2_move_stick_changed(vec: Variant) -> void:
 
 func _on_dash_button_pressed() -> void:
 	dash_ability()
-	if EventBus.dungeon_crawl_button_available == true:
-		EventBus.new_dungeon_crawl()
-		make_darkness_visible()
-	elif EventBus.clives_shop_interactable == true:
-		EventBus.clives_shop_available()
+	if EventBus.sanctuary == true :
+		if EventBus.currently_interacting == false :
+			if EventBus.dungeon_crawl_button_available == true:
+				EventBus.new_dungeon_crawl()
+				make_darkness_visible()
+			elif EventBus.clives_shop_interactable == true:
+				EventBus.currently_interacting = true
+				EventBus.clives_shop_available()
+			elif EventBus.tutorial_replay_available == true :
+				EventBus.intro = true
+				EventBus.currently_interacting = true
+				$"..".delete_current_memory()
+				$".."._ready()
 
 
 func _on_bounce_cooldown_timeout() -> void:
 	bounce_cooldown_finished = true
 
-
-func _on_check_brody_location_okay() :
-	while is_instance_valid(self) :
-			# Check if player stuck inside something :
-			#if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_bodies().size() > 0 :
-				#$".".global_position = last_safe_location
-			if last_location == $".".global_position and %BrodyMapStuckCollision.get_overlapping_areas().size() > 0 :
-				$".".global_position = last_safe_location
-				brody_saved = true
-			# Now check if player is not touching a floor tile :
-			if is_on_floor_tile() == false :
-				if dashing == false :
-					$".".global_position = last_safe_location
-			#if %FloorDetector.is_colliding() == false :
-				#$".".global_position = last_safe_location
-			else :
-				last_safe_location = $".".global_position
-				brody_saved = false
-			await get_tree().process_frame
 
 func is_on_floor_tile() -> bool:
 	var check_pos = global_position + Vector2(0, 0)

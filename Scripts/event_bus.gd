@@ -64,6 +64,7 @@ var mystic_sword_purchased = false
 var winged_torch_purchased = false
 
 # Rooms Completed / ENDGAME DECIDER :
+var sanctuary = false
 var intro = false
 var current_room
 var game_over_chance = 0.0
@@ -71,7 +72,9 @@ var last_room = false
 var total_rooms = 0.0
 
 # Sanctuary Buttons :
+var currently_interacting = false
 var dungeon_crawl_button_available = false
+var tutorial_replay_available = false
 var clives_shop_interactable = false
 
 # Theme Indicator

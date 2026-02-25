@@ -1,14 +1,20 @@
 extends Area2D
 
-var equipped = true
-var minitorch_now_on = true
+# Flip thresholds (hysteresis)
+const FLIP_LEFT_THRESHOLD  = -0.25
+const FLIP_RIGHT_THRESHOLD = 0.25
+const FLIP_DOWN_THRESHOLD  = 0.45
+const FLIP_UP_THRESHOLD    = -0.45
+
+var equipped = false
+var unequipped = true
 
 var original_position = Vector2.ZERO
 
-# Touchscreen :
+# Touchscreen:
 var touch_stick = Vector2.ZERO
 
-# All Variables Needed For Solid Torch Movement With Joystick / Mouse :
+# Shield movement variables
 var area_centre
 var target_position
 var direction
@@ -19,106 +25,130 @@ var target_angle
 var angle_difference_to
 var heaviness
 var rotational_easer
-var left_side
 
-# Torch Properties Itself :
-var speed = 10.0
-var max_radius = 9.0             # Max bounds the torch can leave
+# Angular inertia
+var angular_velocity = 0.0
+
+# Shield properties
+var speed = 9.0
+var max_radius = 14.0
 var return_speed = 8.0
 
-# Torch Stamina System & Weighty Feel :
-var rotation_stamina = 0.66        # Maximum Stamina
-var stamina_drain_rate = 0.24      # Stamina Drain rate (when rotated quickly)
-var stamina_recover_rate = 8.0    # Stamina Recovery rate (when not being rotated quickly)
-var min_heaviness = 0.08          # How heavy it feels at 0 stamina
+# Stamina system
+var rotation_stamina = 0.4
+var stamina_drain_rate = 0.55
+var stamina_recover_rate = 2.0
+var min_heaviness = 0.6
 
-# Variables Needed For Flipping The Torch Once Axis Requirements Met :
-var flip_state = 1.0             # 1 = normal, -1 = flipped
-var flip_timer = 0.0             # Counts how long we've been in the flip zone
-var flip_delay = 0.12        # Indicates how long before flipping (tweak this)
-var flip_threshold = 0.2        # Indicates how downward before flip starts
-var flip_speed = 4.0             # Indicates how fast the flip animation happens
+# Flip states
+var facing_left = false
+var facing_down = false
 
-func _ready() :
-	EventBus.new_crawl.connect(check_torch_theme)
+func _ready():
+	pass
+
 
 func _physics_process(delta: float) -> void:
-	area_centre = %Brody.global_position
-	
-	if equipped == false :
+	if not equipped:
+		if not unequipped:
+			unequip()
 		return
-	# direction towards given mouse or stick indication :
+	
+	%Brody.shield_slowdown_speed = 0.64
+	area_centre = %Brody.global_position
+
+	# Direction from input
 	direction = _get_aim_direction(area_centre)
 	if direction == Vector2.ZERO:
 		return
-		
-	# distance from centre :
+
+	# Distance from Brody
 	distance = _get_aim_distance(area_centre, max_radius)
-	
-	# Smooths the position of the torch
+
+	# Smooth positional movement
 	target_position = area_centre + direction * distance
-	
-	# More smoothing when aiming vertically
 	verticality = abs(direction.y)
 	vertical_smoothness = lerp(return_speed, return_speed * 0.15, verticality)
 	global_position = global_position.lerp(target_position, delta * vertical_smoothness)
-	
-	# Weighty Stamina Fatigue System :
-	
-	# Target angle from aim direction 
+
+	# -------------------------
+	#   SHIELD ROTATION LOGIC
+	# -------------------------
+
+	# Target angle
 	target_angle = direction.angle()
-	
-	# How far off we currently are
+
+	# Angular dead-zone (shields shouldn't micro-adjust)
+	var deadzone = 0.15
+	if abs(angle_difference(rotation, target_angle)) < deadzone:
+		target_angle = rotation
+
+	# Limit shield rotation arc (shields don't rotate behind the body)
+	var max_arc = deg_to_rad(110)
+	var wrapped = wrapf(target_angle, -PI, PI)
+	target_angle = clamp(wrapped, -max_arc, max_arc)
+
+	# Forward bias (shields naturally want to face forward)
+	var forward_bias = 0.1
+	target_angle = lerp_angle(target_angle, 0.0, forward_bias * delta)
+
+	# Angle difference
 	angle_difference_to = abs(angle_difference(rotation, target_angle))
-	
-	# Rotation Stamina :
-	# How aggressively the player is trying to rotate the torch
+
+	# Stamina drain / recovery
 	var rotation_speed_request = angle_difference_to / max(delta, 0.0001)
-	
-	# Drain stamina when rotating fast :
 	if rotation_speed_request > 1.0:
-		if %brody_shield.equipped == true :
-			rotation_stamina -= stamina_drain_rate * 8 * delta
 		rotation_stamina -= stamina_drain_rate * delta
 	else:
-		if %brody_shield.equipped == false :
-			rotation_stamina += stamina_recover_rate * 2 * delta
 		rotation_stamina += stamina_recover_rate * delta
-		
+
 	rotation_stamina = clamp(rotation_stamina, 0.0, 1.0)
-	
-	# Stamina affects heaviness (lower stamina = heavier)
+
+	# Stamina affects heaviness
 	var stamina_factor = lerp(min_heaviness, 1.0, rotation_stamina)
-	
-	# Heaviness Feel Logic :
+
 	# Heaviness based on angle difference
 	heaviness = clamp(1.0 - (angle_difference_to / PI), 0.2, 1.0)
-	
-	# Stamina system and heaviness feel
 	heaviness *= stamina_factor
-	
-	# Easing rotation of the torch :
-	rotational_easer = (1.0 - pow(0.001, delta * speed)) * heaviness
-	
+
+	# -------------------------
+	#   ANGULAR INERTIA
+	# -------------------------
+
+	var angle_diff = angle_difference(rotation, target_angle)
+
+	# Apply torque proportional to angle difference
+	angular_velocity += angle_diff * heaviness * delta * speed
+
+	# Angular damping (friction)
+	angular_velocity *= 0.85
+
 	# Apply rotation
-	rotation = lerp_angle(rotation, target_angle, rotational_easer)
-	
-	# Wrist Flip (cool epic ninjago skills)
-	left_side = direction.x < -flip_threshold
-	
-	if left_side:
-		flip_timer += delta
-	else:
-		flip_timer = 0.0
-		
-	if left_side and flip_timer > flip_delay:
-		flip_state = -1.0
-	elif not left_side:
-		flip_state = 1.0
-		
-	scale.y = lerp(scale.y, flip_state, delta * flip_speed)
-	
-	# fuck me that was complicated as shite 
+	rotation += angular_velocity
+
+	# -------------------------
+	#   FLIP LOGIC
+	# -------------------------
+
+	var x_offset = direction.x
+	var y_offset = direction.y
+
+	# Horizontal flip
+	if x_offset < FLIP_LEFT_THRESHOLD and not facing_left:
+		facing_left = true
+		scale.x = -abs(scale.x)
+	elif x_offset > FLIP_RIGHT_THRESHOLD and facing_left:
+		facing_left = false
+		scale.x = abs(scale.x)
+
+	# Vertical flip (only if your sprite needs it)
+	if y_offset > FLIP_DOWN_THRESHOLD and not facing_down:
+		facing_down = true
+		scale.y = -abs(scale.y)
+	elif y_offset < FLIP_UP_THRESHOLD and facing_down:
+		facing_down = false
+		scale.y = abs(scale.y)
+
 
 
 func _get_aim_direction(centre: Vector2) -> Vector2:
@@ -155,6 +185,38 @@ func _get_aim_distance(centre: Vector2, max_r: float) -> float:
 	# Mouse distance
 	var mouse_dist = (get_global_mouse_position() - centre).length()
 	return clamp(mouse_dist, 0.0, max_r)
+
+func shield_collision() :
+	%ShieldCollision.disabled = false
+
+func unequip() :
+	%Brody.shield_slowdown_speed = 1.0
+	unequipped = true
+	%ShieldCollision.disabled = true
+	
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.set_ease(Tween.EASE_OUT)
+	
+	# Anticipation move
+	tween.tween_property(self, "position", Vector2(4, -2), 0.08)
+	tween.parallel().tween_property(self, "scale", Vector2(1.1, 0.9), 0.08) # squash/stretch
+	
+	# Flick Towards back
+	tween.tween_property(self, "position", Vector2(-2, 5), 0.12)
+	tween.parallel().tween_property(self, "rotation_degrees", -60, 0.12)
+	tween.parallel().tween_property(self, "scale", Vector2(0.9, 1.1), 0.12) # stretch on swing
+	
+	# Adjust shield as needed
+	tween.tween_property(self, "position", Vector2(0, 3), 0.10)
+	tween.parallel().tween_property(self, "rotation_degrees", randf_range(-15, 15), 0.10)
+	tween.parallel().tween_property(self, "scale", Vector2(1.0, 1.0), 0.10)
+	
+	# Switch to animation
+	tween.finished.connect(func():
+		%ShieldSprite.play("Holstered")
+	)
+
 
 func get_lost() -> void:
 	original_position = position
@@ -195,33 +257,6 @@ func now_unequipped() :
 func now_equipped() :
 	equipped = true
 
-func minitorch_on() :
-	%TorchSprite.visible = false
-	%MiniTorch.visible = true
-	%MainFlameSecondary.emitting = false
-	%MainFlameSecondary.emitting = false
-	
-func minitorch_off() :
-	%MiniTorch.visible = false
-	%TorchSprite.visible = true
-	%MainFlameSecondary.emitting = true
-	%MainFlameSecondary.emitting = true
-
 
 func _on_touch_screen_layer_stick_changed(vec: Variant) -> void:
 	touch_stick = vec
-
-func check_torch_theme() :
-	if EventBus.current_theme == 1 or EventBus.current_theme == 4 : # Then Normal :
-		%TorchLight.energy = 10.95
-		%TorchLight.texture.width = 96
-		%TorchLight.texture.height = 96
-	elif EventBus.current_theme == 2 :
-		%TorchLight.energy = 12.0
-		%TorchLight.texture.width = 128
-		%TorchLight.texture.height = 128
-	elif EventBus.current_theme == 3 : # Hell so we need to alter it to be darker
-		print("done")
-		%TorchLight.energy = 2.0
-		%TorchLight.texture.width = 96
-		%TorchLight.texture.height = 96
