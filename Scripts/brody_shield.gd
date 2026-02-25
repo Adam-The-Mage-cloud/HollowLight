@@ -45,8 +45,13 @@ var facing_left = false
 var facing_down = false
 
 func _ready():
-	pass
+	check_shield()
 
+func check_shield() :
+	if EventBus.shield_acquired == "none" :
+		visible = false
+	elif EventBus.shield_acquired == "default" :
+		visible = true
 
 func _physics_process(delta: float) -> void:
 	if not equipped:
@@ -54,7 +59,7 @@ func _physics_process(delta: float) -> void:
 			unequip()
 		return
 	
-	%Brody.shield_slowdown_speed = 0.64
+	%Brody.shield_slowdown_speed = 0.8
 	area_centre = %Brody.global_position
 
 	# Direction from input

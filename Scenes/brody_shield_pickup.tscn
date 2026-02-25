@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://c53rlngcbxwev"]
+
+[ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_fwony"]
+[ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="1_se7qn"]
+[ext_resource type="Script" uid="uid://ddj4nnpqb4fgq" path="res://Scripts/brody_shield_pickup.gd" id="2_ur0cn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ur0cn"]
+shader = ExtResource("1_fwony")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
+shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Vector3(1, 0.75, 0.3)
+shader_parameter/susceptible_flash_amount = 0.0
+shader_parameter/susceptible_flash_color = Vector3(1, 0.75, 0.3)
+shader_parameter/burn_amount = 0.0
+shader_parameter/burn_edge_width = 0.15
+shader_parameter/burn_edge_color = Vector3(0.95, 0.4, 0.09)
+shader_parameter/char_width = 0.08
+shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
+shader_parameter/crumble_strength = 1.0
+shader_parameter/crumble_fade = 0.6
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_se7qn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwony"]
+atlas = ExtResource("1_se7qn")
+region = Rect2(4, 16, 24, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ur0cn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwony")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_68c2m"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ur0cn"]
+gradient = SubResource("Gradient_68c2m")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="brody_shield_pickup" type="Area2D"]
+z_index = 4
+texture_filter = 1
+material = SubResource("ShaderMaterial_ur0cn")
+script = ExtResource("2_ur0cn")
+
+[node name="ShieldPickupCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_se7qn")
+
+[node name="ShieldPickupSprite" type="AnimatedSprite2D" parent="."]
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_ur0cn")
+autoplay = "default"
+
+[node name="CliveShadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(1, 11)
+scale = Vector2(2, 0.5)
+texture = SubResource("GradientTexture2D_ur0cn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

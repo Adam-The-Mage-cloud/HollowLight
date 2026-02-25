@@ -44,6 +44,18 @@ var death_played = false
 # Uniques (one-time purchases) :
 var mystic_sword_price = 775
 var winged_torch_price = 1725
+# Outfits (one-time purchases) :
+var gladiator_outfit_price = 400
+var liquified_outfit_price = 750
+var samurai_outfit_price = 1200
+# Torches (one-time purchases) :
+var walltorch_torch_price = 160
+var wizardstaff_torch_price = 2375
+# Shields (one-time purchases) :
+var bluevariant_shield_price = 300
+var nurnincrest_shield_price = 625
+var holyeffigee_shield_price = 1575
+
 
 # Currency Variables :
 var total_current_darkness = 0.0
@@ -58,10 +70,27 @@ var player_level: int = 1
 
 # Currently Equipped Player Inventory :
 var equipped_sidekick
+var shield_acquired
+var equipped_torch
+var equipped_brodyoutfit
 
 # PURCHASES :
+# > Clives Shop :
 var mystic_sword_purchased = false
 var winged_torch_purchased = false
+
+# > Cat Balloonist :
+# >> Outfits :
+var gladiator_brody_purchased = false
+var liquified_brody_purchased = false
+var samurai_brody_purchased = false
+# >> Torches :
+var walltorch_torch_purchased = false
+var wizardstaff_torch_purchased = false
+# >> Shields :
+var bluevariant_shield_purchased = false
+var nurnincrest_shield_purchased = false
+var holyeffigee_shield_purchased = false
 
 # Rooms Completed / ENDGAME DECIDER :
 var sanctuary = false
@@ -76,6 +105,7 @@ var currently_interacting = false
 var dungeon_crawl_button_available = false
 var tutorial_replay_available = false
 var clives_shop_interactable = false
+var catballoon_shop_interactable = false
 
 # Theme Indicator
 var current_theme = 1
@@ -175,7 +205,7 @@ func spawn_the_sanctuary() :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # OPEN SHOPS :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# > Clives Shop (Uniques for Gems & Gold) :
+# > Clives Shop (Uniques for Gold) :
 func clives_shop_available() :
 	EventBus.open_clives_shop.emit()
 
@@ -190,6 +220,7 @@ func get_save_data() -> Dictionary:
 		"total_acquired_experience": total_acquired_experience,
 		"total_acquired_goldpieces": total_acquired_goldpieces,
 		"sidekick": equipped_sidekick,
+		"equipped_shield": shield_acquired,
 		
 		# Shop Purchases :
 		"mystic_sword_purchased": mystic_sword_purchased,
@@ -201,6 +232,7 @@ func apply_save_data(data: Dictionary):
 	total_acquired_experience = data.get("total_acquired_experience", 0)
 	total_acquired_goldpieces = data.get("total_acquired_goldpieces", 0)
 	equipped_sidekick = data.get("sidekick", "none")
+	shield_acquired = data.get("equipped_shield", "none")
 	
 	# Shop Purchases :
 	mystic_sword_purchased = data.get("mystic_sword_purchased", false)

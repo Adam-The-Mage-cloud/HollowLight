@@ -220,6 +220,7 @@ func _on_dungeon_ended() :
 	# Turn Off ability for Touchscreen Controls (Temporarily) 
 	touchscreen_available = false
 	%TouchScreenLayer.visible = false
+	%ShieldButton.visible = false
 
 func _on_new_dungeon_crawl() :
 	# Delete Previous Instances (e.g. Sanctuary) :
@@ -265,6 +266,7 @@ func _on_new_dungeon_crawl() :
 		%TouchScreenLayer.visible = true
 		%TorchJoystickBase.visible = true
 		%TorchJoystickSprite.visible = true
+		%ShieldButton.visible = true
 		EventBus.intro = false
 		
 	else :
@@ -286,6 +288,7 @@ func _on_new_dungeon_crawl() :
 		%TouchScreenLayer.visible = true
 		%TorchJoystickBase.visible = true
 		%TorchJoystickSprite.visible = true
+		%ShieldButton.visible = true
 
 func new_dungeon_touchscreen() :
 	%TouchScreenPress1.visible = true
@@ -323,6 +326,7 @@ func _set_sanctuary_properties() :
 	%TorchJoystickSpriteHighlighted.visible = false
 	%TorchJoystickBase.visible = false
 	%TorchJoystickSprite.visible = false
+	%ShieldButton.visible = false
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # MEMORY / LOADING :

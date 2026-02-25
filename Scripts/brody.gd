@@ -288,6 +288,18 @@ func get_move_direction() -> Vector2:
 		return Vector2.ZERO
 
 
+func pickup_shield() :
+	EventBus.shield_acquired = "default"
+	%brody_shield.check_shield()
+	%ShieldButton.visible = true
+	EventBus.save_game()
+	
+	# Display How To Use Shield Manual :
+	var manual = preload("res://Scenes/shield_manual.tscn").instantiate()
+	manual.global_position = $".".global_position + Vector2(40, 40)
+	%BrodyCam.call_deferred("add_child", manual)
+
+
 func dash_ability():
 	if input_enabled == true:
 		if dash_available == true:
@@ -669,7 +681,20 @@ func _on_dash_button_pressed() -> void:
 				EventBus.currently_interacting = true
 				$"..".delete_current_memory()
 				$".."._ready()
+			elif EventBus.catballoon_shop_interactable == true :
+				EventBus.currently_interacting = true
+				%DashButton.visible = false
+				%TouchScreenPress2.visible = false
+				var balloon_shop = preload("res://Scenes/travellers_sanctuary/ShopMenus/catballoon_shop.tscn").instantiate()
+				balloon_shop.global_position = global_position
+				%BrodyCam.call_deferred("add_child", balloon_shop)
 
+func _on_shield_button_pressed() -> void:
+	initialise_shield_equip()
+	if %brody_shield.equipped == true :
+		%ShieldHighlighted.visible = false
+	else :
+		%ShieldHighlighted.visible = true
 
 func _on_bounce_cooldown_timeout() -> void:
 	bounce_cooldown_finished = true

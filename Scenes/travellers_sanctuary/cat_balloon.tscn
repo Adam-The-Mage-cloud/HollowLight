@@ -1,0 +1,147 @@
+[gd_scene load_steps=18 format=3 uid="uid://05ohtgkusd5q"]
+
+[ext_resource type="Script" uid="uid://3w6jcivc53x4" path="res://Scripts/cat_balloon.gd" id="1_7cqin"]
+[ext_resource type="Texture2D" uid="uid://gvn6ngyfj4bq" path="res://Artwork/Cat_Air_Balloon.png" id="1_thpmb"]
+[ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="2_7cqin"]
+[ext_resource type="Texture2D" uid="uid://brqu6k6mytps1" path="res://Artwork/Cat_Air_Balloon_Highlighted.png" id="3_bymvm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bymvm"]
+size = Vector2(23, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ir7tl"]
+atlas = ExtResource("1_thpmb")
+region = Rect2(26, 95, 40, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdeg5"]
+atlas = ExtResource("3_bymvm")
+region = Rect2(30, 95, 32, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tdeg5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ir7tl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tdeg5")
+}],
+"loop": true,
+"name": &"highlighted",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dumca"]
+atlas = ExtResource("1_thpmb")
+region = Rect2(14, 7, 64, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bymvm"]
+atlas = ExtResource("3_bymvm")
+region = Rect2(14, 7, 64, 90)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bwcmw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dumca")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bymvm")
+}],
+"loop": true,
+"name": &"highlighted",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tyu56"]
+atlas = ExtResource("2_7cqin")
+region = Rect2(112, 12, 24, 35)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n8jiw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tyu56")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyjx7"]
+atlas = ExtResource("1_thpmb")
+region = Rect2(3, 112, 24, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_utwvl"]
+atlas = ExtResource("1_thpmb")
+region = Rect2(3, 101, 24, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8wv25"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyjx7")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_utwvl")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_thpmb"]
+
+[node name="cat_balloon" type="CharacterBody2D"]
+texture_filter = 1
+script = ExtResource("1_7cqin")
+
+[node name="BalloonBodyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(5.5, 3)
+shape = SubResource("RectangleShape2D_bymvm")
+
+[node name="CatBalloonBasket" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(1, -3)
+sprite_frames = SubResource("SpriteFrames_tdeg5")
+
+[node name="CatBalloon" type="AnimatedSprite2D" parent="CatBalloonBasket"]
+unique_name_in_owner = true
+position = Vector2(0, -61)
+sprite_frames = SubResource("SpriteFrames_bwcmw")
+autoplay = "default"
+
+[node name="BalloonShieldSprite" type="AnimatedSprite2D" parent="CatBalloonBasket"]
+position = Vector2(17, 10)
+sprite_frames = SubResource("SpriteFrames_n8jiw")
+
+[node name="CatBalloonist" type="AnimatedSprite2D" parent="CatBalloonBasket"]
+position = Vector2(-2, -6)
+sprite_frames = SubResource("SpriteFrames_8wv25")
+animation = &"up"
+autoplay = "up"
+
+[node name="CatBalloonShopArea" type="Area2D" parent="."]
+position = Vector2(-234, -32)
+
+[node name="CatShopCollision" type="CollisionShape2D" parent="CatBalloonShopArea"]
+position = Vector2(233, 40)
+scale = Vector2(2.3248372, 2.3248372)
+shape = SubResource("CircleShape2D_thpmb")
+
+[connection signal="body_entered" from="CatBalloonShopArea" to="." method="_on_cat_balloon_shop_area_body_entered"]
+[connection signal="body_exited" from="CatBalloonShopArea" to="." method="_on_cat_balloon_shop_area_body_exited"]

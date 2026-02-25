@@ -12,6 +12,10 @@ func _ready() :
 	if EventBus.intro == true :
 		play_sanctuary_tutorial()
 
+func spawn_default_shield() :
+	var shield_pickup = preload("res://Scenes/brody_shield_pickup.tscn").instantiate() 
+	shield_pickup.global_position = Vector2(90, 16)
+	call_deferred("add_child", shield_pickup)
 
 func play_sanctuary_tutorial() :
 	%IntroCam.enabled = true
@@ -152,6 +156,7 @@ func play_sanctuary_tutorial() :
 	%IntroCam.enabled = false
 	EventBus.currently_interacting = false
 	EventBus.intro = false
+	spawn_default_shield() 
 
 
 func _on_torch_and_shield_body_entered(body: Node2D) -> void:
