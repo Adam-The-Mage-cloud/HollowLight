@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://crssqr3d5ml2q"]
+[gd_scene load_steps=76 format=3 uid="uid://crssqr3d5ml2q"]
 
 [ext_resource type="Script" uid="uid://wdphlyeqrkxh" path="res://Scripts/procedural_room.gd" id="1_bbfjf"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4rtng"]
@@ -17,6 +17,9 @@
 [ext_resource type="Texture2D" uid="uid://dd14ejrwjs3ma" path="res://Artwork/Dungeon_Doors.png" id="8_2vw2r"]
 [ext_resource type="Texture2D" uid="uid://uskr4udq314c" path="res://Artwork/Plant_Tileset_Tinted.png" id="10_qnclt"]
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="16_eomwv"]
+[ext_resource type="Texture2D" uid="uid://cygce4ktn8jxp" path="res://Artwork/Dungeon_Doors_Hell.png" id="18_bh8nq"]
+[ext_resource type="Texture2D" uid="uid://dqcs5dukdliij" path="res://Artwork/Dungeon_Doors_Ice.png" id="19_3cvy4"]
+[ext_resource type="Texture2D" uid="uid://5vfbn1yp58ou" path="res://Artwork/Dungeon_Doors_Overgrown.png" id="20_3cvy4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qnclt"]
 texture = ExtResource("2_4rtng")
@@ -3494,6 +3497,7 @@ var unlocked = false
 func _ready() -> void:
 	unlocked = false
 	set_tint()
+	set_themed_skin()
 
 func set_tint() :
 	if EventBus.current_theme == 1 : # Reg :
@@ -3515,6 +3519,18 @@ func set_tint() :
 		material.set_shader_parameter(\"tint_color\", Color(0.0, 0.306, 0.078, 1.0))
 		# Set tint strength
 		material.set_shader_parameter(\"tint_amount\", 0.02)
+
+func set_themed_skin() :
+	var theme = EventBus.current_theme
+	
+	if theme == 1 : # Regular :
+		%DoorSprite.play(\"DarkSteel\")
+	elif theme == 2 : # Ice :
+		%DoorSprite.play(\"DarkSteelIce\")
+	elif theme == 3 : # Hell :
+		%DoorSprite.play(\"DarkSteelHell\")
+	elif theme == 4 : # Overgrown :
+		%DoorSprite.play(\"DarkSteelOvergrown\")
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vw2r"]
@@ -3528,12 +3544,60 @@ region = Rect2(2, 6, 71, 63)
 atlas = ExtResource("8_2vw2r")
 region = Rect2(74, 70, 71, 63)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qh32t"]
+atlas = ExtResource("18_bh8nq")
+region = Rect2(74, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5aitk"]
+atlas = ExtResource("19_3cvy4")
+region = Rect2(74, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xc6uf"]
+atlas = ExtResource("20_3cvy4")
+region = Rect2(74, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jv8f7"]
+atlas = ExtResource("18_bh8nq")
+region = Rect2(2, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jqat"]
+atlas = ExtResource("19_3cvy4")
+region = Rect2(2, 6, 71, 63)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_sity7"]
 atlas = ExtResource("8_2vw2r")
 region = Rect2(2, 70, 71, 63)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wf3ss"]
+atlas = ExtResource("18_bh8nq")
+region = Rect2(2, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x32xd"]
+atlas = ExtResource("19_3cvy4")
+region = Rect2(2, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpbfr"]
+atlas = ExtResource("20_3cvy4")
+region = Rect2(2, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vljhh"]
+atlas = ExtResource("20_3cvy4")
+region = Rect2(2, 6, 71, 63)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_kk80f"]
 atlas = ExtResource("8_2vw2r")
+region = Rect2(74, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2u8ts"]
+atlas = ExtResource("18_bh8nq")
+region = Rect2(74, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s86uy"]
+atlas = ExtResource("19_3cvy4")
+region = Rect2(74, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fph8"]
+atlas = ExtResource("20_3cvy4")
 region = Rect2(74, 6, 71, 63)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vmobn"]
@@ -3556,10 +3620,82 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_qh32t")
+}],
+"loop": true,
+"name": &"DarkSteelFinishDoorHell",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5aitk")
+}],
+"loop": true,
+"name": &"DarkSteelFinishDoorIce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xc6uf")
+}],
+"loop": true,
+"name": &"DarkSteelFinishDoorOvergrown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv8f7")
+}],
+"loop": true,
+"name": &"DarkSteelHell",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jqat")
+}],
+"loop": true,
+"name": &"DarkSteelIce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_sity7")
 }],
 "loop": true,
 "name": &"DarkSteelOpened",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wf3ss")
+}],
+"loop": true,
+"name": &"DarkSteelOpenedHell",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x32xd")
+}],
+"loop": true,
+"name": &"DarkSteelOpenedIce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpbfr")
+}],
+"loop": true,
+"name": &"DarkSteelOpenedOvergrown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vljhh")
+}],
+"loop": true,
+"name": &"DarkSteelOvergrown",
 "speed": 5.0
 }, {
 "frames": [{
@@ -3569,20 +3705,44 @@ animations = [{
 "loop": true,
 "name": &"DarkSteelSmashed",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2u8ts")
+}],
+"loop": true,
+"name": &"DarkSteelSmashedHell",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s86uy")
+}],
+"loop": true,
+"name": &"DarkSteelSmashedIce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3fph8")
+}],
+"loop": true,
+"name": &"DarkSteelSmashedOvergrown",
+"speed": 5.0
 }]
 
-[sub_resource type="Gradient" id="Gradient_eomwv"]
+[sub_resource type="Gradient" id="Gradient_3cvy4"]
 offsets = PackedFloat32Array(0.38867924, 0.6339623, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.17254902, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_spy0k"]
-gradient = SubResource("Gradient_eomwv")
+gradient = SubResource("Gradient_3cvy4")
 fill = 2
 fill_from = Vector2(0.48433048, 0.43874645)
 fill_to = Vector2(0.5982906, 0.8803419)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_t264i"]
-gradient = SubResource("Gradient_eomwv")
+gradient = SubResource("Gradient_3cvy4")
 fill = 2
 fill_from = Vector2(0.48433048, 0.43874645)
 fill_to = Vector2(0.94871795, 0.84900284)
@@ -3772,7 +3932,6 @@ use_parent_material = true
 position = Vector2(0, -25.830685)
 sprite_frames = SubResource("SpriteFrames_vmobn")
 animation = &"DarkSteel"
-autoplay = "DarkSteel"
 
 [node name="FinishLight1" type="PointLight2D" parent="DoorArea/DoorSprite"]
 unique_name_in_owner = true

@@ -169,8 +169,15 @@ func _ready() -> void:
 		%FinishLight3.enabled = true
 		# Emit a signal to tell the loading screen it's pretty much ready :
 		EventBus.last_room_loaded.emit()
-		#if EventBus.current_theme == 1 : # Then DarkSteel Door! :
-		%DoorSprite.play("DarkSteelFinishDoor")
+		var theme = EventBus.current_theme
+		if theme == 1 : # Then DarkSteel Door! :
+			%DoorSprite.play("DarkSteelFinishDoor")
+		elif theme == 2 : # Ice :
+			%DoorSprite.play("DarkSteelFinishDoorIce")
+		elif theme == 3 : # Hell :
+			%DoorSprite.play("DarkSteelFinishDoorHell")
+		elif theme == 4 : # Overgrown :
+			%DoorSprite.play("DarkSteelFinishDoorOvergrown")
 	
 	_choose_room_type_and_size()
 	
@@ -1804,7 +1811,15 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 		%DoorFlashingTimer.stop()
 		%DoorArea.remove_from_group("doors")
 		%DoorArea.unlocked = true
-		%DoorSprite.play("DarkSteelSmashed")
+		var theme = EventBus.current_theme
+		if theme == 1 : # Then DarkSteel Door! :
+			%DoorSprite.play("DarkSteelSmashed")
+		elif theme == 2 : # Ice :
+			%DoorSprite.play("DarkSteelSmashedIce")
+		elif theme == 3 : # Hell :
+			%DoorSprite.play("DarkSteelSmashedHell")
+		elif theme == 4 : # Overgrown :
+			%DoorSprite.play("DarkSteelSmashedOvergrown")
 		
 		if last_room == true :
 			EventBus.last_room_passed()

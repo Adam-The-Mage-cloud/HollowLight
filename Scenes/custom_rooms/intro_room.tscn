@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=4 uid="uid://bm6rtomjhckm3"]
+[gd_scene load_steps=99 format=4 uid="uid://bm6rtomjhckm3"]
 
 [ext_resource type="Script" uid="uid://dft3ru3q7paan" path="res://Scripts/intro_room.gd" id="1_w4pab"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4jg2x"]
@@ -20,6 +20,9 @@
 [ext_resource type="Texture2D" uid="uid://cvo5o65ylw2o2" path="res://Artwork/Sanctuary/Torch_&_Shield_.png" id="13_w4pab"]
 [ext_resource type="Texture2D" uid="uid://cq0xpqi7tt5pm" path="res://Artwork/Torch.png" id="15_jdmvf"]
 [ext_resource type="Shader" uid="uid://blyu1enxvn08k" path="res://Shaders/eyelid.gdshader" id="20_f45ga"]
+[ext_resource type="Texture2D" uid="uid://cygce4ktn8jxp" path="res://Artwork/Dungeon_Doors_Hell.png" id="21_qn4mf"]
+[ext_resource type="Texture2D" uid="uid://dqcs5dukdliij" path="res://Artwork/Dungeon_Doors_Ice.png" id="22_jpy61"]
+[ext_resource type="Texture2D" uid="uid://5vfbn1yp58ou" path="res://Artwork/Dungeon_Doors_Overgrown.png" id="23_i2rj4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u2t4q"]
 texture = ExtResource("2_4jg2x")
@@ -53,7 +56,8 @@ texture_region_size = Vector2i(14, 34)
 
 [sub_resource type="TileSet" id="TileSet_63l4k"]
 tile_size = Vector2i(10, 10)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 67108865
+physics_layer_0/collision_mask = 67108865
 sources/80 = SubResource("TileSetAtlasSource_u2t4q")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2roga"]
@@ -873,7 +877,8 @@ separation = Vector2i(1, 1)
 
 [sub_resource type="TileSet" id="TileSet_aqyf8"]
 tile_size = Vector2i(10, 10)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 67108865
+physics_layer_0/collision_mask = 67108865
 sources/70 = SubResource("TileSetAtlasSource_2roga")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_idi0a"]
@@ -6553,6 +6558,7 @@ var unlocked = false
 func _ready() -> void:
 	unlocked = false
 	set_tint()
+	set_themed_skin()
 
 func set_tint() :
 	if EventBus.current_theme == 1 : # Reg :
@@ -6574,28 +6580,92 @@ func set_tint() :
 		material.set_shader_parameter(\"tint_color\", Color(0.0, 0.306, 0.078, 1.0))
 		# Set tint strength
 		material.set_shader_parameter(\"tint_amount\", 0.02)
+
+func set_themed_skin() :
+	var theme = EventBus.current_theme
+	
+	if theme == 1 : # Regular :
+		%DoorSprite.play(\"DarkSteel\")
+	elif theme == 2 : # Ice :
+		%DoorSprite.play(\"DarkSteelIce\")
+	elif theme == 3 : # Hell :
+		%DoorSprite.play(\"DarkSteelHell\")
+	elif theme == 4 : # Overgrown :
+		%DoorSprite.play(\"DarkSteelOvergrown\")
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ky8y2"]
 size = Vector2(26.165543, 26.399036)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4rtng"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yqbe"]
 atlas = ExtResource("13_i2rj4")
-region = Rect2(2, 5, 71, 64)
+region = Rect2(2, 6, 71, 63)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qnclt"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_t264i"]
 atlas = ExtResource("13_i2rj4")
-region = Rect2(2, 70, 71, 64)
+region = Rect2(74, 70, 71, 63)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8s45h"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qh32t"]
+atlas = ExtResource("21_qn4mf")
+region = Rect2(74, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5aitk"]
+atlas = ExtResource("22_jpy61")
+region = Rect2(74, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xc6uf"]
+atlas = ExtResource("23_i2rj4")
+region = Rect2(74, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jv8f7"]
+atlas = ExtResource("21_qn4mf")
+region = Rect2(2, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jqat"]
+atlas = ExtResource("22_jpy61")
+region = Rect2(2, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sity7"]
 atlas = ExtResource("13_i2rj4")
-region = Rect2(74, 5, 71, 64)
+region = Rect2(2, 70, 71, 63)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_kwq6p"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wf3ss"]
+atlas = ExtResource("21_qn4mf")
+region = Rect2(2, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x32xd"]
+atlas = ExtResource("22_jpy61")
+region = Rect2(2, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpbfr"]
+atlas = ExtResource("23_i2rj4")
+region = Rect2(2, 70, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vljhh"]
+atlas = ExtResource("23_i2rj4")
+region = Rect2(2, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kk80f"]
+atlas = ExtResource("13_i2rj4")
+region = Rect2(74, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2u8ts"]
+atlas = ExtResource("21_qn4mf")
+region = Rect2(74, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s86uy"]
+atlas = ExtResource("22_jpy61")
+region = Rect2(74, 6, 71, 63)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fph8"]
+atlas = ExtResource("23_i2rj4")
+region = Rect2(74, 6, 71, 63)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c2jvk"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4rtng")
+"texture": SubResource("AtlasTexture_4yqbe")
 }],
 "loop": true,
 "name": &"DarkSteel",
@@ -6603,7 +6673,55 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qnclt")
+"texture": SubResource("AtlasTexture_t264i")
+}],
+"loop": true,
+"name": &"DarkSteelFinishDoor",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qh32t")
+}],
+"loop": true,
+"name": &"DarkSteelFinishDoorHell",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5aitk")
+}],
+"loop": true,
+"name": &"DarkSteelFinishDoorIce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xc6uf")
+}],
+"loop": true,
+"name": &"DarkSteelFinishDoorOvergrown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jv8f7")
+}],
+"loop": true,
+"name": &"DarkSteelHell",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jqat")
+}],
+"loop": true,
+"name": &"DarkSteelIce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sity7")
 }],
 "loop": true,
 "name": &"DarkSteelOpened",
@@ -6611,10 +6729,66 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8s45h")
+"texture": SubResource("AtlasTexture_wf3ss")
+}],
+"loop": true,
+"name": &"DarkSteelOpenedHell",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x32xd")
+}],
+"loop": true,
+"name": &"DarkSteelOpenedIce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpbfr")
+}],
+"loop": true,
+"name": &"DarkSteelOpenedOvergrown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vljhh")
+}],
+"loop": true,
+"name": &"DarkSteelOvergrown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kk80f")
 }],
 "loop": true,
 "name": &"DarkSteelSmashed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2u8ts")
+}],
+"loop": true,
+"name": &"DarkSteelSmashedHell",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s86uy")
+}],
+"loop": true,
+"name": &"DarkSteelSmashedIce",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3fph8")
+}],
+"loop": true,
+"name": &"DarkSteelSmashedOvergrown",
 "speed": 5.0
 }]
 
@@ -7138,9 +7312,8 @@ unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(0, -25.830685)
-sprite_frames = SubResource("SpriteFrames_kwq6p")
+sprite_frames = SubResource("SpriteFrames_c2jvk")
 animation = &"DarkSteel"
-autoplay = "DarkSteel"
 
 [node name="DoorOpenArea" type="Area2D" parent="DoorArea"]
 

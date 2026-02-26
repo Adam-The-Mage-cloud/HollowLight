@@ -257,7 +257,15 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 		%DoorBreakParticles.emitting = true
 		%DoorArea.remove_from_group("doors")
 		%DoorArea.unlocked = true
-		%DoorSprite.play("DarkSteelSmashed")
+		var theme = EventBus.current_theme
+		if theme == 1 : # Then DarkSteel Door! :
+			%DoorSprite.play("DarkSteelSmashed")
+		elif theme == 2 : # Ice :
+			%DoorSprite.play("DarkSteelSmashedIce")
+		elif theme == 3 : # Hell :
+			%DoorSprite.play("DarkSteelSmashedHell")
+		elif theme == 4 : # Overgrown :
+			%DoorSprite.play("DarkSteelSmashedOvergrown")
 		%DoorStopperCollision.set_deferred("disabled", true)
 		
 		if last_room == true:

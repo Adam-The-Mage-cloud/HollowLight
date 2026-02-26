@@ -168,16 +168,16 @@ func check_balloonist_shop_status() :
 
 # > Cat Balloonist :
 # >> Outfits :
-var gladiator_brody_purchased = false
-var liquified_brody_purchased = false
-var samurai_brody_purchased = false
+#var gladiator_brody_purchased = false
+#var liquified_brody_purchased = false
+#var samurai_brody_purchased = false
 # >> Torches :
-var walltorch_torch_purchased = false
-var wizardstaff_torch_purchased = false
+#var walltorch_torch_purchased = false
+#var wizardstaff_torch_purchased = false
 # >> Shields :
-var bluevariant_shield_purchased = false
-var nurnincrest_shield_purchased = false
-var holyeffigee_shield_purchased = false
+#var bluevariant_shield_purchased = false
+#var nurnincrest_shield_purchased = false
+#var holyeffigee_shield_purchased = false
 
 func set_item_prices() :
 	if EventBus.gladiator_brody_purchased == false :
