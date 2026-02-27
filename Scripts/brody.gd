@@ -40,8 +40,12 @@ var bounce_cooldown_finished = true
 var dash_available = true
 var dashing = false
 
+# Cosmetics :
+var outfit
+
 func _ready():
 	#_on_check_brody_location_okay()
+	outfit = EventBus.equipped_brodyoutfit
 	breathing()
 
 
@@ -89,9 +93,9 @@ func _physics_process(delta: float) -> void:
 		if direction != Vector2.ZERO:
 			if dashing == false and bouncing == false:
 				moving()
-				%BrodySprite.play("moving")
+				%BrodySprite.play(str(outfit) + "_moving")
 		else:
-			%BrodySprite.play("stationary")
+			%BrodySprite.play(str(outfit) + "_stationary")
 			%feet.play("stationary")
 
 		# ---------------------------------------------------------
@@ -195,7 +199,7 @@ func _physics_process(delta: float) -> void:
 			# -----------------------------------------------------
 			# Play Animation :
 			bouncing = true
-			%BrodySprite.play("roll")
+			%BrodySprite.play(str(outfit) + "_roll")
 			
 			bounce_cooldown_finished = false
 			%BounceCooldown.start()
@@ -342,7 +346,7 @@ func dash_ability():
 			%DashCooldown.start()
 			speed = 4000
 			%feet.visible = false
-			%BrodySprite.play("roll")
+			%BrodySprite.play(str(outfit) + "_roll")
 			
 			# Acceleration phase
 			for i in range(9):
@@ -366,7 +370,7 @@ func dash_ability():
 			collision_mask = original_mask
 			dashing = false
 			%feet.visible = true
-			%BrodySprite.play("moving")
+			%BrodySprite.play(str(outfit) + "_moving")
 
 
 func moving():
@@ -437,6 +441,17 @@ func get_nearest_unlit_brazier(player_pos: Vector2) -> Node2D:
 	
 	return nearest
 
+# COSMETICS :
+func change_outfit() :
+	outfit = EventBus.equipped_brodyoutfit
+
+
+func change_shield() :
+	%brody_shield._ready()
+
+
+func change_torch() :
+	pass
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # EXTERNAL GAMEPLAY REACTIONS :
@@ -686,8 +701,9 @@ func _on_dash_button_pressed() -> void:
 				%DashButton.visible = false
 				%TouchScreenPress2.visible = false
 				var balloon_shop = preload("res://Scenes/travellers_sanctuary/ShopMenus/catballoon_shop.tscn").instantiate()
-				balloon_shop.global_position = global_position
+				balloon_shop.global_position = global_position + Vector2(-105, 25)
 				%BrodyCam.call_deferred("add_child", balloon_shop)
+
 
 func _on_shield_button_pressed() -> void:
 	initialise_shield_equip()
@@ -717,3 +733,6 @@ func is_on_floor_tile() -> bool:
 
 func _on_attacked_cooldown_timeout() -> void:
 	brody_hittable = true
+
+func shop_closed() :
+	$"..".shop_closed()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ce7juc6ps3kwc"]
+[gd_scene load_steps=13 format=3 uid="uid://ce7juc6ps3kwc"]
 
 [ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="1_5e5ks"]
 [ext_resource type="Script" uid="uid://b8yrdnykxjg7g" path="res://Scripts/brody_shield.gd" id="1_bcpb1"]
@@ -6,22 +6,54 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5e5ks"]
 size = Vector2(17, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bcpb1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3a0kt"]
 atlas = ExtResource("1_5e5ks")
-region = Rect2(4, 12, 24, 35)
+region = Rect2(50, 47, 24, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnbu1"]
+atlas = ExtResource("1_5e5ks")
+region = Rect2(26, 12, 24, 35)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kr4xc"]
 atlas = ExtResource("1_5e5ks")
 region = Rect2(17, 45, 24, 27)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcpb1"]
+atlas = ExtResource("1_5e5ks")
+region = Rect2(4, 12, 24, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8sq3"]
+atlas = ExtResource("1_5e5ks")
+region = Rect2(79, 47, 24, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0eywb"]
+atlas = ExtResource("1_5e5ks")
+region = Rect2(80, 12, 24, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ykq7"]
+atlas = ExtResource("1_5e5ks")
+region = Rect2(112, 47, 24, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_044f6"]
+atlas = ExtResource("1_5e5ks")
+region = Rect2(111, 10, 24, 35)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_bcpb1"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bcpb1")
+"texture": SubResource("AtlasTexture_3a0kt")
 }],
 "loop": true,
-"name": &"DefaultShield",
+"name": &"bluevariant_holstered",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnbu1")
+}],
+"loop": true,
+"name": &"bluevariant_shield",
 "speed": 5.0
 }, {
 "frames": [{
@@ -29,7 +61,47 @@ animations = [{
 "texture": SubResource("AtlasTexture_kr4xc")
 }],
 "loop": true,
-"name": &"Holstered",
+"name": &"default_holstered",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcpb1")
+}],
+"loop": true,
+"name": &"default_shield",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8sq3")
+}],
+"loop": true,
+"name": &"holyeffigee_holstered",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0eywb")
+}],
+"loop": true,
+"name": &"holyeffigee_shield",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ykq7")
+}],
+"loop": true,
+"name": &"nurnincrest_holstered",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_044f6")
+}],
+"loop": true,
+"name": &"nurnincrest_shield",
 "speed": 5.0
 }]
 
@@ -52,4 +124,4 @@ y_sort_enabled = true
 use_parent_material = true
 position = Vector2(0, -4.5)
 sprite_frames = SubResource("SpriteFrames_bcpb1")
-animation = &"Holstered"
+animation = &"nurnincrest_holstered"

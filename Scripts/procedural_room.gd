@@ -47,7 +47,7 @@ var walls_obstruction_frequency = 0.08 # Default at 0.05, where 1.0 is a much hi
 var chamber_amount = randi_range(1, 7) # Default between 3 and 6, where more means a bigger cave
 var narrowness_widen_value = 1.5 # Default is 2, the higher, the wider each narrower part of a cave
 
-var beacon_amount = randi_range(1, 4)
+var beacon_amount = randi_range(2, 5)
 
 var floor_source_id = 0
 var obstacle_source_id = 0
@@ -1521,7 +1521,7 @@ func monster_spawns() -> void:
 	if group == null:
 		return
 	
-	var amount = randi_range((group["min_multiplier"] + width + height) / 20, (group["max_multiplier"] + width + height) / 15 + 2) 
+	var amount = randi_range((group["min_multiplier"] + width + height) / 25, (group["max_multiplier"] + width + height) / 20 + 2) 
 	
 	for i in range(amount):
 		var monster_name = weighted_pick(group["weights"])

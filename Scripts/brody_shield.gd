@@ -6,6 +6,8 @@ const FLIP_RIGHT_THRESHOLD = 0.25
 const FLIP_DOWN_THRESHOLD  = 0.45
 const FLIP_UP_THRESHOLD    = -0.45
 
+var shield_skin
+
 var equipped = false
 var unequipped = true
 
@@ -46,12 +48,15 @@ var facing_down = false
 
 func _ready():
 	check_shield()
+	unequip()
 
 func check_shield() :
+	shield_skin = EventBus.shield_acquired
 	if EventBus.shield_acquired == "none" :
 		visible = false
-	elif EventBus.shield_acquired == "default" :
+	else :
 		visible = true
+		
 
 func _physics_process(delta: float) -> void:
 	if not equipped:
@@ -130,29 +135,32 @@ func _physics_process(delta: float) -> void:
 
 	# Apply rotation
 	rotation += angular_velocity
+	
 
 	# -------------------------
 	#   FLIP LOGIC
 	# -------------------------
+	# Clamp so it never flips
+	var max_tilt = deg_to_rad(80)
+	rotation = clamp(rotation, -max_tilt, max_tilt)
 
-	var x_offset = direction.x
-	var y_offset = direction.y
+	# -------------------------
+	#   VISUAL SECONDARY MOTION
+	# -------------------------
 
-	# Horizontal flip
-	if x_offset < FLIP_LEFT_THRESHOLD and not facing_left:
-		facing_left = true
-		scale.x = -abs(scale.x)
-	elif x_offset > FLIP_RIGHT_THRESHOLD and facing_left:
-		facing_left = false
-		scale.x = abs(scale.x)
+	# Tilt based on angular velocity
+	var tilt_amount = clamp(angular_velocity * 0.4, -0.4, 0.4)
+	var settle_speed = 10.0
+	$".".rotation = lerp($".".rotation, tilt_amount, delta * settle_speed)
 
-	# Vertical flip (only if your sprite needs it)
-	if y_offset > FLIP_DOWN_THRESHOLD and not facing_down:
-		facing_down = true
-		scale.y = -abs(scale.y)
-	elif y_offset < FLIP_UP_THRESHOLD and facing_down:
-		facing_down = false
-		scale.y = abs(scale.y)
+	# Directional tilt for extra life
+	var move_dir = (global_position - target_position).normalized()
+	$".".rotation -= move_dir.x * 0.125
+
+	# Squash/stretch
+	var stretch = 1.0 + abs(angular_velocity) * 0.05
+	$".".scale.y = lerp($".".scale.y, stretch, delta * 8.0)
+	$".".scale.x = lerp($".".scale.x, 1.0 / stretch, delta * 8.0)
 
 
 
@@ -192,6 +200,7 @@ func _get_aim_distance(centre: Vector2, max_r: float) -> float:
 	return clamp(mouse_dist, 0.0, max_r)
 
 func shield_collision() :
+	%ShieldSprite.play(str(shield_skin) + "_shield")
 	%ShieldCollision.disabled = false
 
 func unequip() :
@@ -219,7 +228,7 @@ func unequip() :
 	
 	# Switch to animation
 	tween.finished.connect(func():
-		%ShieldSprite.play("Holstered")
+		%ShieldSprite.play(str(shield_skin) + "_holstered")
 	)
 
 

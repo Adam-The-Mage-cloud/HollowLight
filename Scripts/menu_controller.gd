@@ -396,8 +396,9 @@ func _on_clive_item_1_button_pressed() -> void:
 			%Item1Equipped.visible = true
 			
 			# Show Other Sidekick Slots as Unequipped :
-			%Item2Equipped.visible = false
-			%Item2Unequipped.visible = true
+			if EventBus.winged_torch_purchased == true :
+				%Item2Equipped.visible = false
+				%Item2Unequipped.visible = true
 			#%Item3Equipped.visible = false
 			#%Item3Unequipped.visible = true
 			$"../..".despawn_sidekick()
@@ -413,8 +414,9 @@ func _on_clive_item_1_button_pressed() -> void:
 			%Item1Unequipped.visible = false
 			
 			# Show Other Sidekick Slots as Unequipped :
-			%Item2Equipped.visible = false
-			%Item2Unequipped.visible = true
+			if EventBus.winged_torch_purchased == true :
+				%Item2Equipped.visible = false
+				%Item2Unequipped.visible = true
 			#%Item3Equipped.visible = false
 			#%Item3Unequipped.visible = true
 			$"../..".despawn_sidekick()
@@ -440,8 +442,9 @@ func _on_clive_item_2_button_pressed() -> void:
 			%Item2BoughtTick.visible = true
 			
 			# Show Other Sidekick Slots as Unequipped :
-			%Item1Equipped.visible = false
-			%Item1Unequipped.visible = true
+			if EventBus.mystic_sword_purchased == true :
+				%Item1Equipped.visible = false
+				%Item1Unequipped.visible = true
 			#%Item3Equipped.visible = false
 			#%Item3Unequipped.visible = true
 			$"../..".despawn_sidekick()
@@ -457,8 +460,9 @@ func _on_clive_item_2_button_pressed() -> void:
 			%Item2Unequipped.visible = false
 			
 			# Show Other Sidekick Slots as Unequipped :
-			%Item1Equipped.visible = false
-			%Item1Unequipped.visible = true
+			if EventBus.mystic_sword_purchased == true :
+				%Item1Equipped.visible = false
+				%Item1Unequipped.visible = true
 			#%Item3Equipped.visible = false
 			#%Item3Unequipped.visible = true
 		else :

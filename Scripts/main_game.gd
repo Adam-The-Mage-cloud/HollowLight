@@ -18,6 +18,8 @@ func _ready() :
 	EventBus.camera_reset.connect(camera_reset)
 	EventBus.new_dungeon_touchscreen.connect(new_dungeon_touchscreen)
 	
+	EventBus.total_acquired_goldpieces += 1500
+	
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
 	if EventBus.total_acquired_experience == 0 :
 		EventBus.intro = true
@@ -327,6 +329,12 @@ func _set_sanctuary_properties() :
 	%TorchJoystickBase.visible = false
 	%TorchJoystickSprite.visible = false
 	%ShieldButton.visible = false
+
+func shop_closed() :
+	EventBus.save_game()
+	EventBus.currently_interacting = false
+	%DashButton.visible = true
+	%TouchScreenPress2.visible = true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # MEMORY / LOADING :

@@ -221,6 +221,8 @@ func get_save_data() -> Dictionary:
 		"total_acquired_goldpieces": total_acquired_goldpieces,
 		"sidekick": equipped_sidekick,
 		"equipped_shield": shield_acquired,
+		"equipped_torch": equipped_torch,
+		"equipped_brodyoutfit": equipped_brodyoutfit,
 		
 		# Shop Purchases :
 		"mystic_sword_purchased": mystic_sword_purchased,
@@ -233,6 +235,8 @@ func apply_save_data(data: Dictionary):
 	total_acquired_goldpieces = data.get("total_acquired_goldpieces", 0)
 	equipped_sidekick = data.get("sidekick", "none")
 	shield_acquired = data.get("equipped_shield", "none")
+	equipped_torch = data.get("equipped_torch", "none")
+	equipped_brodyoutfit = data.get("equipped_brodyoutfit", "none")
 	
 	# Shop Purchases :
 	mystic_sword_purchased = data.get("mystic_sword_purchased", false)
