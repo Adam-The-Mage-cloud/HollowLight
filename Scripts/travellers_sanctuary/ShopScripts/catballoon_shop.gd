@@ -87,7 +87,7 @@ func check_balloonist_shop_status() :
 	if EventBus.nurnincrest_shield_purchased == true :
 		%Shield2Price.visible = false
 		#%Shield2BoughtTick.visible = true
-		if EventBus.shield_acquired == "nuinencrest" :
+		if EventBus.shield_acquired == "nurnincrest" :
 			# Show as Equipped :
 			%Shield2Equipped.visible = true
 			%Shield2Unequipped.visible = false

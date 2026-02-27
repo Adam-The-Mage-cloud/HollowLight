@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://05ohtgkusd5q"]
+[gd_scene load_steps=19 format=3 uid="uid://05ohtgkusd5q"]
 
 [ext_resource type="Script" uid="uid://3w6jcivc53x4" path="res://Scripts/cat_balloon.gd" id="1_7cqin"]
 [ext_resource type="Texture2D" uid="uid://gvn6ngyfj4bq" path="res://Artwork/Cat_Air_Balloon.png" id="1_thpmb"]
@@ -91,7 +91,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jyjx7")
 }],
-"loop": true,
+"loop": false,
 "name": &"down",
 "speed": 5.0
 }, {
@@ -105,6 +105,8 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_thpmb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bymvm"]
 
 [node name="cat_balloon" type="CharacterBody2D"]
 texture_filter = 1
@@ -130,10 +132,11 @@ position = Vector2(17, 10)
 sprite_frames = SubResource("SpriteFrames_n8jiw")
 
 [node name="CatBalloonist" type="AnimatedSprite2D" parent="CatBalloonBasket"]
+unique_name_in_owner = true
 position = Vector2(-2, -6)
 sprite_frames = SubResource("SpriteFrames_8wv25")
-animation = &"up"
-autoplay = "up"
+animation = &"down"
+autoplay = "down"
 
 [node name="CatBalloonShopArea" type="Area2D" parent="."]
 position = Vector2(-234, -32)
@@ -143,5 +146,14 @@ position = Vector2(233, 40)
 scale = Vector2(2.3248372, 2.3248372)
 shape = SubResource("CircleShape2D_thpmb")
 
+[node name="CatRiseUpArea" type="Area2D" parent="."]
+
+[node name="CatRiseUpCollision" type="CollisionShape2D" parent="CatRiseUpArea"]
+position = Vector2(-13, 10)
+scale = Vector2(6.22313, 6.22313)
+shape = SubResource("CircleShape2D_bymvm")
+
 [connection signal="body_entered" from="CatBalloonShopArea" to="." method="_on_cat_balloon_shop_area_body_entered"]
 [connection signal="body_exited" from="CatBalloonShopArea" to="." method="_on_cat_balloon_shop_area_body_exited"]
+[connection signal="body_entered" from="CatRiseUpArea" to="." method="_on_cat_rise_up_area_body_entered"]
+[connection signal="body_exited" from="CatRiseUpArea" to="." method="_on_cat_rise_up_area_body_exited"]

@@ -18,7 +18,7 @@ func _ready() :
 	EventBus.camera_reset.connect(camera_reset)
 	EventBus.new_dungeon_touchscreen.connect(new_dungeon_touchscreen)
 	
-	EventBus.total_acquired_goldpieces += 1500
+	#EventBus.total_acquired_goldpieces += 1500
 	
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
 	if EventBus.total_acquired_experience == 0 :
@@ -123,6 +123,7 @@ func _ready() :
 		# Start in Sanctuary :
 		var spawn_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
 		spawn_sanctuary.global_position = Vector2(-140.0, -75.0)
+		%Brody.global_position = Vector2(20, 12)
 		%RoomsToBeDeleted.add_child(spawn_sanctuary)
 		_set_sanctuary_properties()
 

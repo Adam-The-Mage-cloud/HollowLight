@@ -448,10 +448,14 @@ func change_outfit() :
 
 func change_shield() :
 	%brody_shield._ready()
+	# Make Shield Equip Button Appear :
+	%ShieldButton.visible = true
 
 
 func change_torch() :
-	pass
+	%Torch.change_skin()
+	# Make Appear for a bit :
+	%Torch.visible = true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # EXTERNAL GAMEPLAY REACTIONS :
@@ -701,7 +705,7 @@ func _on_dash_button_pressed() -> void:
 				%DashButton.visible = false
 				%TouchScreenPress2.visible = false
 				var balloon_shop = preload("res://Scenes/travellers_sanctuary/ShopMenus/catballoon_shop.tscn").instantiate()
-				balloon_shop.global_position = global_position + Vector2(-105, 25)
+				balloon_shop.global_position = %BrodyCam.position
 				%BrodyCam.call_deferred("add_child", balloon_shop)
 
 

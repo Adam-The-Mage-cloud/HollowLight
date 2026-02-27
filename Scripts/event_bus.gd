@@ -223,10 +223,28 @@ func get_save_data() -> Dictionary:
 		"equipped_shield": shield_acquired,
 		"equipped_torch": equipped_torch,
 		"equipped_brodyoutfit": equipped_brodyoutfit,
-		
+		# ----------------------------------------------------------------------
 		# Shop Purchases :
+		# ----------------------------------------------------------------------
+		# > Clive :
+		# > > Sidekicks
 		"mystic_sword_purchased": mystic_sword_purchased,
-		"winged_torch_purchased": winged_torch_purchased
+		"winged_torch_purchased": winged_torch_purchased,
+		
+		# > Balloonist :
+		# > > Outfits 
+		"gladiator_brody_purchased": gladiator_brody_purchased,
+		"liquified_brody_purchased": liquified_brody_purchased,
+		"samurai_brody_purchased": samurai_brody_purchased,
+		
+		# > > Shields
+		"bluevariant_shield_purchased": bluevariant_shield_purchased,
+		"nurnincrest_shield_purchased": nurnincrest_shield_purchased,
+		"holyeffigee_shield_purchased": holyeffigee_shield_purchased,
+		
+		# > > Torches 
+		"walltorch_torch_purchased": walltorch_torch_purchased,
+		"wizardstaff_torch_purchased": wizardstaff_torch_purchased,
 	}
 
 func apply_save_data(data: Dictionary):
@@ -238,9 +256,28 @@ func apply_save_data(data: Dictionary):
 	equipped_torch = data.get("equipped_torch", "none")
 	equipped_brodyoutfit = data.get("equipped_brodyoutfit", "none")
 	
+	# ----------------------------------------------------------------------
 	# Shop Purchases :
+	# ----------------------------------------------------------------------
+	# > Clive :
+	# > > Sidekicks
 	mystic_sword_purchased = data.get("mystic_sword_purchased", false)
 	winged_torch_purchased = data.get("winged_torch_purchased", false)
+	
+	# > Balloonist :
+	# > > Outfits 
+	gladiator_brody_purchased = data.get("gladiator_brody_purchased", false)
+	liquified_brody_purchased = data.get("liquified_brody_purchased", false)
+	samurai_brody_purchased = data.get("samurai_brody_purchased", false)
+	
+	# > > Shields
+	bluevariant_shield_purchased = data.get("bluevariant_shield_purchased", false)
+	nurnincrest_shield_purchased = data.get("nurnincrest_shield_purchased", false)
+	holyeffigee_shield_purchased = data.get("holyeffigee_shield_purchased", false)
+	
+	# > > Torches 
+	walltorch_torch_purchased = data.get("walltorch_torch_purchased", false)
+	wizardstaff_torch_purchased = data.get("wizardstaff_torch_purchased", false)
 	
 	print("Game loaded!")
 

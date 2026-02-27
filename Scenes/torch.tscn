@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://doutgnk2nj6pi"]
+[gd_scene load_steps=25 format=3 uid="uid://doutgnk2nj6pi"]
 
 [ext_resource type="Script" uid="uid://ct4wiv06fidc0" path="res://Scripts/torch.gd" id="1_dwpv8"]
 [ext_resource type="Texture2D" uid="uid://cq0xpqi7tt5pm" path="res://Artwork/Torch.png" id="1_mryve"]
@@ -25,6 +25,14 @@ region = Rect2(64, 70, 24, 35)
 atlas = ExtResource("1_mryve")
 region = Rect2(16, 70, 24, 35)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_beu3c"]
+atlas = ExtResource("1_mryve")
+region = Rect2(9, 38, 47, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spjw2"]
+atlas = ExtResource("1_mryve")
+region = Rect2(105, 38, 47, 31)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_tk5eq"]
 animations = [{
 "frames": [{
@@ -32,7 +40,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_hhj40")
 }],
 "loop": true,
-"name": &"lit",
+"name": &"none_lit",
 "speed": 5.0
 }, {
 "frames": [{
@@ -40,7 +48,39 @@ animations = [{
 "texture": SubResource("AtlasTexture_otn8w")
 }],
 "loop": true,
-"name": &"unlit",
+"name": &"none_unlit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_beu3c")
+}],
+"loop": true,
+"name": &"walltorch_lit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_beu3c")
+}],
+"loop": true,
+"name": &"walltorch_unlit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spjw2")
+}],
+"loop": true,
+"name": &"wizardstaff_lit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spjw2")
+}],
+"loop": true,
+"name": &"wizardstaff_unlit",
 "speed": 5.0
 }]
 
@@ -187,7 +227,7 @@ y_sort_enabled = true
 use_parent_material = true
 position = Vector2(8.211391, -7.5743885)
 sprite_frames = SubResource("SpriteFrames_tk5eq")
-animation = &"lit"
+animation = &"wizardstaff_unlit"
 
 [node name="MainFlame" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true

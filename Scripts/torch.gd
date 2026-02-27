@@ -40,7 +40,9 @@ var flip_threshold = 0.2        # Indicates how downward before flip starts
 var flip_speed = 4.0             # Indicates how fast the flip animation happens
 
 func _ready() :
-	EventBus.new_crawl.connect(check_torch_theme)
+	EventBus.new_crawl.connect(check_torch_light_radiation_theme)
+	change_skin()
+	
 
 func _physics_process(delta: float) -> void:
 	area_centre = %Brody.global_position
@@ -156,6 +158,11 @@ func _get_aim_distance(centre: Vector2, max_r: float) -> float:
 	var mouse_dist = (get_global_mouse_position() - centre).length()
 	return clamp(mouse_dist, 0.0, max_r)
 
+
+func change_skin() :
+	%TorchSprite.play(str(EventBus.equipped_torch) + "_lit")
+
+
 func get_lost() -> void:
 	original_position = position
 
@@ -211,7 +218,7 @@ func minitorch_off() :
 func _on_touch_screen_layer_stick_changed(vec: Variant) -> void:
 	touch_stick = vec
 
-func check_torch_theme() :
+func check_torch_light_radiation_theme() :
 	if EventBus.current_theme == 1 or EventBus.current_theme == 4 : # Then Normal :
 		%TorchLight.energy = 10.95
 		%TorchLight.texture.width = 96
