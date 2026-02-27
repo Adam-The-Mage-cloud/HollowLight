@@ -692,14 +692,17 @@ func _on_dash_button_pressed() -> void:
 			if EventBus.dungeon_crawl_button_available == true:
 				EventBus.new_dungeon_crawl()
 				make_darkness_visible()
+				
 			elif EventBus.clives_shop_interactable == true:
 				EventBus.currently_interacting = true
 				EventBus.clives_shop_available()
+				
 			elif EventBus.tutorial_replay_available == true :
 				EventBus.intro = true
 				EventBus.currently_interacting = true
 				$"..".delete_current_memory()
 				$".."._ready()
+				
 			elif EventBus.catballoon_shop_interactable == true :
 				EventBus.currently_interacting = true
 				%DashButton.visible = false
@@ -707,6 +710,15 @@ func _on_dash_button_pressed() -> void:
 				var balloon_shop = preload("res://Scenes/travellers_sanctuary/ShopMenus/catballoon_shop.tscn").instantiate()
 				balloon_shop.global_position = %BrodyCam.position
 				%BrodyCam.call_deferred("add_child", balloon_shop)
+				
+			elif EventBus.jackie_shop_interactable == true :
+				print("jackiesda")
+				EventBus.currently_interacting = true
+				%DashButton.visible = false
+				%TouchScreenPress2.visible = false
+				var jackies_shop = preload("res://Scenes/travellers_sanctuary/ShopMenus/jackies_shop.tscn").instantiate()
+				jackies_shop.global_position = %BrodyCam.position
+				%BrodyCam.call_deferred("add_child", jackies_shop)
 
 
 func _on_shield_button_pressed() -> void:

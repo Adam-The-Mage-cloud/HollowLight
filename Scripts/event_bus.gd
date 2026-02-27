@@ -56,6 +56,15 @@ var bluevariant_shield_price = 300
 var nurnincrest_shield_price = 625
 var holyeffigee_shield_price = 1575
 
+# Upgrade Prices :
+var dash_timing_upgrade_price = 100
+var torch_max_stamina_upgrade_price = 100
+var torch_recovery_upgrade_price = 100
+var fortify_darkness_upgrade_price = 250
+var shield_stamina_upgrade_price = 100
+var shield_speed_upgrade_price = 200
+var loot_chance_upgrade_price = 500
+
 
 # Currency Variables :
 var total_current_darkness = 0.0
@@ -92,6 +101,15 @@ var bluevariant_shield_purchased = false
 var nurnincrest_shield_purchased = false
 var holyeffigee_shield_purchased = false
 
+# > Jackies Shop :
+var amount_dash_timing_upgraded = 0
+var amount_max_stamina_upgraded = 0
+var amount_torch_recovery_upgraded = 0
+var amount_fortify_darkness_upgraded = 0
+var amount_shield_stamina_upgraded = 0
+var amount_shield_speed_upgraded = 0
+var amount_lootchance_upgraded = 0
+
 # Rooms Completed / ENDGAME DECIDER :
 var sanctuary = false
 var intro = false
@@ -106,6 +124,7 @@ var dungeon_crawl_button_available = false
 var tutorial_replay_available = false
 var clives_shop_interactable = false
 var catballoon_shop_interactable = false
+var jackie_shop_interactable = false
 
 # Theme Indicator
 var current_theme = 1

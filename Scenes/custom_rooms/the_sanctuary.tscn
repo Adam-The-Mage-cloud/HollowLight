@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=108 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
 [ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://1swlwkrgxoby" path="res://Artwork/Positive_Particle.png" id="24_jw7cl"]
 [ext_resource type="Texture2D" uid="uid://dq14dnh50xbj" path="res://Artwork/Orb.png" id="26_tyu56"]
 [ext_resource type="Texture2D" uid="uid://b4ono545808rb" path="res://Artwork/Tutorial_Replay.png" id="28_tyu56"]
+[ext_resource type="PackedScene" uid="uid://b0a285hfnhnoc" path="res://Scenes/travellers_sanctuary/jackies_tent.tscn" id="30_eh67g"]
 
 [sub_resource type="Gradient" id="Gradient_lps57"]
 offsets = PackedFloat32Array(0.38222224, 1)
@@ -4311,6 +4312,21 @@ animations = [{
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pp1pn"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyjx7"]
+atlas = ExtResource("26_tyu56")
+region = Rect2(22, 121, 9, 5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_knu3s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyjx7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_s10yr"]
 atlas = ExtResource("26_tyu56")
 region = Rect2(89, 35, 35, 35)
@@ -4504,9 +4520,6 @@ position = Vector2(18, 336)
 
 [node name="reg_village_tree47" parent="Trees" instance=ExtResource("6_o6jja")]
 position = Vector2(-8, 286)
-
-[node name="reg_village_tree48" parent="Trees" instance=ExtResource("6_o6jja")]
-position = Vector2(-30, 231)
 
 [node name="reg_village_tree49" parent="Trees" instance=ExtResource("6_o6jja")]
 position = Vector2(61, 296)
@@ -6322,6 +6335,10 @@ texture = ExtResource("13_52ghv")
 z_index = 1
 position = Vector2(234, 36)
 
+[node name="jackies_tent" parent="." instance=ExtResource("30_eh67g")]
+z_index = 1
+position = Vector2(-40, 95)
+
 [node name="TentSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(106, 171)
 scale = Vector2(1.5, 1.5)
@@ -6599,6 +6616,10 @@ sprite_frames = SubResource("SpriteFrames_s10yr")
 [node name="MoneySprite" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
 position = Vector2(29.333332, 3.9999998)
 sprite_frames = SubResource("SpriteFrames_pp1pn")
+
+[node name="BrodyFeetSprite" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
+position = Vector2(-8, 22.666672)
+sprite_frames = SubResource("SpriteFrames_knu3s")
 
 [node name="BrodySprite" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
 position = Vector2(-16.666668, 11.333332)

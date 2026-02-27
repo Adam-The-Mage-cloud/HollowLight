@@ -1,4 +1,4 @@
-[gd_scene load_steps=236 format=4 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=238 format=4 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
@@ -2670,6 +2670,21 @@ shader_parameter/flash_amount = 0.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_g6spl"]
 load_path = "res://.godot/imported/Xp_Outline.png-dcae8a9431120524db76c5be15e8eaed.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppo5g"]
+atlas = ExtResource("19_gnsnf")
+region = Rect2(22, 121, 9, 5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d3fhg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppo5g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3bgrf"]
 atlas = ExtResource("19_gnsnf")
@@ -40632,7 +40647,6 @@ script = ExtResource("13_nkab7")
 
 [node name="LootScreen" type="Control" parent="Menus/MenuController"]
 unique_name_in_owner = true
-visible = false
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
 offset_right = 40.0
@@ -40735,6 +40749,11 @@ scale = Vector2(3, 3)
 fill_mode = 3
 texture_over = SubResource("CompressedTexture2D_g6spl")
 
+[node name="BrodyFeet" type="AnimatedSprite2D" parent="Menus/MenuController/LootScreen"]
+position = Vector2(211, 147)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_d3fhg")
+
 [node name="AnimatedBrody" type="AnimatedSprite2D" parent="Menus/MenuController/LootScreen"]
 unique_name_in_owner = true
 z_index = 1
@@ -40743,7 +40762,7 @@ position = Vector2(211.00002, 126)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_vt8ts")
 autoplay = "default"
-frame_progress = 0.49568057
+frame_progress = 0.58559763
 
 [node name="GoldAndBorders" type="Sprite2D" parent="Menus/MenuController/LootScreen"]
 z_index = 2
@@ -41439,6 +41458,7 @@ rotation = 3.2253685
 
 [node name="ShieldStrap" type="AnimatedSprite2D" parent="Brody"]
 unique_name_in_owner = true
+use_parent_material = true
 position = Vector2(-5.8968964, 1.1736526)
 sprite_frames = SubResource("SpriteFrames_c63pe")
 autoplay = "default"
