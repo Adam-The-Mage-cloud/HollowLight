@@ -18,7 +18,7 @@ func _ready() :
 	EventBus.camera_reset.connect(camera_reset)
 	EventBus.new_dungeon_touchscreen.connect(new_dungeon_touchscreen)
 	
-	#EventBus.total_acquired_goldpieces += 1500
+	EventBus.total_acquired_goldpieces = 6000
 	
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
 	if EventBus.total_acquired_experience == 0 :

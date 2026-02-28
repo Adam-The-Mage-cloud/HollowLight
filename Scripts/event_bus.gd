@@ -231,7 +231,6 @@ func clives_shop_available() :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # SAVING AND LOADING :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 # Saved Data Inside a Dictionary :
 func get_save_data() -> Dictionary:
 	return {
@@ -264,6 +263,16 @@ func get_save_data() -> Dictionary:
 		# > > Torches 
 		"walltorch_torch_purchased": walltorch_torch_purchased,
 		"wizardstaff_torch_purchased": wizardstaff_torch_purchased,
+		
+		# > Jackie :
+		# > > Upgrades
+		"amount_dash_timing_upgraded": amount_dash_timing_upgraded,
+		"amount_max_stamina_upgraded": amount_max_stamina_upgraded,
+		"amount_torch_recovery_upgraded": amount_torch_recovery_upgraded,
+		"amount_fortify_darkness_upgraded": amount_fortify_darkness_upgraded,
+		"amount_shield_stamina_upgraded": amount_shield_stamina_upgraded,
+		"amount_shield_speed_upgraded": amount_shield_speed_upgraded,
+		"amount_lootchance_upgraded": amount_lootchance_upgraded,
 	}
 
 func apply_save_data(data: Dictionary):
@@ -297,6 +306,16 @@ func apply_save_data(data: Dictionary):
 	# > > Torches 
 	walltorch_torch_purchased = data.get("walltorch_torch_purchased", false)
 	wizardstaff_torch_purchased = data.get("wizardstaff_torch_purchased", false)
+	
+	# > Jackie :
+	# > > Upgrades
+	amount_dash_timing_upgraded = data.get("amount_dash_timing_upgraded", 0)
+	amount_max_stamina_upgraded = data.get("amount_max_stamina_upgraded", 0)
+	amount_torch_recovery_upgraded = data.get("amount_torch_recovery_upgraded", 0)
+	amount_fortify_darkness_upgraded = data.get("amount_fortify_darkness_upgraded", 0)
+	amount_shield_stamina_upgraded = data.get("amount_shield_stamina_upgraded", 0)
+	amount_shield_speed_upgraded = data.get("amount_shield_speed_upgraded", 0)
+	amount_lootchance_upgraded = data.get("amount_lootchance_upgraded", 0)
 	
 	print("Game loaded!")
 
