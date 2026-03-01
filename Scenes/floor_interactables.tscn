@@ -724,7 +724,7 @@ disabled = true
 [node name="InteractableSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_kudcs")
-animation = &"vase_1"
+animation = &"campfire_3"
 
 [node name="VaseShatteredParticles" type="GPUParticles2D" parent="InteractableSprite"]
 unique_name_in_owner = true

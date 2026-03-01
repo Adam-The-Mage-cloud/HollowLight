@@ -1,6 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://jgdtjlhaudts"]
+[gd_scene load_steps=28 format=3 uid="uid://jgdtjlhaudts"]
 
+[ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_8mio6"]
+[ext_resource type="Script" uid="uid://saapyyqmb64a" path="res://Scripts/travellers_sanctuary/OrbleVillage/orble_overseer.gd" id="1_owve4"]
 [ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_svibl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wfwb2"]
+shader = ExtResource("1_8mio6")
+shader_parameter/flash_amount = 0.0
+shader_parameter/wave_frequency = 1.0
+shader_parameter/wave_amplitude = 0.002
+shader_parameter/wave_longitude = 0.003
+shader_parameter/wave_speed = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8mio6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_owve4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_owve4"]
 atlas = ExtResource("1_svibl")
@@ -26,7 +40,7 @@ region = Rect2(105, 210, 23, 31)
 atlas = ExtResource("1_svibl")
 region = Rect2(129, 210, 23, 31)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_lunq1"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_owve4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -56,10 +70,10 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 15.0,
 "texture": SubResource("AtlasTexture_7hx66")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_bkt6a")
 }],
 "loop": true,
@@ -67,11 +81,170 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="orble_overseer" type="Node2D"]
-texture_filter = 1
+[sub_resource type="Gradient" id="Gradient_8mio6"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
 
-[node name="HatOrbleSprite" type="AnimatedSprite2D" parent="."]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8mio6"]
+gradient = SubResource("Gradient_8mio6")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wfwb2"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_m6mhv"]
+colors = PackedColorArray(0.1441006, 0.4888317, 0.17460966, 1, 0.23529412, 0.14509805, 0.1764706, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7hx66"]
+gradient = SubResource("Gradient_m6mhv")
+
+[sub_resource type="Curve" id="Curve_bkt6a"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_lunq1"]
+curve = SubResource("Curve_bkt6a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_38iqe"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0.4, 0.2, 0.05)
+emission_shape = 3
+emission_box_extents = Vector3(0.3, 0.4, 0.05)
+direction = Vector3(0, 0, 0)
+initial_velocity_min = -5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -0.49, 0)
+radial_accel_min = -5.000002
+radial_accel_max = 4.9999976
+scale_min = 0.049999997
+scale_max = 0.06
+scale_curve = SubResource("CurveTexture_lunq1")
+color = Color(0.5104257, 0.9153792, 0.255261, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_7hx66")
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_co5bw"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_am6nh"]
+colors = PackedColorArray(0.1441006, 0.4888317, 0.17460966, 1, 0.23529412, 0.14509805, 0.1764706, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kffdy"]
+gradient = SubResource("Gradient_am6nh")
+
+[sub_resource type="Curve" id="Curve_rgb4g"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_lgwvj"]
+curve = SubResource("Curve_rgb4g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s14xi"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0.4, 0.2, 0.05)
+emission_shape = 3
+emission_box_extents = Vector3(0.3, 0.4, 0.05)
+direction = Vector3(0, 0, 0)
+initial_velocity_min = -5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -0.49, 0)
+radial_accel_min = -5.000002
+radial_accel_max = 4.9999976
+scale_min = 0.049999997
+scale_max = 0.06
+scale_curve = SubResource("CurveTexture_lgwvj")
+color = Color(0.5104257, 0.9153792, 0.255261, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_kffdy")
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[node name="orble_overseer" type="CharacterBody2D"]
+z_index = 1
+texture_filter = 1
+material = SubResource("ShaderMaterial_wfwb2")
+collision_layer = 1073741825
+collision_mask = 1073741825
+script = ExtResource("1_owve4")
+
+[node name="OverseerCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-1.0000001, 5.0000005)
+scale = Vector2(0.39221188, 0.39221188)
+shape = SubResource("CircleShape2D_8mio6")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-1, 4.9999995)
+scale = Vector2(0.80793786, 0.80793786)
+shape = SubResource("CircleShape2D_owve4")
+
+[node name="OrbleOverseerSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 use_parent_material = true
-sprite_frames = SubResource("SpriteFrames_lunq1")
+sprite_frames = SubResource("SpriteFrames_owve4")
 animation = &"stationary"
+
+[node name="OrbleShadow" type="Sprite2D" parent="OrbleOverseerSprite"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-0.85, 9.5)
+scale = Vector2(0.9813845, 0.34298372)
+texture = SubResource("GradientTexture2D_8mio6")
+
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(1, 10)
+rotation = -3.1415925
+emitting = false
+amount = 6
+texture = SubResource("CompressedTexture2D_wfwb2")
+one_shot = true
+preprocess = 0.2
+explosiveness = 0.4
+process_material = SubResource("ParticleProcessMaterial_38iqe")
+
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(-3, 10)
+emitting = false
+amount = 6
+texture = SubResource("CompressedTexture2D_co5bw")
+one_shot = true
+preprocess = 0.2
+explosiveness = 0.4
+process_material = SubResource("ParticleProcessMaterial_s14xi")
+
+[node name="DirectionTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.05
+one_shot = true
+autostart = true
+
+[node name="MovementTimeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="ProposeTime" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[node name="MissionBoardTime" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_area_entered"]
+[connection signal="area_exited" from="InteractionArea" to="." method="_on_interaction_area_area_exited"]
+[connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
+[connection signal="timeout" from="MovementTimeTimer" to="." method="_on_movement_time_timer_timeout"]
+[connection signal="timeout" from="ProposeTime" to="." method="_on_propose_time_timeout"]
+[connection signal="timeout" from="MissionBoardTime" to="." method="_on_mission_board_time_timeout"]

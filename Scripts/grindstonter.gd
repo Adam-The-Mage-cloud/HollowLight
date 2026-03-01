@@ -193,6 +193,7 @@ func flash_actual_white() :
 
 
 func burn() :
+	EventBus.grindstonters_burnt += 1
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_color", Vector3(0.95, 0.65, 0.25), 0.25)
 	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)

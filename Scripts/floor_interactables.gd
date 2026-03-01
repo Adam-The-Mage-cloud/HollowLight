@@ -44,7 +44,8 @@ func _ready() :
 			vase_type = chosen_skin_number
 		
 		elif type == 2 : # CAMPFIRES
-			chosen_skin_number = randi_range(1, 3)
+			if chosen_skin_number == 0 :
+				chosen_skin_number = randi_range(1, 3)
 			%InteractableSprite.play("campfire_" + str(chosen_skin_number))
 		
 		elif type == 3 : # SACKS

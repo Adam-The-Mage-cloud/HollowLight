@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=121 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
 [ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
@@ -21,12 +21,13 @@
 [ext_resource type="PackedScene" uid="uid://bbdmbq7kdo6e4" path="res://Scenes/travellers_sanctuary/clives_wagon.tscn" id="14_mfhby"]
 [ext_resource type="Texture2D" uid="uid://betht5aagtd00" path="res://Artwork/Argorn_The_Trader.png" id="17_so4ro"]
 [ext_resource type="Texture2D" uid="uid://clg6204cgcaov" path="res://Artwork/Plants_Outside_Tileset.png" id="18_r38ba"]
-[ext_resource type="Texture2D" uid="uid://c01hqtrljk5ta" path="res://Artwork/Menus/AdventureMenu/Tent_Choose_Adventure_Page.png" id="19_5uj6u"]
 [ext_resource type="Texture2D" uid="uid://b63h8f8foljwk" path="res://Artwork/Menus/End_Of_Dungeon_Items.png" id="19_r38ba"]
 [ext_resource type="Texture2D" uid="uid://bxamsscnkd23u" path="res://Artwork/Menus/Clives Shop/Clive_s_Wagon_Flying_Sword.png" id="21_5rehm"]
 [ext_resource type="Texture2D" uid="uid://dlms66tqresj3" path="res://Artwork/Tutorial_Replay_Highlighted.png" id="21_ir7tl"]
 [ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="21_rxw26"]
+[ext_resource type="PackedScene" uid="uid://jgdtjlhaudts" path="res://Scenes/travellers_sanctuary/OrbleVillage/orble_overseer.tscn" id="22_s10yr"]
 [ext_resource type="Texture2D" uid="uid://cn740secgxnfs" path="res://Artwork/Orb_Outfits.png" id="23_jw7cl"]
+[ext_resource type="PackedScene" uid="uid://bdshio7a04146" path="res://Scenes/travellers_sanctuary/OrbleVillage/overseer_mission_board.tscn" id="23_s10yr"]
 [ext_resource type="Texture2D" uid="uid://cel72unrveckk" path="res://Artwork/Goblin.png" id="24_dumca"]
 [ext_resource type="Texture2D" uid="uid://1swlwkrgxoby" path="res://Artwork/Positive_Particle.png" id="24_jw7cl"]
 [ext_resource type="Texture2D" uid="uid://dq14dnh50xbj" path="res://Artwork/Orb.png" id="26_tyu56"]
@@ -35,6 +36,7 @@
 [ext_resource type="PackedScene" uid="uid://conrmkoo8fl6y" path="res://Scenes/travellers_sanctuary/OrbleVillage/sanctuary_ritual_site.tscn" id="32_jyjx7"]
 [ext_resource type="PackedScene" uid="uid://b7rbd1mh7y12u" path="res://Scenes/travellers_sanctuary/OrbleVillage/orble_chefstation.tscn" id="34_knu3s"]
 [ext_resource type="PackedScene" uid="uid://bqpkhtuwobnq4" path="res://Scenes/travellers_sanctuary/OrbleVillage/orble_chef.tscn" id="35_3rqen"]
+[ext_resource type="PackedScene" uid="uid://duajbyy6olgji" path="res://Scenes/floor_interactables.tscn" id="36_thpvr"]
 
 [sub_resource type="Gradient" id="Gradient_lps57"]
 offsets = PackedFloat32Array(0.38222224, 1)
@@ -200,20 +202,35 @@ tile_size = Vector2i(10, 10)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_mfhby")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rxw26"]
-atlas = ExtResource("19_5uj6u")
-region = Rect2(0, 0, 37, 29)
+[sub_resource type="Gradient" id="Gradient_thpvr"]
+colors = PackedColorArray(0.492081, 1.89515e-06, 2.40654e-07, 1, 1, 0.725456, 0.293907, 1)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_dumca"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rxw26")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_thpvr"]
+gradient = SubResource("Gradient_thpvr")
+
+[sub_resource type="Curve" id="Curve_8bi17"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_s10yr"]
+curve = SubResource("Curve_8bi17")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o3yq5"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.15, 0, 0)
+emission_shape_scale = Vector3(1.2, 0.6, 1)
+emission_shape = 1
+emission_sphere_radius = 5.5
+direction = Vector3(0, -1, 0)
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, -25, 0)
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+scale_curve = SubResource("CurveTexture_s10yr")
+color = Color(1, 1, 1, 0.4117647)
+color_ramp = SubResource("GradientTexture1D_thpvr")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0oo8m"]
 atlas = ExtResource("7_o6jja")
@@ -4436,48 +4453,6 @@ tile_map_data = PackedByteArray("AADp/+r/AAACAAIAAADp/+v/AAACAAIAAADp/+z/AAACAAI
 tile_set = SubResource("TileSet_bsgyg")
 physics_quadrant_size = 10
 
-[node name="clive_npc" parent="." instance=ExtResource("6_7kch7")]
-z_index = 1
-position = Vector2(75, 57)
-
-[node name="orble" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-108, 238)
-
-[node name="orble2" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-52, 251)
-
-[node name="orble3" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-147, 292)
-
-[node name="orble4" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(15, 196)
-
-[node name="orble5" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-230, 291)
-
-[node name="orble6" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(17, 114)
-
-[node name="orble7" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-57, 183)
-
-[node name="sanctuary_ritual_site" parent="." instance=ExtResource("32_jyjx7")]
-unique_name_in_owner = true
-position = Vector2(-54, 237)
-
-[node name="orble_shelters" parent="." instance=ExtResource("9_utwvl")]
-position = Vector2(-140, 223)
-
-[node name="sanctuary_campfire" parent="." instance=ExtResource("6_0oo8m")]
-position = Vector2(124, 70)
-
 [node name="Trees" type="Node2D" parent="."]
 z_index = 1
 y_sort_enabled = true
@@ -7351,6 +7326,10 @@ position = Vector2(31, 108)
 [node name="Smallgrass166" parent="SmallGrass" instance=ExtResource("3_kbio4")]
 position = Vector2(4, 99)
 
+[node name="clive_npc" parent="." instance=ExtResource("6_7kch7")]
+z_index = 1
+position = Vector2(75, 57)
+
 [node name="clives_wagon" parent="." instance=ExtResource("14_mfhby")]
 unique_name_in_owner = true
 z_index = 1
@@ -7374,10 +7353,102 @@ position = Vector2(234, 36)
 z_index = 1
 position = Vector2(-40, 95)
 
-[node name="TentSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(106, 171)
-scale = Vector2(1.5, 1.5)
-sprite_frames = SubResource("SpriteFrames_dumca")
+[node name="orble_shelters2" parent="." instance=ExtResource("9_utwvl")]
+y_sort_enabled = true
+position = Vector2(-241, 266)
+
+[node name="orble_shelters3" parent="." instance=ExtResource("9_utwvl")]
+y_sort_enabled = true
+position = Vector2(-241, 266)
+
+[node name="orble_shelters4" parent="." instance=ExtResource("9_utwvl")]
+y_sort_enabled = true
+position = Vector2(-222, 241)
+
+[node name="orble_shelters5" parent="." instance=ExtResource("9_utwvl")]
+y_sort_enabled = true
+position = Vector2(87, 206)
+rotation = 3.1415925
+scale = Vector2(1, -1)
+
+[node name="orble_shelters6" parent="." instance=ExtResource("9_utwvl")]
+y_sort_enabled = true
+position = Vector2(-55, 306)
+rotation = 3.1415925
+scale = Vector2(1, -1)
+
+[node name="orble_chefstation" parent="." instance=ExtResource("34_knu3s")]
+unique_name_in_owner = true
+position = Vector2(-160, 280)
+
+[node name="orble_chef" parent="orble_chefstation" instance=ExtResource("35_3rqen")]
+z_index = 1
+position = Vector2(15, -28)
+
+[node name="StewPotFire" parent="." instance=ExtResource("6_0oo8m")]
+z_index = 0
+position = Vector2(-159, 298)
+
+[node name="StewPotSecondaryParticles" type="GPUParticles2D" parent="StewPotFire"]
+unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
+position = Vector2(-1, -5)
+amount = 100
+amount_ratio = 0.1
+lifetime = 2.4
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_o3yq5")
+
+[node name="StewPotSpit" parent="." instance=ExtResource("36_thpvr")]
+unique_name_in_owner = true
+position = Vector2(-159, 293)
+
+[node name="orble_shelters" parent="." instance=ExtResource("9_utwvl")]
+position = Vector2(-140, 223)
+
+[node name="sanctuary_ritual_site" parent="." instance=ExtResource("32_jyjx7")]
+unique_name_in_owner = true
+position = Vector2(-54, 237)
+
+[node name="sanctuary_campfire" parent="." instance=ExtResource("6_0oo8m")]
+position = Vector2(124, 70)
+
+[node name="overseer_mission_board" parent="." instance=ExtResource("23_s10yr")]
+unique_name_in_owner = true
+position = Vector2(113, 161)
+
+[node name="orble_overseer" parent="." instance=ExtResource("22_s10yr")]
+unique_name_in_owner = true
+position = Vector2(-31, 268)
+
+[node name="orble" parent="." instance=ExtResource("7_k7t6u")]
+z_index = 1
+position = Vector2(-108, 238)
+
+[node name="orble2" parent="." instance=ExtResource("7_k7t6u")]
+z_index = 1
+position = Vector2(-52, 251)
+
+[node name="orble3" parent="." instance=ExtResource("7_k7t6u")]
+z_index = 1
+position = Vector2(-147, 292)
+
+[node name="orble4" parent="." instance=ExtResource("7_k7t6u")]
+z_index = 1
+position = Vector2(15, 196)
+
+[node name="orble5" parent="." instance=ExtResource("7_k7t6u")]
+z_index = 1
+position = Vector2(-230, 291)
+
+[node name="orble6" parent="." instance=ExtResource("7_k7t6u")]
+z_index = 1
+position = Vector2(17, 114)
+
+[node name="orble7" parent="." instance=ExtResource("7_k7t6u")]
+z_index = 1
+position = Vector2(-57, 183)
 
 [node name="TorchAndShield" type="Area2D" parent="."]
 z_index = 1
@@ -7659,31 +7730,6 @@ sprite_frames = SubResource("SpriteFrames_knu3s")
 [node name="BrodySprite" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
 position = Vector2(-16.666668, 11.333332)
 sprite_frames = SubResource("SpriteFrames_o3yq5")
-
-[node name="orble_shelters2" parent="." instance=ExtResource("9_utwvl")]
-position = Vector2(-241, 266)
-
-[node name="orble_shelters3" parent="." instance=ExtResource("9_utwvl")]
-position = Vector2(-241, 266)
-
-[node name="orble_shelters4" parent="." instance=ExtResource("9_utwvl")]
-position = Vector2(-222, 241)
-
-[node name="orble_shelters5" parent="." instance=ExtResource("9_utwvl")]
-position = Vector2(87, 206)
-scale = Vector2(-1, 1)
-
-[node name="orble_shelters6" parent="." instance=ExtResource("9_utwvl")]
-position = Vector2(-55, 306)
-scale = Vector2(-1, 1)
-
-[node name="orble_chefstation" parent="." instance=ExtResource("34_knu3s")]
-unique_name_in_owner = true
-position = Vector2(-160, 280)
-
-[node name="orble_chef" parent="orble_chefstation" instance=ExtResource("35_3rqen")]
-z_index = 1
-position = Vector2(15, -28)
 
 [connection signal="body_entered" from="TorchAndShield" to="." method="_on_torch_and_shield_body_entered"]
 [connection signal="body_exited" from="TorchAndShield" to="." method="_on_torch_and_shield_body_exited"]

@@ -225,6 +225,9 @@ func _on_dungeon_ended() :
 	touchscreen_available = false
 	%TouchScreenLayer.visible = false
 	%ShieldButton.visible = false
+	
+	EventBus.dungeons_completed += 1
+	EventBus.weekly_dungeons_completed += 1
 
 func _on_new_dungeon_crawl() :
 	# Delete Previous Instances (e.g. Sanctuary) :

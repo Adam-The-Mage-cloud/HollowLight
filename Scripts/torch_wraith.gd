@@ -88,7 +88,7 @@ func _on_area_entered(area: Area2D) -> void:
 
 func burn_away() :
 	# Flash effect
-	var tween1 := create_tween()
+	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)
 	tween1.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.15)
 	# Turn on fire light
@@ -110,6 +110,7 @@ func burn_away() :
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.6, 0.0)
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.0, 0.45)
 	if health <= 0:
+		EventBus.torch_wraiths_burnt += 1
 		drop_embers()
 		drop_xp()
 		pinatered = true

@@ -2,10 +2,11 @@ extends CharacterBody2D
 
 # Movement Variables :
 var direction = Vector2.ZERO
-var speed = 2000
+var speed = 24
 
 var orble_moving = false
 var orble_cheffing = false
+var orble_proposing = false
 
 # Movement Boundary Variables :
 var home_position = Vector2.ZERO
@@ -74,7 +75,7 @@ func stir_pot():
 
 func _physics_process(delta: float) -> void:
 	# Update velocity from direction
-	velocity = direction * speed * delta
+	velocity = direction * speed
 
 	# Move using physics
 	move_and_slide()
@@ -127,7 +128,7 @@ func _on_direction_timer_timeout() -> void:
 		
 		if randi_range(1, 2) == 1 : # Then move :
 			
-			direction = Vector2(randf_range(-0.65, 0.65), randf_range(-0.65, 0.65))
+			direction = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)).normalized()
 			
 			moving()
 			
@@ -136,8 +137,8 @@ func _on_direction_timer_timeout() -> void:
 
 
 func _on_propose_time_timeout() -> void:
-	if randi_range(1, 12) == 1 : # THEN PROPOSE TO THE FOREST
-		print("happening")
+	if randi_range(1, 12) == 1 and orble_proposing == false : # THEN PROPOSE TO THE FOREST
+		orble_proposing = true
 		%DirectionTimer.stop()
 		%MovementTimeTimer.stop()
 		direction = %sanctuary_ritual_site.global_position - $".".global_position
@@ -152,7 +153,7 @@ func _on_interaction_area_area_entered(area: Node2D) -> void:
 		%ChefSprite.play("stationary")
 		# THEN WE TWEEN THE CHEF TO JUMP UP ON THE STEPLADDER :
 		var jump_up = create_tween()
-		jump_up.tween_property($".", "global_position", area.global_position + Vector2(0, -10), 1.0)
+		jump_up.tween_property($".", "global_position", area.global_position + Vector2(0, -10), 0.6)
 		await jump_up.finished
 		
 		# NOW START STIRRING THE CAULDRON :
@@ -178,6 +179,16 @@ func _on_interaction_area_area_entered(area: Node2D) -> void:
 		await ladle_raise.finished
 		# JUMP DOWN :
 		jump_down()
+	
+	elif area.name == "RitualArea" :
+		await get_tree().create_timer(randf_range(0.25, 0.65)).timeout
+		direction = Vector2.ZERO
+		%ChefSprite.play("celebrating")
+		await get_tree().create_timer(randf_range(9.0, 16.0)).timeout
+		%DirectionTimer.start()
+		%MovementTimeTimer.start()
+		orble_proposing = false
+
 
 func jump_down():
 	var start_pos = position
@@ -224,7 +235,6 @@ func jump_down():
 
 func _on_cooking_time_timeout() -> void:
 	if randi_range(1, 4) == 4 and orble_cheffing == false : # THEN GO TO COOK
-		print("happening")
 		%DirectionTimer.stop()
 		%MovementTimeTimer.stop()
 		direction = %orble_chefstation.global_position - $".".global_position

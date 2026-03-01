@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://bdshio7a04146"]
+
+[ext_resource type="Script" uid="uid://dobrfyn0mcte0" path="res://Scripts/travellers_sanctuary/OrbleVillage/overseer_mission_board.gd" id="1_m7e67"]
+[ext_resource type="Texture2D" uid="uid://cfrrn70qur3ip" path="res://Artwork/Sanctuary/Orble_Structures.png" id="1_m652n"]
+[ext_resource type="Texture2D" uid="uid://c5xx7org2y2jj" path="res://Artwork/Sanctuary/OverseerBoard/Orble_Structures_Highlighted.png" id="3_rllsi"]
+[ext_resource type="Texture2D" uid="uid://dnyis2en7pq8v" path="res://Artwork/Hint_Exclamation.png" id="4_lt7ba"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7e67"]
+size = Vector2(33, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rllsi"]
+atlas = ExtResource("1_m652n")
+region = Rect2(211, 15, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lt7ba"]
+atlas = ExtResource("3_rllsi")
+region = Rect2(211, 15, 60, 60)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lt7ba"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rllsi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lt7ba")
+}],
+"loop": true,
+"name": &"highlighted",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m652n"]
+
+[node name="overseer_mission_board" type="CharacterBody2D"]
+z_index = 1
+texture_filter = 1
+script = ExtResource("1_m7e67")
+
+[node name="MissionBoardCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, -11.5)
+shape = SubResource("RectangleShape2D_m7e67")
+
+[node name="MissionBoardSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -18)
+sprite_frames = SubResource("SpriteFrames_lt7ba")
+autoplay = "default"
+
+[node name="ExclamationMarkIndicator" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(-2, -32)
+texture = ExtResource("4_lt7ba")
+
+[node name="MissionBoardAccessArea" type="Area2D" parent="."]
+position = Vector2(0, -18)
+
+[node name="BoardAccessCollision" type="CollisionShape2D" parent="MissionBoardAccessArea"]
+position = Vector2(0, 15)
+scale = Vector2(3.8801212, 3.8801212)
+shape = SubResource("CircleShape2D_m652n")
+
+[connection signal="area_entered" from="MissionBoardAccessArea" to="." method="_on_mission_board_access_area_area_entered"]
+[connection signal="body_entered" from="MissionBoardAccessArea" to="." method="_on_mission_board_access_area_body_entered"]
+[connection signal="body_entered" from="MissionBoardAccessArea" to="." method="_on_mission_bard_access_area_body_entered"]
+[connection signal="body_exited" from="MissionBoardAccessArea" to="." method="_on_mission_board_access_area_body_exited"]

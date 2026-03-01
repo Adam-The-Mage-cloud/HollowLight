@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bqpkhtuwobnq4"]
+[gd_scene load_steps=33 format=3 uid="uid://bqpkhtuwobnq4"]
 
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_1iqmt"]
 [ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_tesde"]
@@ -83,6 +83,16 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_68c2m"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0nnt3"]
+gradient = SubResource("Gradient_68c2m")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0nnt3"]
 shader = ExtResource("1_1iqmt")
 shader_parameter/flash_amount = 0.0
@@ -112,7 +122,7 @@ load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f6
 [sub_resource type="Gradient" id="Gradient_1iqmt"]
 colors = PackedColorArray(0.1441006, 0.4888317, 0.17460966, 1, 0.23529412, 0.14509805, 0.1764706, 0.58431375)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_xa185"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0nnt3"]
 gradient = SubResource("Gradient_1iqmt")
 
 [sub_resource type="Curve" id="Curve_0nnt3"]
@@ -137,7 +147,7 @@ scale_min = 0.049999997
 scale_max = 0.06
 scale_curve = SubResource("CurveTexture_x8306")
 color = Color(0.5104257, 0.9153792, 0.255261, 0.8156863)
-color_ramp = SubResource("GradientTexture1D_xa185")
+color_ramp = SubResource("GradientTexture1D_0nnt3")
 turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
@@ -148,14 +158,14 @@ load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f6
 [sub_resource type="Gradient" id="Gradient_4bcwd"]
 colors = PackedColorArray(0.1441006, 0.4888317, 0.17460966, 1, 0.23529412, 0.14509805, 0.1764706, 0.58431375)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_j7dk3"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vvr6s"]
 gradient = SubResource("Gradient_4bcwd")
 
 [sub_resource type="Curve" id="Curve_wg863"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_ewdy7"]
+[sub_resource type="CurveTexture" id="CurveTexture_gf3br"]
 curve = SubResource("Curve_wg863")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h7xak"]
@@ -171,15 +181,16 @@ radial_accel_min = -5.000002
 radial_accel_max = 4.9999976
 scale_min = 0.049999997
 scale_max = 0.06
-scale_curve = SubResource("CurveTexture_ewdy7")
+scale_curve = SubResource("CurveTexture_gf3br")
 color = Color(0.5104257, 0.9153792, 0.255261, 0.8156863)
-color_ramp = SubResource("GradientTexture1D_j7dk3")
+color_ramp = SubResource("GradientTexture1D_vvr6s")
 turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
 
 [node name="orble_chef" type="CharacterBody2D"]
 z_index = 2
+y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_xa185")
 collision_layer = 0
@@ -203,6 +214,14 @@ unique_name_in_owner = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_1iqmt")
 animation = &"stationary"
+
+[node name="OrbleShadow" type="Sprite2D" parent="ChefSprite"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-0.85, 9.5)
+scale = Vector2(0.9813845, 0.34298372)
+texture = SubResource("GradientTexture2D_0nnt3")
 
 [node name="ChefsHat" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

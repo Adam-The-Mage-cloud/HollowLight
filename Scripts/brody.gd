@@ -443,16 +443,19 @@ func get_nearest_unlit_brazier(player_pos: Vector2) -> Node2D:
 
 # COSMETICS :
 func change_outfit() :
+	EventBus.outfit_changed = true
 	outfit = EventBus.equipped_brodyoutfit
 
 
 func change_shield() :
+	EventBus.shield_changed = true
 	%brody_shield._ready()
 	# Make Shield Equip Button Appear :
 	%ShieldButton.visible = true
 
 
 func change_torch() :
+	EventBus.torch_changed = true
 	%Torch.change_skin()
 	# Make Appear for a bit :
 	%Torch.visible = true
@@ -686,16 +689,19 @@ func _on_touch_screen_press_2_move_stick_changed(vec: Variant) -> void:
 
 
 func _on_dash_button_pressed() -> void:
+	EventBus.dash_used += 1
 	dash_ability()
 	if EventBus.sanctuary == true :
 		if EventBus.currently_interacting == false :
 			if EventBus.dungeon_crawl_button_available == true:
 				EventBus.new_dungeon_crawl()
 				make_darkness_visible()
+				EventBus.npcs_spoken_to += 1
 				
 			elif EventBus.clives_shop_interactable == true:
 				EventBus.currently_interacting = true
 				EventBus.clives_shop_available()
+				EventBus.npcs_spoken_to += 1
 				
 			elif EventBus.tutorial_replay_available == true :
 				EventBus.intro = true
@@ -707,18 +713,28 @@ func _on_dash_button_pressed() -> void:
 				EventBus.currently_interacting = true
 				%DashButton.visible = false
 				%TouchScreenPress2.visible = false
+				EventBus.npcs_spoken_to += 1
 				var balloon_shop = preload("res://Scenes/travellers_sanctuary/ShopMenus/catballoon_shop.tscn").instantiate()
 				balloon_shop.global_position = %BrodyCam.position
 				%BrodyCam.call_deferred("add_child", balloon_shop)
 				
 			elif EventBus.jackie_shop_interactable == true :
-				print("jackiesda")
 				EventBus.currently_interacting = true
 				%DashButton.visible = false
 				%TouchScreenPress2.visible = false
+				EventBus.npcs_spoken_to += 1
 				var jackies_shop = preload("res://Scenes/travellers_sanctuary/ShopMenus/jackies_shop.tscn").instantiate()
 				jackies_shop.global_position = %BrodyCam.position
 				%BrodyCam.call_deferred("add_child", jackies_shop)
+				
+			elif EventBus.mission_board_interactable == true :
+				EventBus.currently_interacting = true
+				%DashButton.visible = false
+				%TouchScreenPress2.visible = false
+				EventBus.npcs_spoken_to += 1
+				var mission_board = preload("res://Scenes/travellers_sanctuary/ShopMenus/overseers_board_menu.tscn").instantiate()
+				mission_board.global_position = %BrodyCam.position
+				%BrodyCam.call_deferred("add_child", mission_board)
 
 
 func _on_shield_button_pressed() -> void:

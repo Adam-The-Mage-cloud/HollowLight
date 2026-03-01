@@ -1,5 +1,10 @@
 extends Node
 
+# TIMING (REAL WORLD) :
+var last_daily_reset : String = ""   
+var last_weekly_reset : String = ""  
+
+
 var total_beacons = 0
 
 signal beacon_spawned(beacon)
@@ -127,6 +132,50 @@ var tutorial_replay_available = false
 var clives_shop_interactable = false
 var catballoon_shop_interactable = false
 var jackie_shop_interactable = false
+var mission_board_interactable = false
+
+
+# Current Missions Activated :
+# Dailies :
+var daily_missions = {
+	1: "0",
+	2: "0",
+	3: "0",
+	4: "0",
+}
+
+# Weeklies :
+var weekly_missions = {
+	1: "0",
+	2: "0",
+}
+
+
+# Daily Mission Trackers :
+var draugr_burnt = 0
+var mudcrabs_burnt = 0
+var ogres_burnt = 0
+var goblins_burnt  = 0
+var grindstonters_burnt = 0
+var witches_burnt = 0
+var torch_wraiths_burnt = 0
+var soul_eaters_burnt = 0
+var dire_wolves_burnt = 0
+var orbles_rescued = 0
+var stews_prepared = 0
+var dungeons_completed = 0
+var shield_changed = false
+var outfit_changed = false
+var hat_changed = false
+var torch_changed = false
+var dash_used = 0
+var npcs_spoken_to = 0
+
+# Weekly Mission Trackers :
+var daily_missions_completed_during_current_week = 0
+var weekly_dungeons_completed = 0
+# var weekly_bosses_beaten = 0
+
 
 # Theme Indicator
 var current_theme = 1
@@ -230,6 +279,16 @@ func spawn_the_sanctuary() :
 func clives_shop_available() :
 	EventBus.open_clives_shop.emit()
 
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# REAL WORLD TIME RESETS :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # SAVING AND LOADING :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -243,6 +302,19 @@ func get_save_data() -> Dictionary:
 		"equipped_shield": shield_acquired,
 		"equipped_torch": equipped_torch,
 		"equipped_brodyoutfit": equipped_brodyoutfit,
+		
+		# Time :
+		"last_daily_reset": last_daily_reset,
+		"last_weekly_reset": last_weekly_reset,
+		
+		# Currently Active Missions :
+		"daily_missions": daily_missions,
+		"weekly_missions": weekly_missions,
+		
+		# Weekly Missions :
+		"daily_missions_completed_during_current_week": daily_missions_completed_during_current_week,
+		"weekly_dungeons_completed": weekly_dungeons_completed,
+		
 		# ----------------------------------------------------------------------
 		# Shop Purchases :
 		# ----------------------------------------------------------------------
@@ -286,6 +358,23 @@ func apply_save_data(data: Dictionary):
 	equipped_torch = data.get("equipped_torch", "none")
 	equipped_brodyoutfit = data.get("equipped_brodyoutfit", "none")
 	
+	# Time :
+	last_daily_reset = data.get("last_daily_reset", "none")
+	last_weekly_reset = data.get("last_weekly_reset", "none")
+	
+	# Currently Active Missions :
+	daily_missions = data.get("daily_missions", {
+		1: "0",
+		2: "0",
+		3: "0",
+		4: "0",
+	})
+	
+	weekly_missions = data.get("weekly_missions", {
+		1: "0",
+		2: "0",
+	})
+	print (daily_missions)
 	# ----------------------------------------------------------------------
 	# Shop Purchases :
 	# ----------------------------------------------------------------------

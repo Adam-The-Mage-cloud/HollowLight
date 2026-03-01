@@ -8,9 +8,15 @@ func _ready() :
 	arrows_pointing()
 	wagon_signs_pointing()
 	tutorial_replay_floating()
+	turn_stewpot_spit()
 	
 	if EventBus.intro == true :
 		play_sanctuary_tutorial()
+
+func turn_stewpot_spit() :
+	%StewPotSpit.type = 2
+	%StewPotSpit.chosen_skin_number = 3
+	%StewPotSpit._ready()
 
 func spawn_default_shield() :
 	var shield_pickup = preload("res://Scenes/brody_shield_pickup.tscn").instantiate() 

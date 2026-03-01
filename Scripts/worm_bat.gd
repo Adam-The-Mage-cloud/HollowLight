@@ -100,6 +100,7 @@ func burn_away() :
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.6, 0.0)
 	lighttween.tween_property(%OnFireLight, "texture_scale", 1.0, 0.45)
 	if health <= 0:
+		EventBus.soul_eaters_burnt += 1
 		drop_embers()
 		drop_xp()
 		pinatered = true
