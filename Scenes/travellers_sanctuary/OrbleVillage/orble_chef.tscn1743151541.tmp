@@ -1,0 +1,273 @@
+[gd_scene load_steps=31 format=3 uid="uid://bqpkhtuwobnq4"]
+
+[ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_1iqmt"]
+[ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_tesde"]
+[ext_resource type="Script" uid="uid://bef2w4t21ppbh" path="res://Scripts/travellers_sanctuary/OrbleVillage/orble_chef.gd" id="1_xtlvq"]
+[ext_resource type="Texture2D" uid="uid://dh2kke54c7dps" path="res://Artwork/Sanctuary/Chefs_Ladle_Arms.png" id="4_0nnt3"]
+[ext_resource type="Texture2D" uid="uid://2ftb4gcdwgws" path="res://Artwork/Sanctuary/Ladle.png" id="5_x8306"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xa185"]
+shader = ExtResource("1_1iqmt")
+shader_parameter/flash_amount = 0.0
+shader_parameter/wave_frequency = 0.4
+shader_parameter/wave_amplitude = 0.002
+shader_parameter/wave_longitude = 0.003
+shader_parameter/wave_speed = 2.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tesde"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1iqmt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iqmt"]
+atlas = ExtResource("1_tesde")
+region = Rect2(9, 274, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xa185"]
+atlas = ExtResource("1_tesde")
+region = Rect2(9, 242, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nnt3"]
+atlas = ExtResource("1_tesde")
+region = Rect2(33, 242, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8306"]
+atlas = ExtResource("1_tesde")
+region = Rect2(33, 274, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtlvq"]
+atlas = ExtResource("1_tesde")
+region = Rect2(9, 210, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvr6s"]
+atlas = ExtResource("1_tesde")
+region = Rect2(33, 210, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1iqmt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iqmt")
+}],
+"loop": true,
+"name": &"celebrating",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xa185")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nnt3")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8306")
+}],
+"loop": true,
+"name": &"sleeping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 15.0,
+"texture": SubResource("AtlasTexture_xtlvq")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_vvr6s")
+}],
+"loop": true,
+"name": &"stationary",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0nnt3"]
+shader = ExtResource("1_1iqmt")
+shader_parameter/flash_amount = 0.0
+shader_parameter/wave_frequency = 1.0
+shader_parameter/wave_amplitude = 0.005
+shader_parameter/wave_longitude = 0.001
+shader_parameter/wave_speed = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gf3br"]
+atlas = ExtResource("1_tesde")
+region = Rect2(9, 18, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4bcwd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gf3br")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xtlvq"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_1iqmt"]
+colors = PackedColorArray(0.1441006, 0.4888317, 0.17460966, 1, 0.23529412, 0.14509805, 0.1764706, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xa185"]
+gradient = SubResource("Gradient_1iqmt")
+
+[sub_resource type="Curve" id="Curve_0nnt3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_x8306"]
+curve = SubResource("Curve_0nnt3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vvr6s"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0.4, 0.2, 0.05)
+emission_shape = 3
+emission_box_extents = Vector3(0.3, 0.4, 0.05)
+direction = Vector3(0, 0, 0)
+initial_velocity_min = -5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -0.49, 0)
+radial_accel_min = -5.000002
+radial_accel_max = 4.9999976
+scale_min = 0.049999997
+scale_max = 0.06
+scale_curve = SubResource("CurveTexture_x8306")
+color = Color(0.5104257, 0.9153792, 0.255261, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_xa185")
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gf3br"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_4bcwd"]
+colors = PackedColorArray(0.1441006, 0.4888317, 0.17460966, 1, 0.23529412, 0.14509805, 0.1764706, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_j7dk3"]
+gradient = SubResource("Gradient_4bcwd")
+
+[sub_resource type="Curve" id="Curve_wg863"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_ewdy7"]
+curve = SubResource("Curve_wg863")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h7xak"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0.4, 0.2, 0.05)
+emission_shape = 3
+emission_box_extents = Vector3(0.3, 0.4, 0.05)
+direction = Vector3(0, 0, 0)
+initial_velocity_min = -5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -0.49, 0)
+radial_accel_min = -5.000002
+radial_accel_max = 4.9999976
+scale_min = 0.049999997
+scale_max = 0.06
+scale_curve = SubResource("CurveTexture_ewdy7")
+color = Color(0.5104257, 0.9153792, 0.255261, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_j7dk3")
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[node name="orble_chef" type="CharacterBody2D"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_xa185")
+script = ExtResource("1_xtlvq")
+
+[node name="ChefCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-1.0000001, 5.0000005)
+scale = Vector2(0.39221188, 0.39221188)
+shape = SubResource("CircleShape2D_tesde")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-1, 4.9999995)
+scale = Vector2(0.80793786, 0.80793786)
+shape = SubResource("CircleShape2D_1iqmt")
+
+[node name="ChefSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_1iqmt")
+animation = &"stationary"
+
+[node name="ChefsHat" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_0nnt3")
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_4bcwd")
+
+[node name="CauldronLadle" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-12, -4)
+rotation = 3.1415927
+scale = Vector2(-1, 1)
+texture = ExtResource("5_x8306")
+
+[node name="CauldronArms" type="Sprite2D" parent="CauldronLadle"]
+z_index = 1
+use_parent_material = true
+position = Vector2(4, -8)
+texture = ExtResource("4_0nnt3")
+
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(-3, 10)
+emitting = false
+amount = 6
+texture = SubResource("CompressedTexture2D_xtlvq")
+one_shot = true
+preprocess = 0.2
+explosiveness = 0.4
+process_material = SubResource("ParticleProcessMaterial_vvr6s")
+
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(1, 10)
+rotation = -3.1415925
+emitting = false
+amount = 6
+texture = SubResource("CompressedTexture2D_gf3br")
+one_shot = true
+preprocess = 0.2
+explosiveness = 0.4
+process_material = SubResource("ParticleProcessMaterial_h7xak")
+
+[node name="DirectionTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.05
+one_shot = true
+autostart = true
+
+[node name="MovementTimeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="ProposeTime" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[node name="CookingTime" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_area_entered"]
+[connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
+[connection signal="timeout" from="MovementTimeTimer" to="." method="_on_movement_time_timer_timeout"]
+[connection signal="timeout" from="ProposeTime" to="." method="_on_propose_time_timeout"]
+[connection signal="timeout" from="CookingTime" to="." method="_on_cooking_time_timeout"]

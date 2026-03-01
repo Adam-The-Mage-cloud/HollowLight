@@ -67,7 +67,12 @@ scale = Vector2(0.7392793, 0.7392793)
 scale = Vector2(0.66371375, 0.66371375)
 shape = SubResource("RectangleShape2D_r6mmd")
 
+[node name="SpeedAccelerator" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.125
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
 [connection signal="body_exited" from="PickupArea" to="." method="_on_pickup_area_body_exited"]
+[connection signal="timeout" from="SpeedAccelerator" to="." method="_on_speed_accelerator_timeout"]

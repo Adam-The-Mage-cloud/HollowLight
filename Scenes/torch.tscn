@@ -223,25 +223,21 @@ shape = SubResource("RectangleShape2D_3giss")
 
 [node name="TorchSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-y_sort_enabled = true
 use_parent_material = true
 position = Vector2(8.211391, -7.5743885)
 sprite_frames = SubResource("SpriteFrames_tk5eq")
-animation = &"wizardstaff_unlit"
+animation = &"walltorch_lit"
 
-[node name="MainFlame" type="GPUParticles2D" parent="."]
+[node name="MainFlame" type="GPUParticles2D" parent="TorchSprite"]
 unique_name_in_owner = true
-z_index = 1
-y_sort_enabled = true
-position = Vector2(14.657705, -12.509868)
+position = Vector2(6.446314, -4.935479)
 rotation = -0.800334
 amount = 265
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_sx2py")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="TorchSprite/MainFlame"]
 unique_name_in_owner = true
-z_index = 1
 position = Vector2(5.135801, -0.75641084)
 amount = 100
 local_coords = true

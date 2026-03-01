@@ -40,6 +40,8 @@ var beacons_lit = 0
 
 var death_played = false
 
+var sanctuary_under_attack = false 
+
 # Item Prices :
 # Uniques (one-time purchases) :
 var mystic_sword_price = 775

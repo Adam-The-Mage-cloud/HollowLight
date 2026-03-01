@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkfsbfm7um8de"]
+
+[ext_resource type="Texture2D" uid="uid://cfrrn70qur3ip" path="res://Artwork/Orble_Structures.png" id="1_ejh5c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul1vu"]
+atlas = ExtResource("1_ejh5c")
+region = Rect2(18, 48, 59, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7a0ok"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ul1vu")
+}],
+"loop": true,
+"name": &"shelter1",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejh5c"]
+size = Vector2(36, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ul1vu"]
+size = Vector2(21.634079, 7.2113605)
+
+[node name="orble_shelters" type="CharacterBody2D"]
+z_index = 1
+texture_filter = 1
+
+[node name="OrbleShelterSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7a0ok")
+animation = &"shelter1"
+autoplay = "shelter1"
+
+[node name="OrbleShelterArea" type="Area2D" parent="."]
+
+[node name="OrbleShelterCollision" type="CollisionShape2D" parent="OrbleShelterArea"]
+position = Vector2(-2, 7)
+shape = SubResource("RectangleShape2D_ejh5c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6.0000005, -4.0000005)
+scale = Vector2(0.8320206, 0.8320206)
+shape = SubResource("RectangleShape2D_ul1vu")

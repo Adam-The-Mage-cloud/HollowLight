@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://jgdtjlhaudts"]
+
+[ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_svibl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owve4"]
+atlas = ExtResource("1_svibl")
+region = Rect2(105, 274, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mio6"]
+atlas = ExtResource("1_svibl")
+region = Rect2(105, 242, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfwb2"]
+atlas = ExtResource("1_svibl")
+region = Rect2(129, 242, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6mhv"]
+atlas = ExtResource("1_svibl")
+region = Rect2(129, 274, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hx66"]
+atlas = ExtResource("1_svibl")
+region = Rect2(105, 210, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkt6a"]
+atlas = ExtResource("1_svibl")
+region = Rect2(129, 210, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lunq1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owve4")
+}],
+"loop": true,
+"name": &"celebrating",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8mio6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfwb2")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6mhv")
+}],
+"loop": true,
+"name": &"sleeping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hx66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bkt6a")
+}],
+"loop": true,
+"name": &"stationary",
+"speed": 5.0
+}]
+
+[node name="orble_overseer" type="Node2D"]
+texture_filter = 1
+
+[node name="HatOrbleSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_lunq1")
+animation = &"stationary"

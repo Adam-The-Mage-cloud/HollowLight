@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://chadpnqf4f2xn"]
+[gd_scene load_steps=53 format=3 uid="uid://chadpnqf4f2xn"]
 
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_0yueu"]
 [ext_resource type="Script" uid="uid://bwjcjoh73w2jp" path="res://Scripts/brody.gd" id="1_1lbbp"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b7ygaqnk23ial" path="res://Artwork/Particles/Particle_Effects_2.png" id="3_vfjlh"]
 [ext_resource type="Script" uid="uid://c3blldrekyiky" path="res://Scripts/brodyshadow.gd" id="4_cd0il"]
 [ext_resource type="Texture2D" uid="uid://b28j8m15a6ijg" path="res://Artwork/Particles/Positive_Particle_Small.png" id="4_l2vdu"]
+[ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="5_g8sqi"]
 [ext_resource type="Texture2D" uid="uid://cja70tkheanvb" path="res://Artwork/Darkness_Particle.png" id="5_s6v4d"]
 [ext_resource type="FontFile" uid="uid://6phwuvbfmw4m" path="res://Artwork/Fonts/PixelatedEleganceRegular-ovyAA.ttf" id="5_v4apm"]
 
@@ -274,6 +275,21 @@ animations = [{
 "speed": 0.2
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4rx7b"]
+atlas = ExtResource("5_g8sqi")
+region = Rect2(4, 45, 12, 27)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cwow6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4rx7b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_w5hne"]
 atlas = ExtResource("1_k4lj1")
 region = Rect2(57, 70, 23, 31)
@@ -456,6 +472,14 @@ use_parent_material = true
 position = Vector2(0, -11.999565)
 sprite_frames = SubResource("SpriteFrames_lgt8o")
 animation = &"none_stationary"
+
+[node name="ShieldStrap" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite"]
+unique_name_in_owner = true
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(-6.8968964, 4.173218)
+sprite_frames = SubResource("SpriteFrames_cwow6")
+autoplay = "default"
 
 [node name="antenna" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite"]
 unique_name_in_owner = true

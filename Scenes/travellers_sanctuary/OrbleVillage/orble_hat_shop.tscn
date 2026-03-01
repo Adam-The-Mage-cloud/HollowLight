@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=3 uid="uid://cjg5dswlljae7"]
+
+[ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_2omd5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2omd5"]
+atlas = ExtResource("1_2omd5")
+region = Rect2(57, 274, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qa2t"]
+atlas = ExtResource("1_2omd5")
+region = Rect2(81, 274, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5hfj"]
+atlas = ExtResource("1_2omd5")
+region = Rect2(57, 242, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1n0p"]
+atlas = ExtResource("1_2omd5")
+region = Rect2(81, 242, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sc03"]
+atlas = ExtResource("1_2omd5")
+region = Rect2(57, 210, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ket7u"]
+atlas = ExtResource("1_2omd5")
+region = Rect2(81, 210, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6qa2t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2omd5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qa2t")
+}],
+"loop": true,
+"name": &"celebrating",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 15.0,
+"texture": SubResource("AtlasTexture_m5hfj")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_i1n0p")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qa2t")
+}],
+"loop": true,
+"name": &"sleeping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sc03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ket7u")
+}],
+"loop": true,
+"name": &"stationary",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usf5e"]
+atlas = ExtResource("1_2omd5")
+region = Rect2(33, 18, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_avb4a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usf5e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="orble_hat_shop" type="Node2D"]
+texture_filter = 1
+
+[node name="HatOrbleSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_6qa2t")
+animation = &"stationary"
+
+[node name="HatOrblesHatSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -5)
+sprite_frames = SubResource("SpriteFrames_avb4a")

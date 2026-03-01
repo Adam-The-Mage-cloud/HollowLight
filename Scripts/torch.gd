@@ -41,6 +41,7 @@ var flip_speed = 4.0             # Indicates how fast the flip animation happens
 
 func _ready() :
 	EventBus.new_crawl.connect(check_torch_light_radiation_theme)
+	EventBus.spawn_sanctuary.connect(lower_torch_light)
 	change_skin()
 	
 
@@ -228,7 +229,11 @@ func check_torch_light_radiation_theme() :
 		%TorchLight.texture.width = 128
 		%TorchLight.texture.height = 128
 	elif EventBus.current_theme == 3 : # Hell so we need to alter it to be darker
-		print("done")
 		%TorchLight.energy = 2.0
 		%TorchLight.texture.width = 96
 		%TorchLight.texture.height = 96
+
+func lower_torch_light() :
+	%TorchLight.energy = 5.0
+	%TorchLight.texture.width = 96
+	%TorchLight.texture.height = 96

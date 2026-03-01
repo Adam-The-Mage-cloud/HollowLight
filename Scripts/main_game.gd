@@ -121,6 +121,7 @@ func _ready() :
 	   
 	else :
 		# Start in Sanctuary :
+		%Torch.lower_torch_light()
 		var spawn_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
 		spawn_sanctuary.global_position = Vector2(-140.0, -75.0)
 		%Brody.global_position = Vector2(20, 12)

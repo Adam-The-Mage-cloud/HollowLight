@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dna721dqgl7g1"
-path="res://.godot/imported/Orble_Shelters.png-5623578431f208410fd996f67449d2bf.ctex"
+uid="uid://dp3vlmidomkii"
+path="res://.godot/imported/Floating_Rock_6.png-8ffe400587a1f9ecb711167086a408a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Artwork/Orble_Shelters.png"
-dest_files=["res://.godot/imported/Orble_Shelters.png-5623578431f208410fd996f67449d2bf.ctex"]
+source_file="res://Artwork/Sanctuary/FloatingRocks/Floating_Rock_6.png"
+dest_files=["res://.godot/imported/Floating_Rock_6.png-8ffe400587a1f9ecb711167086a408a3.ctex"]
 
 [params]
 

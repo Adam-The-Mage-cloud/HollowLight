@@ -1,0 +1,223 @@
+[gd_scene load_steps=28 format=3 uid="uid://conrmkoo8fl6y"]
+
+[ext_resource type="Script" uid="uid://2v4xi1prjr0w" path="res://Scripts/travellers_sanctuary/OrbleVillage/sanctuary_ritual_site.gd" id="1_2ts5l"]
+[ext_resource type="Texture2D" uid="uid://cfrrn70qur3ip" path="res://Artwork/Sanctuary/Orble_Structures.png" id="2_2ts5l"]
+[ext_resource type="Texture2D" uid="uid://bauxqfn0b218k" path="res://Artwork/Sanctuary/FloatingRocks/Floating_Rock_1.png" id="2_ry1x8"]
+[ext_resource type="Texture2D" uid="uid://b4vq4mexy7kmr" path="res://Artwork/Sanctuary/FloatingRocks/Floating_Rock_2.png" id="3_2ts5l"]
+[ext_resource type="Texture2D" uid="uid://cedxxc4ees7pk" path="res://Artwork/Sanctuary/FloatingRocks/Floating_Rock_3.png" id="4_bxm3r"]
+[ext_resource type="Texture2D" uid="uid://da65cojct6ivs" path="res://Artwork/Sanctuary/FloatingRocks/Floating_Rock_4.png" id="5_uqgu8"]
+[ext_resource type="Texture2D" uid="uid://c2ivyyl6mjqw8" path="res://Artwork/Sanctuary/FloatingRocks/Floating_Rock_5.png" id="6_bjrgv"]
+[ext_resource type="Texture2D" uid="uid://dp3vlmidomkii" path="res://Artwork/Sanctuary/FloatingRocks/Floating_Rock_6.png" id="7_irial"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jssy0"]
+size = Vector2(22, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_egwso"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxm3r"]
+atlas = ExtResource("2_2ts5l")
+region = Rect2(92, 0, 51, 82)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b1a2l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxm3r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_hph1r"]
+offsets = PackedFloat32Array(0, 0.82222223, 1)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0.08235294, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2ts5l"]
+gradient = SubResource("Gradient_hph1r")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_2ts5l"]
+offsets = PackedFloat32Array(0.008888889, 0.82222223, 1)
+colors = PackedColorArray(0.9490196, 0.52156866, 0.9647059, 1, 0, 0, 0, 0.08235294, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bxm3r"]
+gradient = SubResource("Gradient_2ts5l")
+width = 8
+height = 12
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_uqgu8"]
+offsets = PackedFloat32Array(0.008888889, 0.82222223, 1)
+colors = PackedColorArray(0.3446969, 0.88182163, 0.9911552, 1, 0, 0, 0, 0.08235294, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bjrgv"]
+gradient = SubResource("Gradient_uqgu8")
+width = 8
+height = 12
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_wjb0i"]
+offsets = PackedFloat32Array(0, 0.32704404, 0.5597484, 1)
+colors = PackedColorArray(0.118780546, 0.066229075, 4.2114408e-08, 1, 0.98799986, 0.6725952, 6.160736e-06, 1, 0.99999994, 0.6469911, 0.300574, 1, 0.492081, 1.89515e-06, 2.40654e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2ts5l"]
+gradient = SubResource("Gradient_wjb0i")
+
+[sub_resource type="Curve" id="Curve_bjrgv"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_irial"]
+curve = SubResource("Curve_bjrgv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x5jgb"]
+lifetime_randomness = 0.21
+particle_flag_rotate_y = true
+emission_shape_offset = Vector3(-0.65, 0, 0)
+emission_shape_scale = Vector3(2, 0.5, 1)
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(0, -1, 0)
+spread = 143.182
+flatness = 1.0
+radial_velocity_min = -8.00002
+radial_velocity_max = 7.99998
+gravity = Vector3(0, -20, 0)
+radial_accel_min = -15.0
+radial_accel_max = -15.0
+scale_curve = SubResource("CurveTexture_irial")
+color = Color(0.4627451, 1, 0.14509805, 1)
+color_ramp = SubResource("GradientTexture1D_2ts5l")
+hue_variation_min = -0.15000002
+hue_variation_max = 0.14999998
+turbulence_noise_strength = 0.05
+turbulence_noise_scale = 1.0
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xqa1k"]
+gradient = SubResource("Gradient_wjb0i")
+
+[sub_resource type="Curve" id="Curve_5kxf7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_n4fif"]
+curve = SubResource("Curve_5kxf7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5pxcs"]
+lifetime_randomness = 0.21
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-0.15, 0, 0)
+emission_shape_scale = Vector3(1.2, 0.6, 1)
+emission_shape = 1
+emission_sphere_radius = 5.5
+direction = Vector3(0, -1, 0)
+radial_velocity_min = -5.00002
+radial_velocity_max = 4.99998
+gravity = Vector3(0, -25, 0)
+radial_accel_min = -10.0
+radial_accel_max = -10.0
+scale_curve = SubResource("CurveTexture_n4fif")
+color = Color(0.3764706, 1, 0, 1)
+color_ramp = SubResource("GradientTexture1D_xqa1k")
+hue_variation_min = -0.15000002
+hue_variation_max = 0.14999998
+
+[node name="sanctuary_ritual_site" type="CharacterBody2D"]
+z_index = 1
+texture_filter = 1
+script = ExtResource("1_2ts5l")
+
+[node name="RitualCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-2.3999977, 12.600002)
+shape = SubResource("RectangleShape2D_jssy0")
+
+[node name="RitualArea" type="Area2D" parent="."]
+position = Vector2(0.6000023, 10.600002)
+
+[node name="RitualCollision" type="CollisionShape2D" parent="RitualArea"]
+position = Vector2(0, 1.9999999)
+scale = Vector2(3.1997483, 2.0050826)
+shape = SubResource("CircleShape2D_egwso")
+
+[node name="RitualSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(0, -9)
+sprite_frames = SubResource("SpriteFrames_b1a2l")
+frame_progress = 0.9148597
+
+[node name="FloatingRock1" type="Sprite2D" parent="RitualSprite"]
+position = Vector2(-15.5, -19)
+texture = ExtResource("2_ry1x8")
+
+[node name="FloatingRock2" type="Sprite2D" parent="RitualSprite"]
+position = Vector2(6.5, -25)
+texture = ExtResource("3_2ts5l")
+
+[node name="FloatingRock3" type="Sprite2D" parent="RitualSprite"]
+position = Vector2(17.5, -6)
+texture = ExtResource("4_bxm3r")
+
+[node name="FloatingRock4" type="Sprite2D" parent="RitualSprite"]
+position = Vector2(16.5, 11)
+texture = ExtResource("5_uqgu8")
+
+[node name="FloatingRock5" type="Sprite2D" parent="RitualSprite"]
+position = Vector2(-16.5, 0)
+texture = ExtResource("6_bjrgv")
+
+[node name="FloatingRock6" type="Sprite2D" parent="RitualSprite"]
+position = Vector2(-11.5, 12)
+texture = ExtResource("7_irial")
+
+[node name="FlameLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(0.6000023, 10.600002)
+color = Color(0.19607843, 0.61960787, 0, 1)
+energy = 4.0
+texture = SubResource("GradientTexture2D_2ts5l")
+texture_scale = 1.2
+
+[node name="PurpleLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-1.3999977, -8.399998)
+color = Color(0.739423, 0.6222722, 0.9425473, 1)
+energy = 2.4
+texture = SubResource("GradientTexture2D_bxm3r")
+texture_scale = 1.2
+
+[node name="BlueLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-1.3999977, -24.399998)
+color = Color(0.17254902, 0.7137255, 0.6313726, 1)
+energy = 2.4
+texture = SubResource("GradientTexture2D_bjrgv")
+texture_scale = 1.2
+
+[node name="MainFlame" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(1.6000023, 13.600002)
+amount = 265
+amount_ratio = 0.85
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_x5jgb")
+
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(-2, 1)
+amount = 100
+amount_ratio = 0.85
+lifetime = 2.4
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_5pxcs")

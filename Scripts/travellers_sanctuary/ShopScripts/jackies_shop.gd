@@ -109,6 +109,8 @@ func set_upgrades_status_and_price() :
 	%ShieldStaminaPrice.text = str(EventBus.shield_stamina_upgrade_price) + "g"
 	%ShieldSpeedPrice.text = str(EventBus.shield_speed_upgrade_price) + "g"
 	%IncreaseLootPrice.text = str(EventBus.loot_chance_upgrade_price) + "g"
+	
+	first_load = false
 
 
 # >>>

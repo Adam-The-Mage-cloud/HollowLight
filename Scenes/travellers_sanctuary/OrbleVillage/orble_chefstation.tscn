@@ -1,0 +1,84 @@
+[gd_scene load_steps=14 format=3 uid="uid://b7rbd1mh7y12u"]
+
+[ext_resource type="Texture2D" uid="uid://cfrrn70qur3ip" path="res://Artwork/Sanctuary/Orble_Structures.png" id="1_apkxf"]
+[ext_resource type="Script" uid="uid://cduvmx67dpgga" path="res://Scripts/travellers_sanctuary/OrbleVillage/orble_chefstation.gd" id="1_axuxb"]
+[ext_resource type="Texture2D" uid="uid://cp81r5j301g63" path="res://Artwork/Sanctuary/Soup_Animation_1.png" id="2_mvkae"]
+[ext_resource type="Texture2D" uid="uid://1e22wiqbry33" path="res://Artwork/Sanctuary/Soup_Animation_2.png" id="3_axuxb"]
+[ext_resource type="Texture2D" uid="uid://7plhqhnv7sbn" path="res://Artwork/Sanctuary/Soup_Animation_3.png" id="4_l7s8m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mkakt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uynqn"]
+atlas = ExtResource("1_apkxf")
+region = Rect2(153, 0, 51, 82)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mvkae"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uynqn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccdbv"]
+atlas = ExtResource("2_mvkae")
+region = Rect2(0, 0, 20, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6eo7e"]
+atlas = ExtResource("3_axuxb")
+region = Rect2(0, 0, 20, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lfn6"]
+atlas = ExtResource("4_l7s8m")
+region = Rect2(0, 0, 20, 11)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_apkxf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccdbv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6eo7e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lfn6")
+}],
+"loop": true,
+"name": &"animated",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_apkxf"]
+
+[node name="orble_chefstation" type="CharacterBody2D"]
+z_index = 1
+texture_filter = 1
+script = ExtResource("1_axuxb")
+
+[node name="ChefstationCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_mkakt")
+
+[node name="ChefstationSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, -16)
+sprite_frames = SubResource("SpriteFrames_mvkae")
+
+[node name="OrbleStewSprite" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.7921569, 0.7921569, 0.7921569, 1)
+position = Vector2(-1, -7)
+sprite_frames = SubResource("SpriteFrames_apkxf")
+animation = &"animated"
+autoplay = "animated"
+frame_progress = 0.8666559
+
+[node name="CheffingArea" type="Area2D" parent="."]
+position = Vector2(15, -18)
+
+[node name="CheffingCollision" type="CollisionShape2D" parent="CheffingArea"]
+position = Vector2(-14.999999, 17.999998)
+scale = Vector2(3.1817694, 3.1817694)
+shape = SubResource("CircleShape2D_apkxf")

@@ -24,6 +24,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
 		player_tracking = true
 		target = body
+		%SpeedAccelerator.start()
 
 func _physics_process(delta: float) -> void:
 	if player_tracking:
@@ -48,3 +49,7 @@ func ember_animation():
 	tw.tween_property($".", "scale", Vector2(0.9, 0.9), 0.4)
 
 	tw.finished.connect(ember_animation)
+
+
+func _on_speed_accelerator_timeout() -> void:
+	speed += 5.45
