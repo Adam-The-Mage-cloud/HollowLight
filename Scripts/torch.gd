@@ -27,9 +27,14 @@ var max_radius = 9.0             # Max bounds the torch can leave
 var return_speed = 8.0
 
 # Torch Stamina System & Weighty Feel :
+var last_rotation = 0.0
+var drain_smooth = 0.0
+var recovery_smooth = 0.0
+var upgrade_bonus = 0.05
+
 var rotation_stamina = 0.66        # Maximum Stamina
-var stamina_drain_rate = 0.24      # Stamina Drain rate (when rotated quickly)
-var stamina_recover_rate = 8.0    # Stamina Recovery rate (when not being rotated quickly)
+var stamina_drain_rate = 0.35     # Stamina Drain rate (when rotated quickly) # max is 0.24
+var stamina_recover_rate = 0.55   # Stamina Recovery rate (when not being rotated quickly)
 var min_heaviness = 0.08          # How heavy it feels at 0 stamina
 
 # Variables Needed For Flipping The Torch Once Axis Requirements Met :
@@ -47,81 +52,112 @@ func _ready() :
 
 func _physics_process(delta: float) -> void:
 	area_centre = %Brody.global_position
-	
-	if equipped == false :
+	direction = _get_aim_direction(area_centre)
+	if direction == Vector2.ZERO:
+		last_rotation = rotation  # keep rotation stable
 		return
-	# direction towards given mouse or stick indication :
+	
+	target_angle = direction.angle()
+	if equipped == false:
+		return
+	
 	direction = _get_aim_direction(area_centre)
 	if direction == Vector2.ZERO:
 		return
-		
-	# distance from centre :
-	distance = _get_aim_distance(area_centre, max_radius)
 	
-	# Smooths the position of the torch
+	distance = _get_aim_distance(area_centre, max_radius)
 	target_position = area_centre + direction * distance
 	
-	# More smoothing when aiming vertically
 	verticality = abs(direction.y)
 	vertical_smoothness = lerp(return_speed, return_speed * 0.15, verticality)
 	global_position = global_position.lerp(target_position, delta * vertical_smoothness)
 	
-	# Weighty Stamina Fatigue System :
-	
-	# Target angle from aim direction 
-	target_angle = direction.angle()
-	
-	# How far off we currently are
-	angle_difference_to = abs(angle_difference(rotation, target_angle))
-	
-	# Rotation Stamina :
-	# How aggressively the player is trying to rotate the torch
-	var rotation_speed_request = angle_difference_to / max(delta, 0.0001)
-	
-	# Drain stamina when rotating fast :
-	if rotation_speed_request > 1.0:
-		if %brody_shield.equipped == true :
-			rotation_stamina -= stamina_drain_rate * 8 * delta
-		rotation_stamina -= stamina_drain_rate * delta
+	# --- Rotation effort ---
+	var rotation_delta = abs(angle_difference(rotation, last_rotation))
+	var rotation_speed_request = rotation_delta / delta
+	rotation_speed_request = clamp(rotation_speed_request, 0.0, 20.0)
+	last_rotation = rotation
+	var effort = clamp(rotation_speed_request / 8.0, 0.0, 1.0)
+
+	# --- Drain ---
+	var drain = stamina_drain_rate * effort
+	drain_smooth = lerp(drain_smooth, drain, delta * 3.0)
+
+	# --- Recovery ---
+	# --- Recovery ---
+	var missing = 1.0 - rotation_stamina
+
+	# Upgrade curve: increases minimum recovery speed
+	var min_recovery = 0.5 + (EventBus.amount_torch_recovery_upgraded * 0.1)
+	min_recovery = clamp(min_recovery, 0.5, 0.9)
+
+	# Recovery factor scales with missing stamina
+	var recovery_factor = lerp(min_recovery, 1.0, missing)
+
+	# Final recovery rate
+	var recovery = stamina_recover_rate * recovery_factor
+	recovery_smooth = lerp(recovery_smooth, recovery, delta * 1.5)
+
+	# --- Apply ---
+	if effort > 0.05:
+		rotation_stamina -= drain_smooth * delta
 	else:
-		if %brody_shield.equipped == false :
-			rotation_stamina += stamina_recover_rate * 2 * delta
-		rotation_stamina += stamina_recover_rate * delta
-		
+		rotation_stamina += recovery_smooth * delta
+
 	rotation_stamina = clamp(rotation_stamina, 0.0, 1.0)
 	
-	# Stamina affects heaviness (lower stamina = heavier)
+	# -----------------------------
+	#   HEAVINESS FEEL
+	# -----------------------------
+	
 	var stamina_factor = lerp(min_heaviness, 1.0, rotation_stamina)
+	var speed_factor = clamp(1.0 - (rotation_speed_request / 20.0), 0.2, 1.0)
+	heaviness = lerp(0.008, 0.725, stamina_factor * speed_factor * (stamina_factor * 1.25))
+
 	
-	# Heaviness Feel Logic :
-	# Heaviness based on angle difference
-	heaviness = clamp(1.0 - (angle_difference_to / PI), 0.2, 1.0)
+	# Optional micro‑shake when tired (feels human)
+	heaviness += (1.0 - rotation_stamina) * 0.03 * sin(Time.get_ticks_msec() * 0.02) * 0.1
 	
-	# Stamina system and heaviness feel
-	heaviness *= stamina_factor
+	# -----------------------------
+	#   ROTATION EASING
+	# -----------------------------
 	
-	# Easing rotation of the torch :
 	rotational_easer = (1.0 - pow(0.001, delta * speed)) * heaviness
-	
-	# Apply rotation
 	rotation = lerp_angle(rotation, target_angle, rotational_easer)
 	
-	# Wrist Flip (cool epic ninjago skills)
+	# -----------------------------
+	#   WRIST FLIP LOGIC
+	# -----------------------------
+	
 	left_side = direction.x < -flip_threshold
 	
 	if left_side:
 		flip_timer += delta
 	else:
 		flip_timer = 0.0
-		
+	
 	if left_side and flip_timer > flip_delay:
 		flip_state = -1.0
 	elif not left_side:
 		flip_state = 1.0
-		
+	
 	scale.y = lerp(scale.y, flip_state, delta * flip_speed)
 	
-	# fuck me that was complicated as shite 
+	if rotation_stamina > 0.4 :
+		%StaminaBarGreen.value = rotation_stamina * 97.5
+		%StaminaBarGreen.visible = true
+		%StaminaBarOrange.visible = false
+		%StaminaBarRed.visible = false
+	elif rotation_stamina > 0.15 :
+		%StaminaBarOrange.value = rotation_stamina * 97.5
+		%StaminaBarOrange.visible = true
+		%StaminaBarGreen.visible = false
+		%StaminaBarRed.visible = false
+	else :
+		%StaminaBarRed.value = rotation_stamina * 97.5
+		%StaminaBarRed.visible = true
+		%StaminaBarGreen.visible = false
+		%StaminaBarOrange.visible = false
 
 
 func _get_aim_direction(centre: Vector2) -> Vector2:
@@ -237,3 +273,9 @@ func lower_torch_light() :
 	%TorchLight.energy = 5.0
 	%TorchLight.texture.width = 96
 	%TorchLight.texture.height = 96
+
+
+func _on_upgrade_checker_timeout() -> void:
+	stamina_drain_rate = 0.35 * pow(0.88, EventBus.amount_max_stamina_upgraded)
+	stamina_recover_rate = 0.55 * pow(1.0 / 0.88, EventBus.amount_torch_recovery_upgraded)
+	upgrade_bonus = EventBus.amount_torch_recovery_upgraded * 0.05

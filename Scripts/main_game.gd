@@ -5,7 +5,7 @@ var Shadow_Cloud = preload("res://Scenes/Monsters/the_shadow.tscn")
 var is_touchscreen = true
 var touchscreen_available = true
 
-var darkness_increase_per_second = 3.0
+var darkness_increase_per_second = 4.0
 
 var room_finished = false
 
@@ -18,7 +18,7 @@ func _ready() :
 	EventBus.camera_reset.connect(camera_reset)
 	EventBus.new_dungeon_touchscreen.connect(new_dungeon_touchscreen)
 	
-	EventBus.total_acquired_goldpieces = 6000
+	EventBus.total_acquired_goldpieces = 100000
 	
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
 	if EventBus.total_acquired_experience == 0 :
@@ -180,6 +180,7 @@ func _on_worm_bat_chance_timeout() -> void:
 
 func _on_darkness_checker_timeout() -> void:
 	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + (darkness_increase_per_second / 10), 1.0, 100.0)
+	%DarknessBar.modulate.a = EventBus.total_current_darkness / 200
 
 # CAMERA RESET :
 func camera_reset() :
@@ -226,6 +227,7 @@ func _on_dungeon_ended() :
 	%TouchScreenLayer.visible = false
 	%ShieldButton.visible = false
 	
+	EventBus.total_rooms = 0
 	EventBus.dungeons_completed += 1
 	EventBus.weekly_dungeons_completed += 1
 

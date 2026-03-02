@@ -1,4 +1,4 @@
-[gd_scene load_steps=199 format=4 uid="uid://b6v1370ws5526"]
+[gd_scene load_steps=211 format=4 uid="uid://b6v1370ws5526"]
 
 [ext_resource type="Script" uid="uid://42il3tnxf1fd" path="res://Scripts/main_game.gd" id="1_18r40"]
 [ext_resource type="Script" uid="uid://cej02ppnbubeh" path="res://Scripts/event_bus.gd" id="2_6y7pd"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://tya3j1w66kfi" path="res://Artwork/Joystick_Pressed_Highlighted.png" id="8_cqxut"]
 [ext_resource type="Texture2D" uid="uid://d1awoq62q6e2d" path="res://Artwork/Dash_Button.png" id="8_tpqse"]
 [ext_resource type="Texture2D" uid="uid://bv2t68o63xjhw" path="res://Artwork/Dash_Button_Pressed.png" id="9_c78sm"]
+[ext_resource type="Texture2D" uid="uid://cja70tkheanvb" path="res://Artwork/Darkness_Particle.png" id="9_dvjst"]
 [ext_resource type="Script" uid="uid://bww2124c8vmbs" path="res://Scripts/loading_overlay.gd" id="10_8k7o2"]
 [ext_resource type="Texture2D" uid="uid://dcrn4k4r624w8" path="res://Artwork/Arrowhead_Indicator.png" id="10_c78sm"]
 [ext_resource type="Script" uid="uid://cnyno3yuqeqci" path="res://Scripts/menu_controller.gd" id="10_hm1wn"]
@@ -31,16 +32,25 @@
 [ext_resource type="Shader" uid="uid://dcgionpdp32vo" path="res://Shaders/darkness.gdshader" id="13_vc13p"]
 [ext_resource type="Shader" uid="uid://jtcx64k0fxec" path="res://Shaders/font_flash.gdshader" id="14_58qbg"]
 [ext_resource type="Texture2D" uid="uid://wnrak2dhnsdx" path="res://Artwork/Menus/Xp_Full_White_Outline.png" id="16_0bxlt"]
+[ext_resource type="Texture2D" uid="uid://dwrnf6c02uytf" path="res://Artwork/Menus/_Energy_Bar_Background.png" id="17_r6hdb"]
 [ext_resource type="Texture2D" uid="uid://cxs07dsokwlaj" path="res://Artwork/Menus/End_Of_Dungeon_Menu.png" id="18_hm1wn"]
+[ext_resource type="Texture2D" uid="uid://wkrsnb6p85lv" path="res://Artwork/Menus/Energy_Bar_Base.png" id="18_pr8xe"]
 [ext_resource type="Texture2D" uid="uid://mfke04rq5ifx" path="res://Artwork/Menus/AdventureMenu/Stationary_Choose_Adventure_Page.png" id="19_3bgrf"]
 [ext_resource type="Texture2D" uid="uid://b63h8f8foljwk" path="res://Artwork/Menus/End_Of_Dungeon_Items.png" id="19_06qyo"]
 [ext_resource type="Texture2D" uid="uid://dq14dnh50xbj" path="res://Artwork/Orb.png" id="19_gnsnf"]
+[ext_resource type="Texture2D" uid="uid://cww0vjsl0bid" path="res://Artwork/Menus/Energy_Bar_Progress.png" id="19_rtvbi"]
+[ext_resource type="Texture2D" uid="uid://jl4x4l1uwt6x" path="res://Artwork/Menus/_Energy_Bar_Background_Orange.png" id="20_mkcy4"]
 [ext_resource type="Texture2D" uid="uid://m5vp8im8tv7p" path="res://Artwork/Menus/AdventureMenu/H_For_Home_Letter.png" id="20_vt8ts"]
 [ext_resource type="Texture2D" uid="uid://bgvpb11gatlkx" path="res://Artwork/Menus/AdventureMenu/Arrow_Choose_Adventure.png" id="21_3bgrf"]
+[ext_resource type="Texture2D" uid="uid://c1aow2qeipg5b" path="res://Artwork/Menus/Energy_Bar_Base_Orange.png" id="21_64ufd"]
+[ext_resource type="Texture2D" uid="uid://cn41r102hgjgr" path="res://Artwork/Menus/Energy_Bar_Progress_Orange.png" id="22_vmkh0"]
 [ext_resource type="Texture2D" uid="uid://boeyv3ren8wdo" path="res://Artwork/Menus/AdventureMenu/Replay_Choose_Adventure.png" id="22_vt8ts"]
 [ext_resource type="Texture2D" uid="uid://d3qs0l0qcbt2g" path="res://Artwork/Menus/AdventureMenu/Torch_Choose_Adventure.png" id="23_bbjgr"]
+[ext_resource type="Texture2D" uid="uid://dbygdivvvo3ri" path="res://Artwork/Menus/_Energy_Bar_Background_Red.png" id="23_d3fhg"]
 [ext_resource type="Texture2D" uid="uid://chw164gebxdwf" path="res://Artwork/Menus/AdventureMenu/Highlighted_H_For_Home_Letter.png" id="24_g6spl"]
+[ext_resource type="Texture2D" uid="uid://cwemisg3deiv5" path="res://Artwork/Menus/Energy_Bar_Base_Red.png" id="24_ho1le"]
 [ext_resource type="Texture2D" uid="uid://tdt7fov7r6tn" path="res://Artwork/Menus/AdventureMenu/Axes_Choose_Adventure_Page.png" id="24_jbexl"]
+[ext_resource type="Texture2D" uid="uid://db5jxiauooyol" path="res://Artwork/Menus/Energy_Bar_Progress_Red.png" id="25_4iq27"]
 [ext_resource type="Texture2D" uid="uid://wku7bhmv1r5c" path="res://Artwork/Menus/AdventureMenu/Replay_Log_Choose_Adventure_Page.png" id="25_sgmg2"]
 [ext_resource type="Texture2D" uid="uid://bhbwi86hxjg7k" path="res://Artwork/Menus/AdventureMenu/Highlighted_Arrow_Choose_Adventure.png" id="26_nkab7"]
 [ext_resource type="Texture2D" uid="uid://dlq7bot7kmj68" path="res://Artwork/Menus/AdventureMenu/Highlighted_Replay_Choose_Adventure.png" id="28_evlxa"]
@@ -62,6 +72,15 @@
 
 [sub_resource type="Environment" id="Environment_aqqks"]
 background_mode = 3
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dvjst"]
+load_path = "res://.godot/imported/Darkness_Particle.png-35a347f0ed396a51b8acd214c7e350e7.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_siqoq"]
+shader = ExtResource("10_sftma")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
+shader_parameter/flash_amount = 0.0
 
 [sub_resource type="Image" id="Image_vmkh0"]
 data = {
@@ -13992,9 +14011,90 @@ offset_right = 44.0
 offset_bottom = 176.0
 pivot_offset = Vector2(7.5, 8)
 
+[node name="DarknessBar" type="Sprite2D" parent="TouchScreenLayer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(376, 15)
+scale = Vector2(3, 3)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar2" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(-6.0000005, 12)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar3" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(4, 24)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar4" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(-2.0000002, 34)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar5" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(2, 48)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar6" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(-1, 62)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar7" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+texture_filter = 1
+position = Vector2(-114.66667, 63.66667)
+texture = SubResource("CompressedTexture2D_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar8" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+texture_filter = 1
+position = Vector2(-108.66667, 51.66667)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar9" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+texture_filter = 1
+position = Vector2(-118.66667, 39.66667)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar10" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+texture_filter = 1
+position = Vector2(-112.66667, 29.666672)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar11" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+texture_filter = 1
+position = Vector2(-116.66667, 15.666672)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
+[node name="DarknessBar12" type="Sprite2D" parent="TouchScreenLayer/DarknessBar"]
+texture_filter = 1
+position = Vector2(-113.66667, 1.6666718)
+texture = ExtResource("9_dvjst")
+metadata/_edit_use_anchors_ = true
+
 [node name="DashButton" type="TouchScreenButton" parent="TouchScreenLayer"]
 unique_name_in_owner = true
 texture_filter = 1
+material = SubResource("ShaderMaterial_siqoq")
 position = Vector2(276, 126.00001)
 scale = Vector2(3, 3)
 texture_normal = ExtResource("8_tpqse")
@@ -14109,6 +14209,50 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="StaminaBarGreen" type="TextureProgressBar" parent="TouchScreenLayer"]
+unique_name_in_owner = true
+texture_filter = 1
+offset_left = -6.0
+offset_top = 3.0
+offset_right = 34.0
+offset_bottom = 43.0
+scale = Vector2(3, 3)
+step = 0.1
+fill_mode = 3
+texture_under = ExtResource("17_r6hdb")
+texture_over = ExtResource("18_pr8xe")
+texture_progress = ExtResource("19_rtvbi")
+
+[node name="StaminaBarOrange" type="TextureProgressBar" parent="TouchScreenLayer"]
+unique_name_in_owner = true
+visible = false
+texture_filter = 1
+offset_left = -6.0
+offset_top = 3.0
+offset_right = 34.0
+offset_bottom = 43.0
+scale = Vector2(3, 3)
+step = 0.1
+fill_mode = 3
+texture_under = ExtResource("20_mkcy4")
+texture_over = ExtResource("21_64ufd")
+texture_progress = ExtResource("22_vmkh0")
+
+[node name="StaminaBarRed" type="TextureProgressBar" parent="TouchScreenLayer"]
+unique_name_in_owner = true
+visible = false
+texture_filter = 1
+offset_left = -6.0
+offset_top = 3.0
+offset_right = 34.0
+offset_bottom = 43.0
+scale = Vector2(3, 3)
+step = 0.1
+fill_mode = 3
+texture_under = ExtResource("23_d3fhg")
+texture_over = ExtResource("24_ho1le")
+texture_progress = ExtResource("25_4iq27")
 
 [node name="Menus" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

@@ -271,3 +271,9 @@ amount = 80
 amount_ratio = 0.8
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_beu3c")
+
+[node name="UpgradeChecker" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="UpgradeChecker" to="." method="_on_upgrade_checker_timeout"]

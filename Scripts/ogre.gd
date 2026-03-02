@@ -27,11 +27,7 @@ func _ready() :
 	randomize()
 
 func set_tint() :
-	if EventBus.current_theme == 1 : # Reg :
-		material.set_shader_parameter("tint_color", Color(1.0, 1.0, 1.0, 1.0))
-		# Set tint strength
-		material.set_shader_parameter("tint_amount", 0.12)
-	elif EventBus.current_theme == 2 : # Ice :
+	if EventBus.current_theme == 2 : # Ice :
 		# Set tint color (RGB)
 		material.set_shader_parameter("tint_color", Color(0.067, 0.988, 0.988))
 		# Set tint strength

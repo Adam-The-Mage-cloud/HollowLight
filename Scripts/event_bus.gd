@@ -109,10 +109,10 @@ var nurnincrest_shield_purchased = false
 var holyeffigee_shield_purchased = false
 
 # > Jackies Shop :
-var amount_dash_timing_upgraded = 0
+var amount_dash_timing_upgraded = 0 
 var amount_max_stamina_upgraded = 0
 var amount_torch_recovery_upgraded = 0
-var amount_fortify_darkness_upgraded = 0
+var amount_fortify_darkness_upgraded = 0 ### DO THIS NEXT
 var amount_shield_stamina_upgraded = 0
 var amount_shield_speed_upgraded = 0
 var amount_lootchance_upgraded = 0
@@ -134,6 +134,7 @@ var catballoon_shop_interactable = false
 var jackie_shop_interactable = false
 var mission_board_interactable = false
 
+var jackies_first_load = true
 
 # Current Missions Activated :
 # Dailies :
@@ -225,7 +226,7 @@ func _on_goldpiece_acquired() :
 
 # New Room / Game Finisher Decider :
 func _on_new_room() :
-	game_over_chance = 0.25 
+	game_over_chance = 0.2 
 	if randf_range(0, 1) < game_over_chance :
 		if total_rooms >= 5 : # 7
 			last_room = true
@@ -400,13 +401,13 @@ func apply_save_data(data: Dictionary):
 	
 	# > Jackie :
 	# > > Upgrades
-	amount_dash_timing_upgraded = data.get("amount_dash_timing_upgraded", 0)
-	amount_max_stamina_upgraded = data.get("amount_max_stamina_upgraded", 0)
-	amount_torch_recovery_upgraded = data.get("amount_torch_recovery_upgraded", 0)
-	amount_fortify_darkness_upgraded = data.get("amount_fortify_darkness_upgraded", 0)
-	amount_shield_stamina_upgraded = data.get("amount_shield_stamina_upgraded", 0)
-	amount_shield_speed_upgraded = data.get("amount_shield_speed_upgraded", 0)
-	amount_lootchance_upgraded = data.get("amount_lootchance_upgraded", 0)
+	#amount_dash_timing_upgraded = data.get("amount_dash_timing_upgraded", 0)
+	#amount_max_stamina_upgraded = data.get("amount_max_stamina_upgraded", 0)
+	#amount_torch_recovery_upgraded = data.get("amount_torch_recovery_upgraded", 0)
+	#amount_fortify_darkness_upgraded = data.get("amount_fortify_darkness_upgraded", 0)
+	#amount_shield_stamina_upgraded = data.get("amount_shield_stamina_upgraded", 0)
+	#amount_shield_speed_upgraded = data.get("amount_shield_speed_upgraded", 0)
+	#amount_lootchance_upgraded = data.get("amount_lootchance_upgraded", 0)
 	
 	print("Game loaded!")
 

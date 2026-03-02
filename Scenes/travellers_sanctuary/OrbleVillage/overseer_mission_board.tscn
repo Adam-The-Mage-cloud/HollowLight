@@ -67,6 +67,6 @@ scale = Vector2(3.8801212, 3.8801212)
 shape = SubResource("CircleShape2D_m652n")
 
 [connection signal="area_entered" from="MissionBoardAccessArea" to="." method="_on_mission_board_access_area_area_entered"]
-[connection signal="body_entered" from="MissionBoardAccessArea" to="." method="_on_mission_board_access_area_body_entered"]
 [connection signal="body_entered" from="MissionBoardAccessArea" to="." method="_on_mission_bard_access_area_body_entered"]
+[connection signal="body_entered" from="MissionBoardAccessArea" to="." method="_on_mission_board_access_area_body_entered"]
 [connection signal="body_exited" from="MissionBoardAccessArea" to="." method="_on_mission_board_access_area_body_exited"]

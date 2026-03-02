@@ -46820,12 +46820,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="TotalGoldText" type="RichTextLabel" parent="OverseersBoard"]
 unique_name_in_owner = true
-z_index = 5
+z_index = 20
 texture_filter = 1
 material = SubResource("ShaderMaterial_ycjtj")
-offset_left = -40.000004
+offset_left = -40.666668
 offset_top = -20.666666
-offset_right = 92.0
+offset_right = 91.33333
 offset_bottom = 19.333334
 scale = Vector2(0.2, 0.2)
 theme_override_colors/default_color = Color(0.9882353, 0.827451, 0.05882353, 1)

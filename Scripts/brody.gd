@@ -305,6 +305,7 @@ func pickup_shield() :
 
 
 func dash_ability():
+	
 	if input_enabled == true:
 		if dash_available == true:
 			# Decrease size of collision body :
@@ -343,6 +344,8 @@ func dash_ability():
 			# Dash Logic
 			dashing = true
 			dash_available = false
+			var upgraded = 0.75 / pow(1.0 / 0.88, EventBus.amount_dash_timing_upgraded)
+			%DashCooldown.wait_time = clamp(upgraded, 0.4, 1.0)
 			%DashCooldown.start()
 			speed = 4000
 			%feet.visible = false
@@ -398,6 +401,9 @@ func initialise_shield_equip():
 
 func _on_dash_cooldown_timeout() -> void:
 	dash_available = true
+	var tween = create_tween()
+	tween.tween_property(%DashButton.material, "shader_parameter/flash_amount", 1.0, 0.05)
+	tween.tween_property(%DashButton.material, "shader_parameter/flash_amount", 0.0, 0.1)
 
 
 # Appearance :

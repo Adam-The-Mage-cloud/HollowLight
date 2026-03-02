@@ -1,11 +1,9 @@
 extends Node2D
 
-var first_load = true
-
 func _ready() :
 	open_jackies_shop()
 	set_upgrades_status_and_price()
-	first_load = false
+	EventBus.jackies_first_load = false
 
 # >>>
 # Balloonist SHOP (Uniques [Gems & Gold]) :
@@ -41,7 +39,7 @@ func set_upgrades_status_and_price() :
 	for i in range(EventBus.amount_dash_timing_upgraded) :
 		upgraded_counter += 1
 		%JackiesShopScreen.get_node("DashTimingSkillup"+str(upgraded_counter)).visible = true
-		if first_load == true :
+		if EventBus.jackies_first_load == true :
 			EventBus.dash_timing_upgrade_price *= 2
 		if upgraded_counter == 6 :
 			%DashTimingPrice.visible = false
@@ -50,7 +48,7 @@ func set_upgrades_status_and_price() :
 	for i in range(EventBus.amount_max_stamina_upgraded) :
 		upgraded_counter += 1
 		%JackiesShopScreen.get_node("TorchMaxStaminaSkillup"+ str(upgraded_counter)).visible = true
-		if first_load == true :
+		if EventBus.jackies_first_load == true :
 			EventBus.torch_max_stamina_upgrade_price *= 2
 		if upgraded_counter == 6 :
 			%TorchMaxStaminaPrice.visible = false
@@ -59,7 +57,7 @@ func set_upgrades_status_and_price() :
 	for i in range(EventBus.amount_torch_recovery_upgraded) :
 		upgraded_counter += 1
 		%JackiesShopScreen.get_node("TorchRecoverySkillup"+ str(upgraded_counter)).visible = true
-		if first_load == true :
+		if EventBus.jackies_first_load == true :
 			EventBus.torch_recovery_upgrade_price *= 2
 		if upgraded_counter == 6 :
 			%SwipeRecoveryButton.visible = false
@@ -68,7 +66,7 @@ func set_upgrades_status_and_price() :
 	for i in range(EventBus.amount_fortify_darkness_upgraded) :
 		upgraded_counter += 1
 		%JackiesShopScreen.get_node("FortifyDarknessSkillup"+ str(upgraded_counter)).visible = true
-		if first_load == true :
+		if EventBus.jackies_first_load == true :
 			EventBus.fortify_darkness_upgrade_price *= 2
 		if upgraded_counter == 6 :
 			%FortifyDarknessPrice.visible = false
@@ -77,7 +75,7 @@ func set_upgrades_status_and_price() :
 	for i in range(EventBus.amount_shield_stamina_upgraded) :
 		upgraded_counter += 1
 		%JackiesShopScreen.get_node("ShieldStaminaSkillup"+ str(upgraded_counter)).visible = true
-		if first_load == true :
+		if EventBus.jackies_first_load == true :
 			EventBus.shield_stamina_upgrade_price *= 2
 		if upgraded_counter == 6 :
 			%ShieldStaminaPrice.visible = false
@@ -86,7 +84,7 @@ func set_upgrades_status_and_price() :
 	for i in range(EventBus.amount_shield_speed_upgraded) :
 		upgraded_counter += 1
 		%JackiesShopScreen.get_node("ShieldSpeedSkillup"+ str(upgraded_counter)).visible = true
-		if first_load == true :
+		if EventBus.jackies_first_load == true :
 			EventBus.shield_speed_upgrade_price *= 2
 		if upgraded_counter == 6 :
 			%ShieldSpeedPrice.visible = false
@@ -95,7 +93,7 @@ func set_upgrades_status_and_price() :
 	for i in range(EventBus.amount_lootchance_upgraded) :
 		upgraded_counter += 1
 		%JackiesShopScreen.get_node("LootChanceSkillup"+ str(upgraded_counter)).visible = true
-		if first_load == true :
+		if EventBus.jackies_first_load == true :
 			EventBus.loot_chance_upgrade_price *= 2
 		if upgraded_counter == 6 :
 			%IncreaseLootPrice.visible = false
@@ -110,7 +108,7 @@ func set_upgrades_status_and_price() :
 	%ShieldSpeedPrice.text = str(EventBus.shield_speed_upgrade_price) + "g"
 	%IncreaseLootPrice.text = str(EventBus.loot_chance_upgrade_price) + "g"
 	
-	first_load = false
+	EventBus.jackies_first_load = false
 
 
 # >>>

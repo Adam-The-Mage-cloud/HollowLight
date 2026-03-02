@@ -65,7 +65,7 @@ func set_tint() :
 		# Set tint color (RGB)
 		material.set_shader_parameter("tint_color", Color(0.0, 0.306, 0.078, 1.0))
 		# Set tint strength
-		material.set_shader_parameter("tint_amount", 0.12)
+		material.set_shader_parameter("tint_amount", 0.36)
 
 func _physics_process(delta: float) -> void:
 	if not get_parent().visible:
@@ -114,7 +114,8 @@ func fireatwill_hand1() :
 				var arrow_position = witch_projectile1.global_position
 				var target_angle = witch_projectile1.global_rotation_degrees
 				await get_tree().create_timer(0.05).timeout
-				%WitchHand1.remove_child(witch_projectile1)
+				if is_instance_valid(witch_projectile1) :
+					%WitchHand1.remove_child(witch_projectile1)
 			
 			
 				#witch_projectile1.top_level = true
@@ -140,7 +141,8 @@ func fireatwill_hand2() :
 				var arrow_position = witch_projectile2.global_position
 				var target_angle = witch_projectile2.global_rotation_degrees
 				await get_tree().create_timer(0.05).timeout
-				%WitchHand2.remove_child(witch_projectile2)
+				if is_instance_valid(witch_projectile2) :
+					%WitchHand2.remove_child(witch_projectile2)
 				
 				
 				#witch_projectile1.top_level = true

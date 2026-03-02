@@ -69,7 +69,7 @@ func set_tint() :
 		# Set tint color (RGB)
 		material.set_shader_parameter("tint_color", Color(0.0, 0.306, 0.078, 1.0))
 		# Set tint strength
-		material.set_shader_parameter("tint_amount", 0.12)
+		material.set_shader_parameter("tint_amount", 0.36)
 
 func _physics_process(delta: float) -> void:
 	if not get_parent().visible:
