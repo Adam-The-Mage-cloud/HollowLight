@@ -1,4 +1,4 @@
-[gd_scene load_steps=132 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=139 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
 [ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
@@ -37,7 +37,10 @@
 [ext_resource type="PackedScene" uid="uid://conrmkoo8fl6y" path="res://Scenes/travellers_sanctuary/OrbleVillage/sanctuary_ritual_site.tscn" id="32_jyjx7"]
 [ext_resource type="PackedScene" uid="uid://b7rbd1mh7y12u" path="res://Scenes/travellers_sanctuary/OrbleVillage/orble_chefstation.tscn" id="34_knu3s"]
 [ext_resource type="PackedScene" uid="uid://bqpkhtuwobnq4" path="res://Scenes/travellers_sanctuary/OrbleVillage/orble_chef.tscn" id="35_3rqen"]
+[ext_resource type="Texture2D" uid="uid://cfrrn70qur3ip" path="res://Artwork/Sanctuary/Orble_Structures.png" id="36_3ue0b"]
 [ext_resource type="PackedScene" uid="uid://duajbyy6olgji" path="res://Scenes/floor_interactables.tscn" id="36_thpvr"]
+[ext_resource type="Texture2D" uid="uid://kt6wwoxrhunt" path="res://Artwork/Sanctuary/Happy_Orble.png" id="39_o3yq5"]
+[ext_resource type="Texture2D" uid="uid://c7ixp2akfuloe" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_Full.png" id="40_3ue0b"]
 
 [sub_resource type="Gradient" id="Gradient_lps57"]
 offsets = PackedFloat32Array(0.38222224, 1)
@@ -4374,6 +4377,36 @@ cache/0/18/1/glyphs/68/size = Vector2(16, 18)
 cache/0/18/1/glyphs/68/uv_rect = Rect2(153, 59, 16, 18)
 cache/0/18/1/glyphs/68/texture_idx = 0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3ofq"]
+atlas = ExtResource("36_3ue0b")
+region = Rect2(203, 14, 82, 60)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5k50l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3ofq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gaaj0"]
+atlas = ExtResource("36_3ue0b")
+region = Rect2(88, 14, 60, 60)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u8igk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gaaj0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_thpvr"]
 atlas = ExtResource("24_dumca")
 region = Rect2(30, 6, 24, 12)
@@ -7792,6 +7825,16 @@ theme_override_font_sizes/normal_font_size = 18
 text = "Assist The Orblits"
 fit_content = true
 
+[node name="ContractBoardSprite" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
+position = Vector2(-1.333334, 0.6666665)
+scale = Vector2(0.40000004, 0.40000004)
+sprite_frames = SubResource("SpriteFrames_5k50l")
+
+[node name="RitualSiteSprite" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
+position = Vector2(7.9999995, 4)
+scale = Vector2(0.40000004, 0.40000004)
+sprite_frames = SubResource("SpriteFrames_u8igk")
+
 [node name="Goblin" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
 position = Vector2(42.000008, 22.000002)
 scale = Vector2(-1, 1)
@@ -7829,6 +7872,14 @@ sprite_frames = SubResource("SpriteFrames_e7ufm")
 [node name="OrbleSprite4" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
 position = Vector2(22.666668, 18.666664)
 sprite_frames = SubResource("SpriteFrames_54fd4")
+
+[node name="StewIcon3" type="Sprite2D" parent="Tutorials/OrbleBackground"]
+position = Vector2(38.000004, -5.999999)
+texture = ExtResource("39_o3yq5")
+
+[node name="StewIcon2" type="Sprite2D" parent="Tutorials/OrbleBackground"]
+position = Vector2(30.666666, -2.6666665)
+texture = ExtResource("40_3ue0b")
 
 [connection signal="body_entered" from="TorchAndShield" to="." method="_on_torch_and_shield_body_entered"]
 [connection signal="body_exited" from="TorchAndShield" to="." method="_on_torch_and_shield_body_exited"]

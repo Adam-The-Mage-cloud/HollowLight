@@ -9,6 +9,7 @@ func _ready() :
 	wagon_signs_pointing()
 	tutorial_replay_floating()
 	turn_stewpot_spit()
+	spawn_stew_indicator()
 	
 	if EventBus.intro == true :
 		play_sanctuary_tutorial()
@@ -17,6 +18,10 @@ func turn_stewpot_spit() :
 	%StewPotSpit.type = 2
 	%StewPotSpit.chosen_skin_number = 3
 	%StewPotSpit._ready()
+
+func spawn_stew_indicator() :
+	var stew_indicator = preload("res://Scenes/travellers_sanctuary/OrbleVillage/hunger_indicator.tscn").instantiate()
+	get_tree().current_scene.call_deferred("add_child", stew_indicator)
 
 func spawn_default_shield() :
 	var shield_pickup = preload("res://Scenes/brody_shield_pickup.tscn").instantiate() 
@@ -28,6 +33,7 @@ func play_sanctuary_tutorial() :
 	%overseer_mission_board.exclamation_animation()
 	%cat_balloon.exclamation_animation()
 	%jackies_tent.exclamation_animation()
+	%orble_chefstation.exclamation_animation()
 	%IntroCam.enabled = true
 	
 	var bgt = %TradersBackground
@@ -168,6 +174,7 @@ func play_sanctuary_tutorial() :
 	EventBus.currently_interacting = false
 	EventBus.intro = false
 	spawn_default_shield() 
+	%orble_chefstation.manual = true
 
 
 func _on_torch_and_shield_body_entered(body: Node2D) -> void:

@@ -580,7 +580,6 @@ func finger_tapping(finger) :
 		finger_back.tween_property(finger, "position", finger.position - Vector2(-1, -2), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 		await get_tree().create_timer(1.2).timeout
-		
 
 
 func gold_addon(daily) :

@@ -741,6 +741,15 @@ func _on_dash_button_pressed() -> void:
 				var mission_board = preload("res://Scenes/travellers_sanctuary/ShopMenus/overseers_board_menu.tscn").instantiate()
 				mission_board.global_position = %BrodyCam.position
 				%BrodyCam.call_deferred("add_child", mission_board)
+				
+			elif EventBus.cheffing_station_interactable == true :
+				EventBus.currently_interacting = true
+				%DashButton.visible = false
+				%TouchScreenPress2.visible = false
+				EventBus.npcs_spoken_to += 1
+				var cheffing_station = preload("res://Scenes/travellers_sanctuary/OrbleVillage/stewpot_menu.tscn").instantiate()
+				cheffing_station.global_position = %BrodyCam.position
+				%BrodyCam.call_deferred("add_child", cheffing_station)
 
 
 func _on_shield_button_pressed() -> void:

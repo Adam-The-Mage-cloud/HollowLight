@@ -4,6 +4,8 @@ extends Node
 var last_daily_reset : String = ""   
 var last_weekly_reset : String = ""  
 
+var last_hourly_food_update = 0
+
 
 var total_beacons = 0
 
@@ -134,6 +136,10 @@ var clives_shop_interactable = false
 var catballoon_shop_interactable = false
 var jackie_shop_interactable = false
 var mission_board_interactable = false
+var cheffing_station_interactable = false
+
+# Sanctuary Definables :
+var food_accumulated = 100.0
 
 var jackies_first_load = true
 
@@ -151,6 +157,7 @@ var weekly_missions = {
 	1: "0",
 	2: "0",
 }
+
 
 
 # Daily Mission Trackers :
@@ -306,9 +313,13 @@ func get_save_data() -> Dictionary:
 		"equipped_torch": equipped_torch,
 		"equipped_brodyoutfit": equipped_brodyoutfit,
 		
+		# Sanctuary Values :
+		"food_accumulated": food_accumulated,
+		
 		# Time :
 		"last_daily_reset": last_daily_reset,
 		"last_weekly_reset": last_weekly_reset,
+		"last_hourly_food_update": last_hourly_food_update,
 		
 		# Currently Active Missions :
 		"daily_missions": daily_missions,
@@ -362,9 +373,13 @@ func apply_save_data(data: Dictionary):
 	equipped_torch = data.get("equipped_torch", "none")
 	equipped_brodyoutfit = data.get("equipped_brodyoutfit", "none")
 	
+	# Sanctuary Values :
+	food_accumulated = data.get("food_accumulated", 100.0)
+	
 	# Time :
 	last_daily_reset = data.get("last_daily_reset", "none")
 	last_weekly_reset = data.get("last_weekly_reset", "none")
+	last_hourly_food_update = data.get("last_hourly_food_update", 0)
 	
 	# Currently Active Missions :
 	daily_missions = data.get("daily_missions", {

@@ -27,6 +27,7 @@ func _ready() :
 		%RoomsToBeDeleted.add_child(intro_room)
 		
 		%TouchScreenLayer.visible = false
+		%GameplayUI.visible = false
 		
 		# AWAIT PLAYER MOVEMENT TO BE REENABLED :
 		%Torch.visible = false
@@ -123,6 +124,7 @@ func _ready() :
 		EventBus.sanctuary = false
 		%DashHighlighted.visible = false
 		%StaminaBarGreen.visible = true
+		%GameplayUI.visible = true
 	   
 	else :
 		# Start in Sanctuary :
@@ -342,6 +344,9 @@ func _set_sanctuary_properties() :
 	%TorchJoystickSprite.visible = false
 	%ShieldButton.visible = false
 	%StaminaBarGreen.visible = false
+	
+	for node in get_tree().get_nodes_in_group("deletables_sanctuary"):
+		node.queue_free()
 
 func shop_closed() :
 	EventBus.save_game()

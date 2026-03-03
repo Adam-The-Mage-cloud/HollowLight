@@ -3026,6 +3026,7 @@ autoplay = "default"
 unique_name_in_owner = true
 visible = false
 position = Vector2(-2, -32)
+scale = Vector2(-1, 1)
 texture = ExtResource("4_lt7ba")
 
 [node name="UpgradesText" type="RichTextLabel" parent="ExclamationMarkIndicator"]

@@ -1,0 +1,212 @@
+[gd_scene load_steps=28 format=3 uid="uid://dd07odgne8inj"]
+
+[ext_resource type="Texture2D" uid="uid://ccceiivkxhkok" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_14.png" id="1_kkero"]
+[ext_resource type="Script" uid="uid://rgvuskd1viok" path="res://Scripts/travellers_sanctuary/OrbleVillage/hunger_indicator.gd" id="1_uvnx4"]
+[ext_resource type="Texture2D" uid="uid://bf8pfyh5icgi" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_24.png" id="2_1uejj"]
+[ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="2_ujdqy"]
+[ext_resource type="Texture2D" uid="uid://bt71yynjqtl5i" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_34.png" id="3_dahsc"]
+[ext_resource type="Texture2D" uid="uid://c7ixp2akfuloe" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_Full.png" id="4_jmh24"]
+[ext_resource type="Texture2D" uid="uid://kt6wwoxrhunt" path="res://Artwork/Sanctuary/Happy_Orble.png" id="5_jmh24"]
+[ext_resource type="Texture2D" uid="uid://fhd1qss5beas" path="res://Artwork/Sanctuary/Bubble_Particle.png" id="6_itrl0"]
+[ext_resource type="Texture2D" uid="uid://cj1f28gf8g5n5" path="res://Artwork/Sanctuary/Meh_Orble.png" id="6_uvnx4"]
+[ext_resource type="Texture2D" uid="uid://dmp8xqpp6i083" path="res://Artwork/Sanctuary/Meh_Orble 1.png" id="7_itrl0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uvnx4"]
+shader = ExtResource("2_ujdqy")
+shader_parameter/tint_color = Color(1, 0.19215687, 0.3529412, 1)
+shader_parameter/tint_amount = 0.0
+shader_parameter/flash_amount = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvnx4"]
+atlas = ExtResource("1_kkero")
+region = Rect2(0, 0, 21, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itrl0"]
+atlas = ExtResource("2_1uejj")
+region = Rect2(0, 0, 21, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujdqy"]
+atlas = ExtResource("3_dahsc")
+region = Rect2(0, 0, 21, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmkt3"]
+atlas = ExtResource("4_jmh24")
+region = Rect2(0, 0, 21, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vgvwr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvnx4")
+}],
+"loop": true,
+"name": &"1_4full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itrl0")
+}],
+"loop": true,
+"name": &"2_4full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujdqy")
+}],
+"loop": true,
+"name": &"3_4full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmkt3")
+}],
+"loop": true,
+"name": &"4_4full",
+"speed": 5.0
+}]
+
+[sub_resource type="Curve" id="Curve_uvnx4"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_itrl0"]
+curve = SubResource("Curve_uvnx4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uvnx4"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape_scale = Vector3(6.5, 5, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 89.628
+initial_velocity_min = -18.0
+initial_velocity_max = 18.0
+gravity = Vector3(0, -98, 0)
+scale_min = 0.39999998
+scale_max = 0.59999996
+scale_curve = SubResource("CurveTexture_itrl0")
+color = Color(0.916649, 0.8924594, 0.9999986, 0.6313726)
+turbulence_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_2ts5l"]
+offsets = PackedFloat32Array(0.008888889, 0.82222223, 1)
+colors = PackedColorArray(0.9490196, 0.52156866, 0.9647059, 1, 0, 0, 0, 0.08235294, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_itrl0"]
+gradient = SubResource("Gradient_2ts5l")
+width = 12
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xmkt3"]
+shader = ExtResource("2_ujdqy")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
+shader_parameter/flash_amount = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgvwr"]
+atlas = ExtResource("5_jmh24")
+region = Rect2(0, 0, 13, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aii6t"]
+atlas = ExtResource("6_uvnx4")
+region = Rect2(0, 0, 13, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cutq6"]
+atlas = ExtResource("7_itrl0")
+region = Rect2(0, 0, 13, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aii6t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgvwr")
+}],
+"loop": true,
+"name": &"happy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aii6t")
+}],
+"loop": true,
+"name": &"okay",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cutq6")
+}],
+"loop": true,
+"name": &"sad",
+"speed": 5.0
+}]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ujdqy"]
+gradient = SubResource("Gradient_2ts5l")
+width = 8
+height = 12
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Hunger Indicator" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_uvnx4")
+
+[node name="StewLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="StewIndicator" type="AnimatedSprite2D" parent="StewLayer"]
+unique_name_in_owner = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_uvnx4")
+position = Vector2(25, 14)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_vgvwr")
+animation = &"4_4full"
+autoplay = "4_4full"
+
+[node name="BubbleParticles" type="GPUParticles2D" parent="StewLayer/StewIndicator"]
+unique_name_in_owner = true
+position = Vector2(0, 3)
+emitting = false
+amount = 4
+texture = ExtResource("6_itrl0")
+lifetime = 0.4
+speed_scale = 0.4
+randomness = 0.63
+process_material = SubResource("ParticleProcessMaterial_uvnx4")
+
+[node name="PurpleLight" type="PointLight2D" parent="StewLayer/StewIndicator"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-1.5000001, 2.1999998)
+scale = Vector2(1.5972221, 1.0208333)
+color = Color(0.76329803, 0.6577963, 0.94771594, 1)
+energy = 1.6
+texture = SubResource("GradientTexture2D_itrl0")
+texture_scale = 1.2
+
+[node name="OrbleHappinessIndicator" type="AnimatedSprite2D" parent="StewLayer"]
+unique_name_in_owner = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_xmkt3")
+position = Vector2(57, 28)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_aii6t")
+animation = &"happy"
+autoplay = "happy"
+
+[node name="GreenLight" type="PointLight2D" parent="StewLayer/OrbleHappinessIndicator"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-1.9073486e-06, -9.536743e-07)
+scale = Vector2(1.0198847, 0.68668175)
+energy = 0.8
+texture = SubResource("GradientTexture2D_ujdqy")
+texture_scale = 1.2
