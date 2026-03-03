@@ -18,15 +18,15 @@ func _ready() :
 	EventBus.camera_reset.connect(camera_reset)
 	EventBus.new_dungeon_touchscreen.connect(new_dungeon_touchscreen)
 	
-	EventBus.total_acquired_goldpieces = 100000
-	
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
-	if EventBus.total_acquired_experience == 0 :
+	if EventBus.total_acquired_experience == 0 and EventBus.player_level == 1 :
 		EventBus.intro = true
 		var intro_room = preload("res://Scenes/custom_rooms/intro_room.tscn").instantiate()
 		intro_room.z_index = 0
 		%Brody.global_position = intro_room.global_position + Vector2(160, 72)
 		%RoomsToBeDeleted.add_child(intro_room)
+		
+		%TouchScreenLayer.visible = false
 		
 		# AWAIT PLAYER MOVEMENT TO BE REENABLED :
 		%Torch.visible = false
@@ -71,7 +71,10 @@ func _ready() :
 		var movement_fadeintween = create_tween()
 		movement_fadeintween.tween_property(%MoveJoystickText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.5)
 		
+		EventBus.sanctuary = true
 		%TouchScreenLayer.visible = true
+		%StaminaBarGreen.visible = false
+		%ShieldButton.visible = false
 		%TorchJoystickSpriteHighlighted.visible = false
 		%TorchJoystickSprite.visible = false
 		%DashButton.visible = false
@@ -117,7 +120,9 @@ func _ready() :
 		dash_fadeouttween.tween_property(%DashButtonText, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1.5)
 		
 		await get_tree().create_timer(1.5).timeout
+		EventBus.sanctuary = false
 		%DashHighlighted.visible = false
+		%StaminaBarGreen.visible = true
 	   
 	else :
 		# Start in Sanctuary :
@@ -179,7 +184,7 @@ func _on_worm_bat_chance_timeout() -> void:
 
 
 func _on_darkness_checker_timeout() -> void:
-	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + (darkness_increase_per_second / 10), 1.0, 100.0)
+	EventBus.total_current_darkness = clamp(EventBus.total_current_darkness + ((darkness_increase_per_second / 20) / sqrt(EventBus.amount_fortify_darkness_upgraded + 1)), 1.0, 100.0)
 	%DarknessBar.modulate.a = EventBus.total_current_darkness / 200
 
 # CAMERA RESET :
@@ -322,7 +327,7 @@ func _set_sanctuary_properties() :
 	%TorchWraithChance.stop()
 	%WormBatChance.stop()
 	# Camera :
-	%BrodyCam.zoom = Vector2(1.0, 1.0)
+	%BrodyCam.zoom = Vector2(1.25, 1.25)
 	# Give Brody His Torch/Weapons :
 	%Torch.visible = false
 	# Turn ON DarknessLayer Effect :
@@ -336,6 +341,7 @@ func _set_sanctuary_properties() :
 	%TorchJoystickBase.visible = false
 	%TorchJoystickSprite.visible = false
 	%ShieldButton.visible = false
+	%StaminaBarGreen.visible = false
 
 func shop_closed() :
 	EventBus.save_game()

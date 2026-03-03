@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=132 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
 [ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://dq14dnh50xbj" path="res://Artwork/Orb.png" id="26_tyu56"]
 [ext_resource type="Texture2D" uid="uid://b4ono545808rb" path="res://Artwork/Tutorial_Replay.png" id="28_tyu56"]
 [ext_resource type="PackedScene" uid="uid://b0a285hfnhnoc" path="res://Scenes/travellers_sanctuary/jackies_tent.tscn" id="30_eh67g"]
+[ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="32_8bi17"]
 [ext_resource type="PackedScene" uid="uid://conrmkoo8fl6y" path="res://Scenes/travellers_sanctuary/OrbleVillage/sanctuary_ritual_site.tscn" id="32_jyjx7"]
 [ext_resource type="PackedScene" uid="uid://b7rbd1mh7y12u" path="res://Scenes/travellers_sanctuary/OrbleVillage/orble_chefstation.tscn" id="34_knu3s"]
 [ext_resource type="PackedScene" uid="uid://bqpkhtuwobnq4" path="res://Scenes/travellers_sanctuary/OrbleVillage/orble_chef.tscn" id="35_3rqen"]
@@ -1165,6 +1166,36 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g8da1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3yq5"]
+atlas = ExtResource("32_8bi17")
+region = Rect2(105, 210, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_klrd3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3yq5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ue0b"]
+atlas = ExtResource("32_8bi17")
+region = Rect2(9, 178, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a3ofq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ue0b")
 }],
 "loop": true,
 "name": &"default",
@@ -4420,6 +4451,51 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_klrd3"]
+atlas = ExtResource("32_8bi17")
+region = Rect2(57, 210, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gaaj0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klrd3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5k50l"]
+atlas = ExtResource("32_8bi17")
+region = Rect2(9, 210, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e7ufm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5k50l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8igk"]
+atlas = ExtResource("32_8bi17")
+region = Rect2(129, 178, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_54fd4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8igk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="the_sanctuary" type="Node2D"]
 y_sort_enabled = true
 texture_filter = 1
@@ -7346,10 +7422,12 @@ position = Vector2(5, -43)
 texture = ExtResource("13_52ghv")
 
 [node name="cat_balloon" parent="." instance=ExtResource("14_ir7tl")]
+unique_name_in_owner = true
 z_index = 1
 position = Vector2(234, 36)
 
 [node name="jackies_tent" parent="." instance=ExtResource("30_eh67g")]
+unique_name_in_owner = true
 z_index = 1
 position = Vector2(-40, 95)
 
@@ -7382,7 +7460,7 @@ unique_name_in_owner = true
 position = Vector2(-160, 280)
 
 [node name="orble_chef" parent="orble_chefstation" instance=ExtResource("35_3rqen")]
-z_index = 1
+z_index = 0
 position = Vector2(15, -28)
 
 [node name="StewPotFire" parent="." instance=ExtResource("6_0oo8m")]
@@ -7583,6 +7661,14 @@ sprite_frames = SubResource("SpriteFrames_5uj6u")
 position = Vector2(34.000004, 16.666666)
 sprite_frames = SubResource("SpriteFrames_hsu4a")
 
+[node name="OrbleSprite2" type="AnimatedSprite2D" parent="Tutorials/TradersBackground"]
+position = Vector2(37.333336, -2.6666667)
+sprite_frames = SubResource("SpriteFrames_klrd3")
+
+[node name="OrbleSprite3" type="AnimatedSprite2D" parent="Tutorials/TradersBackground"]
+position = Vector2(11.333336, 17.333332)
+sprite_frames = SubResource("SpriteFrames_a3ofq")
+
 [node name="ShopsBackground" type="Sprite2D" parent="Tutorials"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
@@ -7724,12 +7810,25 @@ position = Vector2(29.333332, 3.9999998)
 sprite_frames = SubResource("SpriteFrames_pp1pn")
 
 [node name="BrodyFeetSprite" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
+z_index = 6
 position = Vector2(-8, 22.666672)
 sprite_frames = SubResource("SpriteFrames_knu3s")
 
 [node name="BrodySprite" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
 position = Vector2(-16.666668, 11.333332)
 sprite_frames = SubResource("SpriteFrames_o3yq5")
+
+[node name="OrbleSprite2" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
+position = Vector2(11.333333, 14.666668)
+sprite_frames = SubResource("SpriteFrames_gaaj0")
+
+[node name="OrbleSprite3" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
+position = Vector2(2.666669, 16.666664)
+sprite_frames = SubResource("SpriteFrames_e7ufm")
+
+[node name="OrbleSprite4" type="AnimatedSprite2D" parent="Tutorials/OrbleBackground"]
+position = Vector2(22.666668, 18.666664)
+sprite_frames = SubResource("SpriteFrames_54fd4")
 
 [connection signal="body_entered" from="TorchAndShield" to="." method="_on_torch_and_shield_body_entered"]
 [connection signal="body_exited" from="TorchAndShield" to="." method="_on_torch_and_shield_body_exited"]

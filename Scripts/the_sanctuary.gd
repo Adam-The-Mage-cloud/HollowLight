@@ -24,7 +24,12 @@ func spawn_default_shield() :
 	call_deferred("add_child", shield_pickup)
 
 func play_sanctuary_tutorial() :
+	# Spawn Exclamation Marks for Mission Board, Cat Balloon, Clives Shop, Jackie
+	%overseer_mission_board.exclamation_animation()
+	%cat_balloon.exclamation_animation()
+	%jackies_tent.exclamation_animation()
 	%IntroCam.enabled = true
+	
 	var bgt = %TradersBackground
 	
 	# Start slightly above and transparent
@@ -136,7 +141,7 @@ func play_sanctuary_tutorial() :
 	
 	var camera_tween21 = create_tween().set_parallel(true)
 	camera_tween21.tween_property(%IntroCam, "zoom", Vector2(1.1, 1.1), 7.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	camera_tween21.tween_property(%IntroCam, "offset", Vector2(-140.0, 200.0), 7.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	camera_tween21.tween_property(%IntroCam, "offset", Vector2(-180.0, 165.0), 7.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	
 	await camera_tween21.finished
 	

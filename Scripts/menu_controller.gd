@@ -114,34 +114,43 @@ func animate_xp_gain():
 	var current_xp = EventBus.total_acquired_experience
 	var new_xp_total = current_xp + EventBus.total_new_acquired_experience
 	
-	# Loop while we overflow past 100
-	while new_xp_total >= 100:
-		#var xp_needed = 100 - current_xp
+	while true:
+		var xp_needed = xp_required_for(EventBus.player_level)
 		
-		# Tween to 100 (level-up) :
-		await tween_xp_bar(current_xp, 100)
+		if new_xp_total < xp_needed:
+			break
 		
-		# Player Level Up :
+		# Tween to full bar
+		await tween_xp_bar(current_xp, xp_needed)
+		
+		# Level up
 		EventBus.player_level += 1
 		%TotalXPText.text = str(EventBus.player_level)
 		level_up_flashes()
 		
-		# Remove the 100 XP and then reset the bar :
-		new_xp_total -= 100
+		# Remove XP used for this level
+		new_xp_total -= xp_needed
 		current_xp = 0
 		%XPProgressBar.value = 0
-		
-	# Final tween for leftover XP (where the bar isn't fully filled) :
+	
+	# Tween leftover XP
 	await tween_xp_bar(current_xp, new_xp_total)
 	
-	# Update Stored XP
 	EventBus.total_acquired_experience = new_xp_total
 	EventBus.total_new_acquired_experience = 0
 	
-	# Signal for EventBus to begin the next menu (buttons!) :
 	await get_tree().create_timer(0.8).timeout
 	fade_lootscreen()
 	EventBus.open_the_travel_menu()
+
+
+func xp_required_for(level: int) -> int:
+	var base = 100
+	var per_level = 25
+	var max_level = 10
+	
+	var effective_level = min(level, max_level)
+	return base + (per_level * (effective_level - 1))
 
 
 func tween_xp_bar(from_value: float, to_value: float) -> void:
@@ -161,6 +170,8 @@ func tween_xp_bar(from_value: float, to_value: float) -> void:
 # Helps Showcase Each Time A Level Up Occurs :
 func level_up_flashes() :
 	# Increase Font Scale :
+	EventBus.player_skill_points += 1
+	%SkillPointsText.text = str(EventBus.player_skill_points)
 	var XPFontScaler_tween = create_tween()
 	XPFontScaler_tween.tween_property(%TotalXPText, "scale", Vector2(0.6, 0.6), 0.04).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	

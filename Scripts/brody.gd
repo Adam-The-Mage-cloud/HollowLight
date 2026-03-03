@@ -300,7 +300,7 @@ func pickup_shield() :
 	
 	# Display How To Use Shield Manual :
 	var manual = preload("res://Scenes/shield_manual.tscn").instantiate()
-	manual.global_position = $".".global_position + Vector2(40, 40)
+	manual.global_position = %BrodyCam.position
 	%BrodyCam.call_deferred("add_child", manual)
 
 

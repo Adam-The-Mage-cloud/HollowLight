@@ -189,12 +189,12 @@ turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
 
 [node name="orble_chef" type="CharacterBody2D"]
-z_index = 2
+z_index = 1
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_xa185")
-collision_layer = 0
-collision_mask = 1073741824
+collision_layer = 15
+collision_mask = 1073741839
 script = ExtResource("1_xtlvq")
 
 [node name="ChefCollision" type="CollisionShape2D" parent="."]
@@ -217,13 +217,12 @@ animation = &"stationary"
 
 [node name="OrbleShadow" type="Sprite2D" parent="ChefSprite"]
 modulate = Color(1, 1, 1, 0.44313726)
-z_index = -1
 use_parent_material = true
 position = Vector2(-0.85, 9.5)
 scale = Vector2(0.9813845, 0.34298372)
 texture = SubResource("GradientTexture2D_0nnt3")
 
-[node name="ChefsHat" type="AnimatedSprite2D" parent="."]
+[node name="ChefsHat" type="AnimatedSprite2D" parent="ChefSprite"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_0nnt3")
 position = Vector2(0, -6)

@@ -46632,6 +46632,7 @@ modulate = Color(1, 1, 1, 0)
 light_mask = 0
 z_index = 50
 texture_filter = 1
+scale = Vector2(0.875, 0.875)
 script = ExtResource("1_817hx")
 
 [node name="OverseersBoard" type="Node2D" parent="."]

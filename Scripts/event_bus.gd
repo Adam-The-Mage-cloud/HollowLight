@@ -83,6 +83,7 @@ var total_new_acquired_goldpieces: int = 0
 
 # PLAYER STATS :
 var player_level: int = 1
+var player_skill_points: int = 0
 
 # Currently Equipped Player Inventory :
 var equipped_sidekick
@@ -112,9 +113,9 @@ var holyeffigee_shield_purchased = false
 var amount_dash_timing_upgraded = 0 
 var amount_max_stamina_upgraded = 0
 var amount_torch_recovery_upgraded = 0
-var amount_fortify_darkness_upgraded = 0 ### DO THIS NEXT
-var amount_shield_stamina_upgraded = 0
-var amount_shield_speed_upgraded = 0
+var amount_fortify_darkness_upgraded = 0 
+var amount_shield_stamina_upgraded = 0 ### DO THIS NEXT
+var amount_shield_speed_upgraded = 0 ### DO THIS NEXT 
 var amount_lootchance_upgraded = 0
 
 # Rooms Completed / ENDGAME DECIDER :
@@ -297,6 +298,7 @@ func clives_shop_available() :
 func get_save_data() -> Dictionary:
 	return {
 		"player_level": player_level,
+		"player_skill_points": player_skill_points,
 		"total_acquired_experience": total_acquired_experience,
 		"total_acquired_goldpieces": total_acquired_goldpieces,
 		"sidekick": equipped_sidekick,
@@ -352,6 +354,7 @@ func get_save_data() -> Dictionary:
 
 func apply_save_data(data: Dictionary):
 	player_level = data.get("player_level", 1)
+	player_skill_points = data.get("player_skill_points", 1)
 	total_acquired_experience = data.get("total_acquired_experience", 0)
 	total_acquired_goldpieces = data.get("total_acquired_goldpieces", 0)
 	equipped_sidekick = data.get("sidekick", "none")
@@ -401,13 +404,13 @@ func apply_save_data(data: Dictionary):
 	
 	# > Jackie :
 	# > > Upgrades
-	#amount_dash_timing_upgraded = data.get("amount_dash_timing_upgraded", 0)
-	#amount_max_stamina_upgraded = data.get("amount_max_stamina_upgraded", 0)
-	#amount_torch_recovery_upgraded = data.get("amount_torch_recovery_upgraded", 0)
-	#amount_fortify_darkness_upgraded = data.get("amount_fortify_darkness_upgraded", 0)
-	#amount_shield_stamina_upgraded = data.get("amount_shield_stamina_upgraded", 0)
-	#amount_shield_speed_upgraded = data.get("amount_shield_speed_upgraded", 0)
-	#amount_lootchance_upgraded = data.get("amount_lootchance_upgraded", 0)
+	amount_dash_timing_upgraded = data.get("amount_dash_timing_upgraded", 0)
+	amount_max_stamina_upgraded = data.get("amount_max_stamina_upgraded", 0)
+	amount_torch_recovery_upgraded = data.get("amount_torch_recovery_upgraded", 0)
+	amount_fortify_darkness_upgraded = data.get("amount_fortify_darkness_upgraded", 0)
+	amount_shield_stamina_upgraded = data.get("amount_shield_stamina_upgraded", 0)
+	amount_shield_speed_upgraded = data.get("amount_shield_speed_upgraded", 0)
+	amount_lootchance_upgraded = data.get("amount_lootchance_upgraded", 0)
 	
 	print("Game loaded!")
 

@@ -143,17 +143,17 @@ func _physics_process(delta: float) -> void:
 	
 	scale.y = lerp(scale.y, flip_state, delta * flip_speed)
 	
-	if rotation_stamina > 0.4 :
+	if rotation_stamina > 0.4 and EventBus.sanctuary == false :
 		%StaminaBarGreen.value = rotation_stamina * 97.5
 		%StaminaBarGreen.visible = true
 		%StaminaBarOrange.visible = false
 		%StaminaBarRed.visible = false
-	elif rotation_stamina > 0.15 :
+	elif rotation_stamina > 0.15 and EventBus.sanctuary == false :
 		%StaminaBarOrange.value = rotation_stamina * 97.5
 		%StaminaBarOrange.visible = true
 		%StaminaBarGreen.visible = false
 		%StaminaBarRed.visible = false
-	else :
+	elif rotation_stamina <= 0.15 and EventBus.sanctuary == false :
 		%StaminaBarRed.value = rotation_stamina * 97.5
 		%StaminaBarRed.visible = true
 		%StaminaBarGreen.visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://4l1y2rep6mab"]
+[gd_scene load_steps=35 format=4 uid="uid://4l1y2rep6mab"]
 
 [ext_resource type="Script" uid="uid://cx5vaf4gkk5h4" path="res://Scripts/shield_manual.gd" id="1_hmrg8"]
 [ext_resource type="Texture2D" uid="uid://ccvwn55wfqobe" path="res://Artwork/Shield_Button_Highlighted.png" id="1_ng3kb"]
@@ -3264,9 +3264,25 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyjx7"]
+atlas = ExtResource("4_xcf20")
+region = Rect2(22, 121, 9, 5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hmrg8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyjx7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="shield_manual" type="Node2D"]
 z_index = 24
 texture_filter = 1
+scale = Vector2(1.5, 1.5)
 script = ExtResource("1_hmrg8")
 
 [node name="OrbleBackground" type="Sprite2D" parent="."]
@@ -3408,3 +3424,8 @@ sprite_frames = SubResource("SpriteFrames_6r5ng")
 [node name="MoneySprite3" type="AnimatedSprite2D" parent="OrbleBackground"]
 position = Vector2(48, -35.333336)
 sprite_frames = SubResource("SpriteFrames_lth34")
+
+[node name="BrodyFeetSprite" type="AnimatedSprite2D" parent="OrbleBackground"]
+z_index = 7
+position = Vector2(-31.333334, 15.333333)
+sprite_frames = SubResource("SpriteFrames_hmrg8")

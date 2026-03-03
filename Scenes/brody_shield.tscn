@@ -124,4 +124,12 @@ y_sort_enabled = true
 use_parent_material = true
 position = Vector2(0, -4.5)
 sprite_frames = SubResource("SpriteFrames_bcpb1")
-animation = &"nurnincrest_holstered"
+animation = &"default_holstered"
+autoplay = "default_holstered"
+
+[node name="EventBusChecker" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[connection signal="timeout" from="EventBusChecker" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="EventBusChecker" to="." method="_on_event_bus_checker_timeout"]

@@ -72,7 +72,6 @@ func _ready() :
 	tween.parallel().tween_property(mat, "shader_parameter/fade", 0.0, 0.72)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
-	%ShieldButton.visible = false
 	
 	# START DIALOGUE :
 	await get_tree().create_timer(2.00).timeout

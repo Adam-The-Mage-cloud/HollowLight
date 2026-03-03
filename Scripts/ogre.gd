@@ -269,7 +269,7 @@ func drop_currency() :
 	if pinatered == false :
 		pinatered = true
 		# Drop XP :
-		var random_xp_amount = randi_range(3, 6)
+		var random_xp_amount = randi_range(2, 3)
 		for i in random_xp_amount : 
 			var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
 			xp.global_position = $".".global_position
@@ -277,7 +277,7 @@ func drop_currency() :
 			await get_tree().create_timer(0.008).timeout
 			
 		# Drop Gold :
-		var random_gold_amount = randi_range(3, 9)
+		var random_gold_amount = randi_range(2, (4 + (EventBus.amount_lootchance_upgraded / 3)))
 		for i in random_gold_amount : 
 			var gold_piece = preload("res://Scenes/Currencies/gold_piece.tscn").instantiate()
 			gold_piece.global_position = $".".global_position

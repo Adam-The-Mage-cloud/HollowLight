@@ -31,6 +31,9 @@ var rotational_easer
 # Angular inertia
 var angular_velocity = 0.0
 
+var shield_stamina_bonus = 1.0
+var shield_speed_bonus = 1.0
+
 # Shield properties
 var speed = 9.0
 var max_radius = 14.0
@@ -272,5 +275,20 @@ func now_equipped() :
 	equipped = true
 
 
-func _on_touch_screen_layer_stick_changed(vec: Variant) -> void:
+func _on_touch_screen_press_1_stick_changed(vec: Variant) -> void:
 	touch_stick = vec
+
+
+func _on_event_bus_checker_timeout() -> void:
+	shield_stamina_bonus = EventBus.amount_shield_stamina_upgraded
+	shield_speed_bonus = EventBus.amount_shield_speed_upgraded
+	
+	# Stamina Upgrade :
+	var stamina_scale = 1.0 + (shield_stamina_bonus * 0.12)
+	stamina_drain_rate = 0.55 / stamina_scale
+	stamina_recover_rate = 2.0 * stamina_scale
+	
+	# Speed Upgrade :
+	var speed_scale = 1.0 + (shield_speed_bonus * 0.10)
+	speed = 9.0 * speed_scale
+	return_speed = 8.0 * speed_scale

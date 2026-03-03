@@ -229,7 +229,7 @@ func drop_currency() :
 			await get_tree().create_timer(0.008).timeout
 			
 		# Drop Gold :
-		var random_gold_amount = randi_range(3, 9)
+		var random_gold_amount = randi_range(2, (4 + (EventBus.amount_lootchance_upgraded / 3)))
 		for i in random_gold_amount : 
 			var gold_piece = preload("res://Scenes/Currencies/gold_piece.tscn").instantiate()
 			gold_piece.global_position = $".".global_position
