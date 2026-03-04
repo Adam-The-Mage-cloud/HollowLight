@@ -165,7 +165,6 @@ func set_and_check_missions():
 # THIS ALSO CHECKS TO SEE IF OBJECTIVES HAVE BEEN COMPLETED
 func apply_daily_mission(i: int):
 	var mission_type = EventBus.daily_missions[str(i)]
-	print (EventBus.daily_missions[str(i)])
 
 	match mission_type:
 		"complete":
@@ -333,7 +332,6 @@ func pick_from_daily_pool() :
 	while i < 4 :
 		i += 1
 		var daily_picker = 0
-		print (EventBus.daily_missions[str(i)])
 		if EventBus.daily_missions[str(i)] == "0" :
 			daily_picker = randi_range(1, 18)
 			while already_used_missions.has(daily_picker) :
@@ -473,7 +471,6 @@ func pick_from_weekly_pool() :
 	while i < 4 :
 		i += 1
 		var weekly_picker = 0
-		print (EventBus.weekly_missions[str(i)])
 		if EventBus.weekly_missions[str(i)] == "0" :
 			weekly_picker = randi_range(1, 18)
 			while already_used_weekly_missions.has(weekly_picker) :
@@ -586,7 +583,6 @@ func gold_addon(daily) :
 	# Gold Addon Animation :
 	if daily == 1 :
 		var start_value = EventBus.total_acquired_goldpieces
-		print (start_value)
 		var end_value = start_value + daily_gold_reward
 		var gold_addon_duration = 2.0  # Seconds
 		var gold_addon_tween = create_tween()
@@ -612,7 +608,6 @@ func gold_addon(daily) :
 		
 	if daily == 2 :
 		var start_value = EventBus.total_acquired_goldpieces
-		print (start_value)
 		var end_value = start_value + weekly_gold_reward
 		var gold_addon_duration = 2.0  # Seconds
 		var gold_addon_tween = create_tween()

@@ -1,8 +1,9 @@
-[gd_scene load_steps=40 format=3 uid="uid://bichk4byx86ln"]
+[gd_scene load_steps=44 format=3 uid="uid://bichk4byx86ln"]
 
 [ext_resource type="Script" uid="uid://bro4bciu8ppt8" path="res://Scripts/travellers_sanctuary/OrbleVillage/orble.gd" id="1_4fjp5"]
 [ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_c5dhw"]
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="2_bfjjc"]
+[ext_resource type="Texture2D" uid="uid://cif6x5ke5opoy" path="res://Artwork/Sanctuary/Fervour.png" id="3_ot6ie"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bfjjc"]
 shader = ExtResource("2_bfjjc")
@@ -15,6 +16,29 @@ shader_parameter/wave_speed = 2.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_4fjp5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bfjjc"]
+
+[sub_resource type="Curve" id="Curve_ot6ie"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_sm2es"]
+curve = SubResource("Curve_ot6ie")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4u3ld"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape_scale = Vector3(6.5, 5, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 89.628
+initial_velocity_min = -18.0
+initial_velocity_max = 18.0
+gravity = Vector3(0, -98, 0)
+scale_min = 0.19999999
+scale_max = 0.39999998
+scale_curve = SubResource("CurveTexture_sm2es")
+color = Color(0.916649, 0.8924594, 0.9999986, 0.6313726)
+turbulence_enabled = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7jqnc"]
 atlas = ExtResource("1_c5dhw")
@@ -305,6 +329,15 @@ shape = SubResource("CircleShape2D_4fjp5")
 [node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea"]
 scale = Vector2(0.80793786, 0.80793786)
 shape = SubResource("CircleShape2D_bfjjc")
+
+[node name="FervourProduced" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(1, -3)
+amount = 4
+texture = ExtResource("3_ot6ie")
+speed_scale = 0.4
+randomness = 0.63
+process_material = SubResource("ParticleProcessMaterial_4u3ld")
 
 [node name="OrbleSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

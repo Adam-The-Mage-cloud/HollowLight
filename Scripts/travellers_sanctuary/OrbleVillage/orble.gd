@@ -52,23 +52,27 @@ func assign_outfit() :
 func _physics_process(delta: float) -> void:
 	# STATES WITH NO DIRECTION :
 	if state == STATE_SLEEP:
+		%FervourProduced.emitting = false
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
 		
 	if state == STATE_PROPOSE:
 		# Move only toward ritual site
+		%FervourProduced.emitting = false
 		velocity = direction * speed
 		move_and_slide()
 		return
 		
 	if state == STATE_CELEBRATE:
+		%FervourProduced.emitting = true
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
 		
 	# Time To Wanderrr :
 	if state == STATE_WANDER:
+		%FervourProduced.emitting = false
 		# Gain Direction :
 		if target_position == Vector2.ZERO:
 			pick_new_target()

@@ -87,6 +87,9 @@ var total_new_acquired_goldpieces: int = 0
 var player_level: int = 1
 var player_skill_points: int = 0
 
+# Fervour :
+var total_fervour: int = 0
+
 # Currently Equipped Player Inventory :
 var equipped_sidekick
 var shield_acquired
@@ -234,7 +237,7 @@ func _on_goldpiece_acquired() :
 
 # New Room / Game Finisher Decider :
 func _on_new_room() :
-	game_over_chance = 0.2 
+	game_over_chance = (total_rooms * 0.27) / 5.0
 	if randf_range(0, 1) < game_over_chance :
 		if total_rooms >= 5 : # 7
 			last_room = true
@@ -306,6 +309,7 @@ func get_save_data() -> Dictionary:
 	return {
 		"player_level": player_level,
 		"player_skill_points": player_skill_points,
+		"total_fervour": total_fervour,
 		"total_acquired_experience": total_acquired_experience,
 		"total_acquired_goldpieces": total_acquired_goldpieces,
 		"sidekick": equipped_sidekick,
@@ -366,6 +370,7 @@ func get_save_data() -> Dictionary:
 func apply_save_data(data: Dictionary):
 	player_level = data.get("player_level", 1)
 	player_skill_points = data.get("player_skill_points", 1)
+	total_fervour = data.get("total_fervour", 0)
 	total_acquired_experience = data.get("total_acquired_experience", 0)
 	total_acquired_goldpieces = data.get("total_acquired_goldpieces", 0)
 	equipped_sidekick = data.get("sidekick", "none")

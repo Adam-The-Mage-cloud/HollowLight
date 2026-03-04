@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://b7yyx5k8oi87n"]
+
+[ext_resource type="Texture2D" uid="uid://cif6x5ke5opoy" path="res://Artwork/Sanctuary/Fervour.png" id="1_cilpq"]
+[ext_resource type="Script" uid="uid://c51trxxvwusvk" path="res://Scripts/travellers_sanctuary/OrbleVillage/fervour_collection.gd" id="1_tb3ra"]
+[ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="2_80kte"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w0xil"]
+shader = ExtResource("2_80kte")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
+shader_parameter/flash_amount = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tb3ra"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_80kte"]
+size = Vector2(8, 8)
+
+[node name="fervour_collection" type="Area2D"]
+z_index = 1
+texture_filter = 1
+script = ExtResource("1_tb3ra")
+
+[node name="FervourSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_w0xil")
+texture = ExtResource("1_cilpq")
+
+[node name="RadarCollisionArea" type="CollisionShape2D" parent="."]
+scale = Vector2(2.556338, 2.556338)
+shape = SubResource("CircleShape2D_tb3ra")
+
+[node name="PickupArea" type="Area2D" parent="."]
+scale = Vector2(0.9914216, 0.9914216)
+
+[node name="PickupCollisionArea" type="CollisionShape2D" parent="PickupArea"]
+scale = Vector2(0.4, 0.4)
+shape = SubResource("RectangleShape2D_80kte")
+
+[node name="FlashTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 1.4
+autostart = true
+
+[node name="SpeedAccelerator" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.125
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]

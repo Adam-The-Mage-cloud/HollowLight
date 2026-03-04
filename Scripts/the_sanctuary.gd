@@ -9,6 +9,7 @@ func _ready() :
 	wagon_signs_pointing()
 	tutorial_replay_floating()
 	turn_stewpot_spit()
+	process_hourly_updates()
 	spawn_stew_indicator()
 	
 	if EventBus.intro == true :
@@ -22,6 +23,49 @@ func turn_stewpot_spit() :
 func spawn_stew_indicator() :
 	var stew_indicator = preload("res://Scenes/travellers_sanctuary/OrbleVillage/hunger_indicator.tscn").instantiate()
 	get_tree().current_scene.call_deferred("add_child", stew_indicator)
+
+func process_hourly_updates():
+	var now = Time.get_unix_time_from_system()
+	
+	# First-time setup
+	if EventBus.last_hourly_food_update == 0:
+		EventBus.last_hourly_food_update = now
+		return
+	
+	var seconds_passed = now - EventBus.last_hourly_food_update
+	var hours_passed = int(seconds_passed / 3600)
+	
+	if hours_passed <= 0:
+		return
+	
+	var fervour_gained = 0
+	var food = EventBus.food_accumulated
+	
+	# Simulate each hour in order
+	for hour in range(1, hours_passed + 1):
+	
+		# Apply hourly food decay
+		food -= 4.0
+		food = clamp(food, 0.0, 100.0)
+	
+		# Every 4 hours, check if food was above 40 at that moment
+		if hour % 3 == 0:
+			if food > 40.0:
+				fervour_gained += 1
+	
+	# Commit the final food value
+	EventBus.food_accumulated = food
+	
+	# Spawn Fervour
+	if fervour_gained > 0:
+		var FervourScene = preload("res://Scenes/travellers_sanctuary/OrbleVillage/fervour_collection.tscn")
+		for i in range(fervour_gained):
+			var fervour = FervourScene.instantiate()
+			fervour.global_position = %sanctuary_ritual_site.position
+			call_deferred("add_child", fervour)
+	
+	# Update timestamp once
+	EventBus.last_hourly_food_update = now
 
 func spawn_default_shield() :
 	var shield_pickup = preload("res://Scenes/brody_shield_pickup.tscn").instantiate() 

@@ -58,9 +58,8 @@ func _on_close_menu_button_pressed() -> void:
 
 
 func _on_buy_stew_button_pressed() -> void:
-	print("bought")
 	if EventBus.total_acquired_goldpieces >= 50 and EventBus.food_accumulated < 100 :
-		print("bought")
+
 		EventBus.total_acquired_goldpieces -= 50
 		EventBus.stews_prepared += 1
 		EventBus.food_accumulated += 35

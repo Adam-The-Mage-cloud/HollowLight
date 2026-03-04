@@ -2,6 +2,10 @@ extends CharacterBody2D
 
 var manual = false
 
+func _ready() :
+	if EventBus.food_accumulated < 40 :
+		stew_animation()
+
 func stirring() :
 	%OrbleStewSprite.visible = true
 
@@ -49,3 +53,20 @@ func exclamation_animation() :
 		
 		await down_ex.finished
 	%ExclamationMarkIndicator.visible = false
+
+
+func stew_animation() :
+	%StewIconSprite.visible = true
+	while $".".visible == true:
+		var up_ex = create_tween().set_parallel(true)
+		up_ex.tween_property(%StewIconSprite, "global_position", %StewIconSprite.global_position + Vector2(2, -11), 1.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		# Wait for le both tweens du finieash :
+		await up_ex.finished
+		
+		var down_ex = create_tween().set_parallel(true)
+		down_ex.tween_property(%StewIconSprite, "global_position", %StewIconSprite.global_position - Vector2(2, -11), 1.6).set_trans(Tween.TRANS_SINE)#.set_ease(Tween.EASE_OUT)
+		
+		
+		await down_ex.finished
+	%StewIconSprite.visible = false

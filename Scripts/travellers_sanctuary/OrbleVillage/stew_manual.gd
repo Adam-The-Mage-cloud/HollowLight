@@ -26,7 +26,7 @@ func _ready() :
 		
 	await tb.finished
 	
-	await get_tree().create_timer(9.0).timeout
+	await get_tree().create_timer(12.0).timeout
 	
 		# Fade and slide back up
 	var tb2 = create_tween()

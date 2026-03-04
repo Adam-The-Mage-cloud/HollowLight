@@ -8,7 +8,6 @@ func _ready() :
 	reparent(get_parent().get_node("Brody").get_node("BrodyCam"), true)
 	global_position = get_parent().global_position
 	add_to_group("deletables_sanctuary")
-	check_hourly_food_update()
 	update_visual()
 	position += Vector2(-120, -60)
 
@@ -30,27 +29,12 @@ func _process(_float) -> void :
 		%OrbleHappinessIndicator.position = Vector2(57, 28)
 		%OrbleHappinessIndicator.scale = Vector2(2.0, 2.0)
 		%StewIndicator.scale = Vector2(2.0, 2.0)
-
-# If it's been an hour, reduce amount of food by 4 :
-func check_hourly_food_update():
-	var now = Time.get_unix_time_from_system()
-	if EventBus.last_hourly_food_update == 0:
-		EventBus.last_hourly_food_update = now
-		return
-	
-	var hours_passed = int((now - EventBus.last_hourly_food_update) / 3600)
-	
-	if hours_passed > 0:
-		EventBus.food_accumulated -= 4 * hours_passed
-		EventBus.food_accumulated = clamp(EventBus.food_accumulated, 0.0, 100.0)
-		update_visual()
-		EventBus.last_hourly_food_update = now
+		
+	%FervourText.text = str(EventBus.total_fervour)
 
 
 func update_visual() :
-	print("updated")
 	if old_food_amount != EventBus.food_accumulated :
-		print("flash_white")
 		flash_white()
 	old_food_amount = EventBus.food_accumulated
 	# If Full :
@@ -58,20 +42,36 @@ func update_visual() :
 		%BubbleParticles.emitting = true
 		%StewIndicator.play("4_4full")
 		%OrbleHappinessIndicator.play("happy")
+		%FervourLevel.text = "HIGH"
+		%FervourLevel.add_theme_color_override("default_color", Color(0.0, 0.933, 0.0, 1.0))
+		%RaidRiskLevel.text = "LOW"
+		%RaidRiskLevel.add_theme_color_override("default_color", Color(0.0, 0.933, 0.0, 1.0))
 		
 	elif EventBus.food_accumulated > 50.0 :
 		%StewIndicator.play("3_4full")
 		%OrbleHappinessIndicator.play("happy")
+		%FervourLevel.text = "HIGH"
+		%FervourLevel.add_theme_color_override("default_color", Color(0.0, 0.933, 0.0, 1.0))
+		%RaidRiskLevel.text = "LOW"
+		%RaidRiskLevel.add_theme_color_override("default_color", Color(0.0, 0.933, 0.0, 1.0))
 		
 	elif EventBus.food_accumulated > 25.0 :
 		continuously_flash_red()
 		%StewIndicator.play("2_4full")
 		%OrbleHappinessIndicator.play("okay")
+		%FervourLevel.text = "AVERAGE"
+		%FervourLevel.add_theme_color_override("default_color", Color(0.824, 0.514, 0.0, 1.0))
+		%RaidRiskLevel.text = "AVERAGE"
+		%RaidRiskLevel.add_theme_color_override("default_color", Color(0.824, 0.514, 0.0, 1.0))
 		
 	elif EventBus.food_accumulated >= 0.0 :
 		continuously_flash_red()
 		%StewIndicator.play("1_4full")
 		%OrbleHappinessIndicator.play("sad")
+		%FervourLevel.text = "LOW"
+		%FervourLevel.add_theme_color_override("default_color", Color(0.878, 0.012, 0.0, 1.0))
+		%RaidRiskLevel.text = "HIGH"
+		%RaidRiskLevel.add_theme_color_override("default_color", Color(0.878, 0.012, 0.0, 1.0))
 
 
 func flash_white() :

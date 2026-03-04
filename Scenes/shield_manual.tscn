@@ -3280,6 +3280,7 @@ animations = [{
 }]
 
 [node name="shield_manual" type="Node2D"]
+modulate = Color(1, 1, 1, 0)
 z_index = 24
 texture_filter = 1
 scale = Vector2(1.5, 1.5)

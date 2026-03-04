@@ -241,6 +241,8 @@ func _on_dungeon_ended() :
 func _on_new_dungeon_crawl() :
 	# Delete Previous Instances (e.g. Sanctuary) :
 	delete_current_memory()
+	for node in get_tree().get_nodes_in_group("deletables_sanctuary"):
+		node.queue_free()
 	# DISPLAY LOADING SCREEN and let LoadingOverlay handle the rest :
 	%LoadingOverlay.show_loading()
 	# Start With Spawning Trapdoor Room :
@@ -344,9 +346,6 @@ func _set_sanctuary_properties() :
 	%TorchJoystickSprite.visible = false
 	%ShieldButton.visible = false
 	%StaminaBarGreen.visible = false
-	
-	for node in get_tree().get_nodes_in_group("deletables_sanctuary"):
-		node.queue_free()
 
 func shop_closed() :
 	EventBus.save_game()
