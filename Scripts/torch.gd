@@ -32,6 +32,8 @@ var drain_smooth = 0.0
 var recovery_smooth = 0.0
 var upgrade_bonus = 0.05
 
+var effort = 0.0                  # Used for Calculating Knockback
+
 var rotation_stamina = 0.66        # Maximum Stamina
 var stamina_drain_rate = 0.35     # Stamina Drain rate (when rotated quickly) # max is 0.24
 var stamina_recover_rate = 0.55   # Stamina Recovery rate (when not being rotated quickly)
@@ -77,7 +79,7 @@ func _physics_process(delta: float) -> void:
 	var rotation_speed_request = rotation_delta / delta
 	rotation_speed_request = clamp(rotation_speed_request, 0.0, 20.0)
 	last_rotation = rotation
-	var effort = clamp(rotation_speed_request / 8.0, 0.0, 1.0)
+	effort = clamp(rotation_speed_request / 8.0, 0.0, 1.0)
 
 	# --- Drain ---
 	var drain = stamina_drain_rate * effort

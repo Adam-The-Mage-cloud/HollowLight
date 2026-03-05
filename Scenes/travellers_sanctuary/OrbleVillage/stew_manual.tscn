@@ -5525,7 +5525,7 @@ animations = [{
 [node name="stew_manual" type="Node2D"]
 modulate = Color(1, 1, 1, 0)
 texture_filter = 1
-scale = Vector2(1.75, 1.75)
+scale = Vector2(1.5, 1.5)
 script = ExtResource("1_4aq1q")
 
 [node name="OrbleBackground" type="Sprite2D" parent="."]

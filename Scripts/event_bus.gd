@@ -142,6 +142,7 @@ var mission_board_interactable = false
 var cheffing_station_interactable = false
 
 # Sanctuary Definables :
+var raid_entity_count = 0
 var food_accumulated = 100.0
 
 var jackies_first_load = true

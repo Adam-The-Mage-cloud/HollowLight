@@ -112,7 +112,7 @@ func _ready() :
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 	await t.finished
-	await get_tree().create_timer(9.0).timeout
+	await get_tree().create_timer(6.0).timeout
 	
 	# Fade and slide back up
 	var t2 = create_tween()
@@ -144,7 +144,7 @@ func _ready() :
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 	await tm.finished
-	await get_tree().create_timer(9.0).timeout
+	await get_tree().create_timer(6.0).timeout
 	
 	# Fade and slide back up
 	var t2m = create_tween()

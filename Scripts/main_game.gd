@@ -5,6 +5,8 @@ var Shadow_Cloud = preload("res://Scenes/Monsters/the_shadow.tscn")
 var is_touchscreen = true
 var touchscreen_available = true
 
+var raid_active = false
+
 var darkness_increase_per_second = 4.0
 
 var room_finished = false
@@ -44,7 +46,7 @@ func _ready() :
 		cam.offset = Vector2(24.0, -8.0)
 		
 		var camera_tween2 = create_tween()
-		camera_tween2.tween_property(cam, "zoom", Vector2(1.5, 1.5), 6.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween2.tween_property(cam, "zoom", Vector2(1.6875, 1.6875), 6.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 		await camera_tween2.finished
 		var camera_tween3 = create_tween().set_parallel(true)
@@ -53,14 +55,14 @@ func _ready() :
 		
 		await camera_tween3.finished
 		var camera_tween4 = create_tween().set_parallel(true)
-		camera_tween4.tween_property(cam, "zoom", Vector2(1.5, 1.5), 4.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween4.tween_property(cam, "zoom", Vector2(1.6875, 1.6875), 4.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		camera_tween4.tween_property(cam, "offset", Vector2(0, 0), 4.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 		await camera_tween4.finished
 		
 		# Tween camera back to default
 		var camera_tween = create_tween()
-		camera_tween.tween_property(cam, "zoom", Vector2(1.5, 1.5), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween.tween_property(cam, "zoom", Vector2(1.6875, 1.6875), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		camera_tween.tween_property(cam, "offset", Vector2(0.0, 0.0), 1.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		%Torch.visible = true
 		
@@ -113,7 +115,7 @@ func _ready() :
 		%DashButton.visible = true
 		touchscreen_available = true
 		%TorchJoystickSpriteHighlighted.z_index = -2
-		%BrodyCam.zoom = Vector2(1.5, 1.5)
+		%BrodyCam.zoom = Vector2(1.6875, 1.6875)
 		
 		await dash_fadeintween.finished 
 		await get_tree().create_timer(0.5).timeout
@@ -141,7 +143,7 @@ func _input(event):
 		if event is InputEventScreenTouch:
 			is_touchscreen = true
 			EventBus.touchscreen_enacted = true
-			%BrodyCam.zoom = Vector2(1.5, 1.5)
+			%BrodyCam.zoom = Vector2(1.6875, 1.6875)
 			%TouchScreenLayer.visible = true
 
 func _process(_delta: float) -> void: 
@@ -272,7 +274,7 @@ func _on_new_dungeon_crawl() :
 		%TorchWraithChance.start()
 		%WormBatChance.start()
 		# Brody Cam :
-		%BrodyCam.zoom = Vector2(1.5, 1.5)
+		%BrodyCam.zoom = Vector2(1.6875, 1.6875)
 		# Give Brody His Torch/Weapons :
 		%Torch.visible = true
 		# Turn ON DarknessLayer Effect :
@@ -294,7 +296,7 @@ func _on_new_dungeon_crawl() :
 		%TorchWraithChance.start()
 		%WormBatChance.start()
 		# Brody Cam :
-		%BrodyCam.zoom = Vector2(1.5, 1.5)
+		%BrodyCam.zoom = Vector2(1.6875, 1.6875)
 		# Give Brody His Torch/Weapons :
 		%Torch.visible = true
 		# Turn ON DarknessLayer Effect :
@@ -307,6 +309,41 @@ func _on_new_dungeon_crawl() :
 		%TorchJoystickBase.visible = true
 		%TorchJoystickSprite.visible = true
 		%ShieldButton.visible = true
+
+func sanctuary_raid_started() :
+	raid_active = true
+	# Give Brody His Torch/Weapons :
+	%Torch.visible = true
+	# Enable ability for Touchscreen Controls (Temporarily) 
+	%TorchJoystickBase.visible = true
+	%TorchJoystickSprite.visible = true
+	%ShieldButton.visible = true
+	%GoblinAttackText.visible = true
+	raid_shake()
+	raid_flashing()
+
+func raid_shake() :
+	# Shaking:
+	while raid_active == true :
+		%Brody.camera_shake_small()
+		await get_tree().create_timer(1.5).timeout
+
+func raid_flashing() :
+	# Flashing:
+	while raid_active == true :
+		%GoblinAttackText.flash_white()
+		await get_tree().create_timer(1.5).timeout
+
+func sanctuary_raid_finished() :
+	raid_active = false
+	# Give Brody His Torch/Weapons :
+	%Torch.visible = false
+	# Enable ability for Touchscreen Controls (Temporarily) 
+	%TorchJoystickBase.visible = false
+	%TorchJoystickSprite.visible = false
+	%ShieldButton.visible = false
+	%GoblinAttackText.visible = false
+
 
 func new_dungeon_touchscreen() :
 	%TouchScreenPress1.visible = true
@@ -331,7 +368,7 @@ func _set_sanctuary_properties() :
 	%TorchWraithChance.stop()
 	%WormBatChance.stop()
 	# Camera :
-	%BrodyCam.zoom = Vector2(1.25, 1.25)
+	%BrodyCam.zoom = Vector2(1.5, 1.5)
 	# Give Brody His Torch/Weapons :
 	%Torch.visible = false
 	# Turn ON DarknessLayer Effect :

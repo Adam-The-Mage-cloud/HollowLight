@@ -1,9 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://cnx8kj5ldb85k"]
+[gd_scene load_steps=37 format=3 uid="uid://cnx8kj5ldb85k"]
 
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_gsga4"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_dvi4l"]
 [ext_resource type="Script" uid="uid://ds8gnm6t5605i" path="res://Scripts/dire_wolf.gd" id="3_ls8ti"]
 [ext_resource type="Texture2D" uid="uid://hy6ltbrijhps" path="res://Artwork/Dire_Wolf.png" id="4_k8mu5"]
+[ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="5_dvi4l"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wok0b"]
 shader = ExtResource("1_gsga4")
@@ -21,6 +22,10 @@ shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
+shader_parameter/cloud_amount = 0.0
+shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_scale = 72.0
+shader_parameter/cloud_dissolve = 0.0
 
 [sub_resource type="Gradient" id="Gradient_mgc0q"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
@@ -141,15 +146,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hov43"]
-atlas = ExtResource("4_k8mu5")
-region = Rect2(155, 4, 70, 31)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcp5n"]
+atlas = ExtResource("5_dvi4l")
+region = Rect2(0, 0, 160, 79)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6ipta"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hov43")
+"texture": SubResource("AtlasTexture_fcp5n")
 }],
 "loop": true,
 "name": &"darkness",
@@ -251,6 +256,7 @@ shape = SubResource("RectangleShape2D_f8eah")
 position = Vector2(-6.5, 3.5)
 
 [node name="WolfHitboxCollision" type="CollisionShape2D" parent="WolfHitboxArea"]
+unique_name_in_owner = true
 position = Vector2(7.25, -1.75)
 shape = SubResource("RectangleShape2D_lbcxa")
 
@@ -293,7 +299,7 @@ frame_progress = 0.20295176
 unique_name_in_owner = true
 visible = false
 use_parent_material = true
-position = Vector2(-3, 3)
+position = Vector2(34, 19)
 sprite_frames = SubResource("SpriteFrames_6ipta")
 animation = &"darkness"
 

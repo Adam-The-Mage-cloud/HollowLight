@@ -1,6 +1,9 @@
 extends Node2D
 
+var raid_happened = false
+
 func _ready() :
+	randomize()
 	EventBus.save_game()
 	EventBus.sanctuary = true
 	EventBus.total_current_darkness = 0
@@ -27,7 +30,6 @@ func spawn_stew_indicator() :
 func process_hourly_updates():
 	var now = Time.get_unix_time_from_system()
 	
-	# First-time setup
 	if EventBus.last_hourly_food_update == 0:
 		EventBus.last_hourly_food_update = now
 		return
@@ -41,31 +43,56 @@ func process_hourly_updates():
 	var fervour_gained = 0
 	var food = EventBus.food_accumulated
 	
-	# Simulate each hour in order
 	for hour in range(1, hours_passed + 1):
-	
-		# Apply hourly food decay
+		
+		# Hourly food decay
 		food -= 4.0
 		food = clamp(food, 0.0, 100.0)
-	
-		# Every 4 hours, check if food was above 40 at that moment
+		
+		# Fervour gain every 3 hours
 		if hour % 3 == 0:
 			if food > 40.0:
 				fervour_gained += 1
+		
+		# -------------------------
+		# Goblin raid chance
+		# -------------------------
+		var raid_chance = get_goblin_raid_chance(food)
+		if raid_chance > 0.0 and randf() < raid_chance and raid_happened == false:
+			raid_happened = true
+			goblin_raid()
 	
-	# Commit the final food value
+	# Commit final food
 	EventBus.food_accumulated = food
 	
-	# Spawn Fervour
+	# Spawn fervour
 	if fervour_gained > 0:
 		var FervourScene = preload("res://Scenes/travellers_sanctuary/OrbleVillage/fervour_collection.tscn")
 		for i in range(fervour_gained):
 			var fervour = FervourScene.instantiate()
-			fervour.global_position = %sanctuary_ritual_site.position
+			fervour.global_position = %sanctuary_ritual_site.position 
 			call_deferred("add_child", fervour)
 	
-	# Update timestamp once
 	EventBus.last_hourly_food_update = now
+
+func get_goblin_raid_chance(food: float) -> float:
+	if food >= 70.0:
+		return 0.05
+	elif food >= 50.0:
+		return 1.0 / 7.0
+	elif food >= 20.0:
+		return 1.0 / 4.0
+	else:
+		return 0.5
+
+func goblin_raid() :
+	await get_tree().create_timer(7.0).timeout
+	get_tree().current_scene.sanctuary_raid_started()
+	for i in range(randi_range(5, 6)) :
+		EventBus.raid_entity_count += 1
+		var halfdarkgoblin = preload("res://Scenes/Monsters/halfdarkgoblin.tscn").instantiate()
+		halfdarkgoblin.global_position = %sanctuary_ritual_site.position + Vector2(randi_range(-300, 300), randi_range(90, 150))
+		call_deferred("add_child", halfdarkgoblin)
 
 func spawn_default_shield() :
 	var shield_pickup = preload("res://Scenes/brody_shield_pickup.tscn").instantiate() 
@@ -216,7 +243,7 @@ func play_sanctuary_tutorial() :
 	get_tree().current_scene.get_node("Brody/BrodyCam").enabled = true
 	%IntroCam.enabled = false
 	EventBus.currently_interacting = false
-	EventBus.intro = false
+	#EventBus.intro = false
 	spawn_default_shield() 
 	%orble_chefstation.manual = true
 

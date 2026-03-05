@@ -1,9 +1,10 @@
-[gd_scene load_steps=39 format=3 uid="uid://calcwa6h6p7s7"]
+[gd_scene load_steps=40 format=3 uid="uid://calcwa6h6p7s7"]
 
 [ext_resource type="Script" uid="uid://dclgdmv75uqvq" path="res://Scripts/grindstonter.gd" id="1_4uh28"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_eluae"]
 [ext_resource type="Texture2D" uid="uid://4tppfmjt3y0b" path="res://Artwork/Grindstonter.png" id="2_4uh28"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_kagbw"]
+[ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="4_bdov3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kagbw"]
 shader = ExtResource("1_eluae")
@@ -21,6 +22,10 @@ shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
+shader_parameter/cloud_amount = 0.0
+shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_scale = 72.0
+shader_parameter/cloud_dissolve = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7b2kr"]
 size = Vector2(231.93118, 140)
@@ -35,15 +40,15 @@ width = 32
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2uxqy"]
-atlas = ExtResource("2_4uh28")
-region = Rect2(137, 14, 9, 15)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcp5n"]
+atlas = ExtResource("4_bdov3")
+region = Rect2(0, 0, 160, 79)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eluae"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2uxqy")
+"texture": SubResource("AtlasTexture_fcp5n")
 }],
 "loop": true,
 "name": &"default",
@@ -257,7 +262,7 @@ unique_name_in_owner = true
 visible = false
 y_sort_enabled = true
 use_parent_material = true
-position = Vector2(-3, 2)
+position = Vector2(25, 19)
 sprite_frames = SubResource("SpriteFrames_eluae")
 
 [node name="GrindSprite" type="AnimatedSprite2D" parent="VisualPivot"]
@@ -310,6 +315,7 @@ process_material = SubResource("ParticleProcessMaterial_nsh21")
 [node name="GrindHitBox" type="Area2D" parent="."]
 
 [node name="GrindCollision" type="CollisionShape2D" parent="GrindHitBox"]
+unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-0.39156342, 1.6084423)
 scale = Vector2(0.845214, 0.845214)

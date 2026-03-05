@@ -20,6 +20,7 @@ func _on_cheffing_area_body_entered(body: Node2D) -> void:
 		%ChefstationSprite.play("highlighted")
 		%ExclamationMarkIndicator.visible = false
 		if manual == true :
+			EventBus.intro = false
 			load_cheffing_manual()
 
 

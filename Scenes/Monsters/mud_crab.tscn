@@ -22,6 +22,10 @@ shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
+shader_parameter/cloud_amount = 0.0
+shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_scale = 72.0
+shader_parameter/cloud_dissolve = 0.0
 
 [sub_resource type="Gradient" id="Gradient_snf3b"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)
@@ -443,7 +447,7 @@ process_material = SubResource("ParticleProcessMaterial_glfq1")
 [node name="visibility_collision" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-0.72935486, -0.39392114)
-scale = Vector2(0.29921463, 0.47869903)
+scale = Vector2(0.5275092, 0.84393644)
 shape = SubResource("RectangleShape2D_71vx6")
 
 [node name="CrabHitBox" type="Area2D" parent="."]

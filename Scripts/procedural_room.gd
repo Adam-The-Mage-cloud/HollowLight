@@ -239,7 +239,7 @@ func _ready() -> void:
 
 func diversify_room_with_scalers() :
 	dungeon_outline_plant_spawn_chance = randf_range(1.5, 2.5) # Where higher is rarer. and 1 is everytime
-	room_complexity = randf_range(-0.25, 0.75) # -1 is super open, simple space (boss) / -0.05 is super complex, (tight)
+	room_complexity = randf_range(-0.75, -0.25) # -1 is super open, simple space (boss) / -0.05 is super complex, (tight)
 	floorcover_cluster_rate = randf_range(0.05, 0.1) # The lower, the less clusters spawn in relation to the amount of floor tiles in the room
 	floorcover_frequency = randf_range(0.25, 0.55) # Default is 0.4, where 1.0 is maximum frequency and 0.0 is minimum
 	bits_and_bobs_spawn_rate = randf_range(0.005, 0.015) # Like above, the lower, the less likely to spawn in relation to the amount of floor tiles in the room
@@ -248,7 +248,7 @@ func diversify_room_with_scalers() :
 	max_wall_interactable_amount = randi_range(4000, 8000) # The max possible amount of wall interactables / number of floor tiles
 	stepladder_spawn_rate = 9 # Where 1 is every time and the greater from 1 it is, the less likely aka 1/2 or 1/3 or 1/8...
 	raggedize_level = randf_range(0.5, 0.8) # Default at 0.25 where 0.0 is highly uniform and 1 is VERY ragged
-	walls_obstruction_frequency = randf_range(0.03, 0.075) # Default at 0.05, where 1.0 is a much higher noise chance of spawning negative wall obstructions compared to 0 (next to none)
+	walls_obstruction_frequency = randf_range(0.03, 0.055) # Default at 0.05, where 1.0 is a much higher noise chance of spawning negative wall obstructions compared to 0 (next to none)
 	chamber_amount = randi_range(1, 7) # Default between 3 and 6, where more means a bigger cave
 	narrowness_widen_value = randf_range(1.5, 3.5) # Default is 2, the higher, the wider each narrower part of a cave
 

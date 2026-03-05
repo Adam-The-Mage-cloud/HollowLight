@@ -1,11 +1,11 @@
-[gd_scene load_steps=58 format=3 uid="uid://bdukdo4isrqc0"]
+[gd_scene load_steps=56 format=3 uid="uid://bdukdo4isrqc0"]
 
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_2gt0r"]
 [ext_resource type="Script" uid="uid://ur2dkh4f5cow" path="res://Scripts/goblin.gd" id="1_fkbyy"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_o6mmh"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_o6mmh"]
 [ext_resource type="Texture2D" uid="uid://cel72unrveckk" path="res://Artwork/Goblin.png" id="4_2gt0r"]
-[ext_resource type="Texture2D" uid="uid://dqjlqpsdsjxbi" path="res://Artwork/Ogre_Shadow.png" id="4_ajbjq"]
+[ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="6_m446r"]
 [ext_resource type="Texture2D" uid="uid://b7ygaqnk23ial" path="res://Artwork/Particles/Particle_Effects_2.png" id="7_m25tm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ep384"]
@@ -24,6 +24,10 @@ shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
+shader_parameter/cloud_amount = 0.0
+shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_scale = 72.0
+shader_parameter/cloud_dissolve = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p60ou"]
 shader = ExtResource("1_2gt0r")
@@ -97,26 +101,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nk7xg"]
-atlas = ExtResource("4_ajbjq")
-region = Rect2(42, 125, 24, 40)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ejjyv"]
-atlas = ExtResource("4_ajbjq")
-region = Rect2(90, 125, 24, 40)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ma1k"]
-atlas = ExtResource("4_ajbjq")
-region = Rect2(30, 45, 50, 68)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcp5n"]
+atlas = ExtResource("6_m446r")
+region = Rect2(0, 0, 160, 79)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hfpgn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nk7xg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ejjyv")
+"texture": SubResource("AtlasTexture_fcp5n")
 }],
 "loop": true,
 "name": &"moving",
@@ -124,7 +117,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4ma1k")
+"texture": SubResource("AtlasTexture_fcp5n")
 }],
 "loop": true,
 "name": &"stationary",
@@ -399,7 +392,7 @@ unique_name_in_owner = true
 visible = false
 y_sort_enabled = true
 use_parent_material = true
-position = Vector2(-1.5, 9.5)
+position = Vector2(25, 19)
 sprite_frames = SubResource("SpriteFrames_hfpgn")
 animation = &"moving"
 autoplay = "moving"
@@ -467,7 +460,9 @@ process_material = SubResource("ParticleProcessMaterial_5shmn")
 [node name="GoblinHitBox" type="Area2D" parent="Visuals"]
 
 [node name="GoblinCollision" type="CollisionShape2D" parent="Visuals/GoblinHitBox"]
+unique_name_in_owner = true
 position = Vector2(-2.7845001, 5.732807)
+scale = Vector2(1, 0.5)
 shape = SubResource("CapsuleShape2D_ajbjq")
 
 [node name="visibility_collision" type="CollisionShape2D" parent="."]

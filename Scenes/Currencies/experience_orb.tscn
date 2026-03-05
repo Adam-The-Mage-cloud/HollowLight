@@ -6,12 +6,16 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xvl3v"]
 shader = ExtResource("1_pl03u")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
 shader_parameter/flash_amount = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1etqg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pl03u"]
 shader = ExtResource("1_pl03u")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
 shader_parameter/flash_amount = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1etqg"]

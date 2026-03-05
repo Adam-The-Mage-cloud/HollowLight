@@ -15,6 +15,16 @@ func _ready() :
 func _process(_float) -> void :
 	if EventBus.currently_interacting == true and EventBus.cheffing_station_interactable == false :
 		%StewLayer.visible = false
+	elif EventBus.intro == true :
+		%StewLayer.visible = false
+	elif EventBus.clives_shop_interactable == true :
+		%StewLayer.visible = false
+	elif EventBus.mission_board_interactable == true :
+		%StewLayer.visible = false
+	elif EventBus.catballoon_shop_interactable == true :
+		%StewLayer.visible = false
+	elif EventBus.jackie_shop_interactable == true :
+		%StewLayer.visible = false
 	else :
 		%StewLayer.visible = true
 	

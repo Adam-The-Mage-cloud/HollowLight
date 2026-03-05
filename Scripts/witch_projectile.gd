@@ -53,7 +53,7 @@ func fly() :
 	var distance = 400
 	
 	var fly_straight_tween = create_tween()
-	fly_straight_tween.tween_property(self, "global_position", global_position + direction * distance, 5.5)
+	fly_straight_tween.tween_property(self, "global_position", global_position + -direction * distance, 5.5)
 
 func apply_angle(target_angle) :
 	rotation_degrees = target_angle

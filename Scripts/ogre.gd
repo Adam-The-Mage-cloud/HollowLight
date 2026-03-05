@@ -161,15 +161,18 @@ func _on_all_beacons_lit() :
 	# Drop Gold at this point?
 
 func shadow_form() :
+	flash_white()
+	$"." .material.set("shader_parameter/cloud_amount", 1.00)
+	%visibility_collision.set_deferred("disabled", true)
 	shadow = true
 	var first_flash = create_tween()
 	first_flash.tween_property(material, "shader_parameter/susceptible_flash_amount", 1.0, 0.1)
 	first_flash.tween_property(material, "shader_parameter/susceptible_flash_amount", 0.0, 0.2)
 	$".".monitoring = false
 	lightable = true
-	%visibility_collision.scale *= 2.4
+	%visibility_collision.scale *= 12.0
 	in_sight = true
-	speed = 50
+	speed = 85
 	%FootStepParticlesLeft.visible = false
 	%FootStepParticlesRight.visible = false
 	%OgreShadowSprite.play("moving")
@@ -179,6 +182,8 @@ func shadow_form() :
 	%OgreHead.visible = false
 	%OgreSprite.visible = false
 	%OgreAxe.visible = false
+	await get_tree().create_timer(0.005).timeout
+	%visibility_collision.set_deferred("disabled", false)
 
 
 func _on_axe_area_area_entered(area: Area2D) -> void:
@@ -194,7 +199,18 @@ func _on_axe_area_area_entered(area: Area2D) -> void:
 
 
 func _on_ogre_hit_box_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and lightable == true or area.name == "winged_torch" and lightable == true :
+	if area.name == "Torch" and lightable == true :
+		# Knockback:
+		speed = -50
+		var rotation_tween_1 = create_tween()
+		rotation_tween_1.tween_property($".", "rotation_degrees", $".".rotation_degrees + 65, 1.2)
+		global_position.y += randf_range(-3, 3)
+		global_position.x += randf_range(-3, 3)
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * (area.effort * 24.0) * 2, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		burn()
+	elif area.name == "winged_torch" and lightable == true :
 		# Knockback:
 		speed = -50
 		var rotation_tween_1 = create_tween()
@@ -211,7 +227,7 @@ func _on_ogre_hit_box_area_entered(area: Area2D) -> void:
 		global_position.x += randf_range(-3, 3)
 		var knockback_direction = (global_position - area.global_position).normalized()
 		var knockback_movement = create_tween()
-		knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		knockback_movement.tween_property(self, "position", position + knockback_direction * (area.effort * 24.0), 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
 	
 	# Player Pets :

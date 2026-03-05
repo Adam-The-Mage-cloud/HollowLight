@@ -13,6 +13,14 @@ var new_facing = 1
 var last_facing_scale_x = 1
 var bow_or_melee = 1          # If bow then -1 just to make sure it's not flipped
 
+var facing = 1.0
+
+
+var orbit_strength = 0.6          # 0 = pure chase, 1 = pure orbit
+var desired_distance = 140.0      # ideal ranged distance
+var noise = FastNoiseLite.new()
+
+
 var hand1_base_pos
 var hand2_base_pos
 
@@ -68,35 +76,63 @@ func set_tint() :
 		material.set_shader_parameter("tint_amount", 0.36)
 
 func _physics_process(delta: float) -> void:
-	if not get_parent().visible:
+	if not get_parent().visible or not target:
 		return
-
-	if not target:
-		return
-
+	
 	brody_position = target.global_position
-	direction = (brody_position - global_position).normalized()
-
-	new_facing = 1 * bow_or_melee
-	if brody_position.x < global_position.x:
-		new_facing = -1 * bow_or_melee
-
-	# Flip ONLY the visuals, not the pivot
-	%Visuals.scale.x = new_facing
-
-	# Movement
-	if global_position.distance_to(brody_position) > 10.0:
-		position += direction * speed * delta
-
-	# Aim pivot only when not attacking
+	
+	update_facing()
+	update_movement(delta)
+	
 	if not attacking:
-		%WeaponPivot.look_at(brody_position)
-		if bow_or_melee != - 1 :
-			if new_facing < 0:
-				%WeaponPivot.rotation += PI
-				%WeaponPivot.scale.x = -new_facing
-			else :
-				%WeaponPivot.scale.x = -new_facing
+		smooth_aim(delta)
+
+
+# --- MOVEMENT ---------------------------------------------------------
+
+func update_movement(delta: float) -> void:
+	var dist = global_position.distance_to(brody_position)
+	if dist <= 10.0:
+		return
+	
+	var dir = get_dynamic_direction()
+	dir = get_noisy_direction(dir, Engine.get_physics_frames())
+	
+	position += dir * speed * delta
+
+
+func get_dynamic_direction() -> Vector2:
+	var to_player = brody_position - global_position
+	var dist = to_player.length()
+	var chase = to_player.normalized()
+	
+	# Orbiting (perpendicular)
+	var orbit = Vector2(-chase.y, chase.x) * orbit_strength
+	
+	# Maintain distance
+	var push_out = Vector2.ZERO
+	if dist < desired_distance:
+		push_out = -chase * ((desired_distance - dist) / desired_distance)
+	
+	return (chase + orbit + push_out).normalized()
+
+
+func get_noisy_direction(base: Vector2, t: float) -> Vector2:
+	var angle_offset = noise.get_noise_1d(t * 0.8) * 0.25
+	return base.rotated(angle_offset)
+
+
+func update_facing() -> void:
+	var target_facing = -1.0 if brody_position.x < global_position.x else 1.0
+	facing = lerp(facing, target_facing, 0.2)
+	%Visuals.scale.x = facing
+
+
+func smooth_aim(delta: float) -> void:
+	var pivot = %WeaponPivot
+	var target_angle = pivot.global_position.angle_to_point(brody_position)
+	pivot.rotation = lerp_angle(pivot.rotation, target_angle, 0.25)
+
 
 
 func fireatwill_hand1() :
@@ -285,15 +321,20 @@ func _on_all_beacons_lit() :
 	# Drop Gold at this point?
 
 func shadow_form() :
+	flash_white()
+	%WitchCollision.scale *= Vector2(1.00, 0.75)
+	%WitchCollision.position += Vector2(0, -4)
+	$"." .material.set("shader_parameter/cloud_amount", 1.00)
+	%visibility_collision.set_deferred("disabled", true)
 	shadow = true
 	var first_flash = create_tween()
 	first_flash.tween_property(material, "shader_parameter/susceptible_flash_amount", 1.0, 0.1)
 	first_flash.tween_property(material, "shader_parameter/susceptible_flash_amount", 0.0, 0.2)
 	$".".monitoring = false
 	lightable = true
-	%visibility_collision.scale *= 2.4
+	%visibility_collision.scale *= 12.0
 	in_sight = true
-	speed = 50
+	speed = 85
 	%FootStepParticlesLeft.visible = false
 	%FootStepParticlesRight.visible = false
 	%WitchShadowSprite.visible = true
@@ -302,10 +343,23 @@ func shadow_form() :
 	%WeaponPivot.visible = false
 	%WitchLegL.visible = false
 	%WitchLegR.visible = false
+	await get_tree().create_timer(0.005).timeout
+	%visibility_collision.set_deferred("disabled", false)
 
 
 func _on_witch_hit_box_area_entered(area: Area2D) -> void:
-	if area.name == "Torch" and lightable == true or area.name == "winged_torch" and lightable == true :
+	if area.name == "Torch" and lightable == true :
+		# Knockback:
+		speed = -50
+		var rotation_tween_1 = create_tween()
+		rotation_tween_1.tween_property($".", "rotation_degrees", $".".rotation_degrees + 65, 1.2)
+		global_position.y += randf_range(-3, 3)
+		global_position.x += randf_range(-3, 3)
+		var knockback_direction = (global_position - area.global_position).normalized()
+		var knockback_movement = create_tween()
+		knockback_movement.tween_property(self, "position", position + knockback_direction * (area.effort * 24.0) * 2, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		burn()
+	elif area.name == "winged_torch" and lightable == true :
 		# Knockback:
 		speed = -50
 		var rotation_tween_1 = create_tween()
@@ -322,7 +376,7 @@ func _on_witch_hit_box_area_entered(area: Area2D) -> void:
 		global_position.x += randf_range(-3, 3)
 		var knockback_direction = (global_position - area.global_position).normalized()
 		var knockback_movement = create_tween()
-		knockback_movement.tween_property(self, "position", position + knockback_direction * 4, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		knockback_movement.tween_property(self, "position", position + knockback_direction * (area.effort * 24.0), 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
 	
 	# Player Pets :

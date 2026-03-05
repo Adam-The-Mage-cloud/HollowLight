@@ -1,11 +1,11 @@
-[gd_scene load_steps=63 format=3 uid="uid://he3eyfbd0ckl"]
+[gd_scene load_steps=61 format=3 uid="uid://he3eyfbd0ckl"]
 
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_8d0up"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_o150v"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_o150v"]
-[ext_resource type="Texture2D" uid="uid://dqjlqpsdsjxbi" path="res://Artwork/Ogre_Shadow.png" id="3_evh1o"]
 [ext_resource type="Script" uid="uid://b6q4g5ctrm6oq" path="res://Scripts/draugr.gd" id="3_omf3v"]
 [ext_resource type="Texture2D" uid="uid://c28n6sdgxa58o" path="res://Artwork/Draugr.png" id="4_8d0up"]
+[ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="6_gday6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_omf3v"]
 shader = ExtResource("1_o150v")
@@ -23,6 +23,10 @@ shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
+shader_parameter/cloud_amount = 0.0
+shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_scale = 72.0
+shader_parameter/cloud_dissolve = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8d0up"]
 shader = ExtResource("1_8d0up")
@@ -96,26 +100,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nk7xg"]
-atlas = ExtResource("3_evh1o")
-region = Rect2(42, 125, 24, 40)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ejjyv"]
-atlas = ExtResource("3_evh1o")
-region = Rect2(90, 125, 24, 40)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ma1k"]
-atlas = ExtResource("3_evh1o")
-region = Rect2(30, 45, 50, 68)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcp5n"]
+atlas = ExtResource("6_gday6")
+region = Rect2(0, 0, 160, 79)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eil10"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nk7xg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ejjyv")
+"texture": SubResource("AtlasTexture_fcp5n")
 }],
 "loop": true,
 "name": &"moving",
@@ -123,7 +116,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4ma1k")
+"texture": SubResource("AtlasTexture_fcp5n")
 }],
 "loop": true,
 "name": &"stationary",
@@ -402,7 +395,7 @@ unique_name_in_owner = true
 visible = false
 y_sort_enabled = true
 use_parent_material = true
-position = Vector2(-1.5, 9.5)
+position = Vector2(26, 21)
 sprite_frames = SubResource("SpriteFrames_eil10")
 animation = &"moving"
 autoplay = "moving"
@@ -468,9 +461,9 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_wb0ma")
 
 [node name="DraugrHitBox" type="Area2D" parent="Visuals"]
-visible = false
 
 [node name="DraugrCollision" type="CollisionShape2D" parent="Visuals/DraugrHitBox"]
+unique_name_in_owner = true
 position = Vector2(0.23049927, -0.23566437)
 shape = SubResource("CapsuleShape2D_f48ns")
 

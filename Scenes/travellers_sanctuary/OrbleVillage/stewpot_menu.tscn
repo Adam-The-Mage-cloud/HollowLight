@@ -5653,18 +5653,19 @@ gradient = SubResource("Gradient_xodr1")
 load_path = "res://.godot/imported/Finger.png-12f269517eacaf39c6b3b0646782ac93.ctex"
 
 [node name="stewpot_menu" type="Node2D"]
+modulate = Color(1, 1, 1, 0)
 texture_filter = 1
-scale = Vector2(2, 2)
+scale = Vector2(2.4, 2.4)
 script = ExtResource("1_mcg7n")
 
 [node name="Border" type="Sprite2D" parent="."]
 light_mask = 0
-position = Vector2(0.8333358, -0.030298233)
+position = Vector2(-5.3333325, -0.030298233)
 texture = ExtResource("1_r2sho")
 
 [node name="PriceUnderline" type="AnimatedSprite2D" parent="."]
 light_mask = 0
-position = Vector2(-0.175, 6.466667)
+position = Vector2(-6.3416677, 6.466667)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_bxhpp")
 
@@ -5674,9 +5675,9 @@ light_mask = 0
 z_index = 5
 texture_filter = 1
 material = SubResource("ShaderMaterial_bxhpp")
-offset_left = -12.999999
+offset_left = -19.166668
 offset_top = 1.8000021
-offset_right = 119.0
+offset_right = 112.83333
 offset_bottom = 41.800003
 scale = Vector2(0.2, 0.2)
 theme_override_colors/default_color = Color(0.9882353, 0.827451, 0.05882353, 1)
@@ -5690,7 +5691,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Gold" type="AnimatedSprite2D" parent="."]
 light_mask = 0
 z_index = 2
-position = Vector2(-42.500008, -25.533335)
+position = Vector2(-48.66667, -25.533335)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_y73k1")
 
@@ -5700,9 +5701,9 @@ light_mask = 0
 z_index = 5
 texture_filter = 1
 material = SubResource("ShaderMaterial_xodr1")
-offset_left = -38.333332
+offset_left = -44.5
 offset_top = -29.533333
-offset_right = 93.66667
+offset_right = 87.5
 offset_bottom = 10.466667
 scale = Vector2(0.24, 0.24)
 theme_override_colors/default_color = Color(0.9882353, 0.827451, 0.05882353, 1)
@@ -5715,7 +5716,7 @@ metadata/_edit_use_anchors_ = true
 [node name="ChefSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 use_parent_material = true
-position = Vector2(-19.841665, 1.6333351)
+position = Vector2(-26.008331, 1.6333351)
 sprite_frames = SubResource("SpriteFrames_f8d5v")
 animation = &"stationary"
 autoplay = "stationary"
@@ -5736,7 +5737,7 @@ sprite_frames = SubResource("SpriteFrames_ajt54")
 [node name="CauldronLadle" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 use_parent_material = true
-position = Vector2(-32.333332, -3.3666658)
+position = Vector2(-38.500004, -3.3666658)
 rotation = 3.1415927
 scale = Vector2(-1, 1)
 texture = SubResource("CompressedTexture2D_rqds6")
@@ -5748,21 +5749,21 @@ texture = SubResource("CompressedTexture2D_m3vmy")
 
 [node name="ChefstationSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(40.333336, 5.133333)
+position = Vector2(34.166668, 5.133333)
 sprite_frames = SubResource("SpriteFrames_mcg7n")
 
 [node name="Orble1" type="AnimatedSprite2D" parent="."]
-position = Vector2(-7.0000005, 23.974998)
+position = Vector2(-13.166668, 23.974998)
 sprite_frames = SubResource("SpriteFrames_xodr1")
 
 [node name="Orble2" type="AnimatedSprite2D" parent="."]
-position = Vector2(5.3333354, 23.974998)
+position = Vector2(-0.83333254, 23.974998)
 sprite_frames = SubResource("SpriteFrames_20433")
 
 [node name="BuyStewButton" type="TouchScreenButton" parent="."]
 modulate = Color(1, 1, 1, 0)
 z_index = 40
-position = Vector2(-13.000002, -1.5333347)
+position = Vector2(-19.166668, -1.5333347)
 scale = Vector2(0.100260414, 13.999999)
 texture_normal = SubResource("GradientTexture1D_ymuoo")
 
@@ -5770,7 +5771,7 @@ texture_normal = SubResource("GradientTexture1D_ymuoo")
 unique_name_in_owner = true
 light_mask = 0
 z_index = 40
-position = Vector2(39.83221, -31.533333)
+position = Vector2(33.66554, -31.533333)
 scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("11_xodr1")
 texture_pressed = ExtResource("12_ymuoo")
@@ -5778,7 +5779,7 @@ texture_pressed = ExtResource("12_ymuoo")
 [node name="BuyFinger" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 z_index = 6
-position = Vector2(5.0000005, 12)
+position = Vector2(-1.1666684, 12)
 rotation = -0.78539824
 scale = Vector2(0.75, 0.75)
 texture = SubResource("CompressedTexture2D_y73k1")

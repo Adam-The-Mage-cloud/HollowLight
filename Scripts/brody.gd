@@ -29,6 +29,7 @@ var safe_frames = 0
 const SAFE_FRAMES_REQUIRED = 4 
 
 var weapon_equipped = false
+var shield_equipped = false
 var torch_equipped = true
 
 var bobbing = false
@@ -388,12 +389,14 @@ func moving():
 
 func initialise_shield_equip():
 	if %brody_shield.equipped == false : # Equip :
+		shield_equipped = true
 		%brody_shield.equipped = true
 		%brody_shield.unequipped = false
 		%brody_shield.z_index = 1
 		%ShieldStrap.visible = false
 		%brody_shield.shield_collision()
 	else : # Unequip :
+		shield_equipped = false
 		%brody_shield.equipped = false
 		%ShieldStrap.visible = true
 		%brody_shield.z_index = -1
@@ -477,6 +480,7 @@ func crushed():
 		%antenna.position.y += 4
 		%feet.position.y -= 2
 		await get_tree().create_timer(0.55).timeout
+		%BrodySprite.play(str(outfit) + "_moving")
 		%antenna.position.y -= 4
 		%feet.position.y += 2
 		input_enabled = true
