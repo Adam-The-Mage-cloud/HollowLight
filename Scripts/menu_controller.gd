@@ -114,6 +114,10 @@ func animate_xp_gain():
 	var current_xp = EventBus.total_acquired_experience
 	var new_xp_total = current_xp + EventBus.total_new_acquired_experience
 	
+	# Ensure bar max is correct for the starting level
+	%XPProgressBar.max_value = xp_required_for(EventBus.player_level)
+	%XPProgressBarHighlight.max_value = xp_required_for(EventBus.player_level)
+	
 	while true:
 		var xp_needed = xp_required_for(EventBus.player_level)
 		
@@ -126,6 +130,11 @@ func animate_xp_gain():
 		# Level up
 		EventBus.player_level += 1
 		%TotalXPText.text = str(EventBus.player_level)
+		
+		# IMPORTANT: update bar max for the new level
+		%XPProgressBar.max_value = xp_required_for(EventBus.player_level)
+		%XPProgressBarHighlight.max_value = xp_required_for(EventBus.player_level)
+		
 		level_up_flashes()
 		
 		# Remove XP used for this level

@@ -5,9 +5,11 @@ var Shadow_Cloud = preload("res://Scenes/Monsters/the_shadow.tscn")
 var is_touchscreen = true
 var touchscreen_available = true
 
+var selected_orble
+
 var raid_active = false
 
-var darkness_increase_per_second = 4.0
+var darkness_increase_per_second = 5.0
 
 var room_finished = false
 
@@ -132,7 +134,7 @@ func _ready() :
 		# Start in Sanctuary :
 		%Torch.lower_torch_light()
 		var spawn_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
-		spawn_sanctuary.global_position = Vector2(-140.0, -75.0)
+		spawn_sanctuary.global_position = Vector2(-0.0, 0.0)
 		%Brody.global_position = Vector2(20, 12)
 		%RoomsToBeDeleted.add_child(spawn_sanctuary)
 		_set_sanctuary_properties()
@@ -254,6 +256,10 @@ func _on_new_dungeon_crawl() :
 	%RoomsToBeDeleted.call_deferred("add_child", new_room)
 	
 	EventBus.sanctuary = false
+	# Update GameplayUI Tracker Values :
+	EventBus.total_new_fervour = 0
+	%IndicatorDirector.levelled_used_xp = 0.0
+	%IndicatorDirector.temporary_level = 0
 	
 	# If Intro Then Wait 6 Seconds Then Explain Darkness, Speed, Gold, XP :
 	if EventBus.player_level < 3 :
@@ -344,6 +350,32 @@ func sanctuary_raid_finished() :
 	%ShieldButton.visible = false
 	%GoblinAttackText.visible = false
 
+func introduce_orble(orble) :
+	orble.global_position = %Brody.global_position + Vector2(80, 65)
+	orble.newly_spawned = true
+	selected_orble = orble
+	
+	# Disable Touchscreen :
+	%TouchScreenLayer.visible = false
+	
+	# Send camera in :
+	%BrodyCam.offset = Vector2(-20, 0)
+	%BrodyCam.zoom = Vector2(2.0, 2.0)
+	
+	# Open keyboard and give orble a name :
+	var namepopup = preload("res://Scenes/travellers_sanctuary/OrbleVillage/namer_popup.tscn").instantiate()
+	call_deferred("add_child", namepopup)
+
+func orble_named(orble_particular) :
+	selected_orble.name_visible(orble_particular)
+	selected_orble.newly_spawned = false
+	
+	if EventBus.orbles_to_introduce <= 0 :
+		# Reset Camera / Touchscreen etc :
+		var cam_tween = create_tween()
+		cam_tween.tween_property(%BrodyCam, "zoom", Vector2(1.5, 1.5), 1.0)
+		cam_tween.tween_property(%BrodyCam, "offset", Vector2(0.0, 0.0), 1.0)
+		%TouchScreenLayer.visible = true
 
 func new_dungeon_touchscreen() :
 	%TouchScreenPress1.visible = true

@@ -1,8 +1,9 @@
-[gd_scene load_steps=63 format=4 uid="uid://dd07odgne8inj"]
+[gd_scene load_steps=66 format=4 uid="uid://dd07odgne8inj"]
 
 [ext_resource type="Texture2D" uid="uid://ccceiivkxhkok" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_14.png" id="1_kkero"]
 [ext_resource type="Script" uid="uid://rgvuskd1viok" path="res://Scripts/travellers_sanctuary/OrbleVillage/hunger_indicator.gd" id="1_uvnx4"]
 [ext_resource type="Texture2D" uid="uid://bf8pfyh5icgi" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_24.png" id="2_1uejj"]
+[ext_resource type="Texture2D" uid="uid://bew7mma84gov7" path="res://Artwork/Goblin_Half-dark.png" id="2_aii6t"]
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="2_ujdqy"]
 [ext_resource type="Texture2D" uid="uid://bt71yynjqtl5i" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_34.png" id="3_dahsc"]
 [ext_resource type="Texture2D" uid="uid://c7ixp2akfuloe" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_Full.png" id="4_jmh24"]
@@ -12,6 +13,21 @@
 [ext_resource type="Texture2D" uid="uid://dmp8xqpp6i083" path="res://Artwork/Sanctuary/Meh_Orble 1.png" id="7_itrl0"]
 [ext_resource type="Texture2D" uid="uid://cif6x5ke5opoy" path="res://Artwork/Sanctuary/Fervour.png" id="11_xmkt3"]
 [ext_resource type="Shader" uid="uid://jtcx64k0fxec" path="res://Shaders/font_flash.gdshader" id="12_vgvwr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtpy2"]
+atlas = ExtResource("2_aii6t")
+region = Rect2(14, 41, 59, 21)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ptexo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtpy2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uvnx4"]
 shader = ExtResource("2_ujdqy")
@@ -14802,6 +14818,16 @@ script = ExtResource("1_uvnx4")
 
 [node name="StewLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+
+[node name="GoblinHead" type="AnimatedSprite2D" parent="StewLayer"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.9607843)
+z_index = 1
+texture_filter = 1
+position = Vector2(38, 29)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_ptexo")
 
 [node name="StewIndicator" type="AnimatedSprite2D" parent="StewLayer"]
 unique_name_in_owner = true

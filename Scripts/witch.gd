@@ -123,9 +123,10 @@ func get_noisy_direction(base: Vector2, t: float) -> Vector2:
 
 
 func update_facing() -> void:
-	var target_facing = -1.0 if brody_position.x < global_position.x else 1.0
-	facing = lerp(facing, target_facing, 0.2)
-	%Visuals.scale.x = facing
+	if shadow == false :
+		var target_facing = -1.0 if brody_position.x < global_position.x else 1.0
+		facing = lerp(facing, target_facing, 0.2)
+		%Visuals.scale.x = facing
 
 
 func smooth_aim(delta: float) -> void:

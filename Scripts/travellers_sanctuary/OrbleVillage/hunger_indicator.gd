@@ -28,6 +28,20 @@ func _process(_float) -> void :
 	else :
 		%StewLayer.visible = true
 	
+	if EventBus.raid_entity_count > 0 :
+		%GoblinHead.visible = true
+		%FervourLevel.visible = false
+		%FervourProduction.visible = false
+		%GoblinRaidRisk.visible = false
+		%RaidRiskLevel.visible = false
+	
+	else :
+		%FervourLevel.visible = true
+		%FervourProduction.visible = true
+		%GoblinHead.visible = false
+		%GoblinRaidRisk.visible = true
+		%RaidRiskLevel.visible = true
+	
 	if EventBus.cheffing_station_interactable == true and EventBus.currently_interacting == true :
 		update_visual()
 		%StewIndicator.position = Vector2(208, 58)

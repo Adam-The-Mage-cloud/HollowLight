@@ -229,6 +229,8 @@ func _on_ogre_hit_box_area_entered(area: Area2D) -> void:
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * (area.effort * 24.0), 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
+		$".".light_mask = 1
+		%OnFireLight.enabled = true
 	
 	# Player Pets :
 	# Mystic Sword Bloody Knockback :

@@ -218,6 +218,7 @@ func _ready() -> void:
 	generate_exterior_plants_outline()
 	place_spawn_points()
 	monster_spawns()
+	special_event_spawns()
 	beacon_spawns()
 	generate_wall_interactables()
 	generate_floor_interactables()
@@ -1801,6 +1802,34 @@ func new_stepladder_dungeon(body) :
 		get_tree().current_scene.get_node("RoomsToBeDeleted").call_deferred("add_child", new_room)
 		# new_room.first_room = false
 
+func special_event_spawns() :
+	if EventBus.intro == false :
+		# Special Event Spawns :
+		#Money Goblin :
+		if randi_range(1, 36) == 12 :
+			var new_money_goblin = preload("res://Scenes/Monsters/money_goblin.tscn").instantiate()
+			var rand = randi_range(1, spawnpoints)
+			var spawn_node = %SpawnPoints.get_child(rand - 1)
+			new_money_goblin.global_position = spawn_node.global_position
+			print (new_money_goblin.global_position)
+			call_deferred("add_child", new_money_goblin)
+		
+		# Orble To Rescue :
+		if randi_range(3, 3) == 3 :
+			if EventBus.total_orbles < 7 :
+				var new_orble_to_rescue = preload("res://Scenes/travellers_sanctuary/OrbleVillage/orble.tscn").instantiate()
+				var rand = randi_range(0, %SpawnPoints.get_child_count() - 1)
+				var spawn_node = %SpawnPoints.get_child(rand)
+				new_orble_to_rescue.global_position = spawn_node.global_position
+				print (new_orble_to_rescue.global_position)
+				call_deferred("add_child", new_orble_to_rescue)
+				# Spawn 1-3 Fervour around the character :
+				for i in range (randi_range(1, 3)) :
+					var fervour = preload("res://Scenes/travellers_sanctuary/OrbleVillage/fervour_collection.tscn").instantiate()
+					fervour.global_position = spawn_node.global_position
+					call_deferred("add_child", fervour)
+
+
 func _on_door_open_area_body_entered(body: Node2D) -> void:
 	if body.name != "Brody" or already_opened == true or room_complete == false :
 		return
@@ -1838,17 +1867,6 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 			# Show next room :
 			EventBus.current_room = next_room
 			next_room.visible = true
-			
-			# Special Event Spawns :
-			#Money Goblin :
-			if randi_range(1, 24) == 12 :
-				print ("yayay")
-				var new_money_goblin = preload("res://Scenes/Monsters/money_goblin.tscn").instantiate()
-				var rand = randi_range(1, spawnpoints)
-				var spawn_node = %SpawnPoints.get_child(rand - 1)
-				new_money_goblin.global_position = spawn_node.global_position + Vector2(0, -200)
-				print (new_money_goblin.global_position)
-				%SpawnPoints.call_deferred("add_child", new_money_goblin)
 			
 			# Tell EventBus How many beacons are in the next room, by getting beacons to activate :
 			var new_rooms_beacons = next_room.get_node("Beacons").get_children()

@@ -82,6 +82,7 @@ var total_acquired_goldpieces: int = 0
 
 var total_new_acquired_experience: int = 0
 var total_new_acquired_goldpieces: int = 0
+var total_new_fervour: int = 0
 
 # PLAYER STATS :
 var player_level: int = 1
@@ -142,6 +143,11 @@ var mission_board_interactable = false
 var cheffing_station_interactable = false
 
 # Sanctuary Definables :
+var sanctuary_level = 1
+var orbles: Array[String] = []
+var max_orble_count = 7 * sanctuary_level
+var total_orbles = 0
+var orbles_to_introduce = 0
 var raid_entity_count = 0
 var food_accumulated = 100.0
 
@@ -204,6 +210,7 @@ func _ready():
 	EventBus.goldpiece_acquired.connect(_on_goldpiece_acquired)
 	
 	EventBus.new_room.connect(_on_new_room)
+	
 
 func player_died() :
 	EventBus.beacons_lit = 0
@@ -320,6 +327,7 @@ func get_save_data() -> Dictionary:
 		
 		# Sanctuary Values :
 		"food_accumulated": food_accumulated,
+		"orbles": orbles,
 		
 		# Time :
 		"last_daily_reset": last_daily_reset,
@@ -381,6 +389,11 @@ func apply_save_data(data: Dictionary):
 	
 	# Sanctuary Values :
 	food_accumulated = data.get("food_accumulated", 100.0)
+	var loaded = data.get("orbles", [])
+	orbles.clear()
+	for item in loaded:
+		orbles.append(str(item))
+	
 	
 	# Time :
 	last_daily_reset = data.get("last_daily_reset", "none")

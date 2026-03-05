@@ -1,4 +1,4 @@
-[gd_scene load_steps=146 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=145 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
 [ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://nm8p1d0it3q7" path="res://Scenes/travellers_sanctuary/sanctuary_campfire.tscn" id="6_0oo8m"]
 [ext_resource type="PackedScene" uid="uid://bfgqfdxugrc4c" path="res://Scenes/travellers_sanctuary/clive_npc.tscn" id="6_7kch7"]
 [ext_resource type="PackedScene" uid="uid://br6d3apohpg5v" path="res://Scenes/travellers_sanctuary/reg_village_tree.tscn" id="6_o6jja"]
-[ext_resource type="PackedScene" uid="uid://bichk4byx86ln" path="res://Scenes/travellers_sanctuary/OrbleVillage/orble.tscn" id="7_k7t6u"]
 [ext_resource type="Texture2D" uid="uid://cvo5o65ylw2o2" path="res://Artwork/Sanctuary/Torch_&_Shield_.png" id="7_o6jja"]
 [ext_resource type="Texture2D" uid="uid://c2btlsuq6jfou" path="res://Artwork/Sanctuary/Torch_&_Shield_Highlighted_.png" id="8_0oo8m"]
 [ext_resource type="Shader" uid="uid://gywty5cpfyuw" path="res://Shaders/water.gdshader" id="8_ptv4p"]
@@ -7595,34 +7594,6 @@ position = Vector2(113, 161)
 [node name="orble_overseer" parent="." instance=ExtResource("22_s10yr")]
 unique_name_in_owner = true
 position = Vector2(-31, 268)
-
-[node name="orble" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-108, 238)
-
-[node name="orble2" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-19, 233)
-
-[node name="orble3" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-147, 292)
-
-[node name="orble4" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(15, 196)
-
-[node name="orble5" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-230, 291)
-
-[node name="orble6" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(17, 114)
-
-[node name="orble7" parent="." instance=ExtResource("7_k7t6u")]
-z_index = 1
-position = Vector2(-57, 183)
 
 [node name="TorchAndShield" type="Area2D" parent="."]
 z_index = 1

@@ -4,7 +4,19 @@ extends Sprite2D
 
 var target
 
-func _process(_delta):
+var levelled_used_xp = 0.0
+var xp_displayed = 0.0
+var xp_target = 0.0
+var xp_velocity = 0.0
+
+var temporary_level = 0
+
+func _ready() :
+	%GameplayXPOutlineFlasher.material = %GameplayXPOutlineFlasher.material.duplicate()
+	%GameplayXPProgressBar.material = %GameplayXPProgressBar.material.duplicate()
+	%GameplayTotalXPText.material = %GameplayTotalXPText.material.duplicate()
+
+func _process(delta):
 	get_nearest_brazier()
 	if target == null :
 		get_nearest_door()
@@ -42,6 +54,69 @@ func _process(_delta):
 	position = edge_pos
 	rotation = dir.angle()
 	rotation_degrees += 90
+	
+	# Showcase Gold, XP and Fervour Counts :
+	%DungeonGoldText.text = str(EventBus.total_new_acquired_goldpieces)
+	
+	# Displayed level = real level + temporary level-ups
+	%GameplayTotalXPText.text = str(EventBus.player_level + temporary_level)
+	
+	# Target XP comes from the event bus
+	xp_target = float(EventBus.total_new_acquired_experience - levelled_used_xp)
+	
+	# Smooth interpolation
+	var speed = 6.0
+	xp_displayed = lerp(xp_displayed, xp_target, 1.0 - pow(0.001, delta * speed))
+	
+	# Snap if extremely close
+	if abs(xp_displayed - xp_target) < 0.1:
+		xp_displayed = xp_target
+	
+	%GameplayXPProgressBar.value = xp_displayed
+	
+	var current_level = EventBus.player_level + temporary_level
+	%GameplayXPProgressBar.max_value = float(xp_required_for(current_level))
+	resolve_level_ups()
+	
+	# Fervour UI
+	if EventBus.total_new_fervour > 0:
+		%FervourCount.visible = true
+		%DungeonFervourText.text = str(EventBus.total_new_fervour)
+	else:
+		%FervourCount.visible = false
+
+
+func resolve_level_ups():
+	if xp_displayed >= float(xp_required_for(EventBus.player_level + temporary_level)):
+		var needed = xp_required_for(EventBus.player_level + temporary_level)
+		
+		# Consume XP only from displayed value
+		xp_displayed -= needed
+		levelled_used_xp += needed
+		
+		# Add a temporary level
+		temporary_level += 1
+		%GameplayTotalXPText.text = str(EventBus.player_level + temporary_level)
+		
+		level_up_flash_in_game()
+		var current_level = EventBus.player_level + temporary_level
+		%GameplayXPProgressBar.max_value = float(xp_required_for(current_level))
+
+
+
+func level_up_flash_in_game():
+	print("flashingg")
+	%GameplayXPOutlineFlasher.visible = true
+	await get_tree().create_timer(0.2).timeout
+	%GameplayXPOutlineFlasher.visible = false
+
+func xp_required_for(level: int) -> int:
+	var base = 100
+	var per_level = 0
+	var max_level = 0
+	
+	var effective_level = min(level, max_level)
+	return base + (per_level * (effective_level - 1))
 
 
 func get_nearest_brazier():

@@ -1,12 +1,18 @@
 extends Node2D
 
 var raid_happened = false
+var orble_spawned = false
 
 func _ready() :
 	randomize()
 	EventBus.save_game()
 	EventBus.sanctuary = true
 	EventBus.total_current_darkness = 0
+	# Resize Max Orble Potential and Calculate Any Room We Have For More :
+	EventBus.orbles.resize(EventBus.max_orble_count)
+	for i in range(EventBus.orbles.size()):
+		if EventBus.orbles[i] == null:
+			EventBus.orbles[i] = ""
 	%SanctuaryMainFloor.add_to_group("floors")
 	arrows_pointing()
 	wagon_signs_pointing()
@@ -14,9 +20,42 @@ func _ready() :
 	turn_stewpot_spit()
 	process_hourly_updates()
 	spawn_stew_indicator()
+	spawn_already_orbles()
 	
 	if EventBus.intro == true :
 		play_sanctuary_tutorial()
+	
+	if EventBus.orbles_to_introduce > 0 :
+		introduce_orbles()
+
+
+func spawn_already_orbles() :
+	for i in range(EventBus.max_orble_count) :
+		if EventBus.orbles[i] != null or EventBus.orbles[i] != "" :
+			EventBus.total_orbles += 1
+			var new_orble = preload("res://Scenes/travellers_sanctuary/OrbleVillage/orble.tscn").instantiate()
+			new_orble.name_visible(EventBus.orbles[i])
+			new_orble.global_position = Vector2(0,0) + %sanctuary_ritual_site.position #+ Vector2(randi_range(-20, 10), randi_range(40, 50))
+			print (global_position)
+			print (new_orble.global_position)
+			call_deferred("add_child", new_orble)
+
+
+func introduce_orbles() :
+	if orble_spawned == false :
+		orble_spawned = true
+		var new_orble = preload("res://Scenes/travellers_sanctuary/OrbleVillage/orble.tscn").instantiate()
+		call_deferred("add_child", new_orble)
+		# Start naming process
+		get_tree().current_scene.introduce_orble(new_orble)
+		EventBus.orbles_to_introduce -= 1
+		# Wait until the popup emits "orble_named"
+		await new_orble.orble_named
+		orble_spawned = false
+		if EventBus.orbles_to_introduce > 0 :
+			await get_tree().create_timer(1.0).timeout
+			introduce_orbles()
+
 
 func turn_stewpot_spit() :
 	%StewPotSpit.type = 2
@@ -70,20 +109,22 @@ func process_hourly_updates():
 		var FervourScene = preload("res://Scenes/travellers_sanctuary/OrbleVillage/fervour_collection.tscn")
 		for i in range(fervour_gained):
 			var fervour = FervourScene.instantiate()
-			fervour.global_position = %sanctuary_ritual_site.position 
+			fervour.global_position = %sanctuary_ritual_site.global_position 
 			call_deferred("add_child", fervour)
 	
 	EventBus.last_hourly_food_update = now
 
 func get_goblin_raid_chance(food: float) -> float:
-	if food >= 70.0:
+	if food >= 70.0 and EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
 		return 0.05
-	elif food >= 50.0:
+	elif food >= 50.0 and EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
 		return 1.0 / 7.0
-	elif food >= 20.0:
+	elif food >= 20.0 and EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
 		return 1.0 / 4.0
-	else:
+	elif EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
 		return 0.5
+	else :
+		return 0.0
 
 func goblin_raid() :
 	await get_tree().create_timer(7.0).timeout

@@ -67,6 +67,8 @@ func _on_pickup_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
 		body.pickup_shake()
 		EventBus.total_fervour += 1
+		if EventBus.sanctuary == false :
+			EventBus.total_new_fervour += 1
 		EventBus.save_game()
 		queue_free()
 

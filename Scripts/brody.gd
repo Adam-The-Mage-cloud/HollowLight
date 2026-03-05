@@ -703,7 +703,7 @@ func _on_dash_button_pressed() -> void:
 	dash_ability()
 	if EventBus.sanctuary == true :
 		if EventBus.currently_interacting == false :
-			if EventBus.dungeon_crawl_button_available == true:
+			if EventBus.dungeon_crawl_button_available == true and EventBus.raid_entity_count <= 0 :
 				EventBus.new_dungeon_crawl()
 				make_darkness_visible()
 				EventBus.npcs_spoken_to += 1

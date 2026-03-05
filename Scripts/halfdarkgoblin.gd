@@ -537,9 +537,10 @@ func drop_currency() :
 			await get_tree().create_timer(0.008).timeout
 		
 		# Drop Fervour :
-		var fervour = preload("res://Scenes/travellers_sanctuary/OrbleVillage/fervour_collection.tscn").instantiate()
-		fervour.global_position = $".".global_position
-		get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", fervour)
+		if randi_range(1, 4) == 2 :
+			var fervour = preload("res://Scenes/travellers_sanctuary/OrbleVillage/fervour_collection.tscn").instantiate()
+			fervour.global_position = $".".global_position
+			get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", fervour)
 
 var out_of_range = true
 
