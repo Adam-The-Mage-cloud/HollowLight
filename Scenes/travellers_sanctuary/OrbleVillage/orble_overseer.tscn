@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://jgdtjlhaudts"]
+[gd_scene load_steps=30 format=3 uid="uid://jgdtjlhaudts"]
 
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_8mio6"]
 [ext_resource type="Script" uid="uid://saapyyqmb64a" path="res://Scripts/travellers_sanctuary/OrbleVillage/orble_overseer.gd" id="1_owve4"]
@@ -15,6 +15,17 @@ shader_parameter/wave_speed = 2.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_8mio6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_owve4"]
+
+[sub_resource type="Gradient" id="Gradient_hph1r"]
+offsets = PackedFloat32Array(0, 0.82222223, 1)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0.08235294, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wfwb2"]
+gradient = SubResource("Gradient_hph1r")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_owve4"]
 atlas = ExtResource("1_svibl")
@@ -182,6 +193,16 @@ shape = SubResource("CircleShape2D_8mio6")
 position = Vector2(-1, 4.9999995)
 scale = Vector2(0.80793786, 0.80793786)
 shape = SubResource("CircleShape2D_owve4")
+
+[node name="FlameLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-1, 5.0000005)
+scale = Vector2(0.18270153, 0.18270153)
+color = Color(0.19607843, 0.61960787, 0, 1)
+energy = 1.2
+texture = SubResource("GradientTexture2D_wfwb2")
+texture_scale = 1.2
 
 [node name="OrbleOverseerSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

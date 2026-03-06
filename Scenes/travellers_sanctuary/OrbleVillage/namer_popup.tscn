@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://ct6i3gqp8dkme"]
+[gd_scene load_steps=33 format=4 uid="uid://ct6i3gqp8dkme"]
 
 [ext_resource type="Shader" uid="uid://jtcx64k0fxec" path="res://Shaders/font_flash.gdshader" id="1_jbkhy"]
 [ext_resource type="Script" uid="uid://bchysjxymyxxp" path="res://Scripts/travellers_sanctuary/OrbleVillage/namer_popup.gd" id="1_ybwn1"]
@@ -3144,6 +3144,9 @@ cache/0/36/1/glyphs/59/texture_idx = 0
 shader = ExtResource("1_jbkhy")
 shader_parameter/flash_amount = 0.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fignx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [node name="NamerPopup" type="Node2D"]
 script = ExtResource("1_ybwn1")
 
@@ -3159,17 +3162,16 @@ anchors_preset = -1
 anchor_left = -2.2777777
 anchor_right = -1.5534763
 anchor_bottom = 0.61222726
-offset_left = 1034.6111
-offset_top = 37.0
-offset_right = 1166.6113
-offset_bottom = 77.0
-scale = Vector2(0.51754135, 0.51754135)
+offset_left = 1010.6111
+offset_top = 22.0
+offset_right = 1142.6113
+offset_bottom = 62.0
+scale = Vector2(0.6039936, 0.6039936)
 theme_override_colors/default_color = Color(1, 0.7921569, 0.2784314, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.60784316)
 theme_override_fonts/normal_font = SubResource("FontFile_5jrud")
 theme_override_font_sizes/normal_font_size = 36
 text = "Name Your Orble:"
-metadata/_edit_use_anchors_ = true
 
 [node name="NameEnter" type="LineEdit" parent="NameLayer"]
 unique_name_in_owner = true
@@ -3178,15 +3180,17 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_ybwn1")
 anchors_preset = -1
 anchor_left = -2.1066287
-anchor_top = 0.199113
+anchor_top = 0.15998259
 anchor_right = -1.7901969
 anchor_bottom = 0.15998259
-offset_left = 1016.6111
-offset_top = 18.20401
-offset_right = 1148.6113
-offset_bottom = 58.204002
-scale = Vector2(0.363399, 0.363399)
+offset_left = 969.61115
+offset_top = 12.20401
+offset_right = 1101.6113
+offset_bottom = 52.204002
+scale = Vector2(0.6999603, 0.6999603)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_fignx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fignx")
 placeholder_text = "NAME ENTER"
 alignment = 1
 max_length = 14
@@ -3194,15 +3198,16 @@ emoji_menu_enabled = false
 metadata/_edit_use_anchors_ = true
 
 [node name="Underline" type="ColorRect" parent="NameLayer"]
-offset_left = 151.0
-offset_top = 77.0
-offset_right = 252.0
-offset_bottom = 79.0
+offset_left = 110.000015
+offset_top = 70.0
+offset_right = 211.00002
+offset_bottom = 72.0
+scale = Vector2(1.7717403, 1.7717403)
 
 [node name="AcceptNameButton" type="TouchScreenButton" parent="NameLayer"]
 texture_filter = 1
-position = Vector2(319, 51)
-scale = Vector2(2, 2)
+position = Vector2(296, 47.000004)
+scale = Vector2(2.5062833, 2.5062833)
 texture_normal = ExtResource("2_5jrud")
 texture_pressed = ExtResource("3_ybwn1")
 

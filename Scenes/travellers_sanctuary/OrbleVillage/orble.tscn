@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=4 uid="uid://bichk4byx86ln"]
+[gd_scene load_steps=69 format=4 uid="uid://bichk4byx86ln"]
 
 [ext_resource type="Script" uid="uid://bro4bciu8ppt8" path="res://Scripts/travellers_sanctuary/OrbleVillage/orble.gd" id="1_4fjp5"]
 [ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_c5dhw"]
@@ -40,6 +40,17 @@ scale_max = 0.39999998
 scale_curve = SubResource("CurveTexture_sm2es")
 color = Color(0.916649, 0.8924594, 0.9999986, 0.6313726)
 turbulence_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_sm2es"]
+offsets = PackedFloat32Array(0, 0.82222223, 1)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0.08235294, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sm2es"]
+gradient = SubResource("Gradient_sm2es")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7jqnc"]
 atlas = ExtResource("1_c5dhw")
@@ -1421,6 +1432,16 @@ speed_scale = 0.4
 randomness = 0.63
 process_material = SubResource("ParticleProcessMaterial_4u3ld")
 
+[node name="FlameLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(0.99999994, 0)
+scale = Vector2(0.18270153, 0.18270153)
+color = Color(0.19607843, 0.61960787, 0, 1)
+energy = 1.2
+texture = SubResource("GradientTexture2D_sm2es")
+texture_scale = 1.2
+
 [node name="OrbleSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 use_parent_material = true
@@ -1439,6 +1460,7 @@ texture = SubResource("GradientTexture2D_4fjp5")
 
 [node name="OrbleNameTag" type="RichTextLabel" parent="OrbleSprite"]
 unique_name_in_owner = true
+visible = false
 z_index = 3
 material = SubResource("ShaderMaterial_4u3ld")
 anchors_preset = 15

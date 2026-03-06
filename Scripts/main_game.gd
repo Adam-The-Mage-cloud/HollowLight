@@ -135,7 +135,7 @@ func _ready() :
 		%Torch.lower_torch_light()
 		var spawn_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
 		spawn_sanctuary.global_position = Vector2(-0.0, 0.0)
-		%Brody.global_position = Vector2(20, 12)
+		%Brody.global_position = Vector2(136, 90)
 		%RoomsToBeDeleted.add_child(spawn_sanctuary)
 		_set_sanctuary_properties()
 
@@ -351,7 +351,7 @@ func sanctuary_raid_finished() :
 	%GoblinAttackText.visible = false
 
 func introduce_orble(orble) :
-	orble.global_position = %Brody.global_position + Vector2(80, 65)
+	orble.global_position = %Brody.global_position + Vector2(-24, 0)
 	orble.newly_spawned = true
 	selected_orble = orble
 	
@@ -388,7 +388,8 @@ func _on_spawning_sanctuary() :
 	_set_sanctuary_properties()
 	var new_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
 	new_sanctuary.z_index = 0
-	%Brody.global_position = new_sanctuary.global_position + Vector2(140, 14)
+	new_sanctuary.global_position = Vector2(0, 0)
+	%Brody.global_position = new_sanctuary.global_position + Vector2(136, 90)
 	%RoomsToBeDeleted.call_deferred("add_child", new_sanctuary)
 
 func _set_sanctuary_properties() :

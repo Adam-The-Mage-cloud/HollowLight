@@ -18,9 +18,9 @@ func _ready() :
 	wagon_signs_pointing()
 	tutorial_replay_floating()
 	turn_stewpot_spit()
+	spawn_already_orbles()
 	process_hourly_updates()
 	spawn_stew_indicator()
-	spawn_already_orbles()
 	
 	if EventBus.intro == true :
 		play_sanctuary_tutorial()
@@ -31,14 +31,19 @@ func _ready() :
 
 func spawn_already_orbles() :
 	for i in range(EventBus.max_orble_count) :
-		if EventBus.orbles[i] != null or EventBus.orbles[i] != "" :
+		if EventBus.orbles[i] != null and EventBus.orbles[i] != "" :
 			EventBus.total_orbles += 1
 			var new_orble = preload("res://Scenes/travellers_sanctuary/OrbleVillage/orble.tscn").instantiate()
 			new_orble.name_visible(EventBus.orbles[i])
-			new_orble.global_position = Vector2(0,0) + %sanctuary_ritual_site.position #+ Vector2(randi_range(-20, 10), randi_range(40, 50))
+			new_orble.global_position = Vector2(0,42) + %sanctuary_ritual_site.position #+ Vector2(randi_range(-20, 10), randi_range(40, 50))
 			print (global_position)
 			print (new_orble.global_position)
 			call_deferred("add_child", new_orble)
+	while EventBus.total_orbles < 2 :
+		EventBus.orbles_to_introduce += 1
+		EventBus.total_orbles += 1
+		orble_spawned = false
+		introduce_orbles()
 
 
 func introduce_orbles() :
@@ -52,7 +57,7 @@ func introduce_orbles() :
 		# Wait until the popup emits "orble_named"
 		await new_orble.orble_named
 		orble_spawned = false
-		if EventBus.orbles_to_introduce > 0 :
+		if EventBus.orbles_to_introduce > 0 or EventBus.total_orbles < 2 :
 			await get_tree().create_timer(1.0).timeout
 			introduce_orbles()
 
@@ -89,7 +94,7 @@ func process_hourly_updates():
 		food = clamp(food, 0.0, 100.0)
 		
 		# Fervour gain every 3 hours
-		if hour % 3 == 0:
+		if hour % (EventBus.total_orbles / 2) == 0:
 			if food > 40.0:
 				fervour_gained += 1
 		
@@ -109,7 +114,7 @@ func process_hourly_updates():
 		var FervourScene = preload("res://Scenes/travellers_sanctuary/OrbleVillage/fervour_collection.tscn")
 		for i in range(fervour_gained):
 			var fervour = FervourScene.instantiate()
-			fervour.global_position = %sanctuary_ritual_site.global_position 
+			fervour.global_position = Vector2(0,42) + %sanctuary_ritual_site.position
 			call_deferred("add_child", fervour)
 	
 	EventBus.last_hourly_food_update = now
@@ -134,6 +139,10 @@ func goblin_raid() :
 		var halfdarkgoblin = preload("res://Scenes/Monsters/halfdarkgoblin.tscn").instantiate()
 		halfdarkgoblin.global_position = %sanctuary_ritual_site.position + Vector2(randi_range(-300, 300), randi_range(90, 150))
 		call_deferred("add_child", halfdarkgoblin)
+		
+		for tm in get_tree().get_nodes_in_group("orbles"):
+			tm.raided = true
+			tm.run_upwards()
 
 func spawn_default_shield() :
 	var shield_pickup = preload("res://Scenes/brody_shield_pickup.tscn").instantiate() 

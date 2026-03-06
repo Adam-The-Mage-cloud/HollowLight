@@ -1,5 +1,10 @@
 extends CharacterBody2D
 
+var health = 2
+var orble_name
+
+var raided = false
+
 signal orble_named(name)
 
 # State Machine Time :
@@ -37,8 +42,11 @@ var newly_spawned = false
 
 func _ready() -> void:
 	randomize()
+	material = material.duplicate()
 	assign_outfit()
 	home_position = global_position
+	$".".add_to_group("orbles")
+	
 	%OrbleSprite.play(str(orble_look) + "_stationary")
 	%DirectionTimer.wait_time = randf_range(8, 13)
 	%DirectionTimer.start()
@@ -50,7 +58,9 @@ func _ready() -> void:
 		#pass
 
 func name_visible(name) :
+	%OrbleNameTag.visible = true
 	%OrbleNameTag.text = name
+	orble_name = name
 	emit_signal("orble_named", name)
 
 func assign_outfit() :
@@ -139,7 +149,47 @@ func _physics_process(delta: float) -> void:
 			else:
 				%OrbleSprite.play(orble_look + "_stationary")
 
+func check_health(area) :
+	var tween = create_tween()
+	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.05)
+	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
+	
+	# knockback :
+	var knockback_direction = (global_position - area.global_position).normalized()
+	var knockback_movement = create_tween()
+	knockback_movement.tween_property(self, "position", position + knockback_direction * 24.0, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	health -= 1
+	if health <= 0 :
+		death()
 
+func death() :
+	var tween = create_tween()
+	tween.set_parallel(true)
+	
+	# Slow, reverent spin
+	tween.tween_property($".", "rotation_degrees", $".".rotation_degrees + 180, 1.44)\
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	
+	# Rise upward
+	tween.tween_property($".", "position:y", $".".position.y - 30, 1.44)\
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	
+	# Divine expansion instead of shrinking
+	tween.tween_property($".", "scale", Vector2(0, 0), 1.44)\
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	
+	# Fade out at the peak
+	tween.tween_property(material, "shader_parameter/flash_amount", 1.0, 1.44)
+	
+	
+	await tween.finished
+	
+	# Find Orble in the orble Array and make "" :
+	for i in range (EventBus.max_orble_count) :
+		if EventBus.orbles[i] == orble_name :
+			EventBus.orbles[i] = ""
+	
+	queue_free()
 
 func pick_new_target():
 	# Pick a random point inside the patrol area
@@ -165,6 +215,14 @@ func moving() :
 	
 	%OrbleSprite.play(str(orble_look) + "_moving")
 
+func run_upwards(boost = 2.0):
+	while EventBus.raid_entity_count > 0 :
+		state = STATE_WANDER
+		direction = Vector2(0.25, -1)
+		speed = 24 * boost
+		await get_tree().create_timer(0.2).timeout
+	speed = 24
+	_on_movement_time_timer_timeout()
 
 func footsteps_activated() :
 	while direction != Vector2.ZERO:
@@ -189,6 +247,17 @@ func _on_direction_timer_timeout() -> void:
 			state = STATE_SLEEP
 			%OrbleSprite.play(str(orble_look) + "_sleeping")
 
+func create_stack(partner) :
+	%DirectionTimer.stop()
+	%MovementTimeTimer.stop()
+	direction = global_position - partner.global_position
+	await get_tree().create_timer(0.35).timeout
+	direction = Vector2.ZERO
+	global_position = partner.global_position + Vector2(0, -2)
+	
+	await get_tree().create_timer(4.4).timeout
+	%DirectionTimer.start()
+	%MovementTimeTimer.start()
 
 func _on_propose_time_timeout() -> void:
 	if randi_range(1, 12) == 1 and not orble_proposing and EventBus.sanctuary == true :
@@ -198,7 +267,8 @@ func _on_propose_time_timeout() -> void:
 		%DirectionTimer.stop()
 		%MovementTimeTimer.stop()
 		
-		direction = (get_parent().get_node("sanctuary_ritual_site").global_position - global_position).normalized()
+		if get_parent().get_node("sanctuary_ritual_site") != null :
+			direction = (get_parent().get_node("sanctuary_ritual_site").global_position - global_position).normalized()
 		%OrbleSprite.play(str(orble_look) + "_moving")
 
 func flash_actual_white() :
@@ -221,6 +291,7 @@ func _on_interaction_area_area_entered(area: Node2D) -> void:
 		state = STATE_WANDER
 		orble_proposing = false
 		pick_new_target()
+
 
 
 func _on_interaction_area_body_entered(body: Node2D) -> void:
@@ -249,3 +320,7 @@ func _on_interaction_area_body_entered(body: Node2D) -> void:
 		
 		await tween.finished
 		queue_free()
+	
+	elif body.name == "orble" :
+		if randi_range(2, 2) == 2 : 
+			body.create_stack($".")

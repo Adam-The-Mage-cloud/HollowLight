@@ -17,7 +17,7 @@ func _ready() :
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.name != "Brody":
+	if body.name != "Brody" or $".".visible == false or get_parent().visible == false :
 		return
 	
 	if used == true :

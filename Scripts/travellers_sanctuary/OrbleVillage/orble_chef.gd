@@ -14,6 +14,8 @@ var patrol_size = 256
 
 var orble_look = "default"
 
+var raided = false
+
 var first_speech = true
 
 var old_pos = Vector2.ZERO
@@ -21,6 +23,7 @@ var old_pos = Vector2.ZERO
 func _ready() -> void:
 	randomize()
 	home_position = global_position
+	$".".add_to_group("orbles")
 	%ChefSprite.play("stationary")
 	%DirectionTimer.wait_time = randf_range(8, 13)
 	%DirectionTimer.start()
@@ -112,6 +115,13 @@ func moving() :
 	orble_moving = true
 	bobble_hat()
 
+func run_upwards(boost = 2.0):
+	while EventBus.raid_entity_count > 0 :
+		direction = Vector2(0.8, -1) # straight upward
+		speed = 24 * boost
+		await get_tree().create_timer(0.2).timeout
+	speed = 24
+	_on_movement_time_timer_timeout()
 
 func footsteps_activated() :
 	while direction != Vector2.ZERO:

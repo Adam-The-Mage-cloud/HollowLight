@@ -252,6 +252,8 @@ func _on_slash_area_body_entered(body: Node2D) -> void:
 			if attacking == false :
 				slash()
 			await get_tree().create_timer(randf_range(1.0, 1.2)).timeout
+	elif body.has_method("check_health") :
+		body.check_health($".")
 
 
 func _on_slash_area_body_exited(body: Node2D) -> void:
@@ -387,6 +389,8 @@ func breathing() -> void:
 func _on_melee_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" and get_parent().visible == true and shadow == false :
 		body.ogre_slashed($".")
+	elif body.has_method("check_health") :
+		body.check_health($".")
 
 func _on_all_beacons_lit() :
 	if get_parent().visible == true :

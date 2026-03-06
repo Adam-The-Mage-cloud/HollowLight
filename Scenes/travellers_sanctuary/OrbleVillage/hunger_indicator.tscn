@@ -14966,7 +14966,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="FervourCount" type="Sprite2D" parent="StewLayer"]
 texture_filter = 1
-position = Vector2(370, 25)
+position = Vector2(368, 25)
 scale = Vector2(2, 2)
 texture = ExtResource("11_xmkt3")
 

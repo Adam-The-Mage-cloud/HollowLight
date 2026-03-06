@@ -1815,7 +1815,7 @@ func special_event_spawns() :
 			call_deferred("add_child", new_money_goblin)
 		
 		# Orble To Rescue :
-		if randi_range(3, 3) == 3 :
+		if randi_range(1, 6) == 3 :
 			if EventBus.total_orbles < 7 :
 				var new_orble_to_rescue = preload("res://Scenes/travellers_sanctuary/OrbleVillage/orble.tscn").instantiate()
 				var rand = randi_range(0, %SpawnPoints.get_child_count() - 1)

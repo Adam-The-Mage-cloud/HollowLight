@@ -1,5 +1,8 @@
 extends Area2D
 
+var health = 3
+var wager = 1.0
+
 var leg_rest_rotations = {}
 var leg_rest_positions = {}
 var original_left_pincer_rotation
@@ -22,6 +25,7 @@ var pincing = false
 
 var shadow = false
 var pinatered = false
+var shadow_pinatered = false
 
 var bobbing = false
 
@@ -209,6 +213,7 @@ func _on_all_beacons_lit() :
 	# Drop Gold at this point?
 
 func shadow_form() :
+	%DarknessLight.enabled = true
 	$"." .material.set("shader_parameter/cloud_amount", 1.00)
 	%visibility_collision.set_deferred("disabled", true)
 	shadow = true
@@ -267,7 +272,27 @@ func _on_crab_hit_box_area_entered(area: Area2D) -> void:
 		var knockback_direction = (global_position - area.global_position).normalized()
 		var knockback_movement = create_tween()
 		knockback_movement.tween_property(self, "position", position + knockback_direction * (area.effort * 24.0), 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		knockback_movement.tween_property(self, "scale", Vector2(0.85, 0.85), 0.12).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		knockback_movement.tween_property(self, "scale", Vector2(1.0, 1.0), 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		flash_white()
+		health -= 1
+		$".".light_mask = 1
+		%OnFireLight.enabled = true
+		# Calculate new burn target
+		if health == 2 :
+			drop_currency()
+			%MonsterBurningParticles.amount_ratio = 0.3
+			%OnFireLight.texture.width = 32
+			%OnFireLight.texture.height = 32
+		else :
+			drop_currency()
+			%MonsterBurningParticles.amount_ratio = 1.0
+			%OnFireLight.texture.width = 48
+			%OnFireLight.texture.height = 48
+		# Fire light animation
+		var lighttween = create_tween()
+		lighttween.tween_property(%OnFireLight, "texture_scale", 1.6, 0.0)
+		lighttween.tween_property(%OnFireLight, "texture_scale", 1.0, 0.45)
 	
 	# Player Pets :
 	# Mystic Sword Bloody Knockback :
@@ -308,7 +333,9 @@ func burn() :
 	$".".light_mask = 1
 	%OnFireLight.enabled = true
 	# Drop Currencies :
+	wager = 2.0
 	drop_currency()
+	shadow_pinatered = true
 	
 	var tween2 = create_tween()
 	tween2.tween_property(material, "shader_parameter/burn_amount", 1.0, 1.0)
@@ -323,28 +350,35 @@ func burn() :
 		
 
 func drop_currency() :
-	if pinatered == false :
-		pinatered = true
-		# Drop XP :
-		var random_xp_amount = randi_range(3, 6)
-		for i in random_xp_amount : 
-			var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
-			xp.global_position = $".".global_position
-			get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", xp)
-			await get_tree().create_timer(0.008).timeout
+	if pinatered == false or shadow == true :
+		if shadow_pinatered == false :
+			# Drop XP :
+			pinatered = true
+			var random_xp_amount = randi_range(1 * wager, 3 * wager)
+			for i in random_xp_amount : 
+				var xp = preload("res://Scenes/Currencies/experience_orb.tscn").instantiate()
+				xp.global_position = $".".global_position
+				get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", xp)
+				await get_tree().create_timer(0.008).timeout
+				
+			# Drop Gold :
+			var random_gold_amount = randi_range(1 * wager, (2 + (EventBus.amount_lootchance_upgraded / 3) * wager))
+			for i in random_gold_amount : 
+				var gold_piece = preload("res://Scenes/Currencies/gold_piece.tscn").instantiate()
+				gold_piece.global_position = $".".global_position
+				get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", gold_piece)
+				await get_tree().create_timer(0.008).timeout
+				
+			# Drop Embers :
+			var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
+			ember.global_position = $".".global_position
+			get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", ember)
 			
-		# Drop Gold :
-		var random_gold_amount = randi_range(2, (4 + (EventBus.amount_lootchance_upgraded / 3)))
-		for i in random_gold_amount : 
-			var gold_piece = preload("res://Scenes/Currencies/gold_piece.tscn").instantiate()
-			gold_piece.global_position = $".".global_position
-			get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", gold_piece)
-			await get_tree().create_timer(0.008).timeout
-			
-		# Drop Embers :
-		var ember = preload("res://Scenes/Currencies/ember.tscn").instantiate()
-		ember.global_position = $".".global_position
-		get_tree().current_scene.get_node("EntitiesToBeDeleted").call_deferred("add_child", ember)
+			if randi_range(1, 48) == 2 :
+				var FervourScene = preload("res://Scenes/travellers_sanctuary/OrbleVillage/fervour_collection.tscn")
+				var fervour = FervourScene.instantiate()
+				fervour.global_position = $".".global_position
+				call_deferred("add_child", fervour)
 
 
 func _on_pincer_activation_area_body_entered(body: Node2D) -> void:

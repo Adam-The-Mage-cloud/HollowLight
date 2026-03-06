@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bqpkhtuwobnq4"]
+[gd_scene load_steps=35 format=3 uid="uid://bqpkhtuwobnq4"]
 
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_1iqmt"]
 [ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_tesde"]
@@ -17,6 +17,17 @@ shader_parameter/wave_speed = 2.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_tesde"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1iqmt"]
+
+[sub_resource type="Gradient" id="Gradient_0nnt3"]
+offsets = PackedFloat32Array(0, 0.82222223, 1)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0.08235294, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x8306"]
+gradient = SubResource("Gradient_0nnt3")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1iqmt"]
 atlas = ExtResource("1_tesde")
@@ -208,6 +219,16 @@ shape = SubResource("CircleShape2D_tesde")
 position = Vector2(-1, 4.9999995)
 scale = Vector2(0.80793786, 0.80793786)
 shape = SubResource("CircleShape2D_1iqmt")
+
+[node name="FlameLight" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-0.99999994, 4.9999995)
+scale = Vector2(0.18270153, 0.18270153)
+color = Color(0.19607843, 0.61960787, 0, 1)
+energy = 1.2
+texture = SubResource("GradientTexture2D_x8306")
+texture_scale = 1.2
 
 [node name="ChefSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
