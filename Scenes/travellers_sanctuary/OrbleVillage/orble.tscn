@@ -1434,6 +1434,7 @@ process_material = SubResource("ParticleProcessMaterial_4u3ld")
 
 [node name="FlameLight" type="PointLight2D" parent="."]
 unique_name_in_owner = true
+visible = false
 use_parent_material = true
 position = Vector2(0.99999994, 0)
 scale = Vector2(0.18270153, 0.18270153)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=62 format=3 uid="uid://0g8pb6puuqkw"]
+[gd_scene load_steps=63 format=3 uid="uid://0g8pb6puuqkw"]
 
 [ext_resource type="Texture2D" uid="uid://bks8x1mw2ipnv" path="res://Artwork/Ogre.png" id="1_3blal"]
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_8jiyc"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_n5x3l"]
 [ext_resource type="Script" uid="uid://ertoqb7sop20" path="res://Scripts/ogre.gd" id="2_4j2he"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_4ma1k"]
+[ext_resource type="Texture2D" uid="uid://b2ax21uatnbaj" path="res://Artwork/pixel_noise.webp" id="3_0bw13"]
 [ext_resource type="Texture2D" uid="uid://bho5bv12fgumx" path="res://Artwork/Ogre_Head.png" id="3_t5uq8"]
 [ext_resource type="Script" uid="uid://cvt4m3lbm2gv8" path="res://Scripts/slash_area.gd" id="4_xdnku"]
 [ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="5_4ma1k"]
@@ -28,9 +29,10 @@ shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
 shader_parameter/cloud_amount = 0.0
-shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_speed = 6.0
 shader_parameter/cloud_scale = 72.0
 shader_parameter/cloud_dissolve = 0.0
+shader_parameter/cloud_noise = ExtResource("3_0bw13")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xdnku"]
 size = Vector2(231.93118, 140)

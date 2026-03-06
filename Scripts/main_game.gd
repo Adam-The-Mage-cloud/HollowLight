@@ -9,7 +9,7 @@ var selected_orble
 
 var raid_active = false
 
-var darkness_increase_per_second = 5.0
+var darkness_increase_per_second = 12.4
 
 var room_finished = false
 
@@ -150,6 +150,19 @@ func _input(event):
 
 func _process(_delta: float) -> void: 
 	%DarknessEffect.modulate.a = EventBus.total_current_darkness / 100
+	
+	# Show Interact Button or Don't :
+	if EventBus.sanctuary == true :
+		if EventBus.tutorial_replay_available == true or EventBus.dungeon_crawl_button_available == true or EventBus.clives_shop_interactable == true or EventBus.catballoon_shop_interactable == true or EventBus.jackie_shop_interactable == true or EventBus.cheffing_station_interactable == true or EventBus.mission_board_interactable == true :
+			if EventBus.currently_interacting == false :
+				%DashButton.visible = false
+				%InteractButton.visible = true
+		else :
+			%DashButton.visible = true
+			%InteractButton.visible = false
+	else :
+		%DashButton.visible = true
+		%InteractButton.visible = false
 
 func _on_shadow_spawn_timer_timeout() -> void:
 	# Spawn another Shadow cloud :
@@ -405,7 +418,7 @@ func _set_sanctuary_properties() :
 	# Give Brody His Torch/Weapons :
 	%Torch.visible = false
 	# Turn ON DarknessLayer Effect :
-	%DarknessLayer.visible = false
+	%DarknessLayer.visible = false  
 	# Turn ON GameplayUI :
 	%GameplayUI.visible = false
 	# Enable ability for Touchscreen Controls (Temporarily) 
@@ -422,6 +435,8 @@ func shop_closed() :
 	EventBus.currently_interacting = false
 	%DashButton.visible = true
 	%TouchScreenPress2.visible = true
+	%TouchScreenLayer.visible = true
+	%Brody.input_enabled = true
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # MEMORY / LOADING :

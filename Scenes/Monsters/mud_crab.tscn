@@ -1,8 +1,9 @@
-[gd_scene load_steps=53 format=3 uid="uid://cickrdkft6tma"]
+[gd_scene load_steps=54 format=3 uid="uid://cickrdkft6tma"]
 
 [ext_resource type="Script" uid="uid://uusi0j0e50rq" path="res://Scripts/mud_crab.gd" id="1_f72kl"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_snf3b"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_snf3b"]
+[ext_resource type="Texture2D" uid="uid://b2ax21uatnbaj" path="res://Artwork/pixel_noise.webp" id="3_4s4rn"]
 [ext_resource type="Texture2D" uid="uid://flq6u4clrt25" path="res://Artwork/Mud_crab.png" id="3_f72kl"]
 [ext_resource type="Texture2D" uid="uid://eougmh3elcw" path="res://Artwork/Crab_Shadow.png" id="4_f72kl"]
 
@@ -23,9 +24,10 @@ shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
 shader_parameter/cloud_amount = 0.0
-shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_speed = 6.0
 shader_parameter/cloud_scale = 72.0
 shader_parameter/cloud_dissolve = 0.0
+shader_parameter/cloud_noise = ExtResource("3_4s4rn")
 
 [sub_resource type="Gradient" id="Gradient_snf3b"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)

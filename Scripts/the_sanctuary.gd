@@ -13,6 +13,7 @@ func _ready() :
 	for i in range(EventBus.orbles.size()):
 		if EventBus.orbles[i] == null:
 			EventBus.orbles[i] = ""
+	%StewPotSpit.alight_flame()
 	%SanctuaryMainFloor.add_to_group("floors")
 	arrows_pointing()
 	wagon_signs_pointing()
@@ -47,7 +48,7 @@ func spawn_already_orbles() :
 
 
 func introduce_orbles() :
-	if orble_spawned == false :
+	if orble_spawned == false and EventBus.intro == false :
 		orble_spawned = true
 		var new_orble = preload("res://Scenes/travellers_sanctuary/OrbleVillage/orble.tscn").instantiate()
 		call_deferred("add_child", new_orble)

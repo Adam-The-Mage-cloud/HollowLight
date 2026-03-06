@@ -226,7 +226,8 @@ unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(8.211391, -7.5743885)
 sprite_frames = SubResource("SpriteFrames_tk5eq")
-animation = &"walltorch_lit"
+animation = &"none_lit"
+autoplay = "none_lit"
 
 [node name="MainFlame" type="GPUParticles2D" parent="TorchSprite"]
 unique_name_in_owner = true

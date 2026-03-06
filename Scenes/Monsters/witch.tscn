@@ -1,8 +1,9 @@
-[gd_scene load_steps=53 format=3 uid="uid://bbf5kkr8xtioh"]
+[gd_scene load_steps=54 format=3 uid="uid://bbf5kkr8xtioh"]
 
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_d6wki"]
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_rrl02"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_un8x1"]
+[ext_resource type="Texture2D" uid="uid://b2ax21uatnbaj" path="res://Artwork/pixel_noise.webp" id="3_tfl0q"]
 [ext_resource type="Script" uid="uid://ci431erixgi8h" path="res://Scripts/witch.gd" id="3_un8x1"]
 [ext_resource type="Texture2D" uid="uid://b7aecg4npab65" path="res://Artwork/Witch.png" id="4_hjh8c"]
 [ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="6_2bhqr"]
@@ -24,9 +25,10 @@ shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
 shader_parameter/cloud_amount = 0.0
-shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_speed = 6.0
 shader_parameter/cloud_scale = 72.0
 shader_parameter/cloud_dissolve = 0.0
+shader_parameter/cloud_noise = ExtResource("3_tfl0q")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d6wki"]
 shader = ExtResource("1_rrl02")

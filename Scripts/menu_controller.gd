@@ -504,6 +504,7 @@ func _on_close_menu_button_pressed() -> void:
 	EventBus.currently_interacting = false
 	%DashButton.visible = true
 	%TouchScreenPress2.visible = true
+	%TouchScreenLayer.visible = true
 	# > For Clives Shop :
 	%CliveShopScreen.visible = false
 	var AdventureScreenFade_tween = create_tween()

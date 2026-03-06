@@ -25,6 +25,7 @@ func open_mission_board() :
 	# Update Gold & XP Values :
 	%TotalGoldText.text = str(EventBus.total_acquired_goldpieces)
 	%TotalXPText.text = str(EventBus.player_level)
+	%FervourText.text = str(EventBus.total_fervour)
 	
 	# Swoop-in Shop :
 	var bgs = $"."
@@ -602,7 +603,10 @@ func gold_addon(daily) :
 		
 		# ADDUP END GOLDPIECES
 		EventBus.total_acquired_goldpieces = end_value
-			
+		
+		# ADDUP END FERVOUR 
+		EventBus.total_fervour += 1
+		%FervourText.text = str(EventBus.total_fervour)
 		await get_tree().create_timer(1.0).timeout
 		
 		
@@ -627,5 +631,8 @@ func gold_addon(daily) :
 		
 		# ADDUP END GOLDPIECES
 		EventBus.total_acquired_goldpieces = end_value
-			
+		
+		# ADDUP END FERVOUR 
+		EventBus.total_fervour += 3
+		%FervourText.text = str(EventBus.total_fervour)
 		await get_tree().create_timer(1.0).timeout

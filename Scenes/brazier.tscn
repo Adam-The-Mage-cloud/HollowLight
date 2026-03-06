@@ -178,7 +178,7 @@ wait_time = 0.2
 
 [node name="FlashingTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 3.75
+wait_time = 1.9
 autostart = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

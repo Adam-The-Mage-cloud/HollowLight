@@ -472,6 +472,7 @@ use_parent_material = true
 position = Vector2(0, -11.999565)
 sprite_frames = SubResource("SpriteFrames_lgt8o")
 animation = &"none_stationary"
+autoplay = "none_stationary"
 
 [node name="ShieldStrap" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite"]
 unique_name_in_owner = true

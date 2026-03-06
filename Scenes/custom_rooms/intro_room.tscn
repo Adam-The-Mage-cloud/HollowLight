@@ -6966,7 +6966,6 @@ unique_name_in_owner = true
 
 [node name="EyeLids" type="ColorRect" parent="."]
 unique_name_in_owner = true
-visible = false
 z_index = 24
 material = SubResource("ShaderMaterial_gv8w3")
 offset_left = 15.853327

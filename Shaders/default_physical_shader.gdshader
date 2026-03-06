@@ -39,86 +39,58 @@ uniform float crumble_strength = 1.0;
 uniform float crumble_fade = 0.6;
 
 // -------------------------
-// Cloud Distortion + Dissolve
+// Ultra-Light Cloud Distortion + Dissolve
 // -------------------------
 uniform float cloud_amount : hint_range(0.0, 1.0) = 0.0;
 uniform float cloud_speed = 1.0;
 uniform float cloud_scale = 3.0;
-uniform float cloud_dissolve = 0.0; // 0 = no dissolve, 1 = strong fade in/out
+uniform float cloud_dissolve = 0.0;
 
-// -------------------------
-// Smooth hash noise
-// -------------------------
-float hash(vec2 p) {
-    p = fract(p * vec2(123.34, 345.45));
-    p += dot(p, p + 34.345);
-    return fract(p.x * p.y);
-}
-
-float noise(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-
-    float a = hash(i);
-    float b = hash(i + vec2(1.0, 0.0));
-    float c = hash(i + vec2(0.0, 1.0));
-    float d = hash(i + vec2(1.0, 1.0));
-
-    vec2 u = f * f * (3.0 - 2.0 * f);
-
-    return mix(a, b, u.x) +
-           (c - a) * u.y * (1.0 - u.x) +
-           (d - b) * u.x * u.y;
-}
-
-// -------------------------
-// Fractal Brownian Motion (FBM)
-// -------------------------
-float fbm(vec2 p) {
-    float v = 0.0;
-    float a = 0.5;
-    for (int i = 0; i < 5; i++) {
-        v += a * noise(p);
-        p *= 2.0;
-        a *= 0.5;
-    }
-    return v;
-}
+// Single cheap noise texture
+uniform sampler2D cloud_noise;
 
 void fragment() {
     vec2 uv = UV;
-
-    // -------------------------
-    // CLOUD DISTORTION (FBM + domain warp)
-    // -------------------------
     vec2 distorted_uv = uv;
 
+    // -------------------------
+    // ALIVE SHADOW CLOUD DISTORTION (Mobile-Safe)
+    // -------------------------
     if (cloud_amount > 0.0) {
         float t = TIME * cloud_speed;
 
-        // Domain warp
-        vec2 warp = vec2(
-            fbm(uv * cloud_scale + vec2(t, t * 0.3)),
-            fbm(uv * cloud_scale + vec2(-t * 0.4, t))
-        );
+        // Two scrolling noise layers
+        float n1 = texture(cloud_noise, uv * cloud_scale + vec2(t * 0.4, t * 0.1)).r;
+        float n2 = texture(cloud_noise, uv * (cloud_scale * 0.7) + vec2(-t * 0.2, t * 0.5)).r;
 
-        // Smooth, organic distortion
-        distorted_uv += (warp - 0.5) * 0.12 * cloud_amount;
+        // Convert to signed noise
+        float s1 = n1 * 2.0 - 1.0;
+        float s2 = n2 * 2.0 - 1.0;
+
+        // Alive wobble (very cheap)
+        float wobble = sin(t * 0.8 + uv.x * 6.0) * 0.02;
+
+        // Stronger, shadow-like distortion
+        vec2 warp = vec2(s1 * 0.06, s2 * 0.06);
+
+        distorted_uv += (warp + wobble) * cloud_amount;
     }
 
     vec4 tex = texture(TEXTURE, distorted_uv);
     vec4 out_color = tex;
 
     // -------------------------
-    // CLOUD DISSOLVE (parts fade in/out)
+    // ULTRA-LIGHT CLOUD DISSOLVE
     // -------------------------
     if (cloud_dissolve > 0.0) {
-        float t = TIME * cloud_speed * 0.5;
-        float dissolve = fbm(uv * cloud_scale * 1.5 + vec2(t, -t));
-        dissolve = smoothstep(0.3, 0.7, dissolve);
+        float t = TIME * cloud_speed * 0.4;
 
-        float alpha_mod = mix(1.0, dissolve, cloud_dissolve);
-        out_color.a *= alpha_mod;
+        float d = texture(cloud_noise,
+            uv * (cloud_scale * 1.1) + vec2(t, -t * 0.5)
+        ).r;
+
+        float dissolve = smoothstep(0.25, 0.75, d);
+        out_color.a *= mix(1.0, dissolve, cloud_dissolve);
     }
 
     // -------------------------

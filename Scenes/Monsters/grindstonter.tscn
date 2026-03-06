@@ -1,9 +1,10 @@
-[gd_scene load_steps=47 format=3 uid="uid://calcwa6h6p7s7"]
+[gd_scene load_steps=48 format=3 uid="uid://calcwa6h6p7s7"]
 
 [ext_resource type="Script" uid="uid://dclgdmv75uqvq" path="res://Scripts/grindstonter.gd" id="1_4uh28"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_eluae"]
 [ext_resource type="Texture2D" uid="uid://4tppfmjt3y0b" path="res://Artwork/Grindstonter.png" id="2_4uh28"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_kagbw"]
+[ext_resource type="Texture2D" uid="uid://b2ax21uatnbaj" path="res://Artwork/pixel_noise.webp" id="3_c44wx"]
 [ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="4_bdov3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kagbw"]
@@ -23,9 +24,10 @@ shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
 shader_parameter/cloud_amount = 0.0
-shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_speed = 6.0
 shader_parameter/cloud_scale = 72.0
 shader_parameter/cloud_dissolve = 0.0
+shader_parameter/cloud_noise = ExtResource("3_c44wx")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7b2kr"]
 size = Vector2(231.93118, 140)

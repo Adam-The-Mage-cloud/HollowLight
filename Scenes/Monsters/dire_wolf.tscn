@@ -1,7 +1,8 @@
-[gd_scene load_steps=44 format=3 uid="uid://cnx8kj5ldb85k"]
+[gd_scene load_steps=45 format=3 uid="uid://cnx8kj5ldb85k"]
 
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_gsga4"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_dvi4l"]
+[ext_resource type="Texture2D" uid="uid://b2ax21uatnbaj" path="res://Artwork/pixel_noise.webp" id="3_k8mu5"]
 [ext_resource type="Script" uid="uid://ds8gnm6t5605i" path="res://Scripts/dire_wolf.gd" id="3_ls8ti"]
 [ext_resource type="Texture2D" uid="uid://hy6ltbrijhps" path="res://Artwork/Dire_Wolf.png" id="4_k8mu5"]
 [ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="5_dvi4l"]
@@ -23,9 +24,10 @@ shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
 shader_parameter/cloud_amount = 0.0
-shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_speed = 6.0
 shader_parameter/cloud_scale = 72.0
 shader_parameter/cloud_dissolve = 0.0
+shader_parameter/cloud_noise = ExtResource("3_k8mu5")
 
 [sub_resource type="Gradient" id="Gradient_mgc0q"]
 offsets = PackedFloat32Array(0.0946844, 0.669435, 0.739203)

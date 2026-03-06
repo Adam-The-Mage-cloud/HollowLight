@@ -273,6 +273,7 @@ func _physics_process(delta: float) -> void:
 		knockback_velocity = Vector2.ZERO
 		brody_saved = true
 		safe_frames = 0
+		
 
 
 # Movement INPUT :
@@ -306,7 +307,6 @@ func pickup_shield() :
 
 
 func dash_ability():
-	
 	if input_enabled == true:
 		if dash_available == true:
 			# Decrease size of collision body :
@@ -701,60 +701,74 @@ func _on_touch_screen_press_2_move_stick_changed(vec: Variant) -> void:
 func _on_dash_button_pressed() -> void:
 	EventBus.dash_used += 1
 	dash_ability()
+
+func _on_interact_button_pressed() -> void:
 	if EventBus.sanctuary == true :
+		print (EventBus.currently_interacting)
 		if EventBus.currently_interacting == false :
 			if EventBus.dungeon_crawl_button_available == true and EventBus.raid_entity_count <= 0 :
+				%TouchScreenLayer.visible = false
 				EventBus.new_dungeon_crawl()
 				make_darkness_visible()
 				EventBus.npcs_spoken_to += 1
 				
 			elif EventBus.clives_shop_interactable == true:
+				%TouchScreenLayer.visible = false
 				EventBus.currently_interacting = true
 				EventBus.clives_shop_available()
 				EventBus.npcs_spoken_to += 1
+				input_enabled = false
 				
 			elif EventBus.tutorial_replay_available == true :
+				%TouchScreenLayer.visible = false
 				EventBus.intro = true
 				EventBus.currently_interacting = true
 				$"..".delete_current_memory()
 				$".."._ready()
 				
 			elif EventBus.catballoon_shop_interactable == true :
+				%TouchScreenLayer.visible = false
 				EventBus.currently_interacting = true
 				%DashButton.visible = false
 				%TouchScreenPress2.visible = false
+				input_enabled = false
 				EventBus.npcs_spoken_to += 1
 				var balloon_shop = preload("res://Scenes/travellers_sanctuary/ShopMenus/catballoon_shop.tscn").instantiate()
 				balloon_shop.global_position = %BrodyCam.position
 				%BrodyCam.call_deferred("add_child", balloon_shop)
 				
 			elif EventBus.jackie_shop_interactable == true :
+				%TouchScreenLayer.visible = false
 				EventBus.currently_interacting = true
 				%DashButton.visible = false
 				%TouchScreenPress2.visible = false
+				input_enabled = false
 				EventBus.npcs_spoken_to += 1
 				var jackies_shop = preload("res://Scenes/travellers_sanctuary/ShopMenus/jackies_shop.tscn").instantiate()
 				jackies_shop.global_position = %BrodyCam.position
 				%BrodyCam.call_deferred("add_child", jackies_shop)
 				
 			elif EventBus.mission_board_interactable == true :
+				%TouchScreenLayer.visible = false
 				EventBus.currently_interacting = true
 				%DashButton.visible = false
 				%TouchScreenPress2.visible = false
+				input_enabled = false
 				EventBus.npcs_spoken_to += 1
 				var mission_board = preload("res://Scenes/travellers_sanctuary/ShopMenus/overseers_board_menu.tscn").instantiate()
 				mission_board.global_position = %BrodyCam.position
 				%BrodyCam.call_deferred("add_child", mission_board)
 				
 			elif EventBus.cheffing_station_interactable == true :
+				%TouchScreenLayer.visible = false
 				EventBus.currently_interacting = true
 				%DashButton.visible = false
 				%TouchScreenPress2.visible = false
+				input_enabled = false
 				EventBus.npcs_spoken_to += 1
 				var cheffing_station = preload("res://Scenes/travellers_sanctuary/OrbleVillage/stewpot_menu.tscn").instantiate()
 				cheffing_station.global_position = %BrodyCam.position
 				%BrodyCam.call_deferred("add_child", cheffing_station)
-
 
 func _on_shield_button_pressed() -> void:
 	initialise_shield_equip()

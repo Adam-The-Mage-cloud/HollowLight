@@ -208,7 +208,7 @@ unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(1.6000023, 13.600002)
 amount = 265
-amount_ratio = 0.85
+amount_ratio = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_x5jgb")
 
@@ -217,7 +217,7 @@ unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(-2, 1)
 amount = 100
-amount_ratio = 0.85
+amount_ratio = 0.4
 lifetime = 2.4
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_5pxcs")

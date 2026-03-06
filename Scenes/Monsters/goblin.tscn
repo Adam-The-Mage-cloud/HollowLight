@@ -1,9 +1,10 @@
-[gd_scene load_steps=63 format=3 uid="uid://bdukdo4isrqc0"]
+[gd_scene load_steps=64 format=3 uid="uid://bdukdo4isrqc0"]
 
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_2gt0r"]
 [ext_resource type="Script" uid="uid://ur2dkh4f5cow" path="res://Scripts/goblin.gd" id="1_fkbyy"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_o6mmh"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_o6mmh"]
+[ext_resource type="Texture2D" uid="uid://b2ax21uatnbaj" path="res://Artwork/pixel_noise.webp" id="3_m446r"]
 [ext_resource type="Texture2D" uid="uid://cel72unrveckk" path="res://Artwork/Goblin.png" id="4_2gt0r"]
 [ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="6_m446r"]
 [ext_resource type="Texture2D" uid="uid://b7ygaqnk23ial" path="res://Artwork/Particles/Particle_Effects_2.png" id="7_m25tm"]
@@ -25,9 +26,10 @@ shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
 shader_parameter/cloud_amount = 0.0
-shader_parameter/cloud_speed = 2.4
+shader_parameter/cloud_speed = 6.0
 shader_parameter/cloud_scale = 72.0
 shader_parameter/cloud_dissolve = 0.0
+shader_parameter/cloud_noise = ExtResource("3_m446r")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p60ou"]
 shader = ExtResource("1_2gt0r")

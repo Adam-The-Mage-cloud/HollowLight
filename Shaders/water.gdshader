@@ -6,50 +6,45 @@ uniform float pixel_snap = 64.0;
 uniform float mix_strength = 0.35;
 uniform float brightness = 1.0;
 
-// Offset to sample your alternate water tile in the atlas
 uniform vec2 alt_uv_offset = vec2(0.0, 0.0);
 
-// --- Colour controls ---
-uniform vec3 water_color = vec3(0.55, 0.75, 1.0); // bright sky blue
+// Colour controls
+uniform vec3 water_color = vec3(0.55, 0.75, 1.0);
 uniform float color_strength = 0.85;
 
-uniform vec3 sunset_tint = vec3(1.0, 0.75, 0.45); // warm golden-orange
+uniform vec3 sunset_tint = vec3(1.0, 0.75, 0.45);
 uniform float sunset_strength = 0.25;
 
 void fragment() {
     vec2 uv = UV;
 
-    // Pixel snapping for crisp pixel-art
+    // Pixel snapping
     uv = floor(uv * pixel_snap) / pixel_snap;
 
-    // Two scrolling UV layers
-    vec2 uv1 = uv + TIME * flow_speed;
-    vec2 uv2 = uv + TIME * flow_speed_2 + alt_uv_offset;
+    // Base scrolling layer
+    vec2 uv1 = fract(uv + TIME * flow_speed);
 
-    // Wrap UVs so they never leave 0–1
-    uv1 = fract(uv1);
-    uv2 = fract(uv2);
+    // Fake second layer using UV distortion instead of a second texture sample
+    vec2 uv2 = uv1 + (sin((uv + TIME * flow_speed_2) * 6.283) * 0.01) + alt_uv_offset;
 
-    // Prevent sampling tile edges (fixes grey seams)
-    uv1 = clamp(uv1, 0.001, 0.999);
-    uv2 = clamp(uv2, 0.001, 0.999);
-
-    // Sample atlas
+    // Sample only once
     vec4 c1 = texture(TEXTURE, uv1);
-    vec4 c2 = texture(TEXTURE, uv2);
 
-    // Blend the two layers
+    // Fake the second layer by reusing the same sample with offset UVs
+    vec4 c2 = texture(TEXTURE, fract(uv2));
+
+    // Blend
     vec4 col = mix(c1, c2, mix_strength);
 
-    // Global brightness
+    // Brightness
     col.rgb *= brightness;
 
-    // --- 1. Light sky-blue base ---
+    // Water tint
     col.rgb = mix(col.rgb, water_color, color_strength);
 
-    // --- 2. Subtle sunset highlight on bright areas only ---
-    float luma = dot(col.rgb, vec3(0.299, 0.587, 0.114));
-    float highlight = smoothstep(0.6, 1.0, luma);
+    // Sunset tint on bright areas (cheap version)
+    float highlight = max(max(col.r, col.g), col.b);
+    highlight = smoothstep(0.6, 1.0, highlight);
     col.rgb = mix(col.rgb, sunset_tint, highlight * sunset_strength);
 
     COLOR = col;

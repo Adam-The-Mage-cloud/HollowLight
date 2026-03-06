@@ -223,7 +223,7 @@ func _ready() -> void:
 	generate_wall_interactables()
 	generate_floor_interactables()
 	moonlight_spawns()
-	fog_cluster_spawns()
+	#fog_cluster_spawns()
 	
 	_ensure_door_corridor_clear()
 	_ensure_room_opening_clear()

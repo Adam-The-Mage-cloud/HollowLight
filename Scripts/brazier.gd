@@ -81,11 +81,18 @@ func flash_white():
 		return
 		
 	# Flash up to white
-	var tween := create_tween()
+	var tween = create_tween()
 	tween.tween_property(mat, "shader_parameter/flash_amount", 1.0, 0.3)
 	
 	# Fade back down
 	tween.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.3)
+	
+	await tween.finished
+	var tween2 = create_tween()
+	tween2.tween_property(mat, "shader_parameter/flash_amount", 1.0, 0.3)
+	
+	# Fade back down
+	tween2.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.3)
 
 
 func _on_flashing_timer_timeout() :
