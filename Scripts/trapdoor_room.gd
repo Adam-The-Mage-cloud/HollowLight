@@ -81,7 +81,7 @@ func themify() :
 		%DoorArea.modulate = Color(0.0, 0.306, 0.078, 1.0)
 
 func _on_door_open_area_body_entered(body: Node2D) -> void:
-	if body.name == "Brody" and not already_opened and room_complete:
+	if body.name == "Brody" and not already_opened and room_complete and EventBus.intro == false:
 		%DoorFlashingTimer.stop()
 		already_opened = true
 		%DoorBreakParticles.emitting = true

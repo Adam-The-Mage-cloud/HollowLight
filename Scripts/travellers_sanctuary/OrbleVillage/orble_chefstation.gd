@@ -42,14 +42,14 @@ func exclamation_animation() :
 	while $".".visible == true:
 		var up_ex = create_tween().set_parallel(true)
 		up_ex.tween_property(%ExclamationMarkIndicator, "global_position", %ExclamationMarkIndicator.global_position + Vector2(2, -11), 1.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		up_ex.tween_property(%UpgradesText, "scale", Vector2(0.2, 0.2), 1.6)
+		up_ex.tween_property(%CookingText, "scale", Vector2(0.2, 0.2), 1.6)
 		
 		# Wait for le both tweens du finieash :
 		await up_ex.finished
 		
 		var down_ex = create_tween().set_parallel(true)
 		down_ex.tween_property(%ExclamationMarkIndicator, "global_position", %ExclamationMarkIndicator.global_position - Vector2(2, -11), 1.6).set_trans(Tween.TRANS_SINE)#.set_ease(Tween.EASE_OUT)
-		down_ex.tween_property(%UpgradesText, "scale", Vector2(0.12, 0.12), 1.6)
+		down_ex.tween_property(%CookingText, "scale", Vector2(0.12, 0.12), 1.6)
 		
 		
 		await down_ex.finished

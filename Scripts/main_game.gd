@@ -141,7 +141,7 @@ func _ready() :
 
 # Wait For Touchscreen to be Pressed to turn on touchscreen settings :
 func _input(event):
-	if touchscreen_available == true :
+	if touchscreen_available == true and EventBus.currently_interacting == false :
 		if event is InputEventScreenTouch:
 			is_touchscreen = true
 			EventBus.touchscreen_enacted = true

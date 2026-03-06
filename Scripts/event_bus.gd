@@ -95,7 +95,7 @@ var total_fervour: int = 0
 var equipped_sidekick
 var shield_acquired
 var equipped_torch
-var equipped_brodyoutfit
+var equipped_brodyoutfit = "none"
 
 # PURCHASES :
 # > Clives Shop :
@@ -141,6 +141,7 @@ var catballoon_shop_interactable = false
 var jackie_shop_interactable = false
 var mission_board_interactable = false
 var cheffing_station_interactable = false
+var ritual_statue_interactable = false
 
 # Sanctuary Definables :
 var sanctuary_level = 1

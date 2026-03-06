@@ -110,15 +110,8 @@ func process_hourly_updates():
 	# Commit final food
 	EventBus.food_accumulated = food
 	
-	# Spawn fervour
-	if fervour_gained > 0:
-		var FervourScene = preload("res://Scenes/travellers_sanctuary/OrbleVillage/fervour_collection.tscn")
-		for i in range(fervour_gained):
-			var fervour = FervourScene.instantiate()
-			fervour.global_position = Vector2(0,42) + %sanctuary_ritual_site.position
-			call_deferred("add_child", fervour)
-	
 	EventBus.last_hourly_food_update = now
+	%sanctuary_ritual_site.fervour_to_be_gained(fervour_gained * 2)
 
 func get_goblin_raid_chance(food: float) -> float:
 	if food >= 70.0 and EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
@@ -156,6 +149,7 @@ func play_sanctuary_tutorial() :
 	%cat_balloon.exclamation_animation()
 	%jackies_tent.exclamation_animation()
 	%orble_chefstation.exclamation_animation()
+	%sanctuary_ritual_site.exclamation_animation()
 	%IntroCam.enabled = true
 	
 	var bgt = %TradersBackground

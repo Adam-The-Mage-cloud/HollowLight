@@ -94,9 +94,9 @@ func _physics_process(delta: float) -> void:
 		if direction != Vector2.ZERO:
 			if dashing == false and bouncing == false:
 				moving()
-				%BrodySprite.play(str(outfit) + "_moving")
+				%BrodySprite.play(outfit + "_moving")
 		else:
-			%BrodySprite.play(str(outfit) + "_stationary")
+			%BrodySprite.play(outfit + "_stationary")
 			%feet.play("stationary")
 
 		# ---------------------------------------------------------
@@ -480,7 +480,7 @@ func crushed():
 		%antenna.position.y += 4
 		%feet.position.y -= 2
 		await get_tree().create_timer(0.55).timeout
-		%BrodySprite.play(str(outfit) + "_moving")
+		%BrodySprite.play(outfit + "_moving")
 		%antenna.position.y -= 4
 		%feet.position.y += 2
 		input_enabled = true

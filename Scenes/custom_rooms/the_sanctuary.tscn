@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=154 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
 [ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
@@ -234,6 +234,48 @@ radial_accel_max = -10.0
 scale_curve = SubResource("CurveTexture_s10yr")
 color = Color(1, 1, 1, 0.4117647)
 color_ramp = SubResource("GradientTexture1D_thpvr")
+
+[sub_resource type="Gradient" id="Gradient_ot6ie"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3ue0b"]
+gradient = SubResource("Gradient_ot6ie")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_o3yq5"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_klrd3"]
+gradient = SubResource("Gradient_o3yq5")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a3ofq"]
+gradient = SubResource("Gradient_ot6ie")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gaaj0"]
+gradient = SubResource("Gradient_ot6ie")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_3ue0b"]
+offsets = PackedFloat32Array(0.12626262, 0.18518518, 1)
+colors = PackedColorArray(0, 0, 0, 0.39215687, 0.30980393, 0.30980393, 0.30980393, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o3yq5"]
+gradient = SubResource("Gradient_3ue0b")
+width = 36
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0oo8m"]
 atlas = ExtResource("7_o6jja")
@@ -4591,6 +4633,8 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_04o4s"]
+
 [node name="the_sanctuary" type="Node2D"]
 y_sort_enabled = true
 texture_filter = 1
@@ -7580,8 +7624,184 @@ position = Vector2(-140, 223)
 unique_name_in_owner = true
 position = Vector2(-54, 237)
 
+[node name="OrbleShadow" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.6431373)
+z_index = -1
+use_parent_material = true
+position = Vector2(7.0000005, 23.999998)
+scale = Vector2(4.2110257, 0.69660544)
+texture = SubResource("GradientTexture2D_3ue0b")
+
+[node name="OrbleShadow2" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-100.99999, 70.99999)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow3" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-41, -83.00001)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow4" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-81, -39.000008)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow5" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-166, 21.999992)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow6" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-108.00001, 8.999992)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow7" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(-218, 59.999992)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow8" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(36.999985, -113.00001)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow9" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(3.8146973e-06, -131)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow10" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(36, -168)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow11" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(110.99999, -265)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow12" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(60.000015, -288)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow13" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(76, -321)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow14" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(152, -280.00003)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow15" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(201, -249)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow16" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(236.00002, -238)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow17" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(347, -97)
+scale = Vector2(3.8448029, 0.9927274)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow18" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(166, -71)
+scale = Vector2(7.113647, 0.64208424)
+texture = SubResource("GradientTexture2D_klrd3")
+
+[node name="OrbleShadow19" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(298, -185)
+scale = Vector2(4.3889875, 1.02692)
+texture = SubResource("GradientTexture2D_a3ofq")
+
+[node name="OrbleShadow20" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(237.00002, -223.99998)
+scale = Vector2(2.006247, 0.71756196)
+texture = SubResource("GradientTexture2D_gaaj0")
+
+[node name="OrbleShadow21" type="Sprite2D" parent="sanctuary_ritual_site"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(131, -210.00002)
+scale = Vector2(5.657004, 1.5560004)
+texture = SubResource("GradientTexture2D_gaaj0")
+
 [node name="sanctuary_campfire" parent="." instance=ExtResource("6_0oo8m")]
 position = Vector2(124, 70)
+
+[node name="OrbleShadow" type="Sprite2D" parent="sanctuary_campfire"]
+modulate = Color(1, 1, 1, 0.44313726)
+z_index = -1
+use_parent_material = true
+position = Vector2(2, 7)
+scale = Vector2(1.8939741, 0.40824416)
+texture = SubResource("GradientTexture2D_o3yq5")
 
 [node name="overseer_mission_board" parent="." instance=ExtResource("23_s10yr")]
 unique_name_in_owner = true
@@ -7910,6 +8130,9 @@ texture = ExtResource("39_o3yq5")
 [node name="StewIcon2" type="Sprite2D" parent="Tutorials/OrbleBackground"]
 position = Vector2(30.666666, -2.6666665)
 texture = ExtResource("40_3ue0b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_04o4s")
 
 [connection signal="body_entered" from="TorchAndShield" to="." method="_on_torch_and_shield_body_entered"]
 [connection signal="body_exited" from="TorchAndShield" to="." method="_on_torch_and_shield_body_exited"]

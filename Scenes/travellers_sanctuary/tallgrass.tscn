@@ -67,10 +67,10 @@ sprite_frames = SubResource("SpriteFrames_7wdkd")
 autoplay = "default"
 
 [node name="TallGrassShadow" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.3137255)
+modulate = Color(1, 1, 1, 0.35686275)
 use_parent_material = true
-position = Vector2(0, 8)
-scale = Vector2(1.25, 0.75)
+position = Vector2(2, 11.999999)
+scale = Vector2(1.2143945, 0.32366598)
 texture = SubResource("GradientTexture2D_fipd0")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

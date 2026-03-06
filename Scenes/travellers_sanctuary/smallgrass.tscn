@@ -60,9 +60,9 @@ autoplay = "default"
 frame_progress = 0.39868218
 
 [node name="TallGrassShadow" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.3137255)
+modulate = Color(1, 1, 1, 0.39607844)
 use_parent_material = true
-position = Vector2(0, 11)
+position = Vector2(2, 13)
 scale = Vector2(2, 0.5)
 texture = SubResource("GradientTexture2D_nc8st")
 
