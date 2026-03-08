@@ -11102,6 +11102,7 @@ gradient = SubResource("Gradient_xodr1")
 load_path = "res://.godot/imported/Finger.png-12f269517eacaf39c6b3b0646782ac93.ctex"
 
 [node name="stewpot_menu" type="Node2D"]
+modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 scale = Vector2(2.4, 2.4)
 script = ExtResource("1_mcg7n")
