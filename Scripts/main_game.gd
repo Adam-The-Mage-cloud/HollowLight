@@ -139,6 +139,31 @@ func _ready() :
 		%RoomsToBeDeleted.add_child(spawn_sanctuary)
 		_set_sanctuary_properties()
 
+
+func tell_to_dash() :
+	# Dash Joystick :
+	await get_tree().create_timer(1.5).timeout
+	var dash_fadeintween = create_tween()
+	dash_fadeintween.tween_property(%DashButtonText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.5)
+	
+	%DashHighlighted.visible = true
+	%DashButton.visible = true
+	touchscreen_available = true
+	%TorchJoystickSpriteHighlighted.z_index = -2
+	%BrodyCam.zoom = Vector2(1.6875, 1.6875)
+	
+	await dash_fadeintween.finished 
+	await get_tree().create_timer(0.5).timeout
+	var dash_fadeouttween = create_tween()
+	dash_fadeouttween.tween_property(%DashButtonText, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1.5)
+	
+	await get_tree().create_timer(1.5).timeout
+	EventBus.sanctuary = false
+	%DashHighlighted.visible = false
+	%StaminaBarGreen.visible = true
+	%GameplayUI.visible = true
+
+
 # Wait For Touchscreen to be Pressed to turn on touchscreen settings :
 func _input(event):
 	if touchscreen_available == true and EventBus.currently_interacting == false :

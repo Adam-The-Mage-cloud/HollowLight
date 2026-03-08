@@ -53,6 +53,8 @@ func _ready() -> void:
 	material = material.duplicate()
 	set_tint()
 	breathing()
+	if EventBus.intro == true :
+		slow_down()
 	melee_pivot_offset = %WeaponPivot.position
 	hand1_base_pos = %WitchHand1.position
 	hand2_base_pos = %WitchHand2.position
@@ -226,6 +228,9 @@ func hand_idle_motion() -> void:
 		h2.tween_property(%WitchHand2, "position:y", hand2_base_pos.y, 0.4)
 		
 		await get_tree().create_timer(randf_range(0.4, 0.8)).timeout
+
+func slow_down() :
+	speed /= 4
 
 func realistic_movement() -> void:
 	if _doing_movement:

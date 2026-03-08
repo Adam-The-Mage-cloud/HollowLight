@@ -71,6 +71,7 @@ var width = 32
 var height = 18
 
 # Monster Spawning Dictionary :
+var wolf_already_spawned = false # As having any more than max 1 wolf in a room is just aids lol
 var SPAWN_GROUPS = {
 	1: { # Goblin / Ogre / Wolf room
 		"weights": {
@@ -1518,14 +1519,28 @@ func place_spawn_points() -> void:
 
 func monster_spawns() -> void:
 	var group = SPAWN_GROUPS.get(room_type)
-	
 	if group == null:
 		return
 	
-	var amount = randi_range((group["min_multiplier"] + width + height) / 25, (group["max_multiplier"] + width + height) / 20 + 2) 
+	var amount = randi_range(
+		(group["min_multiplier"] + width + height) / 25,
+		(group["max_multiplier"] + width + height) / 20 + 2
+	)
 	
 	for i in range(amount):
-		var monster_name = weighted_pick(group["weights"])
+		var monster_name = ""
+		
+		while monster_name == "":
+			var pick = weighted_pick(group["weights"])
+			
+			if pick == "dire_wolf" and wolf_already_spawned:
+				continue # try again
+				
+			monster_name = pick
+			
+		if monster_name == "dire_wolf":
+			wolf_already_spawned = true
+			
 		spawn_monster(monster_name)
 
 func spawn_monster(monster_name: String) -> void:

@@ -28,6 +28,8 @@ func _ready() :
 	material = material.duplicate()
 	set_tint()
 	breathing()
+	if EventBus.intro == true :
+		slow_down()
 	randomize()
 
 func set_tint() :
@@ -91,6 +93,9 @@ func _on_body_exited(body: Node2D) -> void:
 	if body.name == "Brody" :
 		in_sight = false
 		%OgreSprite.play("stationary")
+
+func slow_down() :
+	speed /= 4
 
 func realistic_movement() :
 	%OgreSprite.play("moving")

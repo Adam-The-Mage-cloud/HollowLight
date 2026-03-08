@@ -36,6 +36,8 @@ func _ready() :
 	set_tint()
 	breathing()
 	tail_wag()
+	if EventBus.intro == true :
+		slow_down()
 	randomize()
 
 func set_tint() :
@@ -202,6 +204,9 @@ func _on_body_exited(body: Node2D) -> void:
 	if body.name == "Brody" :
 		in_sight = false
 		%DireWolfSprite.play("stationary")
+
+func slow_down() :
+	speed /= 4
 
 func realistic_movement() :
 	while in_sight == true :
@@ -405,17 +410,6 @@ func _on_bite_area_body_entered(body: Node2D) -> void:
 		
 		# Wait for the tween to finish
 		await t.finished
-		
-		# Now hold him in place gently (no teleporting)
-		while target_captured and not body.brody_saved and body.shield_equipped == false :
-			# Soft follow instead of hard snap
-			body.global_position = body.global_position.lerp(%BiteArea.global_position, 0.4)
-			
-			# Random escape chance
-			if randi_range(1, 32) == 12:
-				target_captured = false
-		
-			await get_tree().process_frame
 		
 		body.slowed()
 

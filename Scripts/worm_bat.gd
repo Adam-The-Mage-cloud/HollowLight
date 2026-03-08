@@ -19,6 +19,8 @@ func _ready() :
 	material = material.duplicate()
 	realistic_movement()
 	flapping()
+	if EventBus.intro == true :
+		slow_down()
 	# Deviation of how they're titled towards the player :
 
 func _physics_process(delta: float) -> void:
@@ -39,7 +41,8 @@ func _physics_process(delta: float) -> void:
 			position += delta * speed * direction
 
 
-
+func slow_down() :
+	speed /= 4
 
 func realistic_movement() :
 	while flying == true :

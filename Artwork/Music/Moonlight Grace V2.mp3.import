@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ctrbmj87d0g30"
+path="res://.godot/imported/Moonlight Grace V2.mp3-3f734f79e02a7f89679e25d4f1ad4dc0.mp3str"
+
+[deps]
+
+source_file="res://Artwork/Music/Moonlight Grace V2.mp3"
+dest_files=["res://.godot/imported/Moonlight Grace V2.mp3-3f734f79e02a7f89679e25d4f1ad4dc0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

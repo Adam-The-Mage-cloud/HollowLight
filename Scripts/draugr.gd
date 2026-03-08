@@ -45,6 +45,8 @@ func _ready() -> void:
 	material = material.duplicate()
 	set_tint()
 	breathing()
+	if EventBus.intro == true :
+		slow_down()
 	melee_pivot_offset = %WeaponPivot.position
 	
 	# Random Weapon Chooser:
@@ -209,6 +211,8 @@ func _on_body_exited(body: Node2D) -> void:
 	in_sight = false
 	#target = null
 
+func slow_down() :
+	speed /= 4
 
 func realistic_movement() -> void:
 	if _doing_movement:

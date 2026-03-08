@@ -65,6 +65,10 @@ func _on_area_entered(area: Area2D) -> void:
 
 # Extra Effect Functions :
 func alight_flame() :
+	alight = true
+	%WallTorchLight.enabled = true
+	%MainFlame.emitting = true
+	%MainFlameSecondary.emitting = true
 	var intro_light_tween = create_tween()
 	intro_light_tween.tween_property(%WallTorchLight, "energy", 0.8, 1.4)
 	intro_light_tween.tween_property(%WallTorchLight, "texture_scale", 0.4, 1.4)

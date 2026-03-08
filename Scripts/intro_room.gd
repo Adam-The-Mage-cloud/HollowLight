@@ -18,6 +18,9 @@ func _ready() :
 	EventBus.intro = true
 	EventBus.game_over_chance = 0.25
 	
+	%wall_interactables.alight_flame()
+	%wall_interactables2.alight_flame()
+	
 	$".".add_to_group("rooms")
 	%TileMapFloor.add_to_group("floors")
 	
@@ -289,6 +292,7 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 				var new_rooms_beacons = next_room.get_node("Beacons").get_children()
 				for i in new_rooms_beacons :
 					i.now_visible()
+			get_tree().current_scene.tell_to_dash()
 
 
 func _spawn_next_room() :

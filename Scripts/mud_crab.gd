@@ -38,6 +38,8 @@ func _ready() :
 	material = material.duplicate()
 	set_tint()
 	breathing()
+	if EventBus.intro == true :
+		slow_down()
 	randomize()
 	
 	leg_rest_rotations[%LegL1] = %LegL1.rotation_degrees
@@ -100,6 +102,9 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_body_exited(body: Node2D) -> void:
 	if body.name == "Brody" :
 		in_sight = false
+
+func slow_down() :
+	speed /= 4
 
 func realistic_movement():
 	while in_sight:

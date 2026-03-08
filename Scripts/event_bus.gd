@@ -148,7 +148,7 @@ var sanctuary_level = 1
 var orbles: Array[String] = []
 var max_orble_count = 7 * sanctuary_level
 var total_orbles = 0
-var orbles_to_introduce = 0
+var orbles_to_introduce = 4
 var raid_entity_count = 0
 var food_accumulated = 100.0
 
@@ -250,8 +250,8 @@ func _on_new_room() :
 	if randf_range(0, 1) < game_over_chance :
 		if total_rooms >= 5 : # 7
 			last_room = true
-		elif intro == true :
-			last_room = true
+	if total_rooms >= 2 and intro == true :
+		last_room = true
 
 func last_room_passed() :
 	EventBus.beacons_lit = 0

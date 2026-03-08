@@ -141,9 +141,9 @@ func set_item_prices() :
 		%Outfit3Price.text = str(EventBus.samurai_outfit_price) + "g"
 		
 	if EventBus.walltorch_torch_purchased == false :
-		%Outfit1Price.text = str(EventBus.walltorch_torch_price) + "g"
+		%Torch1Price.text = str(EventBus.walltorch_torch_price) + "g"
 	if EventBus.wizardstaff_torch_purchased == false :
-		%Outfit2Price.text = str(EventBus.wizardstaff_torch_price) + "g"
+		%Torch2Price.text = str(EventBus.wizardstaff_torch_price) + "g"
 		
 	if EventBus.bluevariant_shield_purchased == false :
 		%Shield1Price.text = str(EventBus.bluevariant_shield_price) + "g"

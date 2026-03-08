@@ -22,6 +22,7 @@ func _ready() :
 	spawn_already_orbles()
 	process_hourly_updates()
 	spawn_stew_indicator()
+	lock_moving()
 	
 	if EventBus.intro == true :
 		play_sanctuary_tutorial()
@@ -59,7 +60,7 @@ func introduce_orbles() :
 		await new_orble.orble_named
 		orble_spawned = false
 		if EventBus.orbles_to_introduce > 0 or EventBus.total_orbles < 2 :
-			await get_tree().create_timer(1.0).timeout
+			#await get_tree().create_timer(1.0).timeout
 			introduce_orbles()
 
 
@@ -307,6 +308,18 @@ func _on_torch_and_shield_body_exited(body: Node2D) -> void:
 		if get_node_or_null("%TorchAndShieldSprite") :
 			%TorchAndShieldSprite.play("default")
 
+func lock_moving() :
+	while %Lock.visible:
+		var up_ex = create_tween()
+		up_ex.tween_property(%Lock, "position", %Lock.position + Vector2(2, -4), 2.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+		# Wait for le both tweens du finieash :
+		await up_ex.finished
+		
+		var down_ex = create_tween()
+		down_ex.tween_property(%Lock, "position", %Lock.position - Vector2(2, -4), 2.4).set_trans(Tween.TRANS_SINE)#.set_ease(Tween.EASE_OUT)
+		
+		await down_ex.finished
 
 func arrows_pointing() :
 	# Torch & Shield Arrow Tween:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=4 uid="uid://bm6rtomjhckm3"]
+[gd_scene load_steps=101 format=4 uid="uid://bm6rtomjhckm3"]
 
 [ext_resource type="Script" uid="uid://dft3ru3q7paan" path="res://Scripts/intro_room.gd" id="1_w4pab"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4jg2x"]
@@ -6526,6 +6526,17 @@ cache/0/9/1/glyphs/81/size = Vector2(9, 10)
 cache/0/9/1/glyphs/81/uv_rect = Rect2(35, 1, 9, 10)
 cache/0/9/1/glyphs/81/texture_idx = 0
 
+[sub_resource type="Gradient" id="Gradient_sm2es"]
+offsets = PackedFloat32Array(0, 0.82222223, 1)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0.08235294, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qn4mf"]
+gradient = SubResource("Gradient_sm2es")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vula7"]
 shader = ExtResource("12_jpy61")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
@@ -6915,9 +6926,11 @@ unique_name_in_owner = true
 z_index = 1
 
 [node name="wall_interactables" parent="WallInteractables" instance=ExtResource("11_qn4mf")]
+unique_name_in_owner = true
 position = Vector2(189, -16)
 
 [node name="wall_interactables2" parent="WallInteractables" instance=ExtResource("11_qn4mf")]
+unique_name_in_owner = true
 position = Vector2(137, -16)
 
 [node name="FloorInteractables" type="Node2D" parent="."]
@@ -7272,6 +7285,16 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="FlameLight" type="PointLight2D" parent="FallenTank"]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(1.9999998, -7.999999)
+scale = Vector2(0.18270153, 0.18270153)
+color = Color(0.19607843, 0.61960787, 0, 1)
+energy = 4.73
+texture = SubResource("GradientTexture2D_qn4mf")
+texture_scale = 1.2
 
 [node name="TorchShield" type="Sprite2D" parent="."]
 unique_name_in_owner = true

@@ -44,10 +44,10 @@ func _process(_float) -> void :
 	
 	if EventBus.cheffing_station_interactable == true and EventBus.currently_interacting == true :
 		update_visual()
-		%StewIndicator.position = Vector2(208, 58)
-		%OrbleHappinessIndicator.position = Vector2(240, 100)
-		%OrbleHappinessIndicator.scale = Vector2(2.5, 2.5)
-		%StewIndicator.scale = Vector2(2.5, 2.5)
+		%StewIndicator.position = Vector2(178, 38)
+		%OrbleHappinessIndicator.position = Vector2(220, 80)
+		%OrbleHappinessIndicator.scale = Vector2(4.0, 4.0)
+		%StewIndicator.scale = Vector2(4.0, 4.0)
 	else :
 		%StewIndicator.position = Vector2(25, 14)
 		%OrbleHappinessIndicator.position = Vector2(57, 28)

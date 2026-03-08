@@ -14,6 +14,8 @@ var speed = 20
 
 func _ready() :
 	material = material.duplicate()
+	if EventBus.intro == true :
+		slow_down()
 	pass
 
 func _physics_process(delta: float) -> void:
@@ -87,6 +89,9 @@ func _on_area_entered(area: Area2D) -> void:
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		knockback_movement.tween_property(self, "scale", Vector2(0.85, 0.85), 0.12).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		knockback_movement.tween_property(self, "scale", Vector2(1.0, 1.0), 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func slow_down() :
+	speed /= 4
 
 func burn_away() :
 	# Flash effect

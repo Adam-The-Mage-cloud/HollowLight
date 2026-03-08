@@ -1,14 +1,36 @@
-[gd_scene load_steps=11 format=3 uid="uid://cjg5dswlljae7"]
+[gd_scene load_steps=32 format=3 uid="uid://cjg5dswlljae7"]
 
 [ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_2omd5"]
+[ext_resource type="Script" uid="uid://d1g65cud4iq5r" path="res://Scripts/travellers_sanctuary/OrbleVillage/hat_orble.gd" id="1_6qa2t"]
+[ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_i1n0p"]
+[ext_resource type="Texture2D" uid="uid://cif6x5ke5opoy" path="res://Artwork/Sanctuary/Fervour.png" id="3_m5hfj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4sc03"]
+shader = ExtResource("1_i1n0p")
+shader_parameter/flash_amount = 0.0
+shader_parameter/wave_frequency = 1.0
+shader_parameter/wave_amplitude = 0.003
+shader_parameter/wave_longitude = 0.004
+shader_parameter/wave_speed = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usf5e"]
+atlas = ExtResource("1_2omd5")
+region = Rect2(33, 18, 23, 31)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_avb4a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usf5e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2omd5"]
 atlas = ExtResource("1_2omd5")
 region = Rect2(57, 274, 23, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6qa2t"]
-atlas = ExtResource("1_2omd5")
-region = Rect2(81, 274, 23, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5hfj"]
 atlas = ExtResource("1_2omd5")
@@ -17,6 +39,10 @@ region = Rect2(57, 242, 23, 31)
 [sub_resource type="AtlasTexture" id="AtlasTexture_i1n0p"]
 atlas = ExtResource("1_2omd5")
 region = Rect2(81, 242, 23, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qa2t"]
+atlas = ExtResource("1_2omd5")
+region = Rect2(81, 274, 23, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4sc03"]
 atlas = ExtResource("1_2omd5")
@@ -31,9 +57,6 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2omd5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6qa2t")
 }],
 "loop": true,
 "name": &"celebrating",
@@ -70,23 +93,115 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_usf5e"]
-atlas = ExtResource("1_2omd5")
-region = Rect2(33, 18, 23, 31)
+[sub_resource type="CircleShape2D" id="CircleShape2D_6qa2t"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_avb4a"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_usf5e")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="CircleShape2D" id="CircleShape2D_i1n0p"]
 
-[node name="orble_hat_shop" type="Node2D"]
+[sub_resource type="Curve" id="Curve_4sc03"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_sm2es"]
+curve = SubResource("Curve_4sc03")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ket7u"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape_scale = Vector3(6.5, 5, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 89.628
+initial_velocity_min = -18.0
+initial_velocity_max = 18.0
+gravity = Vector3(0, -98, 0)
+scale_min = 0.19999999
+scale_max = 0.39999998
+scale_curve = SubResource("CurveTexture_sm2es")
+color = Color(0.916649, 0.8924594, 0.9999986, 0.6313726)
+turbulence_enabled = true
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_usf5e"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_avb4a"]
+colors = PackedColorArray(0.1441006, 0.4888317, 0.17460966, 1, 0.23529412, 0.14509805, 0.1764706, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ot6ie"]
+gradient = SubResource("Gradient_avb4a")
+
+[sub_resource type="Curve" id="Curve_vyfer"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_4u3ld"]
+curve = SubResource("Curve_vyfer")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ons80"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0.4, 0.2, 0.05)
+emission_shape = 3
+emission_box_extents = Vector3(0.3, 0.4, 0.05)
+direction = Vector3(0, 0, 0)
+initial_velocity_min = -5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -0.49, 0)
+radial_accel_min = -5.000002
+radial_accel_max = 4.9999976
+scale_min = 0.049999997
+scale_max = 0.06
+scale_curve = SubResource("CurveTexture_4u3ld")
+color = Color(0.5104257, 0.9153792, 0.255261, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_ot6ie")
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3gyx7"]
+load_path = "res://.godot/imported/Particle_Effects_2.png-7cdab56305324f08e643f64191340beb.ctex"
+
+[sub_resource type="Gradient" id="Gradient_43o76"]
+colors = PackedColorArray(0.1441006, 0.4888317, 0.17460966, 1, 0.23529412, 0.14509805, 0.1764706, 0.58431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5qveo"]
+gradient = SubResource("Gradient_43o76")
+
+[sub_resource type="Curve" id="Curve_5eay7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_3n2bs"]
+curve = SubResource("Curve_5eay7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jukb4"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0.4, 0.2, 0.05)
+emission_shape = 3
+emission_box_extents = Vector3(0.3, 0.4, 0.05)
+direction = Vector3(0, 0, 0)
+initial_velocity_min = -5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -0.49, 0)
+radial_accel_min = -5.000002
+radial_accel_max = 4.9999976
+scale_min = 0.049999997
+scale_max = 0.06
+scale_curve = SubResource("CurveTexture_3n2bs")
+color = Color(0.5104257, 0.9153792, 0.255261, 0.8156863)
+color_ramp = SubResource("GradientTexture1D_5qveo")
+turbulence_noise_strength = 11.67
+turbulence_noise_scale = 7.508
+turbulence_noise_speed_random = 0.85
+
+[node name="orble_hat_shop" type="CharacterBody2D"]
 texture_filter = 1
+material = SubResource("ShaderMaterial_4sc03")
+script = ExtResource("1_6qa2t")
+
+[node name="HatOrblesHatSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
+use_parent_material = true
+position = Vector2(-1, -5)
+sprite_frames = SubResource("SpriteFrames_avb4a")
 
 [node name="HatOrbleSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -94,6 +209,68 @@ use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_6qa2t")
 animation = &"stationary"
 
-[node name="HatOrblesHatSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1, -5)
-sprite_frames = SubResource("SpriteFrames_avb4a")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 4)
+scale = Vector2(0.51041543, 0.51041543)
+shape = SubResource("CircleShape2D_6qa2t")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea"]
+scale = Vector2(0.80793786, 0.80793786)
+shape = SubResource("CircleShape2D_i1n0p")
+
+[node name="FervourProduced" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(1, -3)
+amount = 4
+texture = ExtResource("3_m5hfj")
+speed_scale = 0.4
+randomness = 0.63
+process_material = SubResource("ParticleProcessMaterial_ket7u")
+
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(-2, 5)
+emitting = false
+amount = 6
+texture = SubResource("CompressedTexture2D_usf5e")
+one_shot = true
+preprocess = 0.2
+explosiveness = 0.4
+process_material = SubResource("ParticleProcessMaterial_ons80")
+
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.4745098)
+z_index = -1
+position = Vector2(3, 5)
+rotation = -3.1415925
+emitting = false
+amount = 6
+texture = SubResource("CompressedTexture2D_3gyx7")
+one_shot = true
+preprocess = 0.2
+explosiveness = 0.4
+process_material = SubResource("ParticleProcessMaterial_jukb4")
+
+[node name="DirectionTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.05
+one_shot = true
+autostart = true
+
+[node name="MovementTimeTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="ProposeTime" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[connection signal="area_entered" from="InteractionArea" to="." method="_on_interaction_area_area_entered"]
+[connection signal="area_exited" from="InteractionArea" to="." method="_on_interaction_area_area_exited"]
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]

@@ -14813,6 +14813,7 @@ cache/0/36/1/glyphs/20/uv_rect = Rect2(31, 35, 24, 32)
 cache/0/36/1/glyphs/20/texture_idx = 0
 
 [node name="Hunger Indicator" type="Node2D"]
+z_index = 80
 texture_filter = 1
 script = ExtResource("1_uvnx4")
 

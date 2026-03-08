@@ -502,6 +502,7 @@ func _on_close_menu_button_pressed() -> void:
 	# SHOPS :
 	EventBus.save_game()
 	EventBus.currently_interacting = false
+	%Brody.input_enabled = true
 	%DashButton.visible = true
 	%TouchScreenPress2.visible = true
 	%TouchScreenLayer.visible = true

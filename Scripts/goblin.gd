@@ -41,6 +41,8 @@ func _ready() -> void:
 	material = material.duplicate()
 	set_tint()
 	breathing()
+	if EventBus.intro == true :
+		slow_down()
 	melee_pivot_offset = %WeaponPivot.position
 	
 	# Random Weapon Chooser:
@@ -248,6 +250,8 @@ func _on_body_entered(body: Node2D) -> void:
 		if goblin_type == 1 :
 			fire_at_will()
 
+func slow_down() :
+	speed /= 4
 
 func realistic_movement() -> void:
 	if _doing_movement:
