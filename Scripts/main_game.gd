@@ -19,7 +19,7 @@ func _ready() :
 	EventBus.last_room_complete.connect(_on_dungeon_ended)
 	EventBus.new_crawl.connect(_on_new_dungeon_crawl)
 	EventBus.spawn_sanctuary.connect(_on_spawning_sanctuary)
-	EventBus.camera_reset.connect(camera_reset)
+	EventBus.camera_reset.connect(camera_reset)           
 	EventBus.new_dungeon_touchscreen.connect(new_dungeon_touchscreen)
 	
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :

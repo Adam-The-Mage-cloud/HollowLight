@@ -50,18 +50,19 @@ func spawn_already_orbles() :
 
 func introduce_orbles() :
 	if orble_spawned == false and EventBus.intro == false :
-		orble_spawned = true
-		var new_orble = preload("res://Scenes/travellers_sanctuary/OrbleVillage/orble.tscn").instantiate()
-		call_deferred("add_child", new_orble)
-		# Start naming process
-		get_tree().current_scene.introduce_orble(new_orble)
-		EventBus.orbles_to_introduce -= 1
-		# Wait until the popup emits "orble_named"
-		await new_orble.orble_named
-		orble_spawned = false
 		if EventBus.orbles_to_introduce > 0 or EventBus.total_orbles < 2 :
-			#await get_tree().create_timer(1.0).timeout
-			introduce_orbles()
+			orble_spawned = true
+			var new_orble = preload("res://Scenes/travellers_sanctuary/OrbleVillage/orble.tscn").instantiate()
+			call_deferred("add_child", new_orble)
+			# Start naming process
+			get_tree().current_scene.introduce_orble(new_orble)
+			EventBus.orbles_to_introduce -= 1
+			# Wait until the popup emits "orble_named"
+			await new_orble.orble_named
+			orble_spawned = false
+			if EventBus.orbles_to_introduce > 0 or EventBus.total_orbles < 2 :
+				#await get_tree().create_timer(1.0).timeout
+				introduce_orbles()
 
 
 func turn_stewpot_spit() :

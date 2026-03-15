@@ -299,6 +299,7 @@ func shadow_form() :
 	%DireWolfVisibility.scale *= 12.0
 	in_sight = true
 	speed = 85
+	_on_body_entered(get_tree().current_scene.get_node("Brody"))
 	%FootStepParticlesLeft.visible = false
 	%FootStepParticlesRight.visible = false
 	%DireWolfShadowSprite.play("darkness")

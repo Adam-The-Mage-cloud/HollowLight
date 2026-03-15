@@ -1,7 +1,8 @@
-[gd_scene load_steps=186 format=4 uid="uid://bklfhm2tp32pr"]
+[gd_scene load_steps=187 format=4 uid="uid://bklfhm2tp32pr"]
 
 [ext_resource type="Texture2D" uid="uid://bvv2ts7awy4j8" path="res://Artwork/Grass_Outside_Tileset_10x10.png" id="1_dlrfx"]
 [ext_resource type="Script" uid="uid://dntude5y5cb6w" path="res://Scripts/the_sanctuary.gd" id="1_l46w4"]
+[ext_resource type="AudioStream" uid="uid://ctrbmj87d0g30" path="res://Artwork/Music/Moonlight Grace V2.mp3" id="2_5k50l"]
 [ext_resource type="Texture2D" uid="uid://d4jiukys3vnug" path="res://Artwork/Sand_Tileset_10x10.png" id="3_4vcd2"]
 [ext_resource type="PackedScene" uid="uid://byj02odr2ti4q" path="res://Scenes/travellers_sanctuary/smallgrass.tscn" id="3_kbio4"]
 [ext_resource type="PackedScene" uid="uid://dt83xmpkmw7x2" path="res://Scenes/travellers_sanctuary/tallgrass.tscn" id="4_kbio4"]
@@ -10284,6 +10285,10 @@ cache/0/36/1/glyphs/3/texture_idx = 0
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_l46w4")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_5k50l")
+autoplay = true
 
 [node name="ProceduralRoomColour" type="CanvasModulate" parent="."]
 color = Color(0.952067, 0.9071462, 0.76115376, 1)
