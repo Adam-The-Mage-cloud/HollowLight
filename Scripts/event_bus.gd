@@ -93,8 +93,8 @@ var total_fervour: int = 0
 
 # Currently Equipped Player Inventory :
 var equipped_sidekick
-var shield_acquired
-var equipped_torch
+var shield_acquired = "default"
+var equipped_torch = "none"
 var equipped_brodyoutfit = "none"
 
 # PURCHASES :
@@ -148,7 +148,7 @@ var sanctuary_level = 1
 var orbles: Array[String] = []
 var max_orble_count = 7 * sanctuary_level
 var total_orbles = 0
-var orbles_to_introduce = 4
+var orbles_to_introduce = 0
 var raid_entity_count = 0
 var food_accumulated = 100.0
 
@@ -384,7 +384,7 @@ func apply_save_data(data: Dictionary):
 	total_acquired_experience = data.get("total_acquired_experience", 0)
 	total_acquired_goldpieces = data.get("total_acquired_goldpieces", 0)
 	equipped_sidekick = data.get("sidekick", "none")
-	shield_acquired = data.get("equipped_shield", "none")
+	shield_acquired = data.get("equipped_shield", "default")
 	equipped_torch = data.get("equipped_torch", "none")
 	equipped_brodyoutfit = data.get("equipped_brodyoutfit", "none")
 	

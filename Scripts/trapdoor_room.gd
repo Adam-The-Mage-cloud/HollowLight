@@ -82,6 +82,7 @@ func themify() :
 
 func _on_door_open_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" and not already_opened and room_complete and EventBus.intro == false:
+		get_tree().current_scene.get_node("DarknessChecker").start()
 		%DoorFlashingTimer.stop()
 		already_opened = true
 		%DoorBreakParticles.emitting = true
@@ -123,6 +124,7 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 
 
 func _spawn_next_room() :
+	print("next room from trapdoor spawned")
 	EventBus.last_room = false
 	var scene = load("res://Scenes/procedural_room.tscn")
 	var new_room = scene.instantiate()

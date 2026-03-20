@@ -231,6 +231,8 @@ func unequip() :
 	
 	# Switch to animation
 	tween.finished.connect(func():
+		if shield_skin == null :
+			shield_skin = "default"
 		%ShieldSprite.play(str(shield_skin) + "_holstered")
 	)
 

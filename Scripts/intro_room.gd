@@ -254,6 +254,7 @@ func themify() :
 
 func _on_door_open_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" and not already_opened and room_complete:
+		get_tree().current_scene.get_node("DarknessChecker").start()
 		%DoorFlashingTimer.stop()
 		already_opened = true
 		%DoorBreakParticles.emitting = true

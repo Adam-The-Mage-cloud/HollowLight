@@ -131,5 +131,5 @@ autoplay = "default_holstered"
 wait_time = 15.0
 autostart = true
 
-[connection signal="timeout" from="EventBusChecker" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="EventBusChecker" to="." method="_on_event_bus_checker_timeout"]
+[connection signal="timeout" from="EventBusChecker" to="." method="_on_timer_timeout"]

@@ -313,7 +313,6 @@ func _on_new_dungeon_crawl() :
 		
 		await get_tree().create_timer(17.0).timeout
 		# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
-		%DarknessChecker.start()
 		%ShadowSpawnTimer.start()
 		%TorchWraithChance.start()
 		%WormBatChance.start()
@@ -335,7 +334,6 @@ func _on_new_dungeon_crawl() :
 		
 	else :
 		# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
-		%DarknessChecker.start()
 		%ShadowSpawnTimer.start()
 		%TorchWraithChance.start()
 		%WormBatChance.start()
@@ -353,6 +351,7 @@ func _on_new_dungeon_crawl() :
 		%TorchJoystickBase.visible = true
 		%TorchJoystickSprite.visible = true
 		%ShieldButton.visible = true
+		print("maingamefine")
 
 func sanctuary_raid_started() :
 	raid_active = true

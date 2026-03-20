@@ -27,7 +27,7 @@ func _ready() :
 	if EventBus.intro == true :
 		play_sanctuary_tutorial()
 	
-	if EventBus.orbles_to_introduce > 0 :
+	if EventBus.orbles_to_introduce > 1 and EventBus.total_orbles < EventBus.max_orble_count :
 		introduce_orbles()
 
 
@@ -41,7 +41,7 @@ func spawn_already_orbles() :
 			print (global_position)
 			print (new_orble.global_position)
 			call_deferred("add_child", new_orble)
-	while EventBus.total_orbles < 2 :
+	if EventBus.total_orbles < 2 :
 		EventBus.orbles_to_introduce += 1
 		EventBus.total_orbles += 1
 		orble_spawned = false
@@ -116,14 +116,17 @@ func process_hourly_updates():
 	%sanctuary_ritual_site.fervour_to_be_gained(fervour_gained * 2)
 
 func get_goblin_raid_chance(food: float) -> float:
-	if food >= 70.0 and EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
-		return 0.05
-	elif food >= 50.0 and EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
-		return 1.0 / 7.0
-	elif food >= 20.0 and EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
-		return 1.0 / 4.0
-	elif EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
-		return 0.5
+	if EventBus.orbles_to_introduce <= 0 :
+		if food >= 70.0 and EventBus.intro == false :
+			return 0.05
+		elif food >= 50.0 and EventBus.intro == false :
+			return 1.0 / 7.0
+		elif food >= 20.0 and EventBus.intro == false :
+			return 1.0 / 4.0
+		elif EventBus.intro == false and EventBus.orbles_to_introduce <= 0 :
+			return 0.5
+		else :
+			return 0.0
 	else :
 		return 0.0
 

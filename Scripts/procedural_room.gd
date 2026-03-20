@@ -153,88 +153,138 @@ var SPAWN_GROUPS = {
 
 func _ready() -> void:
 	randomize()
-	
-	$".".add_to_group("rooms")
+
+	# Basic registration
+	add_to_group("rooms")
 	EventBus.total_rooms += 1
-	# Door :
+
+	# Door setup
 	%DoorArea.material = %DoorArea.material.duplicate()
 	%DoorArea.add_to_group("doors")
 	%TileMapFloor.add_to_group("floors")
+
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
-	
-	# If last room then prepare Door to have light :
-	if EventBus.last_room == true :
+
+	# If this is the last room, prep the finish door
+	if EventBus.last_room == true:
 		last_room = true
 		%FinishLight1.enabled = true
 		%FinishLight2.enabled = true
 		%FinishLight3.enabled = true
-		# Emit a signal to tell the loading screen it's pretty much ready :
+
 		EventBus.last_room_loaded.emit()
+
 		var theme = EventBus.current_theme
-		if theme == 1 : # Then DarkSteel Door! :
-			%DoorSprite.play("DarkSteelFinishDoor")
-		elif theme == 2 : # Ice :
-			%DoorSprite.play("DarkSteelFinishDoorIce")
-		elif theme == 3 : # Hell :
-			%DoorSprite.play("DarkSteelFinishDoorHell")
-		elif theme == 4 : # Overgrown :
-			%DoorSprite.play("DarkSteelFinishDoorOvergrown")
-	
+		match theme:
+			1: %DoorSprite.play("DarkSteelFinishDoor")
+			2: %DoorSprite.play("DarkSteelFinishDoorIce")
+			3: %DoorSprite.play("DarkSteelFinishDoorHell")
+			4: %DoorSprite.play("DarkSteelFinishDoorOvergrown")
+
+	# Defer heavy generation
+	call_deferred("_post_ready")
+
+
+func _post_ready() -> void:
+	await generate_room_async()
+	call_deferred("spawn_next_room")
+
+
+# ---------------------------------------------------------
+# ASYNC GENERATION PIPELINE
+# ---------------------------------------------------------
+
+func generate_room_async() -> void:
 	_choose_room_type_and_size()
-	
-	# Adjust Room For Theme:
 	themify()
-	
-	
-	
+
 	# FLOOR GENERATION
 	generate_floor()
+	await get_tree().process_frame
 	diversify_room_with_scalers()
+	await get_tree().process_frame
 	_raggedize_edges()
+	await get_tree().process_frame
 	_smooth_floor(5)
+	await get_tree().process_frame
 	_ensure_reachable_floor()
+	await get_tree().process_frame
 	_widen_narrow_passages()
+	await get_tree().process_frame
 	generate_floor_variant_clusters()
-	
-	# NOW that floor exists, align room to previous door
-	if first_room == false :
+	print("floor generated")
+
+	await get_tree().process_frame
+
+	# ALIGN ROOM TO PREVIOUS DOOR
+	if first_room == false:
 		await get_tree().process_frame
 		_position_room_relative_to_door()
+		await get_tree().process_frame
 		_register_protected_door_area()
-	
+		print("positioned door")
+
 	# WALLS / OUTLINES
 	generate_walls_from_floor()
+	await get_tree().process_frame
 	generate_wall_corners_from_floor()
+	await get_tree().process_frame
 	generate_frontfacing_wall_from_floor()
+	await get_tree().process_frame
 	generate_outline_layers_from_floor()
+	await get_tree().process_frame
 	generate_underwall_ring()
-	
+	print("walls drawn")
+
+	await get_tree().process_frame
+
 	# INTERIOR
 	generate_obstacles()
+	await get_tree().process_frame
 	generate_bitsandbobs()
+	await get_tree().process_frame
 	generate_floorcover()
-	
+	print("obstacles drawn")
+
 	# DOOR + SPAWNS
 	position_door()
+	await get_tree().process_frame
+	print("door positioned")
 	generate_exterior_plants_outline()
+	await get_tree().process_frame
+	print("exterior plants outlined")
 	place_spawn_points()
+	await get_tree().process_frame
+	print ("spawnpoints placed")
 	monster_spawns()
+	await get_tree().process_frame
+	print("monsters spawned")
 	special_event_spawns()
+	await get_tree().process_frame
+	print("special events spawned")
 	beacon_spawns()
+	await get_tree().process_frame
+	print("beacons spawned")
 	generate_wall_interactables()
+	await get_tree().process_frame
+	print("wall interactables generated")
 	generate_floor_interactables()
+	await get_tree().process_frame
+	print("floor interactables generated")
 	moonlight_spawns()
-	#fog_cluster_spawns()
-	
+	await get_tree().process_frame
+	print("special spawns done")
+
 	_ensure_door_corridor_clear()
+	await get_tree().process_frame
 	_ensure_room_opening_clear()
-	# Stepladder Chance :
-	if stepladder_chance != 0 :
-		if randi_range(1, stepladder_spawn_rate) == 1 :
+	print("corridor clearance done")
+
+	# Stepladder chance
+	if stepladder_chance != 0:
+		if randi_range(1, stepladder_spawn_rate) == 1:
 			spawn_stepladder()
-		
-	# Pre-Generate Next Room :
-	spawn_next_room()
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ROOM TYPE + SIZE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1529,19 +1579,25 @@ func monster_spawns() -> void:
 	
 	for i in range(amount):
 		var monster_name = ""
+		var attempts = 20  # safety cap
 		
-		while monster_name == "":
+		while monster_name == "" and attempts > 0:
+			attempts -= 1
 			var pick = weighted_pick(group["weights"])
 			
 			if pick == "dire_wolf" and wolf_already_spawned:
-				continue # try again
-				
-			monster_name = pick
+				continue
 			
+			monster_name = pick
+		
+		if monster_name == "":
+			continue  # give up on this spawn
+		
 		if monster_name == "dire_wolf":
 			wolf_already_spawned = true
-			
+		
 		spawn_monster(monster_name)
+		await get_tree().create_timer(0.05).timeout
 
 func spawn_monster(monster_name: String) -> void:
 	var scene_path = "res://Scenes/Monsters/%s.tscn" % monster_name
@@ -1887,7 +1943,7 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 			var new_rooms_beacons = next_room.get_node("Beacons").get_children()
 			for i in new_rooms_beacons :
 				i.now_visible()
-		
+
 func spawn_next_room() :
 	if EventBus.last_room == false :
 		var new_room = preload("res://Scenes/procedural_room.tscn").instantiate()
@@ -1906,11 +1962,11 @@ func spawn_next_room() :
 		new_room.previous_floor_world_positions = world_floor_positions
 		
 		# Send Old FrontWall Positions :
+		# Send Old FrontWall Positions :
 		var world_frontwall_positions: Array[Vector2] = []
-		for p in world_frontwall_positions:
-			var local_pixel = %TileMapFloor.map_to_local(p)
-			var world_pos = %TileMapFloor.to_global(local_pixel)
-			world_frontwall_positions.append(world_pos)
+		for p in previous_frontwall_world_positions:
+			world_frontwall_positions.append(p)
+		
 		new_room.previous_frontwall_world_positions = world_frontwall_positions
 		
 		# Make Invisible  :

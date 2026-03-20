@@ -199,6 +199,8 @@ func _get_aim_distance(centre: Vector2, max_r: float) -> float:
 
 
 func change_skin() :
+	if EventBus.equipped_torch == null :
+		EventBus.equipped_torch = "none"
 	%TorchSprite.play(str(EventBus.equipped_torch) + "_lit")
 
 
