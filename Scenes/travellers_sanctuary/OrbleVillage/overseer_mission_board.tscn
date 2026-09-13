@@ -1,10 +1,11 @@
-[gd_scene load_steps=36 format=4 uid="uid://bdshio7a04146"]
+[gd_scene format=4 uid="uid://bdshio7a04146"]
 
 [ext_resource type="Script" uid="uid://dobrfyn0mcte0" path="res://Scripts/travellers_sanctuary/OrbleVillage/overseer_mission_board.gd" id="1_m7e67"]
 [ext_resource type="Texture2D" uid="uid://cfrrn70qur3ip" path="res://Artwork/Sanctuary/Orble_Structures.png" id="1_m652n"]
 [ext_resource type="Texture2D" uid="uid://c5xx7org2y2jj" path="res://Artwork/Sanctuary/OverseerBoard/Orble_Structures_Highlighted.png" id="3_rllsi"]
 [ext_resource type="Texture2D" uid="uid://dnyis2en7pq8v" path="res://Artwork/Hint_Exclamation.png" id="4_lt7ba"]
 [ext_resource type="Shader" uid="uid://jtcx64k0fxec" path="res://Shaders/font_flash.gdshader" id="5_gqcix"]
+[ext_resource type="AudioStream" uid="uid://dwkngwdaefhg4" path="res://Audio/freesound_community-little-guy-sings-107052.mp3" id="6_5kmej"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m7e67"]
 size = Vector2(33, 7)
@@ -23,7 +24,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rllsi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -31,7 +32,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lt7ba")
 }],
-"loop": true,
+"loop": 1,
 "name": &"highlighted",
 "speed": 5.0
 }]
@@ -254,6 +255,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3006,30 +3016,35 @@ cache/0/36/1/glyphs/69/texture_idx = 0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m652n"]
 
-[node name="overseer_mission_board" type="CharacterBody2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8xjnf"]
+random_pitch = 1.0748733
+streams_count = 1
+stream_0/stream = ExtResource("6_5kmej")
+
+[node name="overseer_mission_board" type="CharacterBody2D" unique_id=1057708602]
 z_index = 1
 texture_filter = 1
 scale = Vector2(-1, 1)
 script = ExtResource("1_m7e67")
 
-[node name="MissionBoardCollision" type="CollisionShape2D" parent="."]
+[node name="MissionBoardCollision" type="CollisionShape2D" parent="." unique_id=935704886]
 position = Vector2(-1.5, -11.5)
 shape = SubResource("RectangleShape2D_m7e67")
 
-[node name="MissionBoardSprite" type="AnimatedSprite2D" parent="."]
+[node name="MissionBoardSprite" type="AnimatedSprite2D" parent="." unique_id=834718199]
 unique_name_in_owner = true
 position = Vector2(0, -18)
 sprite_frames = SubResource("SpriteFrames_lt7ba")
 autoplay = "default"
 
-[node name="ExclamationMarkIndicator" type="Sprite2D" parent="."]
+[node name="ExclamationMarkIndicator" type="Sprite2D" parent="." unique_id=680798262]
 unique_name_in_owner = true
 visible = false
 position = Vector2(-2, -32)
 scale = Vector2(-1, 1)
 texture = ExtResource("4_lt7ba")
 
-[node name="UpgradesText" type="RichTextLabel" parent="ExclamationMarkIndicator"]
+[node name="UpgradesText" type="RichTextLabel" parent="ExclamationMarkIndicator" unique_id=83275060]
 unique_name_in_owner = true
 z_index = 20
 texture_filter = 1
@@ -3050,13 +3065,17 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Contracts!"
 metadata/_edit_use_anchors_ = true
 
-[node name="MissionBoardAccessArea" type="Area2D" parent="."]
+[node name="MissionBoardAccessArea" type="Area2D" parent="." unique_id=2091802323]
 position = Vector2(0, -18)
 
-[node name="BoardAccessCollision" type="CollisionShape2D" parent="MissionBoardAccessArea"]
+[node name="BoardAccessCollision" type="CollisionShape2D" parent="MissionBoardAccessArea" unique_id=276721046]
 position = Vector2(0, 15)
 scale = Vector2(3.8801212, 3.8801212)
 shape = SubResource("CircleShape2D_m652n")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=394663680]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_8xjnf")
 
 [connection signal="area_entered" from="MissionBoardAccessArea" to="." method="_on_mission_board_access_area_area_entered"]
 [connection signal="body_entered" from="MissionBoardAccessArea" to="." method="_on_mission_bard_access_area_body_entered"]

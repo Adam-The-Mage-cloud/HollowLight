@@ -14,6 +14,7 @@ var speed = 20
 
 func _ready() :
 	material = material.duplicate()
+	%TurnedVisibleSound.playing = true
 	if EventBus.intro == true :
 		slow_down()
 	pass
@@ -94,6 +95,7 @@ func slow_down() :
 	speed /= 4
 
 func burn_away() :
+	%DeathSound.playing = true
 	# Flash effect
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)

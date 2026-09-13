@@ -1,8 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://cdo6hvtefqe2x"]
+[gd_scene format=3 uid="uid://cdo6hvtefqe2x"]
 
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="1_3rkoo"]
 [ext_resource type="Script" uid="uid://bmq0q5o2lkg6u" path="res://Scripts/brazier.gd" id="1_w7syr"]
 [ext_resource type="Texture2D" uid="uid://c2atipwkmqsh1" path="res://Artwork/Beacons.png" id="1_wqvan"]
+[ext_resource type="AudioStream" uid="uid://dguyawakswxyy" path="res://Audio/benkirb-shine-4-268912.mp3" id="4_tlaex"]
+[ext_resource type="AudioStream" uid="uid://dd00htkyoco6k" path="res://Audio/benkirb-shine-9-268911.mp3" id="5_lfddy"]
+[ext_resource type="AudioStream" uid="uid://c7652kl8lf4df" path="res://Audio/benkirb-shine-11-268907.mp3" id="6_5kphs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3rkoo"]
 shader = ExtResource("1_3rkoo")
@@ -24,7 +27,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w7syr")
 }],
-"loop": true,
+"loop": 1,
 "name": &"lit",
 "speed": 5.0
 }, {
@@ -32,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3rkoo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"unlit",
 "speed": 5.0
 }]
@@ -114,14 +117,20 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3rkoo"]
 
-[node name="brazier" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k6aki"]
+streams_count = 3
+stream_0/stream = ExtResource("4_tlaex")
+stream_1/stream = ExtResource("5_lfddy")
+stream_2/stream = ExtResource("6_5kphs")
+
+[node name="brazier" type="Area2D" unique_id=1354932036]
 z_index = 5
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_3rkoo")
 script = ExtResource("1_w7syr")
 
-[node name="BrazierSprite" type="AnimatedSprite2D" parent="."]
+[node name="BrazierSprite" type="AnimatedSprite2D" parent="." unique_id=843543812]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
@@ -129,27 +138,27 @@ sprite_frames = SubResource("SpriteFrames_mjyeq")
 animation = &"lit"
 autoplay = "unlit"
 
-[node name="MainFlame" type="GPUParticles2D" parent="."]
+[node name="MainFlame" type="GPUParticles2D" parent="." unique_id=879716640]
 unique_name_in_owner = true
 position = Vector2(-0.17158508, 4.5794516)
 amount = 265
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_mjyeq")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame" unique_id=406339235]
 unique_name_in_owner = true
 position = Vector2(-0.2045064, 2.2326136)
 amount = 100
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_lfrm0")
 
-[node name="BrazierCollision" type="CollisionShape2D" parent="."]
+[node name="BrazierCollision" type="CollisionShape2D" parent="." unique_id=341265214]
 unique_name_in_owner = true
 visible = false
 position = Vector2(-0.40778542, 4.5696154)
 shape = SubResource("RectangleShape2D_wqvan")
 
-[node name="BrazierLight" type="PointLight2D" parent="."]
+[node name="BrazierLight" type="PointLight2D" parent="." unique_id=1947136070]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-0.504097, 5.4626875)
@@ -157,29 +166,34 @@ color = Color(1, 0.439216, 0.172549, 1)
 energy = 10.0
 texture = SubResource("GradientTexture2D_w7syr")
 
-[node name="BrazierShadow" type="Sprite2D" parent="."]
+[node name="BrazierShadow" type="Sprite2D" parent="." unique_id=19577625]
 show_behind_parent = true
 use_parent_material = true
 position = Vector2(-0.73835754, 11.464703)
 texture = SubResource("GradientTexture2D_3rkoo")
 
-[node name="DarknessRepeller" type="Area2D" parent="."]
+[node name="DarknessRepeller" type="Area2D" parent="." unique_id=2049501836]
 
-[node name="DarknessRepellerCollision" type="CollisionShape2D" parent="DarknessRepeller"]
+[node name="DarknessRepellerCollision" type="CollisionShape2D" parent="DarknessRepeller" unique_id=2011654114]
 unique_name_in_owner = true
 position = Vector2(0, 8)
 scale = Vector2(3.4472642, 3.4472642)
 shape = SubResource("CircleShape2D_3rkoo")
 disabled = true
 
-[node name="DarknessReducer" type="Timer" parent="."]
+[node name="DarknessReducer" type="Timer" parent="." unique_id=2100699545]
 unique_name_in_owner = true
 wait_time = 0.2
 
-[node name="FlashingTimer" type="Timer" parent="."]
+[node name="FlashingTimer" type="Timer" parent="." unique_id=425566965]
 unique_name_in_owner = true
 wait_time = 1.9
 autostart = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=624846047]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_k6aki")
+pitch_scale = 1.93
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_entered"]

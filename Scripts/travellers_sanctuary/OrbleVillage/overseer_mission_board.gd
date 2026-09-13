@@ -8,6 +8,7 @@ func _on_mission_board_access_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
 		%MissionBoardSprite.play("highlighted")
 		%orble_overseer.player_interested()
+		%AudioStreamPlayer2D.playing = true
 		EventBus.mission_board_interactable = true
 		%ExclamationMarkIndicator.visible = false
 

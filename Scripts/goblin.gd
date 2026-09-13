@@ -34,6 +34,7 @@ var speed = 24
 
 var _doing_movement = false
 var _doing_footsteps = false
+var introSoundMade = false
 
 func _ready() -> void:
 	randomize()
@@ -89,6 +90,10 @@ func _physics_process(delta: float) -> void:
 	if not target:
 		return
 
+	if introSoundMade == false :
+		%TurnedVisibleSound.playing = true
+		introSoundMade = true
+
 	brody_position = target.global_position
 	direction = (brody_position - global_position).normalized()
 
@@ -115,6 +120,7 @@ func _physics_process(delta: float) -> void:
 
 
 func slash() -> void:
+	%AttackSound.playing = true
 	attacking = true
 
 	var pivot = %WeaponPivot
@@ -217,6 +223,7 @@ func _on_slash_area_body_exited(body: Node2D) -> void:
 
 func fire_at_will() :
 	while get_parent().visible == true:
+		%AttackSound.playing = true
 		bow_or_melee = -1
 		var goblin_arrow = preload("res://Scenes/Monsters/goblin_arrow.tscn").instantiate()
 		goblin_arrow.position = %GoblinRanged.position + Vector2(-3, 0)
@@ -458,6 +465,7 @@ func flash_actual_white() :
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
 
 func burn() :
+	%DeathSound.playing = true
 	EventBus.goblins_burnt += 1
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_color", Vector3(0.95, 0.65, 0.25), 0.25)

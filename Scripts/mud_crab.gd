@@ -32,6 +32,7 @@ var bobbing = false
 var lightable = false
 
 var speed = 12
+var introSoundMade = false
 
 func _ready() :
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
@@ -80,6 +81,9 @@ func set_tint() :
 func _physics_process(delta: float) -> void:
 	if get_parent().visible == true :
 		# Moving : )
+		if introSoundMade == false :
+			%TurnedVisibleSound.playing = true
+			introSoundMade = true
 		if brody_position != null :
 			
 			var desired_angle = (target.global_position - global_position).angle()
@@ -160,6 +164,7 @@ func animate_pincers() :
 			await get_tree().create_timer(randf_range(0.24, 0.36)).timeout
 
 func pince_attempt() :
+	%AttackSound.playing = true
 	var LeftPincerTween = create_tween()
 	LeftPincerTween.tween_property(%PincerPivotL, "rotation_degrees", randf_range(-10, 10), randf_range(0.3, 0.5))
 	LeftPincerTween.tween_property(%PincerPivotL, "rotation_degrees", original_left_pincer_rotation, randf_range(0.1, 0.24))
@@ -329,6 +334,7 @@ func flash_actual_white() :
 
 
 func burn() :
+	%DeathSound.playing = true
 	EventBus.mudcrabs_burnt += 1
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_color", Vector3(0.95, 0.65, 0.25), 0.25)

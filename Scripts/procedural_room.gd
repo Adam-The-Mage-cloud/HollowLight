@@ -1922,12 +1922,14 @@ func _on_door_open_area_body_entered(body: Node2D) -> void:
 			%DoorSprite.play("DarkSteelSmashedOvergrown")
 		
 		if last_room == true :
+			%gameWonSound.playing = true
 			EventBus.last_room_passed()
 			return
 		
 		# SWITCH TO NEXT ROOM :
 		# Reset Beacons :
 		EventBus.beacon_count_reset()
+		%doorSmashSound.playing = true
 		
 		var rooms = get_tree().current_scene.get_node("RoomsToBeDeleted").get_children()
 		var index = rooms.find($".")

@@ -1,15 +1,18 @@
-[gd_scene load_steps=13 format=3 uid="uid://blyp8yoqv8p2o"]
+[gd_scene format=3 uid="uid://blyp8yoqv8p2o"]
 
 [ext_resource type="Script" uid="uid://f67io37ivjkh" path="res://Scripts/gold_piece.gd" id="1_c0dq0"]
 [ext_resource type="Texture2D" uid="uid://d2eowytbt2yx8" path="res://Artwork/Gold_Piece.png" id="2_c0dq0"]
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="2_mx5bu"]
 [ext_resource type="Texture2D" uid="uid://5e55d6b4pcxr" path="res://Artwork/Gold_Piece_2.png" id="3_74db5"]
 [ext_resource type="Texture2D" uid="uid://dc5f7otyi8gel" path="res://Artwork/Gold_Piece_3.png" id="4_5wglr"]
+[ext_resource type="AudioStream" uid="uid://b0d0iilieommq" path="res://Audio/freesound_gamestudio-drop-coin-384921.mp3" id="6_f20ft"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7vta6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f20ft"]
 shader = ExtResource("2_mx5bu")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/tint_amount = 0.0
 shader_parameter/flash_amount = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_74db5"]
@@ -30,7 +33,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_74db5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"goldpiece_1",
 "speed": 5.0
 }, {
@@ -38,7 +41,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5wglr")
 }],
-"loop": true,
+"loop": 1,
 "name": &"goldpiece_2",
 "speed": 5.0
 }, {
@@ -46,7 +49,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mx5bu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"goldpiece_3",
 "speed": 5.0
 }]
@@ -54,35 +57,45 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_74db5"]
 size = Vector2(8, 5)
 
-[node name="gold_piece" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k6aki"]
+random_pitch = 1.0413824
+streams_count = 1
+stream_0/stream = ExtResource("6_f20ft")
+
+[node name="gold_piece" type="Area2D" unique_id=430854622]
 z_index = 4
 texture_filter = 1
 script = ExtResource("1_c0dq0")
 
-[node name="RadarCollisionArea" type="CollisionShape2D" parent="."]
+[node name="RadarCollisionArea" type="CollisionShape2D" parent="." unique_id=1275978675]
 scale = Vector2(3.2, 3.2)
 shape = SubResource("CircleShape2D_7vta6")
 
-[node name="GoldSprite" type="AnimatedSprite2D" parent="."]
+[node name="GoldSprite" type="AnimatedSprite2D" parent="." unique_id=1203551260]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_f20ft")
 sprite_frames = SubResource("SpriteFrames_c0dq0")
 animation = &"goldpiece_1"
 
-[node name="PickupArea" type="Area2D" parent="."]
+[node name="PickupArea" type="Area2D" parent="." unique_id=609517612]
 
-[node name="PickupCollisionArea" type="CollisionShape2D" parent="PickupArea"]
+[node name="PickupCollisionArea" type="CollisionShape2D" parent="PickupArea" unique_id=1035332516]
 scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_74db5")
 
-[node name="FlashTimer" type="Timer" parent="."]
+[node name="FlashTimer" type="Timer" parent="." unique_id=1891650229]
 unique_name_in_owner = true
 wait_time = 1.4
 autostart = true
 
-[node name="SpeedAccelerator" type="Timer" parent="."]
+[node name="SpeedAccelerator" type="Timer" parent="." unique_id=1026332921]
 unique_name_in_owner = true
 wait_time = 0.125
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1402716866]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_k6aki")
+pitch_scale = 1.16
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

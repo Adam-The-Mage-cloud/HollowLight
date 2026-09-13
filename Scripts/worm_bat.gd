@@ -16,6 +16,7 @@ var health = 2
 
 func _ready() :
 	# target = %Brody
+	%TurnedVisibleSound.playing = true
 	material = material.duplicate()
 	realistic_movement()
 	flapping()
@@ -80,6 +81,7 @@ func flapping() :
 		await get_tree().create_timer(randf_range(0.75, 1.25)).timeout
 
 func burn_away() :
+	%DeathSound.playing = true
 	# Flash effect
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_amount", 1.0, 0.15)

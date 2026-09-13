@@ -1,10 +1,12 @@
-[gd_scene load_steps=33 format=3 uid="uid://dpjvluijvoqyk"]
+[gd_scene format=3 uid="uid://dpjvluijvoqyk"]
 
 [ext_resource type="Shader" uid="uid://y1cqhns1omdc" path="res://Shaders/torch_wraith.gdshader" id="1_86bfp"]
 [ext_resource type="Script" uid="uid://c8k4dw7bvoiu3" path="res://Scripts/torch_wraith.gd" id="2_86bfp"]
 [ext_resource type="Texture2D" uid="uid://cjgbv5rwydvc7" path="res://Artwork/Torch_Wraith.png" id="2_pte6v"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_yji83"]
 [ext_resource type="Texture2D" uid="uid://dbmlvsrx3pa3c" path="res://Artwork/Particles/Particle_Effects_1.png" id="5_qcmox"]
+[ext_resource type="AudioStream" uid="uid://cdu45jjpt0it0" path="res://Audio/coghezzi-dark-ghost-voice-horror-vocal-sound-561339.mp3" id="6_8rynv"]
+[ext_resource type="AudioStream" uid="uid://c8ejqu05dloou" path="res://Audio/creatorshome-gas-decompression-329819.mp3" id="7_nixh6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yji83"]
 shader = ExtResource("1_86bfp")
@@ -36,7 +38,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yji83")
 }],
-"loop": true,
+"loop": 1,
 "name": &"wraith_flying",
 "speed": 1.0
 }]
@@ -159,7 +161,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qcmox")
 }],
-"loop": true,
+"loop": 1,
 "name": &"arm1",
 "speed": 1.0
 }]
@@ -204,12 +206,22 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_75nqm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"arm2",
 "speed": 1.0
 }]
 
-[node name="torch_wraith" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nixh6"]
+random_pitch = 1.0748733
+streams_count = 1
+stream_0/stream = ExtResource("6_8rynv")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f3iif"]
+random_pitch = 1.9999999
+streams_count = 1
+stream_0/stream = ExtResource("7_nixh6")
+
+[node name="torch_wraith" type="Area2D" unique_id=1829603988]
 z_index = 2
 texture_filter = 1
 material = SubResource("ShaderMaterial_yji83")
@@ -217,7 +229,7 @@ collision_layer = 33554433
 collision_mask = 33554433
 script = ExtResource("2_86bfp")
 
-[node name="TorchWraithSprite" type="AnimatedSprite2D" parent="."]
+[node name="TorchWraithSprite" type="AnimatedSprite2D" parent="." unique_id=1508207739]
 unique_name_in_owner = true
 texture_filter = 1
 texture_repeat = 1
@@ -227,20 +239,20 @@ animation = &"wraith_flying"
 autoplay = "wraith_flying"
 frame_progress = 0.34901458
 
-[node name="HittingBox" type="CollisionShape2D" parent="."]
+[node name="HittingBox" type="CollisionShape2D" parent="." unique_id=256222193]
 visible = false
 use_parent_material = true
 position = Vector2(-0.54763794, -2.0803347)
 shape = SubResource("RectangleShape2D_1sngw")
 
-[node name="OnFireLight" type="PointLight2D" parent="."]
+[node name="OnFireLight" type="PointLight2D" parent="." unique_id=369105067]
 unique_name_in_owner = true
 position = Vector2(-0.091278076, 0.4622898)
 color = Color(1, 0.4627451, 0.21960784, 0.60784316)
 energy = 4.8
 texture = SubResource("GradientTexture2D_86bfp")
 
-[node name="MonsterBurningParticles" type="GPUParticles2D" parent="."]
+[node name="MonsterBurningParticles" type="GPUParticles2D" parent="." unique_id=332933848]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.7411765)
 z_index = 1
@@ -250,7 +262,7 @@ amount_ratio = 0.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_1sngw")
 
-[node name="TorchWraithParticles" type="GPUParticles2D" parent="."]
+[node name="TorchWraithParticles" type="GPUParticles2D" parent="." unique_id=120685028]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = 1
@@ -264,7 +276,7 @@ randomness = 0.07
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_yji83")
 
-[node name="Arm1" type="AnimatedSprite2D" parent="."]
+[node name="Arm1" type="AnimatedSprite2D" parent="." unique_id=1269802297]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.33333334)
 position = Vector2(7, -15)
@@ -272,13 +284,23 @@ sprite_frames = SubResource("SpriteFrames_al3dc")
 animation = &"arm1"
 autoplay = "arm1"
 
-[node name="Arm2" type="AnimatedSprite2D" parent="."]
+[node name="Arm2" type="AnimatedSprite2D" parent="." unique_id=715798183]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.33333334)
 position = Vector2(-7, -15)
 sprite_frames = SubResource("SpriteFrames_e6nup")
 animation = &"arm2"
 autoplay = "arm2"
+
+[node name="TurnedVisibleSound" type="AudioStreamPlayer2D" parent="." unique_id=2068670617]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_nixh6")
+volume_db = 9.0
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=434709370]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_f3iif")
+volume_db = 4.5
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

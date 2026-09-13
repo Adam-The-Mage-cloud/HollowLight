@@ -22,6 +22,7 @@ var bobbing = false
 var lightable = false
 
 var speed = 12
+var introSoundMade = false
 
 func _ready() :
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
@@ -53,6 +54,9 @@ func set_tint() :
 func _physics_process(delta: float) -> void:
 	if get_parent().visible == true :
 		# Moving : )
+		if introSoundMade == false :
+			%TurnedVisibleSound.playing = true
+			introSoundMade = true
 		if brody_position != null :
 			brody_position = target.global_position
 			direction = (brody_position - global_position).normalized()
@@ -70,6 +74,7 @@ func _physics_process(delta: float) -> void:
 			# move to brody
 
 func slash() :
+	%AttackSound.playing = true
 	var slash_tween = create_tween()
 	# 1. Anticipation: raise the axe a bit first
 	slash_tween.tween_property(%AxePivot, "rotation_degrees", 60, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -288,6 +293,7 @@ func flash_actual_white() :
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
 
 func burn() :
+	%DeathSound.playing = true
 	EventBus.ogres_burnt += 1
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_color", Vector3(0.95, 0.65, 0.25), 0.25)

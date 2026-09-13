@@ -1,10 +1,14 @@
-[gd_scene load_steps=36 format=3 uid="uid://cpj832hfxpjwi"]
+[gd_scene format=3 uid="uid://cpj832hfxpjwi"]
 
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_k21im"]
 [ext_resource type="Texture2D" uid="uid://ioletrx4cysq" path="res://Artwork/noise_texture_2.jpg" id="2_ppl55"]
 [ext_resource type="Script" uid="uid://beeiurjcksqoh" path="res://Scripts/money_goblin.gd" id="3_4yrxw"]
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="4_qy165"]
 [ext_resource type="Texture2D" uid="uid://dx4cq403w2yy8" path="res://Artwork/Money_Goblin.png" id="5_msl3c"]
+[ext_resource type="AudioStream" uid="uid://bq81gte0kcvqa" path="res://Audio/freesound_community-gold-coins-shuffle-through-or-examine-on-wood-surface-25963.mp3" id="6_6rriv"]
+[ext_resource type="AudioStream" uid="uid://cc5dq3lfpen6j" path="res://Audio/freesound_community-goblin-scream-87564.mp3" id="6_msl3c"]
+[ext_resource type="AudioStream" uid="uid://buta3j3pcrcg5" path="res://Audio/freesound_community-goblin-burp-47934.mp3" id="7_qy165"]
+[ext_resource type="AudioStream" uid="uid://c8ejqu05dloou" path="res://Audio/creatorshome-gas-decompression-329819.mp3" id="8_6rriv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qnec0"]
 shader = ExtResource("1_k21im")
@@ -22,6 +26,10 @@ shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
+shader_parameter/cloud_amount = 0.0
+shader_parameter/cloud_speed = 1.0
+shader_parameter/cloud_scale = 3.0
+shader_parameter/cloud_dissolve = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_63123"]
 shader = ExtResource("4_qy165")
@@ -42,7 +50,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qnec0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -66,7 +74,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_txws5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -81,7 +89,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hnd7p")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -202,16 +210,32 @@ height = 53.238144
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j0otr"]
 size = Vector2(231.93118, 140)
 
-[node name="money_goblin" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_knnil"]
+random_pitch = 1.0748733
+streams_count = 1
+stream_0/stream = ExtResource("6_6rriv")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uprk4"]
+random_pitch = 1.1063695
+streams_count = 2
+stream_0/stream = ExtResource("7_qy165")
+stream_1/stream = ExtResource("6_msl3c")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1wpq4"]
+random_pitch = 1.9999999
+streams_count = 1
+stream_0/stream = ExtResource("8_6rriv")
+
+[node name="money_goblin" type="Area2D" unique_id=1903112866]
 texture_filter = 1
 material = SubResource("ShaderMaterial_qnec0")
 script = ExtResource("3_4yrxw")
 
-[node name="Visuals" type="Node2D" parent="."]
+[node name="Visuals" type="Node2D" parent="." unique_id=1304569228]
 unique_name_in_owner = true
 use_parent_material = true
 
-[node name="GoblinLegL" type="AnimatedSprite2D" parent="Visuals"]
+[node name="GoblinLegL" type="AnimatedSprite2D" parent="Visuals" unique_id=2069108287]
 unique_name_in_owner = true
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_63123")
@@ -219,7 +243,7 @@ use_parent_material = true
 position = Vector2(-3.4052773, 11.468044)
 sprite_frames = SubResource("SpriteFrames_qnec0")
 
-[node name="GoblinLegR" type="AnimatedSprite2D" parent="Visuals"]
+[node name="GoblinLegR" type="AnimatedSprite2D" parent="Visuals" unique_id=1063042932]
 unique_name_in_owner = true
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_txws5")
@@ -227,28 +251,28 @@ use_parent_material = true
 position = Vector2(2.5315742, 11.604739)
 sprite_frames = SubResource("SpriteFrames_hnd7p")
 
-[node name="GoblinSprite" type="AnimatedSprite2D" parent="Visuals"]
+[node name="GoblinSprite" type="AnimatedSprite2D" parent="Visuals" unique_id=158065294]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-2.5, -0.5)
 sprite_frames = SubResource("SpriteFrames_c6p0n")
 
-[node name="SlobberParticles" type="GPUParticles2D" parent="Visuals/GoblinSprite"]
+[node name="SlobberParticles" type="GPUParticles2D" parent="Visuals/GoblinSprite" unique_id=2119328326]
 z_index = 4
 position = Vector2(-0.5806656, 0.89550877)
 amount = 2
 amount_ratio = 0.2
 process_material = SubResource("ParticleProcessMaterial_td4s5")
 
-[node name="GoblinShadow" type="Sprite2D" parent="Visuals/GoblinSprite"]
+[node name="GoblinShadow" type="Sprite2D" parent="Visuals/GoblinSprite" unique_id=1461944003]
 z_index = -2
 use_parent_material = true
 position = Vector2(-0.46762082, 10.878615)
 scale = Vector2(2.2459843, -0.71853536)
 texture = SubResource("GradientTexture2D_17hlg")
 
-[node name="OnFireLight" type="PointLight2D" parent="Visuals"]
+[node name="OnFireLight" type="PointLight2D" parent="Visuals" unique_id=1167441068]
 unique_name_in_owner = true
 position = Vector2(-1.9524307, -0.91290855)
 enabled = false
@@ -256,7 +280,7 @@ color = Color(1, 0.4627451, 0.21960784, 0.60784316)
 energy = 4.8
 texture = SubResource("GradientTexture2D_rk7kj")
 
-[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Visuals"]
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Visuals" unique_id=269087324]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -272,7 +296,7 @@ preprocess = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_chf6j")
 
-[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Visuals"]
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Visuals" unique_id=1796862510]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -288,21 +312,37 @@ preprocess = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_g4kxw")
 
-[node name="GoblinHitBox" type="Area2D" parent="Visuals"]
+[node name="GoblinHitBox" type="Area2D" parent="Visuals" unique_id=1822032529]
 
-[node name="GoblinCollision" type="CollisionShape2D" parent="Visuals/GoblinHitBox"]
+[node name="GoblinCollision" type="CollisionShape2D" parent="Visuals/GoblinHitBox" unique_id=1555434511]
 unique_name_in_owner = true
 position = Vector2(-2.7845001, 5.732807)
 shape = SubResource("CapsuleShape2D_bo26l")
 
-[node name="visibility_collision" type="CollisionShape2D" parent="."]
+[node name="visibility_collision" type="CollisionShape2D" parent="." unique_id=71060810]
 unique_name_in_owner = true
 position = Vector2(-17.965591, 2)
 shape = SubResource("RectangleShape2D_j0otr")
 
-[node name="DespawnTimer" type="Timer" parent="."]
+[node name="DespawnTimer" type="Timer" parent="." unique_id=224388893]
 wait_time = 12.0
 autostart = true
+
+[node name="TurnedVisibleSound" type="AudioStreamPlayer2D" parent="." unique_id=1505760467]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_knnil")
+volume_db = 20.0
+autoplay = true
+stream_paused = true
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="." unique_id=390009483]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_uprk4")
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=1157539690]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_1wpq4")
+volume_db = 4.5
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="area_entered" from="Visuals/GoblinHitBox" to="." method="_on_goblin_hit_box_area_entered"]

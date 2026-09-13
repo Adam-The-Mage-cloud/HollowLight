@@ -8,6 +8,7 @@ var camera_shaking = false
 # Touchscreen :
 var touch_move = Vector2.ZERO
 var input_enabled = true
+var already_moved = false
 
 var direction = Vector2.ZERO
 var momentum_tail = Vector2.ZERO
@@ -92,10 +93,12 @@ func _physics_process(delta: float) -> void:
 		# Animation switching
 		# ---------------------------------------------------------
 		if direction != Vector2.ZERO:
-			if dashing == false and bouncing == false:
+			if dashing == false and bouncing == false and already_moved == false:
 				moving()
+				already_moved = true
 				%BrodySprite.play(outfit + "_moving")
 		else:
+			already_moved = false
 			%BrodySprite.play(outfit + "_stationary")
 			%feet.play("stationary")
 
@@ -133,6 +136,7 @@ func _physics_process(delta: float) -> void:
 		# Reduce control during knockback
 		if knockback_velocity.length() > 1.0:
 			control *= knockback_control_reduction
+			%KnockbackSound.playing = true
 
 		# Apply steering
 		velocity = velocity.lerp(direction * max_speed * shield_slowdown_speed, control)
@@ -288,7 +292,6 @@ func get_move_direction() -> Vector2:
 			Input.get_action_strength("right") - Input.get_action_strength("left"),
 			Input.get_action_strength("down") - Input.get_action_strength("up")
 		)
-		
 		return dir.normalized()
 	else:
 		return Vector2.ZERO
@@ -320,6 +323,7 @@ func dash_ability():
 			var target_angle = velocity.angle() * 180 / PI
 			
 			# Lean Into Movement Direction :
+			%dashSound.playing = true
 			var lean = create_tween()
 			lean.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 			lean.tween_property(%BrodySprite, "rotation_degrees", target_angle - 20, 0.08)
@@ -379,12 +383,21 @@ func dash_ability():
 
 func moving():
 	if input_enabled == true:
+		var stillMoving = false
 		while direction != Vector2.ZERO:
 			%feet.play("moving")
 			%FootStepParticlesLeft.emitting = true
 			await get_tree().create_timer(0.2).timeout
 			%FootStepParticlesRight.emitting = true
 			await get_tree().create_timer(0.2).timeout
+			if stillMoving == false :
+				if EventBus.sanctuary == true :
+					%grassRunSound.playing = true
+				else :
+					%stoneRunSound.playing = true
+			stillMoving = true
+		%grassRunSound.playing = false
+		%stoneRunSound.playing = false
 
 
 func initialise_shield_equip():
@@ -637,6 +650,7 @@ func basic_knockback(entity):
 		var dir = (global_position - entity.global_position).normalized()
 		if %brody_shield.equipped == false :
 			knockback_velocity += dir * 24   # small push
+			%HitSound.playing = true
 			camera_shake_small()
 		else :
 			knockback_velocity += dir * 8
@@ -652,6 +666,7 @@ func massive_knockback(entity):
 		var dir = (global_position - entity.global_position).normalized()
 		if %brody_shield.equipped == false :
 			knockback_velocity += dir * 49  # medium push
+			%HitSound.playing = true
 		else :
 			knockback_velocity += dir * 14
 

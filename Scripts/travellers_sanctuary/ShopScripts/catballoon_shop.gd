@@ -1,6 +1,7 @@
 extends Node2D
 
 func _ready() :
+	%AudioStreamPlayer2D.playing = true
 	open_balloonist_shop()
 
 # >>>

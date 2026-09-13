@@ -367,6 +367,7 @@ func check_clive_shop_status() :
 			%Item2Unequipped.visible = true
 
 func clive_shop_fadein() :
+	%CliveShopHey.playing = true
 	%CliveShopScreen.visible = true
 	var AdventureScreenFade_tween = create_tween()
 	AdventureScreenFade_tween.tween_property(%CliveShopScreen, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)

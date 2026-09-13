@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://4l1y2rep6mab"]
+[gd_scene format=4 uid="uid://4l1y2rep6mab"]
 
 [ext_resource type="Script" uid="uid://cx5vaf4gkk5h4" path="res://Scripts/shield_manual.gd" id="1_hmrg8"]
 [ext_resource type="Texture2D" uid="uid://ccvwn55wfqobe" path="res://Artwork/Shield_Button_Highlighted.png" id="1_ng3kb"]
@@ -80,6 +80,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -820,6 +829,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -1605,6 +1623,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -2399,6 +2426,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3169,7 +3205,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yi807")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -3184,7 +3220,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_q0tq1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -3199,7 +3235,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hi7ll")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -3214,7 +3250,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s10yr")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -3229,7 +3265,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h2vad")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -3244,7 +3280,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_roxfq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -3259,7 +3295,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0ouyy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -3274,26 +3310,26 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jyjx7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="shield_manual" type="Node2D"]
+[node name="shield_manual" type="Node2D" unique_id=316185420]
 modulate = Color(1, 1, 1, 0)
-z_index = 24
+z_index = 400
 texture_filter = 1
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_hmrg8")
 
-[node name="OrbleBackground" type="Sprite2D" parent="."]
+[node name="OrbleBackground" type="Sprite2D" parent="." unique_id=213400488]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 4
 scale = Vector2(1.5, 1.5)
 texture = SubResource("CompressedTexture2D_fxxwj")
 
-[node name="FindWayOutText" type="RichTextLabel" parent="OrbleBackground"]
+[node name="FindWayOutText" type="RichTextLabel" parent="OrbleBackground" unique_id=258496256]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -3314,7 +3350,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "SHIELD UNLOCKED"
 fit_content = true
 
-[node name="FindWayOutText2" type="RichTextLabel" parent="OrbleBackground"]
+[node name="FindWayOutText2" type="RichTextLabel" parent="OrbleBackground" unique_id=1729373913]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -3334,7 +3370,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "Equipped:"
 fit_content = true
 
-[node name="FindWayOutText4" type="RichTextLabel" parent="OrbleBackground"]
+[node name="FindWayOutText4" type="RichTextLabel" parent="OrbleBackground" unique_id=128769291]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -3355,7 +3391,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "Pros - Protection, Knockback"
 fit_content = true
 
-[node name="FindWayOutText5" type="RichTextLabel" parent="OrbleBackground"]
+[node name="FindWayOutText5" type="RichTextLabel" parent="OrbleBackground" unique_id=723333020]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -3376,7 +3412,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "Cons - Fatigue, Slowness"
 fit_content = true
 
-[node name="FindWayOutText3" type="RichTextLabel" parent="OrbleBackground"]
+[node name="FindWayOutText3" type="RichTextLabel" parent="OrbleBackground" unique_id=1849274016]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -3397,36 +3433,36 @@ theme_override_font_sizes/normal_font_size = 18
 text = "Unequipped:"
 fit_content = true
 
-[node name="Goblin" type="AnimatedSprite2D" parent="OrbleBackground"]
+[node name="Goblin" type="AnimatedSprite2D" parent="OrbleBackground" unique_id=1675353484]
 position = Vector2(32.666668, 1.1666667)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_xcf20")
 
-[node name="LeafSprite" type="AnimatedSprite2D" parent="OrbleBackground"]
+[node name="LeafSprite" type="AnimatedSprite2D" parent="OrbleBackground" unique_id=1059919576]
 position = Vector2(32.666668, 18.5)
 sprite_frames = SubResource("SpriteFrames_yi807")
 
-[node name="GoldSprite" type="AnimatedSprite2D" parent="OrbleBackground"]
+[node name="GoldSprite" type="AnimatedSprite2D" parent="OrbleBackground" unique_id=876951082]
 position = Vector2(32.666668, 17.833334)
 sprite_frames = SubResource("SpriteFrames_j0x1q")
 
-[node name="BrodySprite" type="AnimatedSprite2D" parent="OrbleBackground"]
+[node name="BrodySprite" type="AnimatedSprite2D" parent="OrbleBackground" unique_id=1933850172]
 position = Vector2(-39.833336, 3.6666667)
 sprite_frames = SubResource("SpriteFrames_hi7ll")
 
-[node name="MoneySprite" type="AnimatedSprite2D" parent="OrbleBackground"]
+[node name="MoneySprite" type="AnimatedSprite2D" parent="OrbleBackground" unique_id=401197451]
 position = Vector2(-23.166666, -1)
 sprite_frames = SubResource("SpriteFrames_q0tq1")
 
-[node name="MoneySprite2" type="AnimatedSprite2D" parent="OrbleBackground"]
+[node name="MoneySprite2" type="AnimatedSprite2D" parent="OrbleBackground" unique_id=627583426]
 position = Vector2(-45.333336, 18.666666)
 sprite_frames = SubResource("SpriteFrames_6r5ng")
 
-[node name="MoneySprite3" type="AnimatedSprite2D" parent="OrbleBackground"]
+[node name="MoneySprite3" type="AnimatedSprite2D" parent="OrbleBackground" unique_id=1695181836]
 position = Vector2(48, -35.333336)
 sprite_frames = SubResource("SpriteFrames_lth34")
 
-[node name="BrodyFeetSprite" type="AnimatedSprite2D" parent="OrbleBackground"]
+[node name="BrodyFeetSprite" type="AnimatedSprite2D" parent="OrbleBackground" unique_id=2041864807]
 z_index = 7
 position = Vector2(-31.333334, 15.333333)
 sprite_frames = SubResource("SpriteFrames_hmrg8")

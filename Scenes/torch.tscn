@@ -1,7 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://doutgnk2nj6pi"]
+[gd_scene format=3 uid="uid://doutgnk2nj6pi"]
 
 [ext_resource type="Script" uid="uid://ct4wiv06fidc0" path="res://Scripts/torch.gd" id="1_dwpv8"]
 [ext_resource type="Texture2D" uid="uid://cq0xpqi7tt5pm" path="res://Artwork/Torch.png" id="1_mryve"]
+[ext_resource type="Material" uid="uid://c7exnshwfkhpn" path="res://ParticleEffects/torch.tres" id="3_spjw2"]
+[ext_resource type="Material" uid="uid://dvs0ta0n5l4eh" path="res://ParticleEffects/torchsecond.tres" id="4_kg6dd"]
+[ext_resource type="AudioStream" uid="uid://c1ouptpdl0ks5" path="res://Audio/biww-fire-whoosh-flame-ignite-sound-561959.mp3" id="6_05x6m"]
 
 [sub_resource type="Gradient" id="Gradient_h1t0l"]
 offsets = PackedFloat32Array(0.0946844, 0.739203)
@@ -39,7 +42,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hhj40")
 }],
-"loop": true,
+"loop": 1,
 "name": &"none_lit",
 "speed": 5.0
 }, {
@@ -47,7 +50,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_otn8w")
 }],
-"loop": true,
+"loop": 1,
 "name": &"none_unlit",
 "speed": 5.0
 }, {
@@ -55,7 +58,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_beu3c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walltorch_lit",
 "speed": 5.0
 }, {
@@ -63,7 +66,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_beu3c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walltorch_unlit",
 "speed": 5.0
 }, {
@@ -71,7 +74,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_spjw2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"wizardstaff_lit",
 "speed": 5.0
 }, {
@@ -79,60 +82,10 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_spjw2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"wizardstaff_unlit",
 "speed": 5.0
 }]
-
-[sub_resource type="Gradient" id="Gradient_fp0sm"]
-offsets = PackedFloat32Array(0, 0.998195)
-colors = PackedColorArray(0.492081, 1.89515e-06, 2.40654e-07, 1, 1, 0.725456, 0.293907, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_beu3c"]
-gradient = SubResource("Gradient_fp0sm")
-
-[sub_resource type="Curve" id="Curve_hnffi"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.183502, 1), 0.0, 0.0, 0, 0, Vector2(0.811448, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_spjw2"]
-curve = SubResource("Curve_hnffi")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sx2py"]
-lifetime_randomness = 0.21
-particle_flag_rotate_y = true
-emission_shape_offset = Vector3(-0.65, 0, 0)
-emission_shape_scale = Vector3(1.6, 0.8, 1)
-emission_shape = 1
-emission_sphere_radius = 5.0
-direction = Vector3(0, -1, 0)
-spread = 143.182
-flatness = 1.0
-radial_velocity_min = -8.00002
-radial_velocity_max = 7.99998
-gravity = Vector3(0, -20, 0)
-radial_accel_min = -15.0
-radial_accel_max = -15.0
-scale_curve = SubResource("CurveTexture_spjw2")
-color_ramp = SubResource("GradientTexture1D_beu3c")
-turbulence_noise_strength = 0.05
-turbulence_noise_scale = 1.0
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u2fq7"]
-lifetime_randomness = 0.21
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(-0.15, 0, 0)
-emission_shape_scale = Vector3(0.7, 0.6, 1)
-emission_shape = 1
-emission_sphere_radius = 5.5
-direction = Vector3(0, -1, 0)
-radial_velocity_min = -5.00002
-radial_velocity_max = 4.99998
-gravity = Vector3(0, -25, 0)
-radial_accel_min = -10.0
-radial_accel_max = -10.0
-scale_curve = SubResource("CurveTexture_spjw2")
-color_ramp = SubResource("GradientTexture1D_beu3c")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h1t0l"]
 atlas = ExtResource("1_mryve")
@@ -144,7 +97,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h1t0l")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -199,12 +152,17 @@ radial_accel_max = -10.0
 scale_curve = SubResource("CurveTexture_7ufd5")
 color_ramp = SubResource("GradientTexture1D_kg6dd")
 
-[node name="Torch" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_72ghi"]
+random_pitch = 1.7817973
+streams_count = 1
+stream_0/stream = ExtResource("6_05x6m")
+
+[node name="Torch" type="Area2D" unique_id=575012160]
 texture_filter = 1
 use_parent_material = true
 script = ExtResource("1_dwpv8")
 
-[node name="TorchLight" type="PointLight2D" parent="."]
+[node name="TorchLight" type="PointLight2D" parent="." unique_id=1372272319]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
@@ -213,7 +171,7 @@ color = Color(1, 0.439216, 0.172549, 1)
 energy = 10.95
 texture = SubResource("GradientTexture2D_h1t0l")
 
-[node name="TorchEnd" type="CollisionShape2D" parent="."]
+[node name="TorchEnd" type="CollisionShape2D" parent="." unique_id=616707227]
 unique_name_in_owner = true
 z_index = 1
 use_parent_material = true
@@ -221,7 +179,7 @@ position = Vector2(14.372684, -13.538522)
 rotation = -0.88415307
 shape = SubResource("RectangleShape2D_3giss")
 
-[node name="TorchSprite" type="AnimatedSprite2D" parent="."]
+[node name="TorchSprite" type="AnimatedSprite2D" parent="." unique_id=1655725136]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(8.211391, -7.5743885)
@@ -229,22 +187,22 @@ sprite_frames = SubResource("SpriteFrames_tk5eq")
 animation = &"none_lit"
 autoplay = "none_lit"
 
-[node name="MainFlame" type="GPUParticles2D" parent="TorchSprite"]
+[node name="MainFlame" type="GPUParticles2D" parent="TorchSprite" unique_id=1809289237]
 unique_name_in_owner = true
 position = Vector2(6.446314, -4.935479)
 rotation = -0.800334
 amount = 265
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_sx2py")
+process_material = ExtResource("3_spjw2")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="TorchSprite/MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="TorchSprite/MainFlame" unique_id=1180890463]
 unique_name_in_owner = true
 position = Vector2(5.135801, -0.75641084)
 amount = 100
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_u2fq7")
+process_material = ExtResource("4_kg6dd")
 
-[node name="MiniTorch" type="AnimatedSprite2D" parent="."]
+[node name="MiniTorch" type="AnimatedSprite2D" parent="." unique_id=1335631334]
 unique_name_in_owner = true
 visible = false
 y_sort_enabled = true
@@ -252,7 +210,7 @@ use_parent_material = true
 position = Vector2(6.48217, -5.0087166)
 sprite_frames = SubResource("SpriteFrames_beu3c")
 
-[node name="MiniFlame" type="GPUParticles2D" parent="MiniTorch"]
+[node name="MiniFlame" type="GPUParticles2D" parent="MiniTorch" unique_id=793637362]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(4.846586, -3.4693823)
@@ -264,7 +222,7 @@ amount_ratio = 0.8
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_h1t0l")
 
-[node name="MiniFlameSecondary" type="GPUParticles2D" parent="MiniTorch/MiniFlame"]
+[node name="MiniFlameSecondary" type="GPUParticles2D" parent="MiniTorch/MiniFlame" unique_id=1956521094]
 y_sort_enabled = true
 position = Vector2(2.7327933, 0.34712774)
 emitting = false
@@ -273,8 +231,13 @@ amount_ratio = 0.8
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_beu3c")
 
-[node name="UpgradeChecker" type="Timer" parent="."]
+[node name="UpgradeChecker" type="Timer" parent="." unique_id=872563448]
 wait_time = 10.0
 autostart = true
+
+[node name="torchWaveSound" type="AudioStreamPlayer2D" parent="." unique_id=398567238]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_72ghi")
+pitch_scale = 1.43
 
 [connection signal="timeout" from="UpgradeChecker" to="." method="_on_upgrade_checker_timeout"]

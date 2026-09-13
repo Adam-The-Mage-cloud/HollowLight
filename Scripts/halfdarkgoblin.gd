@@ -65,6 +65,8 @@ func _ready() -> void:
 			%GoblinMelee.play("club")
 		elif weapon_picker == 3 :
 			%GoblinMelee.play("pick")
+	await get_tree().create_timer(randf_range(0.05, 1.0)).timeout
+	%TurnedVisibleSound.playing = true
 
 func set_tint() :
 	if EventBus.current_theme == 2 : # Ice :
@@ -159,6 +161,7 @@ func _physics_process(delta: float) -> void:
 
 
 func slash() -> void:
+	%AttackSound.playing = true
 	attacking = true
 
 	var pivot = %WeaponPivot
@@ -263,6 +266,7 @@ func _on_slash_area_body_exited(body: Node2D) -> void:
 
 func fire_at_will() :
 	while get_parent().visible == true:
+		%AttackSound.playing = true
 		bow_or_melee = -1
 		var goblin_arrow = preload("res://Scenes/Monsters/goblin_arrow.tscn").instantiate()
 		goblin_arrow.position = %GoblinRanged.position + Vector2(-3, 0)
@@ -445,6 +449,7 @@ func _on_goblin_hit_box_area_entered(area: Area2D) -> void:
 		knockback_movement.tween_property(self, "position", position + knockback_direction * 20, 0.24).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func burn_away() :
+	%goblinDeath.playing = true
 	# Flash effect
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/tint_amount", 0.8, 0.15)
@@ -481,6 +486,7 @@ func burn_away() :
 		EventBus.raid_entity_count -= 1
 		if EventBus.raid_entity_count == 0 :
 			get_tree().current_scene.sanctuary_raid_finished()
+		await get_tree().create_timer(0.3).timeout
 		queue_free()
 
 func flash_white() :

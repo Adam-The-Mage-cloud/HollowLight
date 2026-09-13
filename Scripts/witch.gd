@@ -46,6 +46,7 @@ var speed = 24
 
 var _doing_movement = false
 var _doing_footsteps = false
+var introSoundMade = false
 
 func _ready() -> void:
 	randomize()
@@ -84,6 +85,9 @@ func set_tint() :
 func _physics_process(delta: float) -> void:
 	if not get_parent().visible or not target:
 		return
+	if introSoundMade == false :
+		%TurnedVisibleSound.playing = true
+		introSoundMade = true
 	
 	brody_position = target.global_position
 	
@@ -144,6 +148,7 @@ func smooth_aim(delta: float) -> void:
 
 func fireatwill_hand1() :
 	while get_parent().visible == true and shadow == false :
+		%AttackSound.playing = true
 		var witch_projectile1 = preload("res://Scenes/Monsters/witch_projectile.tscn").instantiate()
 		witch_projectile1.elemental_type = hand1_element 
 		witch_projectile1.position = %WitchHand1.position  + Vector2(-11, 0)
@@ -171,6 +176,7 @@ func fireatwill_hand1() :
 
 func fireatwill_hand2() :
 	while get_parent().visible == true and shadow == false:
+		%AttackSound.playing = true
 		var witch_projectile2 = preload("res://Scenes/Monsters/witch_projectile.tscn").instantiate()
 		witch_projectile2.elemental_type = hand2_element 
 		witch_projectile2.position = %WitchHand2.position + Vector2(10, -2)
@@ -438,6 +444,7 @@ func flash_actual_white() :
 	tween.tween_property(material, "shader_parameter/flash_amount", 0.0, 0.1)
 
 func burn() :
+	%DeathSound.playing = true
 	EventBus.witches_burnt += 1
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_color", Vector3(0.95, 0.65, 0.25), 0.25)

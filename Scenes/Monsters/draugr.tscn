@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://he3eyfbd0ckl"]
+[gd_scene format=3 uid="uid://he3eyfbd0ckl"]
 
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_8d0up"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_o150v"]
@@ -7,6 +7,16 @@
 [ext_resource type="Script" uid="uid://b6q4g5ctrm6oq" path="res://Scripts/draugr.gd" id="3_omf3v"]
 [ext_resource type="Texture2D" uid="uid://c28n6sdgxa58o" path="res://Artwork/Draugr.png" id="4_8d0up"]
 [ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="6_gday6"]
+[ext_resource type="AudioStream" uid="uid://d700h0ml3gyp" path="res://Audio/dragon-studio-zombie-sfx-450450.mp3" id="8_bjdhv"]
+[ext_resource type="AudioStream" uid="uid://b2bv27d31ey7f" path="res://Audio/freesound_community-zombie-6851.mp3" id="9_odv7u"]
+[ext_resource type="AudioStream" uid="uid://con2fstutgsvh" path="res://Audio/freesound_community-zombie-moan-44932.mp3" id="10_8mfkc"]
+[ext_resource type="AudioStream" uid="uid://c8ejqu05dloou" path="res://Audio/creatorshome-gas-decompression-329819.mp3" id="10_vwwjx"]
+[ext_resource type="AudioStream" uid="uid://bck68jtdtlpi" path="res://Audio/phatphrogstudio-zombie-voice-growl-477834.mp3" id="11_c8rcl"]
+[ext_resource type="AudioStream" uid="uid://d24hewykiumvl" path="res://Audio/phatphrogstudio-zombie-voice-idle-moans-2-no-ai-479321.mp3" id="12_wchef"]
+[ext_resource type="AudioStream" uid="uid://ciwqobt1gq0mb" path="res://Audio/freesound_community-zombie-bite-96528.mp3" id="13_kicp2"]
+[ext_resource type="AudioStream" uid="uid://cl6ymwoexvgfo" path="res://Audio/daviddumaisaudio-metal-dagger-hit-185444.mp3" id="14_psp45"]
+[ext_resource type="AudioStream" uid="uid://byumtiwrvrghn" path="res://Audio/daviddumaisaudio-sword-slash-with-metal-shield-impact-185433.mp3" id="15_osvdc"]
+[ext_resource type="AudioStream" uid="uid://jk1alphf75v5" path="res://Audio/freesound_community-deep-metal-clang-87901.mp3" id="16_cic7v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_omf3v"]
 shader = ExtResource("1_o150v")
@@ -49,7 +59,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3o81r")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -73,7 +83,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8d0up")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -97,7 +107,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_omf3v")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -123,7 +133,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fcp5n")
 }],
-"loop": true,
+"loop": 1,
 "name": &"moving",
 "speed": 5.0
 }, {
@@ -131,7 +141,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fcp5n")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stationary",
 "speed": 5.0
 }]
@@ -146,7 +156,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_37epx")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -317,7 +327,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o150v")
 }],
-"loop": true,
+"loop": 1,
 "name": &"greataxe",
 "speed": 5.0
 }, {
@@ -325,7 +335,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_evh1o")
 }],
-"loop": true,
+"loop": 1,
 "name": &"greatfalchion",
 "speed": 5.0
 }]
@@ -398,18 +408,40 @@ color_ramp = SubResource("GradientTexture1D_37epx")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_omf3v"]
 
-[node name="draugr" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7rttl"]
+random_pitch = 1.0748733
+streams_count = 6
+stream_0/stream = ExtResource("8_bjdhv")
+stream_1/stream = ExtResource("9_odv7u")
+stream_2/stream = ExtResource("10_8mfkc")
+stream_3/stream = ExtResource("11_c8rcl")
+stream_4/stream = ExtResource("12_wchef")
+stream_5/stream = ExtResource("13_kicp2")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_615qh"]
+random_pitch = 1.1063695
+streams_count = 3
+stream_0/stream = ExtResource("14_psp45")
+stream_1/stream = ExtResource("15_osvdc")
+stream_2/stream = ExtResource("16_cic7v")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0hlyo"]
+random_pitch = 1.9999999
+streams_count = 1
+stream_0/stream = ExtResource("10_vwwjx")
+
+[node name="draugr" type="Area2D" unique_id=1403533183]
 z_index = 2
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_omf3v")
 script = ExtResource("3_omf3v")
 
-[node name="Visuals" type="Node2D" parent="."]
+[node name="Visuals" type="Node2D" parent="." unique_id=1523491615]
 unique_name_in_owner = true
 use_parent_material = true
 
-[node name="DraugrHead" type="AnimatedSprite2D" parent="Visuals"]
+[node name="DraugrHead" type="AnimatedSprite2D" parent="Visuals" unique_id=1976679679]
 unique_name_in_owner = true
 z_index = 3
 y_sort_enabled = true
@@ -418,7 +450,7 @@ use_parent_material = true
 position = Vector2(0, -11.5)
 sprite_frames = SubResource("SpriteFrames_o150v")
 
-[node name="DraugrLegL" type="AnimatedSprite2D" parent="Visuals"]
+[node name="DraugrLegL" type="AnimatedSprite2D" parent="Visuals" unique_id=1958812113]
 unique_name_in_owner = true
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_evh1o")
@@ -426,7 +458,7 @@ use_parent_material = true
 position = Vector2(-3.5, 19.48784)
 sprite_frames = SubResource("SpriteFrames_omf3v")
 
-[node name="DraugrLegR" type="AnimatedSprite2D" parent="Visuals"]
+[node name="DraugrLegR" type="AnimatedSprite2D" parent="Visuals" unique_id=1770231771]
 unique_name_in_owner = true
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_37epx")
@@ -434,7 +466,7 @@ use_parent_material = true
 position = Vector2(4, 18.48784)
 sprite_frames = SubResource("SpriteFrames_vwevx")
 
-[node name="DarknessLight" type="PointLight2D" parent="Visuals"]
+[node name="DarknessLight" type="PointLight2D" parent="Visuals" unique_id=1841374883]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(1.0000014, 1.1920929e-07)
@@ -445,7 +477,7 @@ energy = 3.0
 texture = SubResource("GradientTexture2D_gday6")
 texture_scale = 1.2
 
-[node name="DraugrShadowSprite" type="AnimatedSprite2D" parent="Visuals"]
+[node name="DraugrShadowSprite" type="AnimatedSprite2D" parent="Visuals" unique_id=94688253]
 unique_name_in_owner = true
 visible = false
 y_sort_enabled = true
@@ -455,27 +487,27 @@ sprite_frames = SubResource("SpriteFrames_eil10")
 animation = &"moving"
 autoplay = "moving"
 
-[node name="DraugrSprite" type="AnimatedSprite2D" parent="Visuals"]
+[node name="DraugrSprite" type="AnimatedSprite2D" parent="Visuals" unique_id=142743752]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_3o81r")
 
-[node name="SlobberParticles" type="GPUParticles2D" parent="Visuals/DraugrSprite"]
+[node name="SlobberParticles" type="GPUParticles2D" parent="Visuals/DraugrSprite" unique_id=106151291]
 z_index = 4
 position = Vector2(-1.0429535, -8.518371)
 amount = 2
 amount_ratio = 0.2
 process_material = SubResource("ParticleProcessMaterial_8d0up")
 
-[node name="DraugrShadow" type="Sprite2D" parent="Visuals/DraugrSprite"]
+[node name="DraugrShadow" type="Sprite2D" parent="Visuals/DraugrSprite" unique_id=786656512]
 z_index = -2
 use_parent_material = true
 position = Vector2(0.7014619, 19.369846)
 scale = Vector2(2.2459843, -0.71853536)
 texture = SubResource("GradientTexture2D_o150v")
 
-[node name="MonsterBurningParticles" type="GPUParticles2D" parent="Visuals/DraugrSprite"]
+[node name="MonsterBurningParticles" type="GPUParticles2D" parent="Visuals/DraugrSprite" unique_id=287741120]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.7411765)
 z_index = 3
@@ -485,7 +517,7 @@ amount_ratio = 0.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_4k7x8")
 
-[node name="OnFireLight" type="PointLight2D" parent="Visuals"]
+[node name="OnFireLight" type="PointLight2D" parent="Visuals" unique_id=1445034213]
 unique_name_in_owner = true
 position = Vector2(-1.9524307, -0.91290855)
 enabled = false
@@ -493,7 +525,7 @@ color = Color(1, 0.4627451, 0.21960784, 0.60784316)
 energy = 4.8
 texture = SubResource("GradientTexture2D_evh1o")
 
-[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Visuals"]
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Visuals" unique_id=360527268]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -509,7 +541,7 @@ preprocess = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_0v06x")
 
-[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Visuals"]
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Visuals" unique_id=483564237]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -525,48 +557,48 @@ preprocess = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_wb0ma")
 
-[node name="DraugrHitBox" type="Area2D" parent="Visuals"]
+[node name="DraugrHitBox" type="Area2D" parent="Visuals" unique_id=1672560903]
 
-[node name="DraugrCollision" type="CollisionShape2D" parent="Visuals/DraugrHitBox"]
+[node name="DraugrCollision" type="CollisionShape2D" parent="Visuals/DraugrHitBox" unique_id=1001971808]
 unique_name_in_owner = true
 position = Vector2(0.23049927, -0.23566437)
 shape = SubResource("CapsuleShape2D_f48ns")
 
-[node name="visibility_collision" type="CollisionShape2D" parent="."]
+[node name="visibility_collision" type="CollisionShape2D" parent="." unique_id=1257121891]
 unique_name_in_owner = true
 visible = false
 position = Vector2(0.49372864, 1.0653381)
 scale = Vector2(1.3826877, 1.3826877)
 shape = SubResource("RectangleShape2D_j6sdh")
 
-[node name="WeaponPivot" type="Marker2D" parent="."]
+[node name="WeaponPivot" type="Marker2D" parent="." unique_id=1571760724]
 unique_name_in_owner = true
 z_index = 2
 use_parent_material = true
 position = Vector2(-0.9914627, 2.3530025)
 
-[node name="MeleeArea" type="Area2D" parent="WeaponPivot"]
+[node name="MeleeArea" type="Area2D" parent="WeaponPivot" unique_id=749187702]
 unique_name_in_owner = true
 visible = false
 position = Vector2(19.50521, 24.427662)
 monitoring = false
 
-[node name="MeleeHitbox" type="CollisionShape2D" parent="WeaponPivot/MeleeArea"]
+[node name="MeleeHitbox" type="CollisionShape2D" parent="WeaponPivot/MeleeArea" unique_id=1019978915]
 position = Vector2(5.69499, -9.105448)
 rotation = 0.6475181
 scale = Vector2(1.340658, 1.0288072)
 shape = SubResource("RectangleShape2D_n2762")
 
-[node name="SlashArea" type="Area2D" parent="WeaponPivot"]
+[node name="SlashArea" type="Area2D" parent="WeaponPivot" unique_id=561387518]
 unique_name_in_owner = true
 position = Vector2(0.9914627, -2.3530025)
 
-[node name="slash_time_collision" type="CollisionShape2D" parent="WeaponPivot/SlashArea"]
+[node name="slash_time_collision" type="CollisionShape2D" parent="WeaponPivot/SlashArea" unique_id=864167526]
 position = Vector2(1.0682483, 2.907408)
 scale = Vector2(5.91039, 4.8234906)
 shape = SubResource("CircleShape2D_evh1o")
 
-[node name="DraugrMelee" type="AnimatedSprite2D" parent="WeaponPivot"]
+[node name="DraugrMelee" type="AnimatedSprite2D" parent="WeaponPivot" unique_id=64064466]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
@@ -575,7 +607,7 @@ position = Vector2(31, 13.147299)
 sprite_frames = SubResource("SpriteFrames_8d0up")
 animation = &"greataxe"
 
-[node name="BloodParticles" type="GPUParticles2D" parent="WeaponPivot/DraugrMelee"]
+[node name="BloodParticles" type="GPUParticles2D" parent="WeaponPivot/DraugrMelee" unique_id=1719652657]
 z_index = 4
 position = Vector2(-19.194324, -1.5123577)
 rotation = 0.77129024
@@ -583,7 +615,7 @@ amount = 1
 amount_ratio = 0.6081
 process_material = SubResource("ParticleProcessMaterial_omf3v")
 
-[node name="SparkParticles" type="GPUParticles2D" parent="WeaponPivot/DraugrMelee"]
+[node name="SparkParticles" type="GPUParticles2D" parent="WeaponPivot/DraugrMelee" unique_id=956117535]
 unique_name_in_owner = true
 z_index = 7
 position = Vector2(-6.7059746, 14.734507)
@@ -594,7 +626,7 @@ speed_scale = 0.45
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_evh1o")
 
-[node name="GrindParticles" type="GPUParticles2D" parent="WeaponPivot/DraugrMelee"]
+[node name="GrindParticles" type="GPUParticles2D" parent="WeaponPivot/DraugrMelee" unique_id=1074395150]
 unique_name_in_owner = true
 z_index = 7
 position = Vector2(-6.7059746, 14.734507)
@@ -604,14 +636,29 @@ speed_scale = 0.45
 explosiveness = 0.15
 process_material = SubResource("ParticleProcessMaterial_cglnr")
 
-[node name="MapStuckCollision" type="Area2D" parent="."]
+[node name="MapStuckCollision" type="Area2D" parent="." unique_id=2091872727]
 unique_name_in_owner = true
 
-[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision"]
+[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision" unique_id=1161035125]
 use_parent_material = true
 position = Vector2(0.009796143, 13.053505)
 scale = Vector2(0.475, 0.475)
 shape = SubResource("CircleShape2D_omf3v")
+
+[node name="TurnedVisibleSound" type="AudioStreamPlayer2D" parent="." unique_id=1092467087]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_7rttl")
+volume_db = 6.0
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="." unique_id=1354427655]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_615qh")
+volume_db = 4.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=956196971]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_0hlyo")
+volume_db = 4.5
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

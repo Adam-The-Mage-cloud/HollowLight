@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bdmwq41laaxdd"]
+[gd_scene format=3 uid="uid://bdmwq41laaxdd"]
 
 [ext_resource type="Script" uid="uid://5dsb7wcd6bt7" path="res://Scripts/wall_interactables.gd" id="1_bqh01"]
 [ext_resource type="Texture2D" uid="uid://bxacl5n4lito3" path="res://Artwork/Gray_Dungeon_Wall_Torch.png" id="2_nrrn8"]
+[ext_resource type="AudioStream" uid="uid://dtecti7fw173d" path="res://Audio/yodguard-fire-magic-5-378639.mp3" id="3_nrrn8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlo4b"]
 
@@ -17,7 +18,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ws8ji")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walltorch_1",
 "speed": 5.0
 }]
@@ -83,30 +84,35 @@ height = 128
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="wall_interactables" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_iqxhq"]
+random_pitch = 1.3348398
+streams_count = 1
+stream_0/stream = ExtResource("3_nrrn8")
+
+[node name="wall_interactables" type="Area2D" unique_id=644965878]
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_bqh01")
 
-[node name="WallInteractableCollision" type="CollisionShape2D" parent="."]
+[node name="WallInteractableCollision" type="CollisionShape2D" parent="." unique_id=1894702966]
 shape = SubResource("RectangleShape2D_mlo4b")
 
-[node name="DarknessRepeller" type="Area2D" parent="."]
+[node name="DarknessRepeller" type="Area2D" parent="." unique_id=1076011488]
 
-[node name="DarknessRepellerCollision" type="CollisionShape2D" parent="DarknessRepeller"]
+[node name="DarknessRepellerCollision" type="CollisionShape2D" parent="DarknessRepeller" unique_id=1956623396]
 unique_name_in_owner = true
 position = Vector2(0, -2)
 scale = Vector2(2.1794734, 2.1794734)
 shape = SubResource("CircleShape2D_bqh01")
 disabled = true
 
-[node name="WallInteractableSprite" type="AnimatedSprite2D" parent="."]
+[node name="WallInteractableSprite" type="AnimatedSprite2D" parent="." unique_id=2074467471]
 unique_name_in_owner = true
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_hy64k")
 animation = &"walltorch_1"
 
-[node name="MainFlame" type="GPUParticles2D" parent="."]
+[node name="MainFlame" type="GPUParticles2D" parent="." unique_id=282815634]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
@@ -117,7 +123,7 @@ amount_ratio = 0.4
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_hy64k")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame" unique_id=1219470278]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(-0.2045064, 1.2581568)
@@ -127,7 +133,7 @@ amount_ratio = 0.3
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_mcevj")
 
-[node name="WallTorchLight" type="PointLight2D" parent="."]
+[node name="WallTorchLight" type="PointLight2D" parent="." unique_id=1444514111]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-0.504097, 5.4626875)
@@ -136,8 +142,12 @@ color = Color(1, 0.439216, 0.172549, 1)
 energy = 10.0
 texture = SubResource("GradientTexture2D_ws8ji")
 
-[node name="DarknessReducer" type="Timer" parent="."]
+[node name="DarknessReducer" type="Timer" parent="." unique_id=376803284]
 unique_name_in_owner = true
+
+[node name="fireLight" type="AudioStreamPlayer2D" parent="." unique_id=135666741]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_iqxhq")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

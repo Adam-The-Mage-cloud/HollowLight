@@ -65,6 +65,7 @@ func _on_area_entered(area: Area2D) -> void:
 
 # Extra Effect Functions :
 func alight_flame() :
+	%fireLight.playing = true
 	alight = true
 	%WallTorchLight.enabled = true
 	%MainFlame.emitting = true

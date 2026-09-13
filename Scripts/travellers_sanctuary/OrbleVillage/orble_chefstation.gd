@@ -16,6 +16,7 @@ func stop_stirring() :
 
 func _on_cheffing_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
+		%AudioStreamPlayer2D.playing = true
 		EventBus.cheffing_station_interactable = true
 		%ChefstationSprite.play("highlighted")
 		%ExclamationMarkIndicator.visible = false

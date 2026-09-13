@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://bbf5kkr8xtioh"]
+[gd_scene format=3 uid="uid://bbf5kkr8xtioh"]
 
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_d6wki"]
 [ext_resource type="Shader" uid="uid://d0r148oo4ms50" path="res://Shaders/wavy_character.gdshader" id="1_rrl02"]
@@ -7,6 +7,12 @@
 [ext_resource type="Script" uid="uid://ci431erixgi8h" path="res://Scripts/witch.gd" id="3_un8x1"]
 [ext_resource type="Texture2D" uid="uid://b7aecg4npab65" path="res://Artwork/Witch.png" id="4_hjh8c"]
 [ext_resource type="Texture2D" uid="uid://cv8c81u3tldkq" path="res://Artwork/Ogre_Head_Shadow.png" id="6_2bhqr"]
+[ext_resource type="AudioStream" uid="uid://bdrwyk63nmcje" path="res://Audio/dragon-studio-witch-laugh-401713.mp3" id="8_7rkqw"]
+[ext_resource type="AudioStream" uid="uid://ckv6iyhagvphf" path="res://Audio/freesound_community-the-cackle-45693.mp3" id="9_k1fsa"]
+[ext_resource type="AudioStream" uid="uid://c8ejqu05dloou" path="res://Audio/creatorshome-gas-decompression-329819.mp3" id="10_n6hxl"]
+[ext_resource type="AudioStream" uid="uid://c37gkcuuu3ggf" path="res://Audio/universfield-spell-casting-229208.mp3" id="10_qgdsg"]
+[ext_resource type="AudioStream" uid="uid://80c47spd3m52" path="res://Audio/dragon-studio-epic-spell-impact-478364.mp3" id="11_uxdjv"]
+[ext_resource type="AudioStream" uid="uid://bkmok3nh8gl18" path="res://Audio/daviddumaisaudio-magical-spell-cast-190272.mp3" id="12_jn2a7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_un8x1"]
 shader = ExtResource("1_d6wki")
@@ -49,7 +55,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p42pi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -73,7 +79,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_whpry")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -97,7 +103,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_l7v3h")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -123,7 +129,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fcp5n")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -138,7 +144,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hjh8c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -300,7 +306,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d6wki")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -311,23 +317,41 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_d6wki")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bagpj"]
 
-[node name="witch" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7rkqw"]
+random_pitch = 1.0748733
+streams_count = 2
+stream_0/stream = ExtResource("8_7rkqw")
+stream_1/stream = ExtResource("9_k1fsa")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k1fsa"]
+random_pitch = 1.1063695
+streams_count = 3
+stream_0/stream = ExtResource("10_qgdsg")
+stream_1/stream = ExtResource("11_uxdjv")
+stream_2/stream = ExtResource("12_jn2a7")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qgdsg"]
+random_pitch = 1.9999999
+streams_count = 1
+stream_0/stream = ExtResource("10_n6hxl")
+
+[node name="witch" type="Area2D" unique_id=2054433546]
 texture_filter = 1
 material = SubResource("ShaderMaterial_un8x1")
 script = ExtResource("3_un8x1")
 
-[node name="Visuals" type="Node2D" parent="."]
+[node name="Visuals" type="Node2D" parent="." unique_id=750308346]
 unique_name_in_owner = true
 use_parent_material = true
 
-[node name="WitchHead" type="AnimatedSprite2D" parent="Visuals"]
+[node name="WitchHead" type="AnimatedSprite2D" parent="Visuals" unique_id=139247382]
 unique_name_in_owner = true
 z_index = 3
 y_sort_enabled = true
@@ -336,7 +360,7 @@ use_parent_material = true
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_un8x1")
 
-[node name="WitchLegL" type="AnimatedSprite2D" parent="Visuals"]
+[node name="WitchLegL" type="AnimatedSprite2D" parent="Visuals" unique_id=1145697226]
 unique_name_in_owner = true
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_hjh8c")
@@ -344,7 +368,7 @@ use_parent_material = true
 position = Vector2(-4, 19)
 sprite_frames = SubResource("SpriteFrames_p42pi")
 
-[node name="WitchLegR" type="AnimatedSprite2D" parent="Visuals"]
+[node name="WitchLegR" type="AnimatedSprite2D" parent="Visuals" unique_id=1112433111]
 unique_name_in_owner = true
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_whpry")
@@ -352,7 +376,7 @@ use_parent_material = true
 position = Vector2(10, 19)
 sprite_frames = SubResource("SpriteFrames_l7v3h")
 
-[node name="DarknessLight" type="PointLight2D" parent="Visuals"]
+[node name="DarknessLight" type="PointLight2D" parent="Visuals" unique_id=1816557776]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(1.0000014, 1.1920929e-07)
@@ -363,7 +387,7 @@ energy = 3.0
 texture = SubResource("GradientTexture2D_tfl0q")
 texture_scale = 1.2
 
-[node name="WitchShadowSprite" type="AnimatedSprite2D" parent="Visuals"]
+[node name="WitchShadowSprite" type="AnimatedSprite2D" parent="Visuals" unique_id=262925790]
 unique_name_in_owner = true
 visible = false
 y_sort_enabled = true
@@ -371,27 +395,27 @@ use_parent_material = true
 position = Vector2(26, 19)
 sprite_frames = SubResource("SpriteFrames_w358o")
 
-[node name="WitchSprite" type="AnimatedSprite2D" parent="Visuals"]
+[node name="WitchSprite" type="AnimatedSprite2D" parent="Visuals" unique_id=1617955691]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_wv0bi")
 
-[node name="SlobberParticles" type="GPUParticles2D" parent="Visuals/WitchSprite"]
+[node name="SlobberParticles" type="GPUParticles2D" parent="Visuals/WitchSprite" unique_id=1121287280]
 z_index = 4
 position = Vector2(2, 0)
 amount = 2
 amount_ratio = 0.2
 process_material = SubResource("ParticleProcessMaterial_705tm")
 
-[node name="WitchShadow" type="Sprite2D" parent="Visuals/WitchSprite"]
+[node name="WitchShadow" type="Sprite2D" parent="Visuals/WitchSprite" unique_id=750201285]
 z_index = -2
 use_parent_material = true
 position = Vector2(2.0000002, 19)
 scale = Vector2(2.2459843, -0.71853536)
 texture = SubResource("GradientTexture2D_1wppr")
 
-[node name="MonsterBurningParticles" type="GPUParticles2D" parent="Visuals/WitchSprite"]
+[node name="MonsterBurningParticles" type="GPUParticles2D" parent="Visuals/WitchSprite" unique_id=732492001]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.7411765)
 z_index = 3
@@ -401,7 +425,7 @@ amount_ratio = 0.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_psfjg")
 
-[node name="OnFireLight" type="PointLight2D" parent="Visuals"]
+[node name="OnFireLight" type="PointLight2D" parent="Visuals" unique_id=1660483068]
 unique_name_in_owner = true
 position = Vector2(-1.9524307, -0.91290855)
 enabled = false
@@ -409,7 +433,7 @@ color = Color(1, 0.4627451, 0.21960784, 0.60784316)
 energy = 4.8
 texture = SubResource("GradientTexture2D_61wjx")
 
-[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Visuals"]
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Visuals" unique_id=683149851]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -425,7 +449,7 @@ preprocess = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_m1vpl")
 
-[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Visuals"]
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Visuals" unique_id=2002263820]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -441,27 +465,27 @@ preprocess = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_2tt0s")
 
-[node name="WitchHitBox" type="Area2D" parent="Visuals"]
+[node name="WitchHitBox" type="Area2D" parent="Visuals" unique_id=596576254]
 visible = false
 
-[node name="WitchCollision" type="CollisionShape2D" parent="Visuals/WitchHitBox"]
+[node name="WitchCollision" type="CollisionShape2D" parent="Visuals/WitchHitBox" unique_id=602269690]
 unique_name_in_owner = true
 position = Vector2(2, 5)
 shape = SubResource("CapsuleShape2D_dnnvo")
 
-[node name="visibility_collision" type="CollisionShape2D" parent="."]
+[node name="visibility_collision" type="CollisionShape2D" parent="." unique_id=1329640914]
 unique_name_in_owner = true
 visible = false
 position = Vector2(-17.965591, 2)
 shape = SubResource("RectangleShape2D_1wvtr")
 
-[node name="WeaponPivot" type="Marker2D" parent="."]
+[node name="WeaponPivot" type="Marker2D" parent="." unique_id=1959564658]
 unique_name_in_owner = true
 z_index = 2
 use_parent_material = true
 position = Vector2(-0.9914627, 2.3530025)
 
-[node name="WitchHand1" type="AnimatedSprite2D" parent="WeaponPivot"]
+[node name="WitchHand1" type="AnimatedSprite2D" parent="WeaponPivot" unique_id=1900208931]
 unique_name_in_owner = true
 z_index = 2
 y_sort_enabled = true
@@ -469,7 +493,7 @@ use_parent_material = true
 position = Vector2(12.525887, 1)
 sprite_frames = SubResource("SpriteFrames_edgkn")
 
-[node name="WitchHand2" type="AnimatedSprite2D" parent="WeaponPivot"]
+[node name="WitchHand2" type="AnimatedSprite2D" parent="WeaponPivot" unique_id=325282387]
 unique_name_in_owner = true
 z_index = 2
 y_sort_enabled = true
@@ -477,15 +501,31 @@ use_parent_material = true
 position = Vector2(-9.008537, 4.6469975)
 sprite_frames = SubResource("SpriteFrames_whpry")
 
-[node name="MapStuckCollision" type="Area2D" parent="."]
+[node name="MapStuckCollision" type="Area2D" parent="." unique_id=1078730201]
 unique_name_in_owner = true
 visible = false
 
-[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision"]
+[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision" unique_id=1729931342]
 use_parent_material = true
 position = Vector2(1, 8)
 scale = Vector2(0.475, 0.475)
 shape = SubResource("CircleShape2D_bagpj")
+
+[node name="TurnedVisibleSound" type="AudioStreamPlayer2D" parent="." unique_id=104515169]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_7rkqw")
+volume_db = 4.5
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="." unique_id=204903834]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_k1fsa")
+volume_db = 4.5
+stream_paused = true
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=169015996]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_qgdsg")
+volume_db = 4.5
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="area_entered" from="Visuals/WitchHitBox" to="." method="_on_witch_hit_box_area_entered"]

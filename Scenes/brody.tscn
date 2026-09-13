@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://chadpnqf4f2xn"]
+[gd_scene format=3 uid="uid://chadpnqf4f2xn"]
 
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_0yueu"]
 [ext_resource type="Script" uid="uid://bwjcjoh73w2jp" path="res://Scripts/brody.gd" id="1_1lbbp"]
@@ -10,6 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="5_g8sqi"]
 [ext_resource type="Texture2D" uid="uid://cja70tkheanvb" path="res://Artwork/Darkness_Particle.png" id="5_s6v4d"]
 [ext_resource type="FontFile" uid="uid://6phwuvbfmw4m" path="res://Artwork/Fonts/PixelatedEleganceRegular-ovyAA.ttf" id="5_v4apm"]
+[ext_resource type="AudioStream" uid="uid://dfagno8c6pbkt" path="res://Audio/asep_bagus-fast-jogging-on-asphalt-320061.mp3" id="11_8cpa3"]
+[ext_resource type="AudioStream" uid="uid://cyi5no2fq03vr" path="res://Audio/freesound_community-running-in-grass-6237.mp3" id="12_5fo0w"]
+[ext_resource type="AudioStream" uid="uid://xcqxfw7mcsjk" path="res://Audio/freesound_community-jump-and-spark-6136.mp3" id="13_5fo0w"]
+[ext_resource type="AudioStream" uid="uid://ce6j6xw67jkt5" path="res://Audio/black_kumizhi-low-thumpy-kick-reverb-hit-494833.mp3" id="14_1febt"]
+[ext_resource type="AudioStream" uid="uid://673opaq6tdqe" path="res://Audio/universfield-cinematic-impact-hit-352702.mp3" id="15_b463g"]
+[ext_resource type="AudioStream" uid="uid://c6bugd1k45i1j" path="res://Audio/universfield-impact-thud-291047.mp3" id="16_cdlm2"]
+[ext_resource type="AudioStream" uid="uid://iqtproene2nd" path="res://Audio/universfield-sword-blade-slicing-flesh-352708.mp3" id="17_lbrv3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l2vdu"]
 shader = ExtResource("1_0yueu")
@@ -83,7 +90,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g8sqi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"gladiator_moving",
 "speed": 5.0
 }, {
@@ -91,7 +98,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cwow6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"gladiator_roll",
 "speed": 5.0
 }, {
@@ -99,7 +106,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g8sqi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"gladiator_stationary",
 "speed": 0.2
 }, {
@@ -107,7 +114,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8cpa3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"liquified_moving",
 "speed": 5.0
 }, {
@@ -115,7 +122,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5fo0w")
 }],
-"loop": true,
+"loop": 1,
 "name": &"liquified_roll",
 "speed": 5.0
 }, {
@@ -123,7 +130,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8cpa3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"liquified_stationary",
 "speed": 0.2
 }, {
@@ -200,7 +207,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s5cts")
 }],
-"loop": true,
+"loop": 1,
 "name": &"none_moving",
 "speed": 8.0
 }, {
@@ -208,7 +215,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k1o5k")
 }],
-"loop": true,
+"loop": 1,
 "name": &"none_roll",
 "speed": 5.0
 }, {
@@ -219,7 +226,7 @@ animations = [{
 "duration": 0.05,
 "texture": SubResource("AtlasTexture_vdrjy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"none_stationary",
 "speed": 0.2
 }, {
@@ -227,7 +234,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b4a8q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"puddle",
 "speed": 5.0
 }, {
@@ -235,7 +242,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1febt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"samurai_moving",
 "speed": 5.0
 }, {
@@ -243,7 +250,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_whxlv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"samurai_roll",
 "speed": 5.0
 }, {
@@ -251,7 +258,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1febt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"samurai_stationary",
 "speed": 0.2
 }, {
@@ -259,7 +266,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0yueu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shadow",
 "speed": 5.0
 }, {
@@ -270,7 +277,7 @@ animations = [{
 "duration": 0.05,
 "texture": SubResource("AtlasTexture_vdrjy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stationary",
 "speed": 0.2
 }]
@@ -285,7 +292,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4rx7b")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -300,7 +307,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w5hne")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -326,7 +333,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b463g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"moving",
 "speed": 8.0
 }, {
@@ -334,7 +341,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cdlm2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stationary",
 "speed": 12.0
 }]
@@ -431,7 +438,32 @@ gravity = Vector3(0, -4, 0)
 scale_curve = SubResource("CurveTexture_s6v4d")
 color_ramp = SubResource("GradientTexture1D_cd0il")
 
-[node name="Brody" type="CharacterBody2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k6aki"]
+streams_count = 1
+stream_0/stream = ExtResource("11_8cpa3")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1febt"]
+streams_count = 1
+stream_0/stream = ExtResource("12_5fo0w")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_whxlv"]
+random_pitch = 1.3348398
+streams_count = 1
+stream_0/stream = ExtResource("13_5fo0w")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_72ghi"]
+random_pitch = 1.122462
+streams_count = 1
+stream_0/stream = ExtResource("14_1febt")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_70jbg"]
+random_pitch = 1.0842268
+streams_count = 3
+stream_0/stream = ExtResource("15_b463g")
+stream_1/stream = ExtResource("16_cdlm2")
+stream_2/stream = ExtResource("17_lbrv3")
+
+[node name="Brody" type="CharacterBody2D" unique_id=1029254558]
 z_index = 2
 y_sort_enabled = true
 texture_filter = 1
@@ -440,7 +472,7 @@ collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_1lbbp")
 
-[node name="BrodyHitbox" type="CollisionShape2D" parent="."]
+[node name="BrodyHitbox" type="CollisionShape2D" parent="." unique_id=1475482394]
 unique_name_in_owner = true
 visible = false
 use_parent_material = true
@@ -448,24 +480,24 @@ position = Vector2(0, 1)
 scale = Vector2(0.475, 0.475)
 shape = SubResource("CircleShape2D_niouw")
 
-[node name="BrodyMapStuckCollision" type="Area2D" parent="."]
+[node name="BrodyMapStuckCollision" type="Area2D" parent="." unique_id=582755552]
 unique_name_in_owner = true
 visible = false
 collision_layer = 67108864
 collision_mask = 67108864
 
-[node name="BrodyCollisionCheck" type="CollisionShape2D" parent="BrodyMapStuckCollision"]
+[node name="BrodyCollisionCheck" type="CollisionShape2D" parent="BrodyMapStuckCollision" unique_id=1454027481]
 use_parent_material = true
 position = Vector2(0, 1)
 scale = Vector2(0.475, 0.475)
 shape = SubResource("CircleShape2D_niouw")
 
-[node name="Y-SortPivot" type="Marker2D" parent="."]
+[node name="Y-SortPivot" type="Marker2D" parent="." unique_id=1639329631]
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(1, 9)
 
-[node name="BrodySprite" type="AnimatedSprite2D" parent="Y-SortPivot"]
+[node name="BrodySprite" type="AnimatedSprite2D" parent="Y-SortPivot" unique_id=768361847]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
@@ -474,7 +506,7 @@ sprite_frames = SubResource("SpriteFrames_lgt8o")
 animation = &"puddle"
 autoplay = "none_stationary"
 
-[node name="ShieldStrap" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite"]
+[node name="ShieldStrap" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite" unique_id=941779606]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
@@ -482,14 +514,14 @@ position = Vector2(-6.8968964, 4.173218)
 sprite_frames = SubResource("SpriteFrames_cwow6")
 autoplay = "default"
 
-[node name="antenna" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite"]
+[node name="antenna" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite" unique_id=700472624]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-2, -2)
 sprite_frames = SubResource("SpriteFrames_8t6bh")
 
-[node name="feet" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite"]
+[node name="feet" type="AnimatedSprite2D" parent="Y-SortPivot/BrodySprite" unique_id=1095009462]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(-7, -5.000435)
@@ -500,24 +532,24 @@ frame_progress = 0.3021507
 centered = false
 offset = Vector2(0, 10.5)
 
-[node name="Shadow" type="Sprite2D" parent="Y-SortPivot"]
+[node name="Shadow" type="Sprite2D" parent="Y-SortPivot" unique_id=996785995]
 unique_name_in_owner = true
 visible = false
 position = Vector2(-2, -7)
 texture = ExtResource("5_s6v4d")
 script = ExtResource("4_cd0il")
 
-[node name="FullShadowChecker" type="Timer" parent="Y-SortPivot/Shadow"]
+[node name="FullShadowChecker" type="Timer" parent="Y-SortPivot/Shadow" unique_id=802538360]
 autostart = true
 
-[node name="BrodyShadow" type="Sprite2D" parent="Y-SortPivot"]
+[node name="BrodyShadow" type="Sprite2D" parent="Y-SortPivot" unique_id=1216180751]
 unique_name_in_owner = true
 z_index = -1
 use_parent_material = true
 position = Vector2(-1, -3)
 texture = SubResource("GradientTexture2D_k1o5k")
 
-[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Y-SortPivot"]
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="Y-SortPivot" unique_id=1710643231]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -531,7 +563,7 @@ one_shot = true
 preprocess = 1.09
 process_material = SubResource("ParticleProcessMaterial_vfjlh")
 
-[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Y-SortPivot"]
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="Y-SortPivot" unique_id=251988908]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -544,7 +576,7 @@ one_shot = true
 preprocess = 0.2
 process_material = SubResource("ParticleProcessMaterial_vfjlh")
 
-[node name="BloodSplatterParticles" type="GPUParticles2D" parent="Y-SortPivot"]
+[node name="BloodSplatterParticles" type="GPUParticles2D" parent="Y-SortPivot" unique_id=1425509162]
 unique_name_in_owner = true
 position = Vector2(-1.0333595, -8.555027)
 emitting = false
@@ -554,7 +586,7 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_l2vdu")
 
-[node name="DarknessClearingParticles" type="GPUParticles2D" parent="Y-SortPivot"]
+[node name="DarknessClearingParticles" type="GPUParticles2D" parent="Y-SortPivot" unique_id=73591932]
 unique_name_in_owner = true
 z_index = 1
 position = Vector2(-1, -12.999565)
@@ -566,12 +598,12 @@ explosiveness = 0.24
 randomness = 0.12
 process_material = SubResource("ParticleProcessMaterial_s6v4d")
 
-[node name="DashCooldown" type="Timer" parent="Y-SortPivot"]
+[node name="DashCooldown" type="Timer" parent="Y-SortPivot" unique_id=1582438315]
 unique_name_in_owner = true
 wait_time = 0.55
 one_shot = true
 
-[node name="FadedText" type="RichTextLabel" parent="."]
+[node name="FadedText" type="RichTextLabel" parent="." unique_id=1720308915]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 z_index = 12
@@ -588,15 +620,41 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BounceCooldown" type="Timer" parent="."]
+[node name="BounceCooldown" type="Timer" parent="." unique_id=1292616070]
 unique_name_in_owner = true
 wait_time = 0.75
 one_shot = true
 
-[node name="AttackedCooldown" type="Timer" parent="."]
+[node name="AttackedCooldown" type="Timer" parent="." unique_id=1501438379]
 unique_name_in_owner = true
 wait_time = 0.6
 one_shot = true
+
+[node name="stoneRunSound" type="AudioStreamPlayer2D" parent="." unique_id=1519521339]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_k6aki")
+volume_db = 14.0
+
+[node name="grassRunSound" type="AudioStreamPlayer2D" parent="." unique_id=110349427]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_1febt")
+volume_db = 24.0
+
+[node name="dashSound" type="AudioStreamPlayer2D" parent="." unique_id=176082084]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_whxlv")
+volume_db = 6.0
+pitch_scale = 1.45
+
+[node name="KnockbackSound" type="AudioStreamPlayer2D" parent="." unique_id=715383975]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_72ghi")
+volume_db = 10.427
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="." unique_id=2119216595]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_70jbg")
+volume_db = 10.0
 
 [connection signal="timeout" from="Y-SortPivot/Shadow/FullShadowChecker" to="Y-SortPivot/Shadow" method="_on_full_shadow_checker_timeout"]
 [connection signal="timeout" from="Y-SortPivot/DashCooldown" to="." method="_on_dash_cooldown_timeout"]

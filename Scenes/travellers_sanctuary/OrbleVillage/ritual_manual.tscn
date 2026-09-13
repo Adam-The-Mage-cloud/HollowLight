@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://8duetxvps8kv"]
+[gd_scene format=4 uid="uid://8duetxvps8kv"]
 
 [ext_resource type="Script" uid="uid://dvd6k102wtfdn" path="res://Scripts/travellers_sanctuary/OrbleVillage/ritual_manual.gd" id="1_fxnix"]
 [ext_resource type="Texture2D" uid="uid://o8k8oqa0n3ip" path="res://Artwork/Sanctuary/Orble_Ritual_Stagnant.png" id="2_pv5jv"]
@@ -80,6 +80,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -910,6 +919,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -1686,6 +1704,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -2498,6 +2525,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3382,6 +3418,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -4230,6 +4275,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -5105,6 +5159,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -5980,6 +6043,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -6855,6 +6927,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -7733,18 +7814,19 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_oknqy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="ritual_manual" type="Node2D"]
+[node name="ritual_manual" type="Node2D" unique_id=1801196357]
 modulate = Color(1, 1, 1, 0)
+z_index = 400
 texture_filter = 1
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_fxnix")
 
-[node name="OrbleBackground" type="Sprite2D" parent="."]
+[node name="OrbleBackground" type="Sprite2D" parent="." unique_id=118561134]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 4
@@ -7752,12 +7834,12 @@ position = Vector2(0, -2.166666)
 scale = Vector2(1.5, 1.5)
 texture = SubResource("CompressedTexture2D_holp4")
 
-[node name="RitualStatue" type="Sprite2D" parent="OrbleBackground"]
+[node name="RitualStatue" type="Sprite2D" parent="OrbleBackground" unique_id=510084578]
 position = Vector2(22.222223, 2.333333)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("2_pv5jv")
 
-[node name="EarnFervourText" type="RichTextLabel" parent="OrbleBackground"]
+[node name="EarnFervourText" type="RichTextLabel" parent="OrbleBackground" unique_id=1985269109]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -7779,7 +7861,7 @@ text = "Earn Fervour:"
 fit_content = true
 metadata/_edit_use_anchors_ = true
 
-[node name="EarnFervourText5" type="RichTextLabel" parent="OrbleBackground"]
+[node name="EarnFervourText5" type="RichTextLabel" parent="OrbleBackground" unique_id=858077484]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -7801,7 +7883,7 @@ text = "        Fervour:"
 fit_content = true
 metadata/_edit_use_anchors_ = true
 
-[node name="EarnFervourText2" type="RichTextLabel" parent="OrbleBackground"]
+[node name="EarnFervourText2" type="RichTextLabel" parent="OrbleBackground" unique_id=1038537442]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -7823,7 +7905,7 @@ text = "{   }"
 fit_content = true
 metadata/_edit_use_anchors_ = true
 
-[node name="EarnFervourText3" type="RichTextLabel" parent="OrbleBackground"]
+[node name="EarnFervourText3" type="RichTextLabel" parent="OrbleBackground" unique_id=918730712]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -7847,7 +7929,7 @@ Contributes
 fit_content = true
 metadata/_edit_use_anchors_ = true
 
-[node name="EarnFervourText4" type="RichTextLabel" parent="OrbleBackground"]
+[node name="EarnFervourText4" type="RichTextLabel" parent="OrbleBackground" unique_id=1716336766]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -7870,7 +7952,7 @@ Happy!"
 fit_content = true
 metadata/_edit_use_anchors_ = true
 
-[node name="EarnFervourText6" type="RichTextLabel" parent="OrbleBackground"]
+[node name="EarnFervourText6" type="RichTextLabel" parent="OrbleBackground" unique_id=673304707]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -7895,7 +7977,7 @@ for                 ,
 fit_content = true
 metadata/_edit_use_anchors_ = true
 
-[node name="EarnFervourText7" type="RichTextLabel" parent="OrbleBackground"]
+[node name="EarnFervourText7" type="RichTextLabel" parent="OrbleBackground" unique_id=683250280]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -7917,7 +7999,7 @@ text = "'Fervour'"
 fit_content = true
 metadata/_edit_use_anchors_ = true
 
-[node name="EarnFervourText9" type="RichTextLabel" parent="OrbleBackground"]
+[node name="EarnFervourText9" type="RichTextLabel" parent="OrbleBackground" unique_id=1896309177]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -7939,7 +8021,7 @@ text = "Restoration"
 fit_content = true
 metadata/_edit_use_anchors_ = true
 
-[node name="EarnFervourText8" type="RichTextLabel" parent="OrbleBackground"]
+[node name="EarnFervourText8" type="RichTextLabel" parent="OrbleBackground" unique_id=1770866010]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -7961,34 +8043,34 @@ text = "BOSS PORTALS"
 fit_content = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Fervour" type="Sprite2D" parent="OrbleBackground"]
+[node name="Fervour" type="Sprite2D" parent="OrbleBackground" unique_id=1533130083]
 position = Vector2(-36.166668, 1)
 texture = ExtResource("3_n6l3a")
 
-[node name="Fervour2" type="Sprite2D" parent="OrbleBackground"]
+[node name="Fervour2" type="Sprite2D" parent="OrbleBackground" unique_id=617132872]
 position = Vector2(-35.72222, 15.666668)
 texture = ExtResource("3_n6l3a")
 
-[node name="Fervour3" type="Sprite2D" parent="OrbleBackground"]
+[node name="Fervour3" type="Sprite2D" parent="OrbleBackground" unique_id=1230036344]
 position = Vector2(28.888895, -23.11111)
 texture = ExtResource("3_n6l3a")
 
-[node name="Fervour4" type="Sprite2D" parent="OrbleBackground"]
+[node name="Fervour4" type="Sprite2D" parent="OrbleBackground" unique_id=301940733]
 position = Vector2(-36.61111, -12.777779)
 texture = ExtResource("3_n6l3a")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="OrbleBackground"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="OrbleBackground" unique_id=970692876]
 z_index = 30
 position = Vector2(49.777775, 23.666668)
 scale = Vector2(-0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_fxnix")
 
-[node name="Sprite2D" type="Sprite2D" parent="OrbleBackground"]
+[node name="Sprite2D" type="Sprite2D" parent="OrbleBackground" unique_id=2000949327]
 position = Vector2(-2.8333366, 3.2222219)
 scale = Vector2(0.39306444, 0.39306444)
 texture = ExtResource("9_801i5")
 
-[node name="Sprite2D2" type="Sprite2D" parent="OrbleBackground"]
+[node name="Sprite2D2" type="Sprite2D" parent="OrbleBackground" unique_id=1040511797]
 position = Vector2(-10.833336, 5.4444437)
 scale = Vector2(0.6163951, 0.6163951)
 texture = ExtResource("4_muxbl")

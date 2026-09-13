@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b137rcrbp61es"]
+
+[ext_resource type="Script" uid="uid://crrwr1qwj7sa" path="res://addons/admob_manager/admob.gd" id="1_rlwyo"]
+[ext_resource type="Script" uid="uid://beoc1ikj02qfn" path="res://addons/admob_manager/banner.gd" id="2_a1fth"]
+[ext_resource type="Script" uid="uid://ba1djs4gu0l84" path="res://addons/admob_manager/rewarded.gd" id="3_thdt6"]
+[ext_resource type="Script" uid="uid://d2a5oigla84v8" path="res://addons/admob_manager/interstitial.gd" id="4_i5bqf"]
+[ext_resource type="Script" uid="uid://c0luug8ckwdta" path="res://addons/admob_manager/rewarded_intertitial.gd" id="5_gnk7d"]
+
+[node name="admob" type="Node" unique_id=1959751130]
+script = ExtResource("1_rlwyo")
+
+[node name="banner" type="Node" parent="." unique_id=1318869806]
+script = ExtResource("2_a1fth")
+
+[node name="interstitial" type="Node" parent="." unique_id=2275165]
+script = ExtResource("4_i5bqf")
+
+[node name="rewarded" type="Node" parent="." unique_id=262842050]
+script = ExtResource("3_thdt6")
+
+[node name="rewarded_intertitial" type="Node" parent="." unique_id=702452767]
+script = ExtResource("5_gnk7d")

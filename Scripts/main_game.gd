@@ -13,6 +13,8 @@ var darkness_increase_per_second = 12.4
 
 var room_finished = false
 
+var AdTimeCounter = 2
+
 func _ready() :
 	randomize()
 	# Connect Main Game To Certain Gameplay Events (For Node Removal/Performance etc e.g. Dungeon Reset / Sanctuary Spawn)
@@ -22,9 +24,27 @@ func _ready() :
 	EventBus.camera_reset.connect(camera_reset)           
 	EventBus.new_dungeon_touchscreen.connect(new_dungeon_touchscreen)
 	
+	# BEFORE ANYTHING ELSE, LOAD INDIE DEV INTRO:
+	%Torch.visible = false
+	%Brody.visible = false
+	%TouchScreenLayer.visible = false
+	%GameplayUI.visible = false
+	get_tree().paused = true
+	%ThanksForPlayingPage.fade_scroll()
+	await get_tree().create_timer(3.5).timeout
+	get_tree().paused = false
+	await get_tree().create_timer(0.5).timeout
+	%TouchScreenLayer.visible = true
+	%GameplayUI.visible = true
+	%IntroLayer.visible = false
+	
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
 	if EventBus.total_acquired_experience == 0 and EventBus.player_level == 1 :
+		%adTimer.stop()
+		%caveNoise.playing = true
 		EventBus.intro = true
+		%Torch.visible = true
+		%Brody.visible = true
 		var intro_room = preload("res://Scenes/custom_rooms/intro_room.tscn").instantiate()
 		intro_room.z_index = 0
 		%Brody.global_position = intro_room.global_position + Vector2(160, 72)
@@ -66,8 +86,9 @@ func _ready() :
 		var camera_tween = create_tween()
 		camera_tween.tween_property(cam, "zoom", Vector2(1.6875, 1.6875), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		camera_tween.tween_property(cam, "offset", Vector2(0.0, 0.0), 1.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		%Torch.visible = true
 		
+		%Torch.visible = true
+		%adTimer.start()
 		%Brody.input_enabled = true
 		touchscreen_available = true
 		
@@ -132,12 +153,34 @@ func _ready() :
 	   
 	else :
 		# Start in Sanctuary :
+		%Torch.visible = true
+		%Brody.visible = true
 		%Torch.lower_torch_light()
 		var spawn_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
 		spawn_sanctuary.global_position = Vector2(-0.0, 0.0)
 		%Brody.global_position = Vector2(136, 90)
 		%RoomsToBeDeleted.add_child(spawn_sanctuary)
 		_set_sanctuary_properties()
+		
+	if Admob.first_loadup == false :
+		Admob.first_loadup = true
+	if Admob.ads_disabled:
+		buttonvisiblefalse()
+
+func buttonvisiblefalse() :
+	%adFreeButton.visible = false
+
+func _on_ad_free_button_pressed():
+	Admob.billing_client.purchase("ad_free")
+
+func _on_ad_timer_timeout() -> void:
+	AdTimeCounter -= 1
+	%TimerTilAd.text = str(AdTimeCounter)
+	if AdTimeCounter == 0 :
+		AdTimeCounter = 90
+		Admob.load_interstitial()
+	if AdTimeCounter == 50 :
+		Admob.load_interstitial()
 
 
 func tell_to_dash() :
@@ -261,6 +304,7 @@ func _on_dungeon_ended() :
 	# If any rooms around, delete them :
 	delete_current_memory()
 	# STOP TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
+	%caveNoise.playing = false
 	%DarknessChecker.stop()
 	%ShadowSpawnTimer.stop()
 	%TorchWraithChance.stop()
@@ -286,6 +330,7 @@ func _on_new_dungeon_crawl() :
 	for node in get_tree().get_nodes_in_group("deletables_sanctuary"):
 		node.queue_free()
 	# DISPLAY LOADING SCREEN and let LoadingOverlay handle the rest :
+	%caveNoise.playing = true
 	%LoadingOverlay.show_loading()
 	# Start With Spawning Trapdoor Room :
 	var new_room = preload("res://Scenes/custom_rooms/trapdoor_room.tscn").instantiate()
@@ -388,6 +433,7 @@ func sanctuary_raid_finished() :
 	%GoblinAttackText.visible = false
 
 func introduce_orble(orble) :
+	return # WORK IN PROGRESS
 	orble.global_position = %Brody.global_position + Vector2(-24, 0)
 	orble.newly_spawned = true
 	selected_orble = orble
@@ -404,6 +450,7 @@ func introduce_orble(orble) :
 	call_deferred("add_child", namepopup)
 
 func orble_named(orble_particular) :
+	return # WORK IN PROGRESS
 	selected_orble.name_visible(orble_particular)
 	selected_orble.newly_spawned = false
 	

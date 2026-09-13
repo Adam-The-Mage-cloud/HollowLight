@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://cickrdkft6tma"]
+[gd_scene format=3 uid="uid://cickrdkft6tma"]
 
 [ext_resource type="Script" uid="uid://uusi0j0e50rq" path="res://Scripts/mud_crab.gd" id="1_f72kl"]
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_snf3b"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://b2ax21uatnbaj" path="res://Artwork/pixel_noise.webp" id="3_4s4rn"]
 [ext_resource type="Texture2D" uid="uid://flq6u4clrt25" path="res://Artwork/Mud_crab.png" id="3_f72kl"]
 [ext_resource type="Texture2D" uid="uid://eougmh3elcw" path="res://Artwork/Crab_Shadow.png" id="4_f72kl"]
+[ext_resource type="AudioStream" uid="uid://dt7s16tox6yem" path="res://Audio/universfield-wet-squelch-276679.mp3" id="7_tuuqp"]
+[ext_resource type="AudioStream" uid="uid://cl4etkldwupov" path="res://Audio/universfield-wet-squelch-impact-352302.mp3" id="8_g06v8"]
+[ext_resource type="AudioStream" uid="uid://c8ejqu05dloou" path="res://Audio/creatorshome-gas-decompression-329819.mp3" id="11_ko5yf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cd1xg"]
 shader = ExtResource("1_snf3b")
@@ -49,7 +52,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_22fag")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -64,7 +67,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7ms1r")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -79,7 +82,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_71vx6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -90,7 +93,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_22fag")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -101,7 +104,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_71vx6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -112,7 +115,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7ms1r")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -138,7 +141,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cxb5i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -153,7 +156,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_snf3b")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -212,7 +215,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f72kl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -230,7 +233,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cd1xg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -323,18 +326,35 @@ size = Vector2(33.763275, 26.858974)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_snf3b"]
 
-[node name="mud_crab" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_e5n3g"]
+random_pitch = 1.0748733
+streams_count = 2
+stream_0/stream = ExtResource("7_tuuqp")
+stream_1/stream = ExtResource("8_g06v8")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l21q0"]
+random_pitch = 1.1063695
+streams_count = 2
+stream_0/stream = ExtResource("7_tuuqp")
+stream_1/stream = ExtResource("8_g06v8")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_25pad"]
+random_pitch = 1.9999999
+streams_count = 1
+stream_0/stream = ExtResource("11_ko5yf")
+
+[node name="mud_crab" type="Area2D" unique_id=875457704]
 z_index = 2
 y_sort_enabled = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_cd1xg")
 script = ExtResource("1_f72kl")
 
-[node name="VisualPivot" type="Marker2D" parent="."]
+[node name="VisualPivot" type="Marker2D" parent="." unique_id=1555322093]
 use_parent_material = true
 rotation = 1.5707964
 
-[node name="OnFireLight" type="PointLight2D" parent="VisualPivot"]
+[node name="OnFireLight" type="PointLight2D" parent="VisualPivot" unique_id=1931614663]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-1.9524307, -0.91290855)
@@ -343,25 +363,25 @@ color = Color(1, 0.4627451, 0.21960784, 0.60784316)
 energy = 4.8
 texture = SubResource("GradientTexture2D_k3g2l")
 
-[node name="LegR1" type="AnimatedSprite2D" parent="VisualPivot"]
+[node name="LegR1" type="AnimatedSprite2D" parent="VisualPivot" unique_id=1701736028]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(9.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_xi6jh")
 
-[node name="LegR2" type="AnimatedSprite2D" parent="VisualPivot"]
+[node name="LegR2" type="AnimatedSprite2D" parent="VisualPivot" unique_id=1059393613]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(9.5, 3.5)
 sprite_frames = SubResource("SpriteFrames_5fgwn")
 
-[node name="LegR3" type="AnimatedSprite2D" parent="VisualPivot"]
+[node name="LegR3" type="AnimatedSprite2D" parent="VisualPivot" unique_id=502636527]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(7.472, 5.5)
 sprite_frames = SubResource("SpriteFrames_k3g2l")
 
-[node name="LegL1" type="AnimatedSprite2D" parent="VisualPivot"]
+[node name="LegL1" type="AnimatedSprite2D" parent="VisualPivot" unique_id=771170778]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-12.5, 1.488)
@@ -369,7 +389,7 @@ rotation = -3.1415925
 scale = Vector2(1, -1)
 sprite_frames = SubResource("SpriteFrames_jptrx")
 
-[node name="LegL2" type="AnimatedSprite2D" parent="VisualPivot"]
+[node name="LegL2" type="AnimatedSprite2D" parent="VisualPivot" unique_id=930633909]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-11.5, 3.5)
@@ -377,7 +397,7 @@ rotation = -3.1415925
 scale = Vector2(1, -1)
 sprite_frames = SubResource("SpriteFrames_u3xgj")
 
-[node name="LegL3" type="AnimatedSprite2D" parent="VisualPivot"]
+[node name="LegL3" type="AnimatedSprite2D" parent="VisualPivot" unique_id=1440113053]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-11.5, 5.5)
@@ -385,7 +405,7 @@ rotation = -3.1415925
 scale = Vector2(1, -1)
 sprite_frames = SubResource("SpriteFrames_77hu5")
 
-[node name="DarknessLight" type="PointLight2D" parent="VisualPivot"]
+[node name="DarknessLight" type="PointLight2D" parent="VisualPivot" unique_id=941061986]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(7.549784e-08, -1.0000014)
@@ -397,7 +417,7 @@ energy = 3.0
 texture = SubResource("GradientTexture2D_4s4rn")
 texture_scale = 1.2
 
-[node name="CrabShadowSprite" type="AnimatedSprite2D" parent="VisualPivot"]
+[node name="CrabShadowSprite" type="AnimatedSprite2D" parent="VisualPivot" unique_id=795978531]
 unique_name_in_owner = true
 visible = false
 y_sort_enabled = true
@@ -405,21 +425,21 @@ use_parent_material = true
 position = Vector2(-3, 2)
 sprite_frames = SubResource("SpriteFrames_3jc7w")
 
-[node name="CrabSprite" type="AnimatedSprite2D" parent="VisualPivot"]
+[node name="CrabSprite" type="AnimatedSprite2D" parent="VisualPivot" unique_id=1885965391]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_wiqsa")
 
-[node name="CrabShadow" type="Sprite2D" parent="VisualPivot/CrabSprite"]
+[node name="CrabShadow" type="Sprite2D" parent="VisualPivot/CrabSprite" unique_id=1245125404]
 z_index = -2
 use_parent_material = true
 position = Vector2(-1.6167068, 5.0788927)
 scale = Vector2(1.9868677, 1.0933094)
 texture = SubResource("GradientTexture2D_nnchh")
 
-[node name="MonsterBurningParticles" type="GPUParticles2D" parent="VisualPivot/CrabSprite"]
+[node name="MonsterBurningParticles" type="GPUParticles2D" parent="VisualPivot/CrabSprite" unique_id=893844618]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.7411765)
 z_index = 3
@@ -429,16 +449,16 @@ amount_ratio = 0.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_g06v8")
 
-[node name="PincerPivotL" type="Marker2D" parent="VisualPivot"]
+[node name="PincerPivotL" type="Marker2D" parent="VisualPivot" unique_id=722329366]
 unique_name_in_owner = true
 z_index = 1
 use_parent_material = true
 position = Vector2(5.105667, -0.5557194)
 
-[node name="PincerLArea" type="Area2D" parent="VisualPivot/PincerPivotL"]
+[node name="PincerLArea" type="Area2D" parent="VisualPivot/PincerPivotL" unique_id=2007816796]
 unique_name_in_owner = true
 
-[node name="PincerLHitbox" type="CollisionShape2D" parent="VisualPivot/PincerPivotL/PincerLArea"]
+[node name="PincerLHitbox" type="CollisionShape2D" parent="VisualPivot/PincerPivotL/PincerLArea" unique_id=1004818935]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-10.231579, -8.225887)
@@ -446,7 +466,7 @@ rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_uyya3")
 
-[node name="CrabPincerL" type="AnimatedSprite2D" parent="VisualPivot/PincerPivotL"]
+[node name="CrabPincerL" type="AnimatedSprite2D" parent="VisualPivot/PincerPivotL" unique_id=918861837]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
@@ -454,16 +474,16 @@ use_parent_material = true
 position = Vector2(-12.105667, -9.444281)
 sprite_frames = SubResource("SpriteFrames_c5tqv")
 
-[node name="PincerPivotR" type="Marker2D" parent="VisualPivot"]
+[node name="PincerPivotR" type="Marker2D" parent="VisualPivot" unique_id=436200464]
 unique_name_in_owner = true
 z_index = 1
 use_parent_material = true
 position = Vector2(-7.817932, -1.1114388)
 
-[node name="PincerRArea" type="Area2D" parent="VisualPivot/PincerPivotR"]
+[node name="PincerRArea" type="Area2D" parent="VisualPivot/PincerPivotR" unique_id=783849907]
 position = Vector2(18.007538, 0)
 
-[node name="PincerRHitbox" type="CollisionShape2D" parent="VisualPivot/PincerPivotR/PincerRArea"]
+[node name="PincerRHitbox" type="CollisionShape2D" parent="VisualPivot/PincerPivotR/PincerRArea" unique_id=1978354920]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-7.334896, -7.761)
@@ -471,14 +491,14 @@ rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_snf3b")
 
-[node name="CrabPincerR" type="AnimatedSprite2D" parent="VisualPivot/PincerPivotR"]
+[node name="CrabPincerR" type="AnimatedSprite2D" parent="VisualPivot/PincerPivotR" unique_id=1595703402]
 z_index = 1
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(12.796204, -7.8885612)
 sprite_frames = SubResource("SpriteFrames_cxb5i")
 
-[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="VisualPivot"]
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="VisualPivot" unique_id=1247593559]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -494,7 +514,7 @@ preprocess = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_ltaep")
 
-[node name="FootStepParticlesRight" type="GPUParticles2D" parent="VisualPivot"]
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="VisualPivot" unique_id=595163704]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -510,34 +530,49 @@ preprocess = 0.2
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_glfq1")
 
-[node name="visibility_collision" type="CollisionShape2D" parent="."]
+[node name="visibility_collision" type="CollisionShape2D" parent="." unique_id=1075856715]
 unique_name_in_owner = true
 position = Vector2(-0.72935486, -0.39392114)
 scale = Vector2(0.5275092, 0.84393644)
 shape = SubResource("RectangleShape2D_71vx6")
 
-[node name="CrabHitBox" type="Area2D" parent="."]
+[node name="CrabHitBox" type="Area2D" parent="." unique_id=1055002251]
 
-[node name="CrabCollision" type="CollisionShape2D" parent="CrabHitBox"]
+[node name="CrabCollision" type="CollisionShape2D" parent="CrabHitBox" unique_id=142086721]
 use_parent_material = true
 position = Vector2(-1.152092, 1.052784)
 shape = SubResource("CapsuleShape2D_jptrx")
 
-[node name="PincerActivationArea" type="Area2D" parent="."]
+[node name="PincerActivationArea" type="Area2D" parent="." unique_id=508523911]
 
-[node name="PincerActivationCollision" type="CollisionShape2D" parent="PincerActivationArea"]
+[node name="PincerActivationCollision" type="CollisionShape2D" parent="PincerActivationArea" unique_id=219937507]
 use_parent_material = true
 position = Vector2(26.25153, -1.0932975)
 shape = SubResource("RectangleShape2D_f72kl")
 
-[node name="MapStuckCollision" type="Area2D" parent="."]
+[node name="MapStuckCollision" type="Area2D" parent="." unique_id=1543946977]
 unique_name_in_owner = true
 
-[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision"]
+[node name="CollisionCheck" type="CollisionShape2D" parent="MapStuckCollision" unique_id=1355967284]
 use_parent_material = true
 position = Vector2(3.1169586, -1.6778545)
 scale = Vector2(0.475, 0.475)
 shape = SubResource("CircleShape2D_snf3b")
+
+[node name="TurnedVisibleSound" type="AudioStreamPlayer2D" parent="." unique_id=7854072]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_e5n3g")
+volume_db = 6.0
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="." unique_id=1600181836]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_l21q0")
+volume_db = 4.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=2130616919]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_25pad")
+volume_db = 4.5
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

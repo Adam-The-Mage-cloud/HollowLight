@@ -68,6 +68,7 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.name == "Torch" :
 		if type == 1 and vase_smashed == false : # THEN VASE / URN SO :
 			# BREAK :
+			%vaseSmash.playing = true
 			vase_smashed = true
 			drop_loot()
 			%VaseShatteredParticles.emitting = true
@@ -76,6 +77,7 @@ func _on_area_entered(area: Area2D) -> void:
 		elif type == 2 and alight == false : # THEN CAMPFIRE :
 			# SET ALIGHT :
 			alight = true
+			%fireLight.playing = true
 			%MainFlame.emitting = true
 			%MainFlameSecondary.emitting = true
 			%FlameLight.enabled = true
@@ -96,6 +98,7 @@ func _on_area_entered(area: Area2D) -> void:
 		elif type == 3 and sliced == false : # THEN SACK SO :
 			# SLICE :
 			sliced = true
+			%woodSmash.playing = true
 			drop_loot()
 			%SackSliceParticles.emitting = true
 			%InteractableSprite.play("sack_" + str(chosen_skin_number) + "_sliced")
@@ -103,12 +106,14 @@ func _on_area_entered(area: Area2D) -> void:
 		elif type == 4 and crate_smashed == false : # THEN CRATE SO :
 			# BREAK :
 			crate_smashed = true
+			%woodSmash.playing = true
 			drop_loot()
 			%CrateBreakParticles.emitting = true
 			%InteractableSprite.play("crate_" + str(chosen_skin_number) + "_smashed")
 		
 		elif type == 5 and bottle_smashed == false : # THEN BOTTLE SO :
 			# BREAK :
+			%vaseSmash.playing = true
 			bottle_smashed = true
 			drop_loot()
 			%GlassShatteringParticles.emitting = true

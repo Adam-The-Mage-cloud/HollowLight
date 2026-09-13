@@ -45,6 +45,7 @@ func brazier_lit() :
 		lit = true
 		# Let Game Know Beacon is Lit :
 		EventBus.beacon_lit.emit()
+		%AudioStreamPlayer2D.playing = true
 		remove_from_group("braziers")
 		%BrazierSprite.play("lit")
 		%DarknessRepellerCollision.call_deferred("set_disabled", false)

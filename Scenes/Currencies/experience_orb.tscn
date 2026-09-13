@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bk2ny42prqkau"]
+[gd_scene format=3 uid="uid://bk2ny42prqkau"]
 
 [ext_resource type="Script" uid="uid://ce0oa7hxa1eqk" path="res://Scripts/experience_orb.gd" id="1_1etqg"]
 [ext_resource type="Texture2D" uid="uid://ceugxq2d37lfg" path="res://Artwork/Xp_Orb.png" id="1_aoupt"]
 [ext_resource type="Shader" uid="uid://clvawxkudjld8" path="res://Shaders/flash_shader.gdshader" id="1_pl03u"]
+[ext_resource type="AudioStream" uid="uid://cvruxwv0m70e" path="res://Audio/53439420-retro-pickup-or-coin-sound-05-474795.mp3" id="4_xvl3v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xvl3v"]
 shader = ExtResource("1_pl03u")
@@ -28,7 +29,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1etqg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"experience_orb",
 "speed": 5.0
 }]
@@ -36,36 +37,46 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xvl3v"]
 size = Vector2(8, 8)
 
-[node name="experience_orb" type="Area2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k6aki"]
+random_pitch = 1.0413824
+streams_count = 1
+stream_0/stream = ExtResource("4_xvl3v")
+
+[node name="experience_orb" type="Area2D" unique_id=1396470937]
 z_index = 4
 texture_filter = 1
 material = SubResource("ShaderMaterial_xvl3v")
 script = ExtResource("1_1etqg")
 
-[node name="RadarCollisionArea" type="CollisionShape2D" parent="."]
+[node name="RadarCollisionArea" type="CollisionShape2D" parent="." unique_id=344121617]
 scale = Vector2(3.2, 3.2)
 shape = SubResource("CircleShape2D_1etqg")
 
-[node name="XPSprite" type="AnimatedSprite2D" parent="."]
+[node name="XPSprite" type="AnimatedSprite2D" parent="." unique_id=1636709025]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_pl03u")
 sprite_frames = SubResource("SpriteFrames_pl03u")
 animation = &"experience_orb"
 
-[node name="PickupArea" type="Area2D" parent="."]
+[node name="PickupArea" type="Area2D" parent="." unique_id=968847176]
 
-[node name="PickupCollisionArea" type="CollisionShape2D" parent="PickupArea"]
+[node name="PickupCollisionArea" type="CollisionShape2D" parent="PickupArea" unique_id=1088535676]
 scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_xvl3v")
 
-[node name="FlashTimer" type="Timer" parent="."]
+[node name="FlashTimer" type="Timer" parent="." unique_id=1442514152]
 unique_name_in_owner = true
 wait_time = 1.4
 autostart = true
 
-[node name="SpeedAccelerator" type="Timer" parent="."]
+[node name="SpeedAccelerator" type="Timer" parent="." unique_id=1182089981]
 unique_name_in_owner = true
 wait_time = 0.125
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=2005185434]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_k6aki")
+pitch_scale = 1.69
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

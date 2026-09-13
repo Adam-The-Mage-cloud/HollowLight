@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://b7rbd1mh7y12u"]
+[gd_scene format=4 uid="uid://b7rbd1mh7y12u"]
 
 [ext_resource type="Texture2D" uid="uid://cfrrn70qur3ip" path="res://Artwork/Sanctuary/Orble_Structures.png" id="1_apkxf"]
 [ext_resource type="Script" uid="uid://cduvmx67dpgga" path="res://Scripts/travellers_sanctuary/OrbleVillage/orble_chefstation.gd" id="1_axuxb"]
@@ -10,6 +10,7 @@
 [ext_resource type="Shader" uid="uid://jtcx64k0fxec" path="res://Shaders/font_flash.gdshader" id="8_6eo7e"]
 [ext_resource type="Texture2D" uid="uid://c7ixp2akfuloe" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_Full.png" id="9_0lfn6"]
 [ext_resource type="Texture2D" uid="uid://bgvpb11gatlkx" path="res://Artwork/Menus/AdventureMenu/Arrow_Choose_Adventure.png" id="10_p7dhl"]
+[ext_resource type="AudioStream" uid="uid://dwkngwdaefhg4" path="res://Audio/freesound_community-little-guy-sings-107052.mp3" id="11_73j7v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mkakt"]
 
@@ -27,7 +28,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uynqn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -35,7 +36,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p7dhl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"highlighted",
 "speed": 5.0
 }]
@@ -70,7 +71,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0lfn6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"animated",
 "speed": 4.0
 }]
@@ -298,6 +299,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3021,20 +3031,25 @@ cache/0/36/1/glyphs/48/size = Vector2(32, 32)
 cache/0/36/1/glyphs/48/uv_rect = Rect2(457, 1, 32, 32)
 cache/0/36/1/glyphs/48/texture_idx = 0
 
-[node name="orble_chefstation" type="CharacterBody2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ol4o5"]
+random_pitch = 1.0748733
+streams_count = 1
+stream_0/stream = ExtResource("11_73j7v")
+
+[node name="orble_chefstation" type="CharacterBody2D" unique_id=1752764104]
 z_index = 1
 texture_filter = 1
 script = ExtResource("1_axuxb")
 
-[node name="ChefstationCollision" type="CollisionShape2D" parent="."]
+[node name="ChefstationCollision" type="CollisionShape2D" parent="." unique_id=316973556]
 shape = SubResource("CircleShape2D_mkakt")
 
-[node name="ChefstationSprite" type="AnimatedSprite2D" parent="."]
+[node name="ChefstationSprite" type="AnimatedSprite2D" parent="." unique_id=497873772]
 unique_name_in_owner = true
 position = Vector2(2, -16)
 sprite_frames = SubResource("SpriteFrames_mvkae")
 
-[node name="OrbleStewSprite" type="AnimatedSprite2D" parent="."]
+[node name="OrbleStewSprite" type="AnimatedSprite2D" parent="." unique_id=727665593]
 unique_name_in_owner = true
 modulate = Color(0.7921569, 0.7921569, 0.7921569, 1)
 material = SubResource("ShaderMaterial_ccdbv")
@@ -3044,22 +3059,22 @@ animation = &"animated"
 autoplay = "animated"
 frame_progress = 0.8666559
 
-[node name="CheffingArea" type="Area2D" parent="."]
+[node name="CheffingArea" type="Area2D" parent="." unique_id=1373920167]
 position = Vector2(15, -18)
 
-[node name="CheffingCollision" type="CollisionShape2D" parent="CheffingArea"]
+[node name="CheffingCollision" type="CollisionShape2D" parent="CheffingArea" unique_id=1613607310]
 position = Vector2(-14.999999, 17.999998)
 scale = Vector2(3.1817694, 3.1817694)
 shape = SubResource("CircleShape2D_apkxf")
 
-[node name="ExclamationMarkIndicator" type="Sprite2D" parent="."]
+[node name="ExclamationMarkIndicator" type="Sprite2D" parent="." unique_id=1522616798]
 unique_name_in_owner = true
 visible = false
 z_index = 34
 position = Vector2(-7, -21)
 texture = SubResource("CompressedTexture2D_6eo7e")
 
-[node name="CookingText" type="RichTextLabel" parent="ExclamationMarkIndicator"]
+[node name="CookingText" type="RichTextLabel" parent="ExclamationMarkIndicator" unique_id=968703838]
 unique_name_in_owner = true
 z_index = 20
 texture_filter = 1
@@ -3080,19 +3095,23 @@ theme_override_font_sizes/normal_font_size = 36
 text = "COOKING!"
 metadata/_edit_use_anchors_ = true
 
-[node name="StewIcon" type="Sprite2D" parent="ExclamationMarkIndicator"]
+[node name="StewIcon" type="Sprite2D" parent="ExclamationMarkIndicator" unique_id=858692019]
 position = Vector2(19, -4)
 texture = ExtResource("9_0lfn6")
 
-[node name="StewIconSprite" type="Sprite2D" parent="."]
+[node name="StewIconSprite" type="Sprite2D" parent="." unique_id=1350283118]
 unique_name_in_owner = true
 visible = false
 position = Vector2(-8, -37)
 texture = ExtResource("9_0lfn6")
 
-[node name="Arrow" type="Sprite2D" parent="StewIconSprite"]
+[node name="Arrow" type="Sprite2D" parent="StewIconSprite" unique_id=1787014249]
 position = Vector2(17, 8)
 texture = ExtResource("10_p7dhl")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=233389716]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_ol4o5")
 
 [connection signal="body_entered" from="CheffingArea" to="." method="_on_cheffing_area_body_entered"]
 [connection signal="body_exited" from="CheffingArea" to="." method="_on_cheffing_area_body_exited"]

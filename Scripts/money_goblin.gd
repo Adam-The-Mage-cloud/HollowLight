@@ -29,6 +29,7 @@ var speed = 5
 
 var _doing_movement = false
 var _doing_footsteps = false
+var introSoundMade = false
 
 func _ready() -> void:
 	randomize()
@@ -65,6 +66,9 @@ func _physics_process(delta: float) -> void:
 	if not get_parent().visible:
 		return
 	
+	if introSoundMade == false :
+		%TurnedVisibleSound.playing = true
+		introSoundMade = true
 	
 	direction = (brody_position - global_position).normalized()
 

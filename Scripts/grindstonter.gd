@@ -30,6 +30,7 @@ var is_lunging = false
 var lunge_available = true
 
 var speed = 48
+var introSoundMade = false
 
 func _ready() :
 	EventBus.all_beacons_lit.connect(_on_all_beacons_lit)
@@ -59,6 +60,10 @@ func set_tint() :
 
 func _physics_process(delta: float) -> void:
 	if get_parent().visible == true :
+		if introSoundMade == false :
+			%TurnedVisibleSound.playing = true
+			introSoundMade = true
+			
 		if flip_cooldown > 0:
 			flip_cooldown -= delta
 
@@ -241,6 +246,7 @@ func flash_actual_white() :
 
 
 func burn() :
+	%DeathSound.playing = true
 	EventBus.grindstonters_burnt += 1
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_color", Vector3(0.95, 0.65, 0.25), 0.25)

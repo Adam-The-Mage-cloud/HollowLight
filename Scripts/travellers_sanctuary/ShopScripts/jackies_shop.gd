@@ -1,6 +1,7 @@
 extends Node2D
 
 func _ready() :
+	%AudioStreamPlayer2D.playing = true
 	open_jackies_shop()
 	set_upgrades_status_and_price()
 	EventBus.jackies_first_load = false

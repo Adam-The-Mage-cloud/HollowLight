@@ -104,6 +104,7 @@ func _physics_process(delta: float) -> void:
 	if effort > 0.05:
 		rotation_stamina -= drain_smooth * delta
 	else:
+		%torchWaveSound.playing = true
 		rotation_stamina += recovery_smooth * delta
 
 	rotation_stamina = clamp(rotation_stamina, 0.0, 1.0)

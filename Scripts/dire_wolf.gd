@@ -27,6 +27,7 @@ var flip_threshold = 12.0
 var is_lunging = false
 var lunge_available = true
 var lightable = false
+var introSoundMade = false
 
 var speed = 48
 
@@ -59,6 +60,9 @@ func set_tint() :
 
 func _physics_process(delta):
 	if get_parent().visible == true :
+		if introSoundMade == false :
+			%TurnedVisibleSound.playing = true
+			introSoundMade = true
 		if flip_cooldown > 0:
 			flip_cooldown -= delta
 
@@ -163,6 +167,7 @@ func lunge():
 	lunge_available = true
 
 func bite() :
+	%AttackSound.playing = true
 	var bite_tween = create_tween()
 	# 1. Anticipation: raise the axe a bit first
 	bite_tween.tween_property(%DireWolfHead, "rotation_degrees", 60, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -427,6 +432,7 @@ func flash_actual_white() :
 
 
 func burn() :
+	%DeathSound.playing = true
 	EventBus.dire_wolves_burnt += 1
 	var tween1 = create_tween()
 	tween1.tween_property(material, "shader_parameter/flash_color", Vector3(0.95, 0.65, 0.25), 0.25)
