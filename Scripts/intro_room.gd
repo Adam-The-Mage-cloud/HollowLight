@@ -9,6 +9,8 @@ var knight_flashing = false
 var torch_flashing = false
 var door_flashing = false
 
+var tutorialVidPlaying = false
+
 var speech = 1
 
 var floor_positions: Array[Vector2i] = []
@@ -100,68 +102,34 @@ func _ready() :
 	%DyingManMurmuring.playing = false
 	
 	await get_tree().create_timer(5.8).timeout
-	var bg = %ManualBackground
+	%TutorialVideoPlayer.visible = true
+	%TutorialVideoPlayer.play()
+	%TutorialFinishedButton.visible = true
+	get_tree().current_scene.get_node("TouchScreenLayer").visible = false
+	get_tree().current_scene.get_node("TouchScreenLayer/TouchScreenPress1").visible = false
+	get_tree().current_scene.get_node("TouchScreenLayer/TouchScreenPress1/DashButton").visible = false
+	get_tree().current_scene.get_node("TouchScreenLayer/TouchScreenPress2").visible = false
+	get_tree().current_scene.get_node("GameplayUI").visible = false
+	tutorialVidPlaying = true
 	
-	# Start slightly above and transparent
-	bg.modulate.a = 0.0
-	bg.position.y -= 20
-	
-	var t = create_tween()
-	t.set_parallel(true)
-	
-	# Fade in
-	t.tween_property(bg, "modulate:a", 1.0, 0.5)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		
-	# Slide down into place
-	t.tween_property(bg, "position:y", bg.position.y + 20, 0.5)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		
-	await t.finished
-	await get_tree().create_timer(6.0).timeout
-	
-	# Fade and slide back up
-	var t2 = create_tween()
-	t2.set_parallel(true)
-	
-	t2.tween_property(bg, "modulate:a", 0.0, 0.5)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-		
-	t2.tween_property(bg, "position:y", bg.position.y - 20, 0.5)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	
-	await t2.finished
-	
-	var bgm = %MonsterBackground
-	
-	# Start slightly above and transparent
-	bgm.modulate.a = 0.0
-	bgm.position.y -= 20
-	
-	var tm = create_tween()
-	tm.set_parallel(true)
-	
-	# Fade in
-	tm.tween_property(bgm, "modulate:a", 1.0, 0.5)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		
-	# Slide down into place
-	tm.tween_property(bgm, "position:y", bgm.position.y + 20, 0.5)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		
-	await tm.finished
-	await get_tree().create_timer(6.0).timeout
-	
-	# Fade and slide back up
-	var t2m = create_tween()
-	t2m.set_parallel(true)
-	
-	t2m.tween_property(bgm, "modulate:a", 0.0, 0.5)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-		
-	t2m.tween_property(bgm, "position:y", bgm.position.y - 20, 0.5)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-		
+	while tutorialVidPlaying == true :
+		await get_tree().create_timer(0.05).timeout
+		get_tree().current_scene.get_node("GameplayUI").visible = false
+		pass
+	print("buttonhit")
+	%TutorialVideoPlayer.stop()
+	%TutorialVideoPlayer.visible = false
+	%TutorialVideoPlayer.queue_free()
+	%IntroLayer.queue_free()
+	%TutorialFinishedButton.visible = false
+	get_tree().current_scene.get_node("TouchScreenLayer").visible = true
+	get_tree().current_scene.get_node("TouchScreenLayer/TouchScreenPress1").visible = true
+	get_tree().current_scene.get_node("TouchScreenLayer/TouchScreenPress1/DashButton").visible = true
+	get_tree().current_scene.get_node("TouchScreenLayer/TouchScreenPress2").visible = true
+	get_tree().current_scene.get_node("TouchScreenLayer/StaminaBarGreen").visible = true
+	get_tree().current_scene.get_node("TouchScreenLayer/StaminaBarOrange").visible = true
+	get_tree().current_scene.get_node("TouchScreenLayer/StaminaBarRed").visible = true
+	get_tree().current_scene.get_node("GameplayUI").visible = true
 	# DOOR NOW OPENABLE :
 	%DoorCollision.disabled = false
 	door_flashing = true
@@ -338,3 +306,8 @@ func _on_flash_allocator_timeout() -> void:
 		flash_white(%TorchShield)
 	elif door_flashing == true :
 		flash_white(%DoorArea)
+
+
+func _on_tutorial_finished_button_pressed() -> void:
+	tutorialVidPlaying = false
+	print("buttonhit!!!!")

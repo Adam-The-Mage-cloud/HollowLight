@@ -41,9 +41,10 @@ func _ready() :
 	# IF FIRST TIME LOADING THE GAME AND PLAYER IS LVL 0 - PLAY DUNGEON INTRO :
 	if EventBus.total_acquired_experience == 0 and EventBus.player_level == 1 :
 		%adTimer.stop()
+		%DashButton.visible = false
 		%caveNoise.playing = true
 		EventBus.intro = true
-		%Torch.visible = true
+		#%Torch.visible = true
 		%Brody.visible = true
 		var intro_room = preload("res://Scenes/custom_rooms/intro_room.tscn").instantiate()
 		intro_room.z_index = 0
@@ -64,27 +65,27 @@ func _ready() :
 		var cam = %BrodyCam
 		
 		# Zoom in
-		cam.zoom = Vector2(2.0, 2.0)
+		cam.zoom = Vector2(2.5, 2.5)
 		cam.offset = Vector2(24.0, -8.0)
 		
 		var camera_tween2 = create_tween()
-		camera_tween2.tween_property(cam, "zoom", Vector2(1.6875, 1.6875), 6.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween2.tween_property(cam, "zoom", Vector2(2.1, 2.1), 6.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 		await camera_tween2.finished
 		var camera_tween3 = create_tween().set_parallel(true)
-		camera_tween3.tween_property(cam, "zoom", Vector2(1.75, 1.75), 8.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween3.tween_property(cam, "zoom", Vector2(2.1875, 2.1875), 8.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		camera_tween3.tween_property(cam, "offset", Vector2(30, -20), 8.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 		await camera_tween3.finished
 		var camera_tween4 = create_tween().set_parallel(true)
-		camera_tween4.tween_property(cam, "zoom", Vector2(1.6875, 1.6875), 4.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween4.tween_property(cam, "zoom", Vector2(2.1, 2.1), 4.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		camera_tween4.tween_property(cam, "offset", Vector2(0, 0), 4.00).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 		await camera_tween4.finished
 		
 		# Tween camera back to default
 		var camera_tween = create_tween()
-		camera_tween.tween_property(cam, "zoom", Vector2(1.6875, 1.6875), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		camera_tween.tween_property(cam, "zoom", Vector2(2.1, 2.1), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		camera_tween.tween_property(cam, "offset", Vector2(0.0, 0.0), 1.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 		%Torch.visible = true
@@ -99,6 +100,7 @@ func _ready() :
 		
 		EventBus.sanctuary = true
 		%TouchScreenLayer.visible = true
+		%TorchJoystickBase.visible = false
 		%StaminaBarGreen.visible = false
 		%ShieldButton.visible = false
 		%TorchJoystickSpriteHighlighted.visible = false
@@ -106,7 +108,7 @@ func _ready() :
 		%DashButton.visible = false
 		%BrodyJoystickSpriteHighlighted.visible = true
 		%BrodyJoystickSprite.visible = true
-		%BrodyJoystickSpriteHighlighted.z_index = 1
+		%BrodyJoystickSpriteHighlighted.z_index = 3
 		
 		await movement_fadeintween.finished 
 		await get_tree().create_timer(0.5).timeout
@@ -118,11 +120,12 @@ func _ready() :
 		var torch_fadeintween = create_tween()
 		torch_fadeintween.tween_property(%TorchJoystickText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.5)
 		
+		%TorchJoystickBase.visible = true
 		%TorchJoystickSpriteHighlighted.visible = true
 		%BrodyJoystickSpriteHighlighted.visible = false
 		%TorchJoystickSprite.visible = true
-		%BrodyJoystickSpriteHighlighted.z_index = -2
-		%TorchJoystickSpriteHighlighted.z_index = 1
+		%BrodyJoystickSpriteHighlighted.z_index = 1
+		%TorchJoystickSpriteHighlighted.z_index = 3
 		
 		await torch_fadeintween.finished 
 		await get_tree().create_timer(0.5).timeout
@@ -135,13 +138,13 @@ func _ready() :
 		dash_fadeintween.tween_property(%DashButtonText, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.5)
 		
 		%DashHighlighted.visible = true
-		%DashButton.visible = true
 		touchscreen_available = true
-		%TorchJoystickSpriteHighlighted.z_index = -2
-		%BrodyCam.zoom = Vector2(1.6875, 1.6875)
+		%TorchJoystickSpriteHighlighted.z_index = 1
+		%BrodyCam.zoom = Vector2(1.85, 1.85)
 		
 		await dash_fadeintween.finished 
 		await get_tree().create_timer(0.5).timeout
+		%DashButton.visible = true
 		var dash_fadeouttween = create_tween()
 		dash_fadeouttween.tween_property(%DashButtonText, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1.5)
 		
@@ -196,7 +199,7 @@ func tell_to_dash() :
 	%DashButton.visible = true
 	touchscreen_available = true
 	%TorchJoystickSpriteHighlighted.z_index = -2
-	%BrodyCam.zoom = Vector2(1.6875, 1.6875)
+	%BrodyCam.zoom = Vector2(1.85, 1.85)
 	
 	await dash_fadeintween.finished 
 	await get_tree().create_timer(0.5).timeout
@@ -216,7 +219,7 @@ func _input(event):
 		if event is InputEventScreenTouch:
 			is_touchscreen = true
 			EventBus.touchscreen_enacted = true
-			%BrodyCam.zoom = Vector2(1.6875, 1.6875)
+			%BrodyCam.zoom = Vector2(1.85, 1.85)
 			%TouchScreenLayer.visible = true
 
 func _process(_delta: float) -> void: 

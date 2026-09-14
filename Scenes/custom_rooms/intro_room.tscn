@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dft3ru3q7paan" path="res://Scripts/intro_room.gd" id="1_w4pab"]
 [ext_resource type="Texture2D" uid="uid://dw3hf1r0tb2dc" path="res://Artwork/Gray_Dungeon_Wall_set.png" id="2_4jg2x"]
+[ext_resource type="VideoStream" uid="uid://bcfmi4no1enrj" path="res://Videos/Tutorial1RightFormat.ogv" id="2_jpy61"]
+[ext_resource type="Texture2D" uid="uid://dl283ntcjmdel" path="res://Artwork/Sanctuary/Resume.png" id="3_i2rj4"]
 [ext_resource type="Texture2D" uid="uid://dxnhs6niv54yx" path="res://Artwork/Gray_Dungeon_Cobble_Wall.png" id="3_w4pab"]
 [ext_resource type="Texture2D" uid="uid://bncc1qcmom8x0" path="res://Artwork/Gray_Dungeon_Tileset_10x10_Walls.png" id="4_vula7"]
 [ext_resource type="Texture2D" uid="uid://cywdleye4u8mm" path="res://Artwork/Gray_Dungeon_Tileset_10x10.png" id="5_k81gh"]
@@ -6580,6 +6582,17 @@ cache/0/9/1/glyphs/81/size = Vector2(9, 10)
 cache/0/9/1/glyphs/81/uv_rect = Rect2(35, 1, 9, 10)
 cache/0/9/1/glyphs/81/texture_idx = 0
 
+[sub_resource type="Gradient" id="Gradient_iqxhq"]
+offsets = PackedFloat32Array(0.0946844, 0.63973063, 0.72727275)
+colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0.101241, 0.101241, 0.101241, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i2rj4"]
+gradient = SubResource("Gradient_iqxhq")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="Gradient" id="Gradient_sm2es"]
 offsets = PackedFloat32Array(0, 0.82222223, 1)
 colors = PackedColorArray(1, 0.4392157, 0.17254902, 1, 0, 0, 0, 0.08235294, 0, 0, 0, 0)
@@ -6895,6 +6908,53 @@ stream_0/stream = SubResource("AudioStreamMP3_qn4mf")
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_w4pab")
+
+[node name="IntroLayer" type="CanvasLayer" parent="." unique_id=739990013]
+unique_name_in_owner = true
+layer = 600
+
+[node name="TutorialVideoPlayer" type="VideoStreamPlayer" parent="IntroLayer" unique_id=1815226496]
+unique_name_in_owner = true
+visible = false
+light_mask = 128
+visibility_layer = 129
+z_index = 60
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.5
+offset_top = -108.0
+offset_right = 1182.5
+offset_bottom = 972.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.17602086, 0.17602086)
+stream = ExtResource("2_jpy61")
+expand = true
+loop = true
+
+[node name="TutorialFinishedButton" type="Button" parent="IntroLayer/TutorialVideoPlayer" unique_id=1717780714]
+unique_name_in_owner = true
+visible = false
+light_mask = 129
+z_index = 61
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -333.6012
+offset_top = 371.11487
+offset_right = -286.6012
+offset_bottom = 401.11487
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(14.979293, 14.979293)
+icon = ExtResource("3_i2rj4")
+flat = true
 
 [node name="ProceduralRoomColour" type="CanvasModulate" parent="." unique_id=1767080890]
 color = Color(0.23786438, 0.7105198, 0.9999996, 1)
@@ -7349,6 +7409,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="WallTorchLight" type="PointLight2D" parent="FallenTank/SpeechBubbleSprite" unique_id=1259795487]
+unique_name_in_owner = true
+use_parent_material = true
+position = Vector2(-1.0000076, -1.000001)
+color = Color(0.30157244, 0.6728244, 0.89933604, 1)
+energy = 2.4
+texture = SubResource("GradientTexture2D_i2rj4")
+
 [node name="FlameLight" type="PointLight2D" parent="FallenTank" unique_id=1645079402]
 unique_name_in_owner = true
 use_parent_material = true
@@ -7423,5 +7491,6 @@ unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_k6aki")
 autoplay = true
 
+[connection signal="pressed" from="IntroLayer/TutorialVideoPlayer/TutorialFinishedButton" to="." method="_on_tutorial_finished_button_pressed"]
 [connection signal="body_entered" from="DoorArea/DoorOpenArea" to="." method="_on_door_open_area_body_entered"]
 [connection signal="timeout" from="FlashAllocator" to="." method="_on_flash_allocator_timeout"]
