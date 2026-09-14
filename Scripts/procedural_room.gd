@@ -153,6 +153,7 @@ var SPAWN_GROUPS = {
 
 func _ready() -> void:
 	randomize()
+	await get_tree().create_timer(0.25).timeout
 
 	# Basic registration
 	add_to_group("rooms")
@@ -281,7 +282,7 @@ func generate_room_async() -> void:
 	print("corridor clearance done")
 
 	# Stepladder chance
-	if stepladder_chance != 0:
+	if stepladder_chance != 0 and EventBus.intro == false:
 		if randi_range(1, stepladder_spawn_rate) == 1:
 			spawn_stepladder()
 
@@ -1601,6 +1602,10 @@ func monster_spawns() -> void:
 
 func spawn_monster(monster_name: String) -> void:
 	var scene_path = "res://Scenes/Monsters/%s.tscn" % monster_name
+	var monster_scene = load(scene_path)
+	if monster_scene == null:
+		push_error("Monster scene not found: " + scene_path)
+		return
 	var monster = load(scene_path).instantiate()
 	
 	var rand = randi_range(0, %SpawnPoints.get_child_count() - 1)

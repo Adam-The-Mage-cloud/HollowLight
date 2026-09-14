@@ -98,6 +98,7 @@ func _on_purchase_updated(result: Dictionary):
 func _process_purchase(purchase: Dictionary):
 	if "ad_free" in purchase.product_ids and purchase.purchase_state == BillingClient.PurchaseState.PURCHASED:
 		ads_disabled = true
+		get_tree().current_scene.hideAdFree()
 		_save_ads_disabled()
 
 		if not purchase.is_acknowledged:

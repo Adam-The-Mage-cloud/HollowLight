@@ -12,7 +12,7 @@ func hide_loading():
 	# Create a tween that fills the rest of the bar :
 	var finish_loading_tween = create_tween()
 	finish_loading_tween.tween_property(%LoadingProgressBar, "value", 100.0, 0.5)
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(2.0).timeout
 	%LoadingProgressBar.value = 0.0
 	visible = false
 

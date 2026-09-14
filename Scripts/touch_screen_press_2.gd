@@ -6,6 +6,9 @@ var radius = 30.0
 var output = Vector2.ZERO
 var center = Vector2.ZERO
 
+var active_finger := -1
+
+
 func _ready():
 	center = %BrodyJoystickBase.position
 	%BrodyJoystickSprite.position = center

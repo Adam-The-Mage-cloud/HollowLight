@@ -177,6 +177,7 @@ func random_speech() :
 func _on_shop_area_body_entered(body: Node2D) -> void:
 	# Enable Shop Interaction Ability :
 	if body.name == "Brody" :
+		%CliveShopHey.playing = true
 		EventBus.clives_shop_interactable = true
 
 func _on_shop_area_body_exited(body: Node2D) -> void:

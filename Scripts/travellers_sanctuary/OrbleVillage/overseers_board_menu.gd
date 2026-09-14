@@ -469,7 +469,7 @@ func pick_from_daily_pool() :
 func pick_from_weekly_pool() :
 	# THE WEEKLY MISSION POOL :
 	var i = 0
-	while i < 4 :
+	while i < 2 :
 		i += 1
 		var weekly_picker = 0
 		if EventBus.weekly_missions[str(i)] == "0" :

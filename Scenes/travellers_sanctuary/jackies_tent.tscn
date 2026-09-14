@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=4 uid="uid://b0a285hfnhnoc"]
+[gd_scene format=4 uid="uid://b0a285hfnhnoc"]
 
 [ext_resource type="Texture2D" uid="uid://3nj1ngai7iyp" path="res://Artwork/Sanctuary/Jackie/Jackie_s_Tent.png" id="1_ok77m"]
 [ext_resource type="Script" uid="uid://b06fcjpmqd4fd" path="res://Scripts/travellers_sanctuary/jackies_tent.gd" id="1_t7sem"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cfigbodde0hxx" path="res://Artwork/Sanctuary/Jackie/Jackie_s_Upgrades_Workbench_Highlighted.png" id="5_uwkw2"]
 [ext_resource type="Shader" uid="uid://cm8o1fqim6j3v" path="res://Shaders/nametag_aliveness.gdshader" id="7_4mpb5"]
 [ext_resource type="Shader" uid="uid://jtcx64k0fxec" path="res://Shaders/font_flash.gdshader" id="10_ulmal"]
+[ext_resource type="AudioStream" uid="uid://y5hqkphafeob" path="res://Audio/freesound_community-heyy-43849.mp3" id="11_parpy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ok77m"]
 size = Vector2(33.25495, 7.1987)
@@ -31,7 +32,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_n3qh6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -39,7 +40,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ulmal")
 }],
-"loop": true,
+"loop": 1,
 "name": &"highlighted",
 "speed": 5.0
 }]
@@ -66,7 +67,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t7sem")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -74,7 +75,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_parpy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"highlighted",
 "speed": 5.0
 }]
@@ -163,6 +164,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -658,7 +668,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6e8s0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -666,7 +676,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4mpb5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"highlighted",
 "speed": 5.0
 }]
@@ -689,7 +699,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_t3tu1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -980,6 +990,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3662,34 +3681,39 @@ width = 36
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="jackies_tent" type="CharacterBody2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_t3tu1"]
+random_pitch = 1.0594631
+streams_count = 1
+stream_0/stream = ExtResource("11_parpy")
+
+[node name="jackies_tent" type="CharacterBody2D" unique_id=1512296908]
 texture_filter = 1
 script = ExtResource("1_t7sem")
 
-[node name="BenchCollision" type="CollisionShape2D" parent="."]
+[node name="BenchCollision" type="CollisionShape2D" parent="." unique_id=1859886399]
 position = Vector2(19.121231, 16.144295)
 scale = Vector2(0.41369894, 3.0961964)
 shape = SubResource("RectangleShape2D_ok77m")
 
-[node name="TentBodyCollision" type="CollisionShape2D" parent="."]
+[node name="TentBodyCollision" type="CollisionShape2D" parent="." unique_id=14764238]
 position = Vector2(-2, 7.999999)
 scale = Vector2(0.6431943, 1.7596012)
 shape = SubResource("RectangleShape2D_n3qh6")
 
-[node name="JackieTent" type="AnimatedSprite2D" parent="."]
+[node name="JackieTent" type="AnimatedSprite2D" parent="." unique_id=1091450873]
 unique_name_in_owner = true
 position = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_6e8s0")
 autoplay = "default"
 
-[node name="JackieSprite" type="AnimatedSprite2D" parent="JackieTent"]
+[node name="JackieSprite" type="AnimatedSprite2D" parent="JackieTent" unique_id=1325452012]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_n3qh6")
 position = Vector2(10, 3)
 sprite_frames = SubResource("SpriteFrames_ulmal")
 autoplay = "default"
 
-[node name="NameTag" type="RichTextLabel" parent="JackieTent/JackieSprite"]
+[node name="NameTag" type="RichTextLabel" parent="JackieTent/JackieSprite" unique_id=559242605]
 z_index = 3
 material = SubResource("ShaderMaterial_ulmal")
 anchors_preset = 15
@@ -3711,19 +3735,19 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="JackieBench" type="AnimatedSprite2D" parent="JackieTent"]
+[node name="JackieBench" type="AnimatedSprite2D" parent="JackieTent" unique_id=1503231631]
 unique_name_in_owner = true
 position = Vector2(11.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_4mpb5")
 autoplay = "default"
 
-[node name="JackiePlume" type="AnimatedSprite2D" parent="JackieTent"]
+[node name="JackiePlume" type="AnimatedSprite2D" parent="JackieTent" unique_id=1127293326]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_t7sem")
 position = Vector2(22, -16)
 sprite_frames = SubResource("SpriteFrames_an1wa")
 
-[node name="MainFlame" type="GPUParticles2D" parent="."]
+[node name="MainFlame" type="GPUParticles2D" parent="." unique_id=1067940714]
 unique_name_in_owner = true
 z_index = -1
 y_sort_enabled = true
@@ -3734,7 +3758,7 @@ amount_ratio = 0.4
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_an1wa")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame" unique_id=474638836]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
@@ -3746,7 +3770,7 @@ lifetime = 2.4
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_8hoxy")
 
-[node name="WallTorchLight" type="PointLight2D" parent="."]
+[node name="WallTorchLight" type="PointLight2D" parent="." unique_id=914005268]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(0, -10)
@@ -3755,21 +3779,21 @@ color = Color(0, 0.7176471, 0.44313726, 1)
 energy = 3.0
 texture = SubResource("GradientTexture2D_xqor4")
 
-[node name="JackieTentArea" type="Area2D" parent="."]
+[node name="JackieTentArea" type="Area2D" parent="." unique_id=99124289]
 position = Vector2(-234, -28)
 
-[node name="CatShopCollision" type="CollisionShape2D" parent="JackieTentArea"]
+[node name="CatShopCollision" type="CollisionShape2D" parent="JackieTentArea" unique_id=1926029418]
 position = Vector2(247, 37.000004)
 scale = Vector2(3.6696618, 3.6696618)
 shape = SubResource("CircleShape2D_p1f31")
 
-[node name="ExclamationMarkIndicator" type="Sprite2D" parent="."]
+[node name="ExclamationMarkIndicator" type="Sprite2D" parent="." unique_id=247106753]
 unique_name_in_owner = true
 visible = false
 position = Vector2(3, -18)
 texture = SubResource("CompressedTexture2D_4mpb5")
 
-[node name="UpgradesText" type="RichTextLabel" parent="ExclamationMarkIndicator"]
+[node name="UpgradesText" type="RichTextLabel" parent="ExclamationMarkIndicator" unique_id=393294625]
 unique_name_in_owner = true
 z_index = 20
 texture_filter = 1
@@ -3790,26 +3814,31 @@ theme_override_font_sizes/normal_font_size = 36
 text = "UPGRADES!"
 metadata/_edit_use_anchors_ = true
 
-[node name="TentShadow" type="Sprite2D" parent="."]
+[node name="TentShadow" type="Sprite2D" parent="." unique_id=2029432366]
 z_index = -1
 use_parent_material = true
 position = Vector2(-3, 19)
 scale = Vector2(5.033371, 0.7479933)
 texture = SubResource("GradientTexture2D_h45vw")
 
-[node name="BenchLegR" type="Sprite2D" parent="."]
+[node name="BenchLegR" type="Sprite2D" parent="." unique_id=1574138536]
 z_index = -1
 use_parent_material = true
 position = Vector2(27, 27)
 scale = Vector2(1.1906344, 0.70158774)
 texture = SubResource("GradientTexture2D_603x2")
 
-[node name="BenchLegL" type="Sprite2D" parent="."]
+[node name="BenchLegL" type="Sprite2D" parent="." unique_id=394448159]
 z_index = -1
 use_parent_material = true
 position = Vector2(15, 25.999998)
 scale = Vector2(1.9319618, -0.6456655)
 texture = SubResource("GradientTexture2D_ok77m")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1204439915]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_t3tu1")
+volume_db = 6.0
 
 [connection signal="body_entered" from="JackieTentArea" to="." method="_on_jackie_tent_area_body_entered"]
 [connection signal="body_entered" from="JackieTentArea" to="." method="_on_cat_balloon_shop_area_body_entered"]

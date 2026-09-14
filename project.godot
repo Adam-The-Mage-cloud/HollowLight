@@ -33,6 +33,7 @@ window/size/viewport_width=409
 window/size/viewport_height=230
 window/size/mode=3
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 window/handheld/orientation=4
 window/defaults/default_clear_color=Color(0, 0, 0, 1)
 window/bg_color=Color(0, 0, 0, 1)
@@ -101,6 +102,7 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver="opengl3"
 rendering_device/fallback_to_vulkan=false
 rendering_device/fallback_to_d3d12=false

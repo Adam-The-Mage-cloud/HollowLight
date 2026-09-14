@@ -291,6 +291,8 @@ func play_sanctuary_tutorial() :
 	await tb21.finished
 	
 	get_tree().current_scene.get_node("Brody/BrodyCam").enabled = true
+	get_tree().current_scene.get_node("TouchScreenLayer").visible = true
+	get_tree().current_scene.get_node("TouchScreenLayer/TouchScreenPress1").visible = true
 	%IntroCam.enabled = false
 	EventBus.currently_interacting = false
 	#EventBus.intro = false

@@ -96,7 +96,10 @@ func _ready() :
 	speech = 4
 	speecher()
 	
-	await get_tree().create_timer(10.0).timeout
+	await get_tree().create_timer(4.2).timeout
+	%DyingManMurmuring.playing = false
+	
+	await get_tree().create_timer(5.8).timeout
 	var bg = %ManualBackground
 	
 	# Start slightly above and transparent
@@ -173,7 +176,7 @@ func speecher() :
 	if speech == 1 :
 		%SpeechText.text = str("my body is broken little Orblit...")
 	if speech == 2 :
-		%SpeechText.text = str("I go to dine in the halls of my forebears...")
+		%SpeechText.text = str("I go to dine in the halls of my forefathers...")
 	if speech == 3 :
 		%SpeechText.text = str("You must get out of here...")
 	if speech == 4 :

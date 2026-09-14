@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 func _on_jackie_tent_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
+		%AudioStreamPlayer2D.playing = true
 		EventBus.jackie_shop_interactable = true
 		%JackieTent.play("highlighted")
 		%JackieSprite.play("highlighted")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=4 uid="uid://05ohtgkusd5q"]
+[gd_scene format=4 uid="uid://05ohtgkusd5q"]
 
 [ext_resource type="Script" uid="uid://3w6jcivc53x4" path="res://Scripts/cat_balloon.gd" id="1_7cqin"]
 [ext_resource type="Texture2D" uid="uid://gvn6ngyfj4bq" path="res://Artwork/Cat_Air_Balloon.png" id="1_thpmb"]
@@ -7,6 +7,8 @@
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="5_tdeg5"]
 [ext_resource type="Shader" uid="uid://cm8o1fqim6j3v" path="res://Shaders/nametag_aliveness.gdshader" id="6_bwcmw"]
 [ext_resource type="Shader" uid="uid://jtcx64k0fxec" path="res://Shaders/font_flash.gdshader" id="7_n8jiw"]
+[ext_resource type="AudioStream" uid="uid://db1plxxgbg8f2" path="res://Audio/dragon-studio-cute-cat-meow-472372.mp3" id="8_bubx2"]
+[ext_resource type="AudioStream" uid="uid://qifgh30xsmvl" path="res://Audio/sound_garage-cat-meow-8-fx-306184.mp3" id="9_tywue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bymvm"]
 size = Vector2(23, 6)
@@ -25,7 +27,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ir7tl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -33,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tdeg5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"highlighted",
 "speed": 5.0
 }]
@@ -52,7 +54,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dumca")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -60,7 +62,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bymvm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"highlighted",
 "speed": 5.0
 }]
@@ -75,7 +77,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tyu56")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -102,7 +104,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jyjx7")
 }],
-"loop": false,
+"loop": 0,
 "name": &"down",
 "speed": 5.0
 }, {
@@ -110,7 +112,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_utwvl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"up",
 "speed": 5.0
 }]
@@ -253,6 +255,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -1210,6 +1221,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3924,30 +3944,36 @@ cache/0/36/1/glyphs/43/size = Vector2(16, 32)
 cache/0/36/1/glyphs/43/uv_rect = Rect2(459, 1, 16, 32)
 cache/0/36/1/glyphs/43/texture_idx = 0
 
-[node name="cat_balloon" type="CharacterBody2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_foqsf"]
+random_pitch = 1.122462
+streams_count = 2
+stream_0/stream = ExtResource("8_bubx2")
+stream_1/stream = ExtResource("9_tywue")
+
+[node name="cat_balloon" type="CharacterBody2D" unique_id=1280111452]
 texture_filter = 1
 script = ExtResource("1_7cqin")
 
-[node name="BalloonBodyCollision" type="CollisionShape2D" parent="."]
+[node name="BalloonBodyCollision" type="CollisionShape2D" parent="." unique_id=808493833]
 position = Vector2(5.5, 3)
 shape = SubResource("RectangleShape2D_bymvm")
 
-[node name="CatBalloonBasket" type="AnimatedSprite2D" parent="."]
+[node name="CatBalloonBasket" type="AnimatedSprite2D" parent="." unique_id=261918110]
 unique_name_in_owner = true
 position = Vector2(1, -3)
 sprite_frames = SubResource("SpriteFrames_tdeg5")
 
-[node name="CatBalloon" type="AnimatedSprite2D" parent="CatBalloonBasket"]
+[node name="CatBalloon" type="AnimatedSprite2D" parent="CatBalloonBasket" unique_id=568954078]
 unique_name_in_owner = true
 position = Vector2(0, -61)
 sprite_frames = SubResource("SpriteFrames_bwcmw")
 autoplay = "default"
 
-[node name="BalloonShieldSprite" type="AnimatedSprite2D" parent="CatBalloonBasket"]
+[node name="BalloonShieldSprite" type="AnimatedSprite2D" parent="CatBalloonBasket" unique_id=2025907671]
 position = Vector2(17, 10)
 sprite_frames = SubResource("SpriteFrames_n8jiw")
 
-[node name="CatBalloonist" type="AnimatedSprite2D" parent="CatBalloonBasket"]
+[node name="CatBalloonist" type="AnimatedSprite2D" parent="CatBalloonBasket" unique_id=1782975422]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_bwcmw")
 position = Vector2(-2, -6)
@@ -3955,7 +3981,7 @@ sprite_frames = SubResource("SpriteFrames_8wv25")
 animation = &"down"
 autoplay = "down"
 
-[node name="NameTag" type="RichTextLabel" parent="CatBalloonBasket"]
+[node name="NameTag" type="RichTextLabel" parent="CatBalloonBasket" unique_id=671418280]
 z_index = 3
 material = SubResource("ShaderMaterial_n8jiw")
 anchors_preset = 15
@@ -3977,7 +4003,7 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MainFlame" type="GPUParticles2D" parent="."]
+[node name="MainFlame" type="GPUParticles2D" parent="." unique_id=1857903870]
 unique_name_in_owner = true
 z_index = -1
 y_sort_enabled = true
@@ -3987,7 +4013,7 @@ amount_ratio = 0.4
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_bwcmw")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame" unique_id=1455694249]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
@@ -3998,7 +4024,7 @@ lifetime = 2.4
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_n8jiw")
 
-[node name="WallTorchLight" type="PointLight2D" parent="."]
+[node name="WallTorchLight" type="PointLight2D" parent="." unique_id=1603792923]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(0, -14)
@@ -4006,44 +4032,44 @@ color = Color(0, 0.7176471, 0.44313726, 1)
 energy = 3.0
 texture = SubResource("GradientTexture2D_bymvm")
 
-[node name="CatBalloonShopArea" type="Area2D" parent="."]
+[node name="CatBalloonShopArea" type="Area2D" parent="." unique_id=1001336813]
 position = Vector2(-234, -32)
 
-[node name="CatShopCollision" type="CollisionShape2D" parent="CatBalloonShopArea"]
+[node name="CatShopCollision" type="CollisionShape2D" parent="CatBalloonShopArea" unique_id=1393041862]
 visible = false
 position = Vector2(233, 40)
 scale = Vector2(2.3248372, 2.3248372)
 shape = SubResource("CircleShape2D_thpmb")
 
-[node name="CatRiseUpArea" type="Area2D" parent="."]
+[node name="CatRiseUpArea" type="Area2D" parent="." unique_id=858512993]
 
-[node name="CatRiseUpCollision" type="CollisionShape2D" parent="CatRiseUpArea"]
+[node name="CatRiseUpCollision" type="CollisionShape2D" parent="CatRiseUpArea" unique_id=1174242599]
 visible = false
 position = Vector2(-13, 10)
 scale = Vector2(6.22313, 6.22313)
 shape = SubResource("CircleShape2D_bymvm")
 
-[node name="BasketShadow" type="Sprite2D" parent="."]
+[node name="BasketShadow" type="Sprite2D" parent="." unique_id=760245583]
 z_index = -1
 use_parent_material = true
 position = Vector2(0.99999994, 11.935785)
 scale = Vector2(3.1222963, 0.7479933)
 texture = SubResource("GradientTexture2D_tdeg5")
 
-[node name="ShieldShadow" type="Sprite2D" parent="."]
+[node name="ShieldShadow" type="Sprite2D" parent="." unique_id=1911613762]
 z_index = -1
 use_parent_material = true
 position = Vector2(17, 14)
 scale = Vector2(1.8333334, 1.301616)
 texture = SubResource("GradientTexture2D_bwcmw")
 
-[node name="ExclamationMarkIndicator" type="Sprite2D" parent="."]
+[node name="ExclamationMarkIndicator" type="Sprite2D" parent="." unique_id=1143641762]
 unique_name_in_owner = true
 visible = false
 position = Vector2(-26, -24)
 texture = SubResource("CompressedTexture2D_bwcmw")
 
-[node name="UpgradesText" type="RichTextLabel" parent="ExclamationMarkIndicator"]
+[node name="UpgradesText" type="RichTextLabel" parent="ExclamationMarkIndicator" unique_id=1781908286]
 unique_name_in_owner = true
 z_index = 20
 texture_filter = 1
@@ -4063,6 +4089,10 @@ theme_override_fonts/normal_font = SubResource("FontFile_bubx2")
 theme_override_font_sizes/normal_font_size = 36
 text = "COSMETICS!"
 metadata/_edit_use_anchors_ = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=120726935]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_foqsf")
 
 [connection signal="body_entered" from="CatBalloonShopArea" to="." method="_on_cat_balloon_shop_area_body_entered"]
 [connection signal="body_exited" from="CatBalloonShopArea" to="." method="_on_cat_balloon_shop_area_body_exited"]

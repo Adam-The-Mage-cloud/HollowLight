@@ -834,14 +834,17 @@ unique_name_in_owner = true
 [node name="vaseSmash" type="AudioStreamPlayer2D" parent="." unique_id=577337041]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_k6aki")
+volume_db = 4.0
 
 [node name="woodSmash" type="AudioStreamPlayer2D" parent="." unique_id=1112019927]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_ji67k")
+volume_db = 4.0
 
 [node name="fireLight" type="AudioStreamPlayer2D" parent="." unique_id=445685478]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_mflin")
+volume_db = 8.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="DarknessRepeller" to="." method="_on_darkness_repeller_body_entered"]

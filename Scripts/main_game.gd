@@ -170,6 +170,9 @@ func _ready() :
 func buttonvisiblefalse() :
 	%adFreeButton.visible = false
 
+func hideAdFree() :
+	%adFreeButton.visible = false
+
 func _on_ad_free_button_pressed():
 	Admob.billing_client.purchase("ad_free")
 
@@ -313,6 +316,7 @@ func _on_dungeon_ended() :
 	%Torch.visible = false
 	# Turn off DarknessLayer Effect :
 	%DarknessLayer.visible = false
+	%DarknessBar.visible = false
 	# Turn Off GameplayUI :
 	%GameplayUI.visible = false
 	# Turn Off ability for Touchscreen Controls (Temporarily) 
@@ -358,15 +362,17 @@ func _on_new_dungeon_crawl() :
 		
 		await get_tree().create_timer(17.0).timeout
 		# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
+		%DarknessChecker.start()
 		%ShadowSpawnTimer.start()
 		%TorchWraithChance.start()
 		%WormBatChance.start()
 		# Brody Cam :
-		%BrodyCam.zoom = Vector2(1.6875, 1.6875)
+		%BrodyCam.zoom = Vector2(1.8, 1.8)
 		# Give Brody His Torch/Weapons :
 		%Torch.visible = true
 		# Turn ON DarknessLayer Effect :
 		%DarknessLayer.visible = true
+		%DarknessBar.visible = true
 		# Turn ON GameplayUI :
 		%GameplayUI.visible = true
 		# Enable ability for Touchscreen Controls (Temporarily) 
@@ -379,15 +385,17 @@ func _on_new_dungeon_crawl() :
 		
 	else :
 		# START TIMERS / GAMEPLAY ONGOING THINGS / ENTITIES :
+		%DarknessChecker.start()
 		%ShadowSpawnTimer.start()
 		%TorchWraithChance.start()
 		%WormBatChance.start()
 		# Brody Cam :
-		%BrodyCam.zoom = Vector2(1.6875, 1.6875)
+		%BrodyCam.zoom = Vector2(1.8, 1.8)
 		# Give Brody His Torch/Weapons :
 		%Torch.visible = true
 		# Turn ON DarknessLayer Effect :
 		%DarknessLayer.visible = true
+		%DarknessBar.visible = true
 		# Turn ON GameplayUI :
 		%GameplayUI.visible = true
 		# Enable ability for Touchscreen Controls (Temporarily) 
@@ -457,7 +465,7 @@ func orble_named(orble_particular) :
 	if EventBus.orbles_to_introduce <= 0 :
 		# Reset Camera / Touchscreen etc :
 		var cam_tween = create_tween()
-		cam_tween.tween_property(%BrodyCam, "zoom", Vector2(1.5, 1.5), 1.0)
+		cam_tween.tween_property(%BrodyCam, "zoom", Vector2(1.8, 1.8), 1.0)
 		cam_tween.tween_property(%BrodyCam, "offset", Vector2(0.0, 0.0), 1.0)
 		%TouchScreenLayer.visible = true
 
@@ -470,6 +478,7 @@ func new_dungeon_touchscreen() :
 func _on_spawning_sanctuary() :
 	delete_current_memory()
 	_set_sanctuary_properties()
+	%DarknessChecker.stop()
 	var new_sanctuary = preload("res://Scenes/custom_rooms/the_sanctuary.tscn").instantiate()
 	new_sanctuary.z_index = 0
 	new_sanctuary.global_position = Vector2(0, 0)
@@ -484,12 +493,14 @@ func _set_sanctuary_properties() :
 	%ShadowSpawnTimer.stop()
 	%TorchWraithChance.stop()
 	%WormBatChance.stop()
+	%DarknessChecker.stop()
 	# Camera :
-	%BrodyCam.zoom = Vector2(1.5, 1.5)
+	%BrodyCam.zoom = Vector2(1.75, 1.75)
 	# Give Brody His Torch/Weapons :
 	%Torch.visible = false
 	# Turn ON DarknessLayer Effect :
 	%DarknessLayer.visible = false  
+	%DarknessBar.visible = false
 	# Turn ON GameplayUI :
 	%GameplayUI.visible = false
 	# Enable ability for Touchscreen Controls (Temporarily) 

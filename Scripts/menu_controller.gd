@@ -291,6 +291,8 @@ func _on_sanctuary_button_pressed() -> void:
 	EventBus.death_played = false
 	EventBus.total_current_darkness = 0
 	EventBus.spawn_the_sanctuary()
+	%TouchScreenLayer.visible = true
+	%TouchScreenPress1.visible = true
 
 func _on_replay_dungeon_button_pressed() -> void:
 	# Highlight in Yellow All Assets on That Side :
@@ -367,7 +369,6 @@ func check_clive_shop_status() :
 			%Item2Unequipped.visible = true
 
 func clive_shop_fadein() :
-	%CliveShopHey.playing = true
 	%CliveShopScreen.visible = true
 	var AdventureScreenFade_tween = create_tween()
 	AdventureScreenFade_tween.tween_property(%CliveShopScreen, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)

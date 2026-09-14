@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://bfgqfdxugrc4c"]
+[gd_scene format=4 uid="uid://bfgqfdxugrc4c"]
 
 [ext_resource type="Script" uid="uid://ch5th8cq4hc18" path="res://Scripts/travellers_sanctuary/clive_npc.gd" id="1_68c2m"]
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_ub41e"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://q3pmxytmxrs3" path="res://Artwork/Sanctuary/Speech_Bubble.png" id="3_m8hgu"]
 [ext_resource type="Shader" uid="uid://cm8o1fqim6j3v" path="res://Shaders/nametag_aliveness.gdshader" id="4_aqkh5"]
 [ext_resource type="FontFile" uid="uid://6phwuvbfmw4m" path="res://Artwork/Fonts/PixelatedEleganceRegular-ovyAA.ttf" id="4_ub41e"]
+[ext_resource type="AudioStream" uid="uid://dpdf1q6uwswc0" path="res://Audio/freesound_community-what-can-i-do-for-you-npc-british-male-99751.mp3" id="7_1dgj6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aqkh5"]
 shader = ExtResource("1_ub41e")
@@ -109,7 +110,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xj8nt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"moving_down",
 "speed": 5.0
 }, {
@@ -141,7 +142,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lkueh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"moving_sideways",
 "speed": 5.0
 }, {
@@ -164,7 +165,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ox1tg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"moving_up",
 "speed": 5.0
 }, {
@@ -172,7 +173,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wkai3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stood_still_back",
 "speed": 5.0
 }, {
@@ -180,7 +181,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2tyrn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stood_still_front",
 "speed": 5.0
 }, {
@@ -188,7 +189,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fsw2i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stood_still_sideways",
 "speed": 5.0
 }]
@@ -341,6 +342,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -864,43 +874,48 @@ cache/0/16/1/glyphs/71/size = Vector2(14, 15)
 cache/0/16/1/glyphs/71/uv_rect = Rect2(119, 1, 14, 15)
 cache/0/16/1/glyphs/71/texture_idx = 0
 
-[node name="clive_npc" type="CharacterBody2D"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yl7u7"]
+random_pitch = 1.0594631
+streams_count = 1
+stream_0/stream = ExtResource("7_1dgj6")
+
+[node name="clive_npc" type="CharacterBody2D" unique_id=1175824787]
 texture_filter = 1
 material = SubResource("ShaderMaterial_aqkh5")
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_68c2m")
 
-[node name="CliveCollision" type="CollisionShape2D" parent="."]
+[node name="CliveCollision" type="CollisionShape2D" parent="." unique_id=673890101]
 position = Vector2(-1, 1.75)
 scale = Vector2(0.25, 0.708)
 shape = SubResource("RectangleShape2D_68c2m")
 
-[node name="ShopArea" type="Area2D" parent="."]
+[node name="ShopArea" type="Area2D" parent="." unique_id=1705762537]
 
-[node name="ShopAreaCollision" type="CollisionShape2D" parent="ShopArea"]
+[node name="ShopAreaCollision" type="CollisionShape2D" parent="ShopArea" unique_id=829552961]
 position = Vector2(-1, -3)
 scale = Vector2(2.0635514, 2.0635514)
 shape = SubResource("CircleShape2D_m8hgu")
 
-[node name="CliveSprite" type="AnimatedSprite2D" parent="."]
+[node name="CliveSprite" type="AnimatedSprite2D" parent="." unique_id=1777381538]
 unique_name_in_owner = true
 position = Vector2(-1, -10)
 sprite_frames = SubResource("SpriteFrames_imj2p")
 animation = &"stood_still_front"
 autoplay = "stood_still_front"
 
-[node name="DirectionTimer" type="Timer" parent="."]
+[node name="DirectionTimer" type="Timer" parent="." unique_id=1631035153]
 unique_name_in_owner = true
 wait_time = 0.05
 one_shot = true
 autostart = true
 
-[node name="MovementTimeTimer" type="Timer" parent="."]
+[node name="MovementTimeTimer" type="Timer" parent="." unique_id=721477285]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="."]
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="." unique_id=626319694]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -913,7 +928,7 @@ preprocess = 0.2
 explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_aqkh5")
 
-[node name="FootStepParticlesRight" type="GPUParticles2D" parent="."]
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="." unique_id=20064856]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -927,14 +942,14 @@ preprocess = 0.2
 explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_aqkh5")
 
-[node name="CliveShadow" type="Sprite2D" parent="."]
+[node name="CliveShadow" type="Sprite2D" parent="." unique_id=52760085]
 modulate = Color(1, 1, 1, 0.44313726)
 z_index = -1
 position = Vector2(-1, 12)
 scale = Vector2(2, 0.5)
 texture = SubResource("GradientTexture2D_68c2m")
 
-[node name="NameTag" type="RichTextLabel" parent="."]
+[node name="NameTag" type="RichTextLabel" parent="." unique_id=988997305]
 material = SubResource("ShaderMaterial_1dgj6")
 anchors_preset = 15
 anchor_right = 1.0
@@ -955,13 +970,13 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpeechBubbleSprite" type="Sprite2D" parent="."]
+[node name="SpeechBubbleSprite" type="Sprite2D" parent="." unique_id=1983809932]
 unique_name_in_owner = true
 visible = false
 position = Vector2(17, -24)
 texture = ExtResource("3_m8hgu")
 
-[node name="SpeechText" type="RichTextLabel" parent="SpeechBubbleSprite"]
+[node name="SpeechText" type="RichTextLabel" parent="SpeechBubbleSprite" unique_id=998301102]
 unique_name_in_owner = true
 z_index = 3
 anchors_preset = 15
@@ -982,9 +997,13 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpeechTimer" type="Timer" parent="."]
+[node name="SpeechTimer" type="Timer" parent="." unique_id=491525550]
 unique_name_in_owner = true
 wait_time = 6.0
+
+[node name="CliveShopHey" type="AudioStreamPlayer" parent="." unique_id=810798705]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_yl7u7")
 
 [connection signal="body_entered" from="ShopArea" to="." method="_on_shop_area_body_entered"]
 [connection signal="body_exited" from="ShopArea" to="." method="_on_shop_area_body_exited"]

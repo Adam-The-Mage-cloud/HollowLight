@@ -30,6 +30,7 @@ func cat_shake() :
 # Collisions :
 func _on_cat_balloon_shop_area_body_entered(body: Node2D) -> void:
 	if body.name == "Brody" :
+		%AudioStreamPlayer2D.playing = true
 		EventBus.catballoon_shop_interactable = true
 		%CatBalloonBasket.play("highlighted")
 		%CatBalloon.play("highlighted")

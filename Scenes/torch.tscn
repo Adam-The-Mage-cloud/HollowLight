@@ -238,6 +238,7 @@ autostart = true
 [node name="torchWaveSound" type="AudioStreamPlayer2D" parent="." unique_id=398567238]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_72ghi")
+volume_db = 5.0
 pitch_scale = 1.43
 
 [connection signal="timeout" from="UpgradeChecker" to="." method="_on_upgrade_checker_timeout"]
