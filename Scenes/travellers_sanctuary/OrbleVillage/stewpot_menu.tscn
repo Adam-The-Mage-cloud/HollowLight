@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=4 uid="uid://cw4o8c88k16ip"]
+[gd_scene format=4 uid="uid://cw4o8c88k16ip"]
 
 [ext_resource type="Script" uid="uid://dutbojimrgqta" path="res://Scripts/travellers_sanctuary/ShopScripts/stewpot_menu.gd" id="1_mcg7n"]
 [ext_resource type="Texture2D" uid="uid://cxs07dsokwlaj" path="res://Artwork/Menus/End_Of_Dungeon_Menu.png" id="1_r2sho"]
@@ -230,6 +230,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -2950,6 +2959,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -5678,7 +5696,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e42ih")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -5694,6 +5712,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -8337,7 +8364,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iy4tm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -8353,6 +8380,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -10962,7 +10998,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1iqmt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"celebrating",
 "speed": 5.0
 }, {
@@ -10973,7 +11009,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0nnt3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"moving",
 "speed": 5.0
 }, {
@@ -10981,7 +11017,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x8306")
 }],
-"loop": true,
+"loop": 1,
 "name": &"sleeping",
 "speed": 5.0
 }, {
@@ -10992,7 +11028,7 @@ animations = [{
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_vvr6s")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stationary",
 "speed": 5.0
 }]
@@ -11025,7 +11061,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gf3br")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -11050,7 +11086,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uynqn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -11058,7 +11094,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p7dhl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"highlighted",
 "speed": 5.0
 }]
@@ -11073,7 +11109,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ajt54")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -11088,7 +11124,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ymuoo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -11101,18 +11137,18 @@ gradient = SubResource("Gradient_xodr1")
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y73k1"]
 load_path = "res://.godot/imported/Finger.png-12f269517eacaf39c6b3b0646782ac93.ctex"
 
-[node name="stewpot_menu" type="Node2D"]
+[node name="stewpot_menu" type="Node2D" unique_id=1957162593]
 modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 scale = Vector2(2.4, 2.4)
 script = ExtResource("1_mcg7n")
 
-[node name="Border" type="Sprite2D" parent="."]
+[node name="Border" type="Sprite2D" parent="." unique_id=425551658]
 light_mask = 0
 position = Vector2(-5.3333325, -0.030298233)
 texture = ExtResource("1_r2sho")
 
-[node name="BuyStew" type="RichTextLabel" parent="."]
+[node name="BuyStew" type="RichTextLabel" parent="." unique_id=1762928713]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -11133,7 +11169,7 @@ fit_content = true
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="BuyStewColon" type="RichTextLabel" parent="."]
+[node name="BuyStewColon" type="RichTextLabel" parent="." unique_id=541067893]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -11153,13 +11189,13 @@ fit_content = true
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="PriceUnderline" type="AnimatedSprite2D" parent="."]
+[node name="PriceUnderline" type="AnimatedSprite2D" parent="." unique_id=991443917]
 light_mask = 0
 position = Vector2(-6.3416677, 6.466667)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_bxhpp")
 
-[node name="Stew1Price" type="RichTextLabel" parent="."]
+[node name="Stew1Price" type="RichTextLabel" parent="." unique_id=213783323]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -11178,14 +11214,14 @@ text = "50g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Gold" type="AnimatedSprite2D" parent="."]
+[node name="Gold" type="AnimatedSprite2D" parent="." unique_id=199386225]
 light_mask = 0
 z_index = 2
 position = Vector2(-48.66667, -25.533335)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_y73k1")
 
-[node name="TotalGoldText" type="RichTextLabel" parent="."]
+[node name="TotalGoldText" type="RichTextLabel" parent="." unique_id=1858235126]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -11203,7 +11239,7 @@ theme_override_font_sizes/normal_font_size = 36
 text = "0"
 metadata/_edit_use_anchors_ = true
 
-[node name="ChefSprite" type="AnimatedSprite2D" parent="."]
+[node name="ChefSprite" type="AnimatedSprite2D" parent="." unique_id=1709288388]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(32.491673, -6.4166646)
@@ -11211,20 +11247,20 @@ sprite_frames = SubResource("SpriteFrames_f8d5v")
 animation = &"stationary"
 autoplay = "stationary"
 
-[node name="OrbleShadow" type="Sprite2D" parent="ChefSprite"]
+[node name="OrbleShadow" type="Sprite2D" parent="ChefSprite" unique_id=1385089787]
 modulate = Color(1, 1, 1, 0.44313726)
 use_parent_material = true
 position = Vector2(-0.85, 9.5)
 scale = Vector2(0.9813845, 0.34298372)
 texture = SubResource("GradientTexture2D_rqds6")
 
-[node name="ChefsHat" type="AnimatedSprite2D" parent="ChefSprite"]
+[node name="ChefsHat" type="AnimatedSprite2D" parent="ChefSprite" unique_id=1849455677]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_m3vmy")
 position = Vector2(0, -6)
 sprite_frames = SubResource("SpriteFrames_ajt54")
 
-[node name="CauldronLadle" type="Sprite2D" parent="."]
+[node name="CauldronLadle" type="Sprite2D" parent="." unique_id=1213842080]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(20, -11.416666)
@@ -11232,32 +11268,32 @@ rotation = 3.1415927
 scale = Vector2(-1, 1)
 texture = SubResource("CompressedTexture2D_rqds6")
 
-[node name="CauldronArms" type="Sprite2D" parent="CauldronLadle"]
+[node name="CauldronArms" type="Sprite2D" parent="CauldronLadle" unique_id=742495133]
 use_parent_material = true
 position = Vector2(4, -8)
 texture = SubResource("CompressedTexture2D_m3vmy")
 
-[node name="ChefstationSprite" type="AnimatedSprite2D" parent="."]
+[node name="ChefstationSprite" type="AnimatedSprite2D" parent="." unique_id=1477923801]
 unique_name_in_owner = true
 position = Vector2(34.166668, 5.133333)
 sprite_frames = SubResource("SpriteFrames_mcg7n")
 
-[node name="Orble1" type="AnimatedSprite2D" parent="."]
+[node name="Orble1" type="AnimatedSprite2D" parent="." unique_id=1912161336]
 position = Vector2(-34.166664, 24.166664)
 sprite_frames = SubResource("SpriteFrames_xodr1")
 
-[node name="Orble2" type="AnimatedSprite2D" parent="."]
+[node name="Orble2" type="AnimatedSprite2D" parent="." unique_id=1523543553]
 position = Vector2(-6.6666665, 23.974998)
 sprite_frames = SubResource("SpriteFrames_20433")
 
-[node name="BuyStewButton" type="TouchScreenButton" parent="."]
+[node name="BuyStewButton" type="TouchScreenButton" parent="." unique_id=142086477]
 modulate = Color(1, 1, 1, 0)
 z_index = 40
 position = Vector2(-19.166668, -1.5333347)
 scale = Vector2(0.100260414, 13.999999)
 texture_normal = SubResource("GradientTexture1D_ymuoo")
 
-[node name="CloseMenuButton" type="TouchScreenButton" parent="."]
+[node name="CloseMenuButton" type="TouchScreenButton" parent="." unique_id=1344915594]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 40
@@ -11266,7 +11302,7 @@ scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("11_xodr1")
 texture_pressed = ExtResource("12_ymuoo")
 
-[node name="BuyFinger" type="Sprite2D" parent="."]
+[node name="BuyFinger" type="Sprite2D" parent="." unique_id=1467755791]
 unique_name_in_owner = true
 z_index = 6
 position = Vector2(-1.1666684, 12)

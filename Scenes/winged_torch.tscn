@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dsul3l1nnmbum"]
+[gd_scene format=3 uid="uid://dsul3l1nnmbum"]
 
 [ext_resource type="Texture2D" uid="uid://bvs20bo27bmj" path="res://Artwork/Winged_Torch_Spritesheet.png" id="1_cht3l"]
 [ext_resource type="Script" uid="uid://xpcpa4aoktqn" path="res://Scripts/winged_torch.gd" id="1_lsfw2"]
@@ -45,7 +45,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mnh03")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 8.0
 }]
@@ -111,32 +111,32 @@ height = 96
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="winged_torch" type="Area2D"]
+[node name="winged_torch" type="Area2D" unique_id=778083061]
 z_index = 4
 texture_filter = 1
 script = ExtResource("1_lsfw2")
 
-[node name="TorchCollision" type="CollisionShape2D" parent="."]
+[node name="TorchCollision" type="CollisionShape2D" parent="." unique_id=829727636]
 position = Vector2(7, -4.7683716e-07)
 rotation = 1.5707964
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_wlbu3")
 
-[node name="EnemyRadar" type="Area2D" parent="."]
+[node name="EnemyRadar" type="Area2D" parent="." unique_id=1366458120]
 collision_layer = 33554432
 collision_mask = 33554432
 
-[node name="RadarCollision" type="CollisionShape2D" parent="EnemyRadar"]
+[node name="RadarCollision" type="CollisionShape2D" parent="EnemyRadar" unique_id=2139796494]
 scale = Vector2(4.4064755, 4.4064755)
 shape = SubResource("CircleShape2D_cht3l")
 
-[node name="TorchSprite" type="AnimatedSprite2D" parent="."]
+[node name="TorchSprite" type="AnimatedSprite2D" parent="." unique_id=1665262927]
 rotation = 2.3561945
 sprite_frames = SubResource("SpriteFrames_54sr7")
 autoplay = "default"
 frame_progress = 0.36277238
 
-[node name="MiniFlame" type="GPUParticles2D" parent="TorchSprite"]
+[node name="MiniFlame" type="GPUParticles2D" parent="TorchSprite" unique_id=1315076644]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(-5, -4)
@@ -147,7 +147,7 @@ amount_ratio = 0.8
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_mnh03")
 
-[node name="MiniFlameSecondary" type="GPUParticles2D" parent="TorchSprite/MiniFlame"]
+[node name="MiniFlameSecondary" type="GPUParticles2D" parent="TorchSprite/MiniFlame" unique_id=1000410571]
 y_sort_enabled = true
 position = Vector2(-2.998591, 0.99953043)
 amount = 80
@@ -155,7 +155,7 @@ amount_ratio = 0.8
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_8pet2")
 
-[node name="TorchLight" type="PointLight2D" parent="TorchSprite"]
+[node name="TorchLight" type="PointLight2D" parent="TorchSprite" unique_id=2068283852]
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-4, -4)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dt83xmpkmw7x2"]
+[gd_scene format=3 uid="uid://dt83xmpkmw7x2"]
 
 [ext_resource type="Script" uid="uid://ddeouedvko5by" path="res://Scripts/travellers_sanctuary/tallgrass.gd" id="1_4tkku"]
 [ext_resource type="Texture2D" uid="uid://clg6204cgcaov" path="res://Artwork/Plants_Outside_Tileset.png" id="2_qjnch"]
@@ -24,7 +24,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fipd0")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -35,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jrobm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"swaying",
 "speed": 3.0
 }]
@@ -50,23 +50,23 @@ width = 36
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Tallgrass" type="Area2D"]
+[node name="Tallgrass" type="Area2D" unique_id=1547257769]
 script = ExtResource("1_4tkku")
 
-[node name="TallGrassCollision" type="CollisionShape2D" parent="."]
+[node name="TallGrassCollision" type="CollisionShape2D" parent="." unique_id=474958351]
 position = Vector2(-1.1920929e-07, 5.5)
 scale = Vector2(0.613254, 0.613254)
 shape = SubResource("RectangleShape2D_verhq")
 debug_color = Color(0.720624, 0.477045, 0.127548, 0.42)
 
-[node name="Tallgrass" type="AnimatedSprite2D" parent="."]
+[node name="Tallgrass" type="AnimatedSprite2D" parent="." unique_id=629718668]
 unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(0, -1.5)
 sprite_frames = SubResource("SpriteFrames_7wdkd")
 autoplay = "default"
 
-[node name="TallGrassShadow" type="Sprite2D" parent="."]
+[node name="TallGrassShadow" type="Sprite2D" parent="." unique_id=1238511992]
 modulate = Color(1, 1, 1, 0.35686275)
 use_parent_material = true
 position = Vector2(2, 11.999999)

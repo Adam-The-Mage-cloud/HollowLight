@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://nm8p1d0it3q7"]
+[gd_scene format=3 uid="uid://nm8p1d0it3q7"]
 
 [ext_resource type="Texture2D" uid="uid://dtg413hiy53ro" path="res://Artwork/Dungeon_Interactables.png" id="1_csauq"]
 
@@ -14,7 +14,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_csauq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -79,23 +79,23 @@ radial_accel_max = -10.0
 scale_curve = SubResource("CurveTexture_mhh1w")
 color_ramp = SubResource("GradientTexture1D_0dv5e")
 
-[node name="sanctuary_campfire" type="CharacterBody2D"]
+[node name="sanctuary_campfire" type="CharacterBody2D" unique_id=442624438]
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
 
-[node name="CampfireCollision" type="CollisionShape2D" parent="."]
+[node name="CampfireCollision" type="CollisionShape2D" parent="." unique_id=1073467702]
 visible = false
 position = Vector2(-1, 0)
 scale = Vector2(0.83935165, 0.83935165)
 shape = SubResource("CircleShape2D_5b4jr")
 
-[node name="CampfireSprite" type="AnimatedSprite2D" parent="."]
+[node name="CampfireSprite" type="AnimatedSprite2D" parent="." unique_id=175831841]
 y_sort_enabled = true
 position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_sby57")
 
-[node name="FlameLight" type="PointLight2D" parent="."]
+[node name="FlameLight" type="PointLight2D" parent="." unique_id=786857810]
 unique_name_in_owner = true
 use_parent_material = true
 color = Color(1, 0.4392157, 0.17254902, 1)
@@ -103,7 +103,7 @@ energy = 4.0
 texture = SubResource("GradientTexture2D_csauq")
 texture_scale = 1.2
 
-[node name="MainFlame" type="GPUParticles2D" parent="."]
+[node name="MainFlame" type="GPUParticles2D" parent="." unique_id=161644396]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(-1, -1)
@@ -112,7 +112,7 @@ amount_ratio = 0.5
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_sby57")
 
-[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame"]
+[node name="MainFlameSecondary" type="GPUParticles2D" parent="MainFlame" unique_id=1792935832]
 unique_name_in_owner = true
 y_sort_enabled = true
 position = Vector2(0, -4)

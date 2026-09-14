@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c32msemfdfdi8"]
+[gd_scene format=3 uid="uid://c32msemfdfdi8"]
 
 [ext_resource type="Script" uid="uid://bov0lf0itxgqj" path="res://Scripts/ember.gd" id="1_dpfje"]
 [ext_resource type="Texture2D" uid="uid://btxeuxmj47rlu" path="res://Artwork/Ember.png" id="1_r6mmd"]
@@ -27,7 +27,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_snl8l")
 }],
-"loop": true,
+"loop": 1,
 "name": &"ember",
 "speed": 5.0
 }, {
@@ -35,7 +35,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mloje")
 }],
-"loop": true,
+"loop": 1,
 "name": &"ember2",
 "speed": 5.0
 }]
@@ -43,31 +43,31 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r6mmd"]
 size = Vector2(8, 8)
 
-[node name="ember" type="Area2D"]
+[node name="ember" type="Area2D" unique_id=990649090]
 z_index = 4
 texture_filter = 1
 script = ExtResource("1_dpfje")
 
-[node name="RadarCollisionArea" type="CollisionShape2D" parent="."]
+[node name="RadarCollisionArea" type="CollisionShape2D" parent="." unique_id=478751779]
 scale = Vector2(6.643638, 6.643638)
 shape = SubResource("CircleShape2D_r6mmd")
 
-[node name="EmberSprite" type="AnimatedSprite2D" parent="."]
+[node name="EmberSprite" type="AnimatedSprite2D" parent="." unique_id=924725282]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_cp746")
 position = Vector2(1, 0)
 sprite_frames = SubResource("SpriteFrames_8qefa")
 animation = &"ember2"
 
-[node name="PickupArea" type="Area2D" parent="."]
+[node name="PickupArea" type="Area2D" parent="." unique_id=1371659348]
 position = Vector2(1, 0)
 scale = Vector2(0.7392793, 0.7392793)
 
-[node name="PickupCollisionArea" type="CollisionShape2D" parent="PickupArea"]
+[node name="PickupCollisionArea" type="CollisionShape2D" parent="PickupArea" unique_id=750929732]
 scale = Vector2(0.66371375, 0.66371375)
 shape = SubResource("RectangleShape2D_r6mmd")
 
-[node name="SpeedAccelerator" type="Timer" parent="."]
+[node name="SpeedAccelerator" type="Timer" parent="." unique_id=326485968]
 unique_name_in_owner = true
 wait_time = 0.125
 

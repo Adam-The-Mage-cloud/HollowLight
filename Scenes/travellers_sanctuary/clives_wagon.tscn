@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bbdmbq7kdo6e4"]
+[gd_scene format=3 uid="uid://bbdmbq7kdo6e4"]
 
 [ext_resource type="Texture2D" uid="uid://mdvsoefqomkd" path="res://Artwork/Sanctuary/Wagon_VFXed.png" id="1_maafo"]
 [ext_resource type="Script" uid="uid://dptlbf5y0fido" path="res://Scripts/clives_wagon.gd" id="1_xmwam"]
@@ -21,7 +21,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_c6c6u")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -29,7 +29,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fm8hj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"highlighted",
 "speed": 5.0
 }]
@@ -46,32 +46,32 @@ width = 36
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="clives_wagon" type="CharacterBody2D"]
+[node name="clives_wagon" type="CharacterBody2D" unique_id=743649146]
 texture_filter = 1
 script = ExtResource("1_xmwam")
 
-[node name="WagonBodyCollision" type="CollisionShape2D" parent="."]
+[node name="WagonBodyCollision" type="CollisionShape2D" parent="." unique_id=1115858657]
 visible = false
 position = Vector2(-1.999999, -3.6345577)
 scale = Vector2(2.0235476, 2.0235476)
 shape = SubResource("RectangleShape2D_ietnt")
 
-[node name="WagonSprite" type="AnimatedSprite2D" parent="."]
+[node name="WagonSprite" type="AnimatedSprite2D" parent="." unique_id=844560130]
 unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(0, -30.5)
 sprite_frames = SubResource("SpriteFrames_r30qj")
 autoplay = "default"
 
-[node name="WagonArea" type="Area2D" parent="."]
+[node name="WagonArea" type="Area2D" parent="." unique_id=605876555]
 position = Vector2(-3, -18)
 
-[node name="WagonAreaCollision" type="CollisionShape2D" parent="WagonArea"]
+[node name="WagonAreaCollision" type="CollisionShape2D" parent="WagonArea" unique_id=237637421]
 visible = false
 scale = Vector2(4.2851458, 4.2851458)
 shape = SubResource("CircleShape2D_ietnt")
 
-[node name="CliveShadow" type="Sprite2D" parent="."]
+[node name="CliveShadow" type="Sprite2D" parent="." unique_id=1298389542]
 modulate = Color(1, 1, 1, 0.6313726)
 z_index = -1
 use_parent_material = true

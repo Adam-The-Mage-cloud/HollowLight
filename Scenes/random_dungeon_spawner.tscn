@@ -1,30 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://dow01u60oiexx"]
+[gd_scene format=3 uid="uid://dow01u60oiexx"]
 
 [ext_resource type="Script" uid="uid://f7ufsauyjx7h" path="res://Scripts/room_manager.gd" id="1_pqafk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pqafk"]
 
-[node name="room_manager" type="Node2D"]
+[node name="room_manager" type="Node2D" unique_id=424422094]
 texture_filter = 1
 script = ExtResource("1_pqafk")
 
-[node name="Room_Walls" type="Node2D" parent="."]
+[node name="Room_Walls" type="Node2D" parent="." unique_id=909746537]
 
-[node name="Room_Floors" type="Node2D" parent="."]
+[node name="Room_Floors" type="Node2D" parent="." unique_id=485722554]
 
-[node name="Room_Decor" type="Node2D" parent="."]
+[node name="Room_Decor" type="Node2D" parent="." unique_id=1853133074]
 
-[node name="SpawnPoints" type="Node2D" parent="."]
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=151498257]
 
-[node name="Doors" type="Node2D" parent="."]
+[node name="Doors" type="Node2D" parent="." unique_id=721784062]
 
-[node name="Door" type="Area2D" parent="Doors"]
+[node name="Door" type="Area2D" parent="Doors" unique_id=2012888539]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/Door"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/Door" unique_id=1470078408]
 shape = SubResource("RectangleShape2D_pqafk")
 
-[node name="Items" type="Node2D" parent="."]
+[node name="Items" type="Node2D" parent="." unique_id=546050359]
 
-[node name="Monsters" type="Node2D" parent="."]
+[node name="Monsters" type="Node2D" parent="." unique_id=1491105106]
 
-[node name="Beacons" type="Node2D" parent="."]
+[node name="Beacons" type="Node2D" parent="." unique_id=1447660506]

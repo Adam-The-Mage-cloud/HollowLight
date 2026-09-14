@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ce7juc6ps3kwc"]
+[gd_scene format=3 uid="uid://ce7juc6ps3kwc"]
 
 [ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="1_5e5ks"]
 [ext_resource type="Script" uid="uid://b8yrdnykxjg7g" path="res://Scripts/brody_shield.gd" id="1_bcpb1"]
@@ -44,7 +44,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3a0kt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"bluevariant_holstered",
 "speed": 5.0
 }, {
@@ -52,7 +52,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cnbu1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"bluevariant_shield",
 "speed": 5.0
 }, {
@@ -60,7 +60,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kr4xc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default_holstered",
 "speed": 1.0
 }, {
@@ -68,7 +68,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bcpb1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default_shield",
 "speed": 5.0
 }, {
@@ -76,7 +76,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g8sq3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"holyeffigee_holstered",
 "speed": 5.0
 }, {
@@ -84,7 +84,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0eywb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"holyeffigee_shield",
 "speed": 5.0
 }, {
@@ -92,7 +92,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7ykq7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"nurnincrest_holstered",
 "speed": 5.0
 }, {
@@ -100,17 +100,17 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_044f6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"nurnincrest_shield",
 "speed": 5.0
 }]
 
-[node name="brody_shield" type="Area2D"]
+[node name="brody_shield" type="Area2D" unique_id=2028570476]
 z_index = -1
 texture_filter = 1
 script = ExtResource("1_bcpb1")
 
-[node name="ShieldCollision" type="CollisionShape2D" parent="."]
+[node name="ShieldCollision" type="CollisionShape2D" parent="." unique_id=1647665902]
 unique_name_in_owner = true
 z_index = 1
 use_parent_material = true
@@ -118,7 +118,7 @@ position = Vector2(0.50000024, -1.9999995)
 shape = SubResource("RectangleShape2D_5e5ks")
 disabled = true
 
-[node name="ShieldSprite" type="AnimatedSprite2D" parent="."]
+[node name="ShieldSprite" type="AnimatedSprite2D" parent="." unique_id=1996473904]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
@@ -127,7 +127,7 @@ sprite_frames = SubResource("SpriteFrames_bcpb1")
 animation = &"default_holstered"
 autoplay = "default_holstered"
 
-[node name="EventBusChecker" type="Timer" parent="."]
+[node name="EventBusChecker" type="Timer" parent="." unique_id=2014083225]
 wait_time = 15.0
 autostart = true
 

@@ -333,7 +333,6 @@ unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_knnil")
 volume_db = 20.0
 autoplay = true
-stream_paused = true
 
 [node name="AttackSound" type="AudioStreamPlayer2D" parent="." unique_id=390009483]
 unique_name_in_owner = true

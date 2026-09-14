@@ -419,7 +419,6 @@ shape = SubResource("CircleShape2D_4uh28")
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_x1n58")
 volume_db = 6.0
-stream_paused = true
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=1756807772]
 unique_name_in_owner = true

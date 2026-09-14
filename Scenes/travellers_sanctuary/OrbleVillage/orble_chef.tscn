@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bqpkhtuwobnq4"]
+[gd_scene format=3 uid="uid://bqpkhtuwobnq4"]
 
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_1iqmt"]
 [ext_resource type="Texture2D" uid="uid://bor31nxmfpjsp" path="res://Artwork/Sanctuary/Orbles.png" id="1_tesde"]
@@ -59,7 +59,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1iqmt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"celebrating",
 "speed": 5.0
 }, {
@@ -70,7 +70,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0nnt3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"moving",
 "speed": 5.0
 }, {
@@ -78,7 +78,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x8306")
 }],
-"loop": true,
+"loop": 1,
 "name": &"sleeping",
 "speed": 5.0
 }, {
@@ -89,7 +89,7 @@ animations = [{
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_vvr6s")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stationary",
 "speed": 5.0
 }]
@@ -122,7 +122,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gf3br")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -199,7 +199,7 @@ turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
 
-[node name="orble_chef" type="CharacterBody2D"]
+[node name="orble_chef" type="CharacterBody2D" unique_id=1600065323]
 z_index = 1
 y_sort_enabled = true
 texture_filter = 1
@@ -208,19 +208,19 @@ collision_layer = 15
 collision_mask = 1073741839
 script = ExtResource("1_xtlvq")
 
-[node name="ChefCollision" type="CollisionShape2D" parent="."]
+[node name="ChefCollision" type="CollisionShape2D" parent="." unique_id=1163739693]
 position = Vector2(-1.0000001, 5.0000005)
 scale = Vector2(0.39221188, 0.39221188)
 shape = SubResource("CircleShape2D_tesde")
 
-[node name="InteractionArea" type="Area2D" parent="."]
+[node name="InteractionArea" type="Area2D" parent="." unique_id=350509456]
 
-[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea"]
+[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea" unique_id=1572655291]
 position = Vector2(-1, 4.9999995)
 scale = Vector2(0.80793786, 0.80793786)
 shape = SubResource("CircleShape2D_1iqmt")
 
-[node name="FlameLight" type="PointLight2D" parent="."]
+[node name="FlameLight" type="PointLight2D" parent="." unique_id=637989600]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-0.99999994, 4.9999995)
@@ -230,26 +230,26 @@ energy = 1.2
 texture = SubResource("GradientTexture2D_x8306")
 texture_scale = 1.2
 
-[node name="ChefSprite" type="AnimatedSprite2D" parent="."]
+[node name="ChefSprite" type="AnimatedSprite2D" parent="." unique_id=906211173]
 unique_name_in_owner = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_1iqmt")
 animation = &"stationary"
 
-[node name="OrbleShadow" type="Sprite2D" parent="ChefSprite"]
+[node name="OrbleShadow" type="Sprite2D" parent="ChefSprite" unique_id=369167634]
 modulate = Color(1, 1, 1, 0.44313726)
 use_parent_material = true
 position = Vector2(-0.85, 9.5)
 scale = Vector2(0.9813845, 0.34298372)
 texture = SubResource("GradientTexture2D_0nnt3")
 
-[node name="ChefsHat" type="AnimatedSprite2D" parent="ChefSprite"]
+[node name="ChefsHat" type="AnimatedSprite2D" parent="ChefSprite" unique_id=1539367307]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_0nnt3")
 position = Vector2(0, -6)
 sprite_frames = SubResource("SpriteFrames_4bcwd")
 
-[node name="CauldronLadle" type="Sprite2D" parent="."]
+[node name="CauldronLadle" type="Sprite2D" parent="." unique_id=1125405749]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-12, -4)
@@ -257,12 +257,12 @@ rotation = 3.1415927
 scale = Vector2(-1, 1)
 texture = ExtResource("5_x8306")
 
-[node name="CauldronArms" type="Sprite2D" parent="CauldronLadle"]
+[node name="CauldronArms" type="Sprite2D" parent="CauldronLadle" unique_id=1492515735]
 use_parent_material = true
 position = Vector2(4, -8)
 texture = ExtResource("4_0nnt3")
 
-[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="."]
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="." unique_id=82908423]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -275,7 +275,7 @@ preprocess = 0.2
 explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_vvr6s")
 
-[node name="FootStepParticlesRight" type="GPUParticles2D" parent="."]
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="." unique_id=796644606]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -289,21 +289,21 @@ preprocess = 0.2
 explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_h7xak")
 
-[node name="DirectionTimer" type="Timer" parent="."]
+[node name="DirectionTimer" type="Timer" parent="." unique_id=8650655]
 unique_name_in_owner = true
 wait_time = 0.05
 one_shot = true
 autostart = true
 
-[node name="MovementTimeTimer" type="Timer" parent="."]
+[node name="MovementTimeTimer" type="Timer" parent="." unique_id=1739617841]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="ProposeTime" type="Timer" parent="."]
+[node name="ProposeTime" type="Timer" parent="." unique_id=1550076115]
 wait_time = 6.0
 autostart = true
 
-[node name="CookingTime" type="Timer" parent="."]
+[node name="CookingTime" type="Timer" parent="." unique_id=1482408923]
 wait_time = 6.0
 autostart = true
 

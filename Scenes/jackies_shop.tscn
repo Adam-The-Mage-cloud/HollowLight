@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=4 uid="uid://dy4jefkxwefcj"]
+[gd_scene format=4 uid="uid://dy4jefkxwefcj"]
 
 [ext_resource type="Texture2D" uid="uid://b63h8f8foljwk" path="res://Artwork/Menus/End_Of_Dungeon_Items.png" id="1_liuaq"]
 [ext_resource type="Script" uid="uid://d36b1d7d5lna4" path="res://Scripts/travellers_sanctuary/ShopScripts/jackies_shop.gd" id="1_xfjsc"]
@@ -23,7 +23,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iy4tm")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -246,6 +246,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3043,6 +3052,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -5633,6 +5651,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -8425,6 +8452,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -11069,6 +11105,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -13888,6 +13933,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -16514,6 +16568,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -19369,6 +19432,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -22013,6 +22085,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -24886,6 +24967,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -27539,6 +27629,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -30412,6 +30511,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -33038,6 +33146,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -35920,6 +36037,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -38564,6 +38690,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -41464,6 +41599,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -44117,6 +44261,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -46771,7 +46924,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tu2vy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -46786,7 +46939,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hhjsd")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -46801,7 +46954,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y01hd")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -46812,7 +46965,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y01hd")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -46827,7 +46980,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sy6t2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -46842,7 +46995,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k8u66")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -46857,7 +47010,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xdbjb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -46868,7 +47021,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xdbjb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -46883,7 +47036,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xfjsc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -46898,29 +47051,29 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gc3as")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="jackies_shop" type="Node2D"]
+[node name="jackies_shop" type="Node2D" unique_id=1675786690]
 script = ExtResource("1_xfjsc")
 
-[node name="JackiesShopScreen" type="Node2D" parent="."]
+[node name="JackiesShopScreen" type="Node2D" parent="." unique_id=628713801]
 light_mask = 0
 z_index = 1
 texture_filter = 1
 position = Vector2(-2, -42)
 scale = Vector2(3, 3)
 
-[node name="Gold" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="Gold" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=1017585848]
 light_mask = 0
 z_index = 2
 position = Vector2(-2, -13.958334)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_w0krx")
 
-[node name="TotalXPTextCat" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="TotalXPTextCat" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1137717962]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -46938,7 +47091,7 @@ theme_override_font_sizes/normal_font_size = 36
 text = "0"
 metadata/_edit_use_anchors_ = true
 
-[node name="TotalGoldTextCat" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="TotalGoldTextCat" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1458854596]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -46956,7 +47109,7 @@ theme_override_font_sizes/normal_font_size = 36
 text = "0"
 metadata/_edit_use_anchors_ = true
 
-[node name="DashTimingPrice" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="DashTimingPrice" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1146393211]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -46975,7 +47128,7 @@ text = "700g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="DashTiming" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="DashTiming" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1584704903]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -46993,49 +47146,49 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Dash Timing -"
 horizontal_alignment = 1
 
-[node name="DashTimingSkillup1" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="DashTimingSkillup1" type="Sprite2D" parent="JackiesShopScreen" unique_id=1177625602]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-20.170004, -4.333)
 texture = ExtResource("3_1uh38")
 
-[node name="DashTimingSkillup2" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="DashTimingSkillup2" type="Sprite2D" parent="JackiesShopScreen" unique_id=458560451]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-17.17, -4.333)
 texture = ExtResource("3_1uh38")
 
-[node name="DashTimingSkillup3" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="DashTimingSkillup3" type="Sprite2D" parent="JackiesShopScreen" unique_id=743490351]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-14.17, -4.333)
 texture = ExtResource("3_1uh38")
 
-[node name="DashTimingSkillup4" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="DashTimingSkillup4" type="Sprite2D" parent="JackiesShopScreen" unique_id=2007819669]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-11.17, -4.333)
 texture = ExtResource("3_1uh38")
 
-[node name="DashTimingSkillup5" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="DashTimingSkillup5" type="Sprite2D" parent="JackiesShopScreen" unique_id=577194262]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-8.17, -4.333)
 texture = ExtResource("3_1uh38")
 
-[node name="DashTimingSkillup6" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="DashTimingSkillup6" type="Sprite2D" parent="JackiesShopScreen" unique_id=1518859546]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-5.17, -4.333)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchMaxStaminaPrice" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="TorchMaxStaminaPrice" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1280413320]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47054,7 +47207,7 @@ text = "900g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="TorchMaxStamina" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="TorchMaxStamina" type="RichTextLabel" parent="JackiesShopScreen" unique_id=2134837775]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47072,49 +47225,49 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Torch Stamina +"
 horizontal_alignment = 1
 
-[node name="TorchMaxStaminaSkillup1" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchMaxStaminaSkillup1" type="Sprite2D" parent="JackiesShopScreen" unique_id=1636239366]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-20.170004, 7.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchMaxStaminaSkillup2" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchMaxStaminaSkillup2" type="Sprite2D" parent="JackiesShopScreen" unique_id=1509947483]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-17.170002, 7.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchMaxStaminaSkillup3" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchMaxStaminaSkillup3" type="Sprite2D" parent="JackiesShopScreen" unique_id=1515820190]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-14.170001, 7.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchMaxStaminaSkillup4" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchMaxStaminaSkillup4" type="Sprite2D" parent="JackiesShopScreen" unique_id=201595910]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-11.170001, 7.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchMaxStaminaSkillup5" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchMaxStaminaSkillup5" type="Sprite2D" parent="JackiesShopScreen" unique_id=1672004487]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-8.17, 7.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchMaxStaminaSkillup6" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchMaxStaminaSkillup6" type="Sprite2D" parent="JackiesShopScreen" unique_id=1605669957]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-5.1700006, 7.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchStaminaRecoveryPrice" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="TorchStaminaRecoveryPrice" type="RichTextLabel" parent="JackiesShopScreen" unique_id=389245120]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47133,7 +47286,7 @@ text = "1000g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="TorchRecovery" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="TorchRecovery" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1501260857]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47151,49 +47304,49 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Swipe Recovery +"
 horizontal_alignment = 1
 
-[node name="TorchRecoverySkillup1" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchRecoverySkillup1" type="Sprite2D" parent="JackiesShopScreen" unique_id=491457393]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-20.170004, 19.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchRecoverySkillup2" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchRecoverySkillup2" type="Sprite2D" parent="JackiesShopScreen" unique_id=1753972301]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-17.170004, 19.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchRecoverySkillup3" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchRecoverySkillup3" type="Sprite2D" parent="JackiesShopScreen" unique_id=493212515]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-14.170001, 19.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchRecoverySkillup4" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchRecoverySkillup4" type="Sprite2D" parent="JackiesShopScreen" unique_id=433167972]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-11.170001, 19.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchRecoverySkillup5" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchRecoverySkillup5" type="Sprite2D" parent="JackiesShopScreen" unique_id=808927605]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-8.17, 19.675)
 texture = ExtResource("3_1uh38")
 
-[node name="TorchRecoverySkillup6" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="TorchRecoverySkillup6" type="Sprite2D" parent="JackiesShopScreen" unique_id=943841800]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-5.170001, 19.675)
 texture = ExtResource("3_1uh38")
 
-[node name="FortifyDarknessPrice" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="FortifyDarknessPrice" type="RichTextLabel" parent="JackiesShopScreen" unique_id=508861997]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47212,7 +47365,7 @@ text = "300g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="FortifyDarkness" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="FortifyDarkness" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1931503552]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47230,49 +47383,49 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Fortitude +"
 horizontal_alignment = 1
 
-[node name="FortifyDarknessSkillup1" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="FortifyDarknessSkillup1" type="Sprite2D" parent="JackiesShopScreen" unique_id=1413769338]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-20.170004, 31.675)
 texture = ExtResource("3_1uh38")
 
-[node name="FortifyDarknessSkillup2" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="FortifyDarknessSkillup2" type="Sprite2D" parent="JackiesShopScreen" unique_id=223507442]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-17.170004, 31.675)
 texture = ExtResource("3_1uh38")
 
-[node name="FortifyDarknessSkillup3" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="FortifyDarknessSkillup3" type="Sprite2D" parent="JackiesShopScreen" unique_id=1578079452]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-14.170001, 31.675)
 texture = ExtResource("3_1uh38")
 
-[node name="FortifyDarknessSkillup4" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="FortifyDarknessSkillup4" type="Sprite2D" parent="JackiesShopScreen" unique_id=1261746819]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-11.170001, 31.675)
 texture = ExtResource("3_1uh38")
 
-[node name="FortifyDarknessSkillup5" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="FortifyDarknessSkillup5" type="Sprite2D" parent="JackiesShopScreen" unique_id=1722135778]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-8.17, 31.675)
 texture = ExtResource("3_1uh38")
 
-[node name="FortifyDarknessSkillup6" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="FortifyDarknessSkillup6" type="Sprite2D" parent="JackiesShopScreen" unique_id=463082280]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(-5.170001, 31.675)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldStaminaPrice" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="ShieldStaminaPrice" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1147171476]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47291,7 +47444,7 @@ text = "400g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ShieldStamina" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="ShieldStamina" type="RichTextLabel" parent="JackiesShopScreen" unique_id=20391902]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47309,49 +47462,49 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Shield Stamina +"
 horizontal_alignment = 1
 
-[node name="ShieldStaminaSkillup1" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldStaminaSkillup1" type="Sprite2D" parent="JackiesShopScreen" unique_id=1167332030]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(24.83, -4.335)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldStaminaSkillup2" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldStaminaSkillup2" type="Sprite2D" parent="JackiesShopScreen" unique_id=1725341039]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(27.83, -4.335)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldStaminaSkillup3" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldStaminaSkillup3" type="Sprite2D" parent="JackiesShopScreen" unique_id=1728079007]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(30.83, -4.335)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldStaminaSkillup4" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldStaminaSkillup4" type="Sprite2D" parent="JackiesShopScreen" unique_id=1141548537]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(33.83, -4.335)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldStaminaSkillup5" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldStaminaSkillup5" type="Sprite2D" parent="JackiesShopScreen" unique_id=31779939]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(36.83, -4.335)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldStaminaSkillup6" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldStaminaSkillup6" type="Sprite2D" parent="JackiesShopScreen" unique_id=1128782970]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(39.83, -4.335)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldSpeedPrice" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="ShieldSpeedPrice" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1979517033]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47370,7 +47523,7 @@ text = "1000g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ShieldSpeed" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="ShieldSpeed" type="RichTextLabel" parent="JackiesShopScreen" unique_id=313605259]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47388,49 +47541,49 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Shield Speed +"
 horizontal_alignment = 1
 
-[node name="ShieldSpeedSkillup1" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldSpeedSkillup1" type="Sprite2D" parent="JackiesShopScreen" unique_id=1889187244]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(24.83, 7.665)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldSpeedSkillup2" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldSpeedSkillup2" type="Sprite2D" parent="JackiesShopScreen" unique_id=1122529483]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(27.83, 7.665)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldSpeedSkillup3" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldSpeedSkillup3" type="Sprite2D" parent="JackiesShopScreen" unique_id=1558883501]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(30.83, 7.665)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldSpeedSkillup4" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldSpeedSkillup4" type="Sprite2D" parent="JackiesShopScreen" unique_id=615910674]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(33.830006, 7.665)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldSpeedSkillup5" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldSpeedSkillup5" type="Sprite2D" parent="JackiesShopScreen" unique_id=138198187]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(36.830006, 7.665)
 texture = ExtResource("3_1uh38")
 
-[node name="ShieldSpeedSkillup6" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="ShieldSpeedSkillup6" type="Sprite2D" parent="JackiesShopScreen" unique_id=419616249]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(39.830006, 7.665)
 texture = ExtResource("3_1uh38")
 
-[node name="IncreaseLootPrice" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="IncreaseLootPrice" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1968219128]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47449,7 +47602,7 @@ text = "200g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="LootChance" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="LootChance" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1505831664]
 unique_name_in_owner = true
 light_mask = 0
 z_index = 5
@@ -47467,49 +47620,49 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Loot Chance +"
 horizontal_alignment = 1
 
-[node name="LootChanceSkillup1" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="LootChanceSkillup1" type="Sprite2D" parent="JackiesShopScreen" unique_id=438667549]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(24.83, 19.665)
 texture = ExtResource("3_1uh38")
 
-[node name="LootChanceSkillup2" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="LootChanceSkillup2" type="Sprite2D" parent="JackiesShopScreen" unique_id=1626924086]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(27.83, 19.665)
 texture = ExtResource("3_1uh38")
 
-[node name="LootChanceSkillup3" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="LootChanceSkillup3" type="Sprite2D" parent="JackiesShopScreen" unique_id=881362079]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(30.83, 19.665)
 texture = ExtResource("3_1uh38")
 
-[node name="LootChanceSkillup4" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="LootChanceSkillup4" type="Sprite2D" parent="JackiesShopScreen" unique_id=923346394]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(33.830013, 19.665)
 texture = ExtResource("3_1uh38")
 
-[node name="LootChanceSkillup5" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="LootChanceSkillup5" type="Sprite2D" parent="JackiesShopScreen" unique_id=872512561]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(36.830013, 19.665)
 texture = ExtResource("3_1uh38")
 
-[node name="LootChanceSkillup6" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="LootChanceSkillup6" type="Sprite2D" parent="JackiesShopScreen" unique_id=1421216243]
 unique_name_in_owner = true
 visible = false
 z_index = 1
 position = Vector2(39.830013, 19.665)
 texture = ExtResource("3_1uh38")
 
-[node name="UnknownPrice" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="UnknownPrice" type="RichTextLabel" parent="JackiesShopScreen" unique_id=1446181243]
 unique_name_in_owner = true
 visible = false
 light_mask = 0
@@ -47529,7 +47682,7 @@ text = "400g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="UnknownPrice2" type="RichTextLabel" parent="JackiesShopScreen"]
+[node name="UnknownPrice2" type="RichTextLabel" parent="JackiesShopScreen" unique_id=671065891]
 unique_name_in_owner = true
 visible = false
 light_mask = 0
@@ -47549,12 +47702,12 @@ text = "1000g"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="GoldXPBorders" type="Sprite2D" parent="JackiesShopScreen"]
+[node name="GoldXPBorders" type="Sprite2D" parent="JackiesShopScreen" unique_id=938608918]
 light_mask = 0
 position = Vector2(0.8333358, 14.169703)
 texture = ExtResource("3_tnvtf")
 
-[node name="CloseMenuButton" type="TouchScreenButton" parent="JackiesShopScreen"]
+[node name="CloseMenuButton" type="TouchScreenButton" parent="JackiesShopScreen" unique_id=1737011938]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(39.83221, -17.333332)
@@ -47562,7 +47715,7 @@ scale = Vector2(0.5, 0.5)
 texture_normal = SubResource("CompressedTexture2D_netr1")
 texture_pressed = SubResource("CompressedTexture2D_7rxi1")
 
-[node name="DashTimingButton" type="TouchScreenButton" parent="JackiesShopScreen"]
+[node name="DashTimingButton" type="TouchScreenButton" parent="JackiesShopScreen" unique_id=774875968]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 light_mask = 0
@@ -47570,7 +47723,7 @@ position = Vector2(-39.666668, -9)
 scale = Vector2(0.14453125, 9)
 texture_normal = SubResource("GradientTexture1D_ufhov")
 
-[node name="TorchStaminaButton" type="TouchScreenButton" parent="JackiesShopScreen"]
+[node name="TorchStaminaButton" type="TouchScreenButton" parent="JackiesShopScreen" unique_id=656753111]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 light_mask = 0
@@ -47578,7 +47731,7 @@ position = Vector2(-40.000004, 3)
 scale = Vector2(0.14583334, 9)
 texture_normal = SubResource("GradientTexture1D_nijh0")
 
-[node name="SwipeRecoveryButton" type="TouchScreenButton" parent="JackiesShopScreen"]
+[node name="SwipeRecoveryButton" type="TouchScreenButton" parent="JackiesShopScreen" unique_id=1705247021]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 light_mask = 0
@@ -47586,7 +47739,7 @@ position = Vector2(-40, 15)
 scale = Vector2(0.14583334, 9)
 texture_normal = SubResource("GradientTexture1D_mlk08")
 
-[node name="FortitudeButton" type="TouchScreenButton" parent="JackiesShopScreen"]
+[node name="FortitudeButton" type="TouchScreenButton" parent="JackiesShopScreen" unique_id=959995760]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 light_mask = 0
@@ -47594,7 +47747,7 @@ position = Vector2(-40, 27.000002)
 scale = Vector2(0.14583333, 9.2353325)
 texture_normal = SubResource("GradientTexture1D_yu0p5")
 
-[node name="ShieldStaminaButton" type="TouchScreenButton" parent="JackiesShopScreen"]
+[node name="ShieldStaminaButton" type="TouchScreenButton" parent="JackiesShopScreen" unique_id=30855877]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 light_mask = 0
@@ -47602,7 +47755,7 @@ position = Vector2(5.0000005, -9.000001)
 scale = Vector2(0.140625, 9.333332)
 texture_normal = SubResource("GradientTexture1D_uew27")
 
-[node name="ShieldSpeedButton" type="TouchScreenButton" parent="JackiesShopScreen"]
+[node name="ShieldSpeedButton" type="TouchScreenButton" parent="JackiesShopScreen" unique_id=1228592594]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 light_mask = 0
@@ -47610,7 +47763,7 @@ position = Vector2(5.3333325, 3)
 scale = Vector2(0.14453125, 9.333333)
 texture_normal = SubResource("GradientTexture1D_j7bu2")
 
-[node name="LootChanceButton" type="TouchScreenButton" parent="JackiesShopScreen"]
+[node name="LootChanceButton" type="TouchScreenButton" parent="JackiesShopScreen" unique_id=1552470445]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 light_mask = 0
@@ -47618,69 +47771,69 @@ position = Vector2(5, 15)
 scale = Vector2(0.14583333, 9.333334)
 texture_normal = SubResource("GradientTexture1D_rlhhp")
 
-[node name="DashTimingSprite" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="DashTimingSprite" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=401181651]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(-44.66667, -5.0000005)
 scale = Vector2(0.625, 0.625)
 sprite_frames = SubResource("SpriteFrames_xfjsc")
 
-[node name="TorchMaxStaminaSprite" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="TorchMaxStaminaSprite" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=548005376]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(-41.666668, 7.666667)
 scale = Vector2(0.625, 0.625)
 sprite_frames = SubResource("SpriteFrames_tu2vy")
 
-[node name="TorchStaminaRecoverySprite" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="TorchStaminaRecoverySprite" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=912413565]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(-53.333336, 12.333334)
 scale = Vector2(0.625, 0.625)
 sprite_frames = SubResource("SpriteFrames_hhjsd")
 
-[node name="TorchStaminaRecoverySprite2" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="TorchStaminaRecoverySprite2" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=1658022357]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(-53.333336, 12.333334)
 scale = Vector2(0.625, 0.625)
 sprite_frames = SubResource("SpriteFrames_xdbjb")
 
-[node name="FortifyDarknessSprite" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="FortifyDarknessSprite" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=1730484931]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(-50.083332, 33.833336)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_gc3as")
 
-[node name="FortifyDarknessCancelSprite" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="FortifyDarknessCancelSprite" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=693879802]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(-50.416668, 32.833336)
 sprite_frames = SubResource("SpriteFrames_sy6t2")
 
-[node name="ShieldMaxStaminaSprite" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="ShieldMaxStaminaSprite" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=343528157]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(46.333332, -4.333333)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_k8u66")
 
-[node name="ShieldSpeedSprite" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="ShieldSpeedSprite" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=265185689]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(47, 7.666667)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_y01hd")
 
-[node name="LootChanceSprite" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="LootChanceSprite" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=2110093765]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(48.3, 20)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_jv37e")
 
-[node name="LuckCharm" type="AnimatedSprite2D" parent="JackiesShopScreen"]
+[node name="LuckCharm" type="AnimatedSprite2D" parent="JackiesShopScreen" unique_id=877850749]
 unique_name_in_owner = true
 light_mask = 0
 position = Vector2(55, 17.666666)

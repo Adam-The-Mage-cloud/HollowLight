@@ -459,7 +459,6 @@ volume_db = 6.0
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_wvwtw")
 volume_db = 6.0
-stream_paused = true
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=1430470820]
 unique_name_in_owner = true

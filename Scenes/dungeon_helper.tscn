@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://cqg7c5vsu8q4b"]
+[gd_scene format=4 uid="uid://cqg7c5vsu8q4b"]
 
 [ext_resource type="Script" uid="uid://cn37kv3dsc2op" path="res://Scripts/dungeon_helper.gd" id="1_22j4l"]
 [ext_resource type="Texture2D" uid="uid://cja70tkheanvb" path="res://Artwork/Darkness_Particle.png" id="1_ny5iy"]
@@ -83,6 +83,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -823,6 +832,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -1584,7 +1602,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_74nq4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -1599,7 +1617,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1jwkt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -1614,7 +1632,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_skmwy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -1629,7 +1647,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_shnh2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -1646,7 +1664,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_g8da1")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -1661,6 +1679,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -2410,6 +2437,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3150,6 +3186,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3907,7 +3952,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_74nq4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -3922,7 +3967,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_shnh2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -3937,24 +3982,24 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_weysv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xebem"]
 
-[node name="dungeon_helper" type="Node2D"]
+[node name="dungeon_helper" type="Node2D" unique_id=932675390]
 z_index = 20
 texture_filter = 1
 script = ExtResource("1_22j4l")
 
-[node name="ShowcaserCamera" type="Camera2D" parent="."]
+[node name="ShowcaserCamera" type="Camera2D" parent="." unique_id=1209562880]
 unique_name_in_owner = true
 offset = Vector2(20, 10)
 zoom = Vector2(1.5, 1.5)
 
-[node name="DungeonScroll1" type="Sprite2D" parent="."]
+[node name="DungeonScroll1" type="Sprite2D" parent="." unique_id=283332785]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 light_mask = 0
@@ -3963,7 +4008,7 @@ position = Vector2(12, 6)
 scale = Vector2(1.5, 1.5)
 texture = SubResource("CompressedTexture2D_weysv")
 
-[node name="FindWayOutText" type="RichTextLabel" parent="DungeonScroll1"]
+[node name="FindWayOutText" type="RichTextLabel" parent="DungeonScroll1" unique_id=694368390]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -3984,7 +4029,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "The Darkness"
 fit_content = true
 
-[node name="FindWayOutText3" type="RichTextLabel" parent="DungeonScroll1"]
+[node name="FindWayOutText3" type="RichTextLabel" parent="DungeonScroll1" unique_id=1845329206]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4005,7 +4050,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "The Darkness"
 fit_content = true
 
-[node name="FindWayOutText2" type="RichTextLabel" parent="DungeonScroll1"]
+[node name="FindWayOutText2" type="RichTextLabel" parent="DungeonScroll1" unique_id=1408947271]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4026,7 +4071,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "Stay Out of"
 fit_content = true
 
-[node name="FindWayOutText4" type="RichTextLabel" parent="DungeonScroll1"]
+[node name="FindWayOutText4" type="RichTextLabel" parent="DungeonScroll1" unique_id=1700037983]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4047,44 +4092,44 @@ theme_override_font_sizes/normal_font_size = 18
 text = "Stay Out of"
 fit_content = true
 
-[node name="OrbleSprite" type="AnimatedSprite2D" parent="DungeonScroll1"]
+[node name="OrbleSprite" type="AnimatedSprite2D" parent="DungeonScroll1" unique_id=1616188826]
 position = Vector2(-10, -15.333334)
 sprite_frames = SubResource("SpriteFrames_b824t")
 
-[node name="Grass1Sprite" type="AnimatedSprite2D" parent="DungeonScroll1"]
+[node name="Grass1Sprite" type="AnimatedSprite2D" parent="DungeonScroll1" unique_id=1718792600]
 position = Vector2(29.999998, -8.666667)
 sprite_frames = SubResource("SpriteFrames_y815b")
 
-[node name="Grass2Sprite" type="AnimatedSprite2D" parent="DungeonScroll1"]
+[node name="Grass2Sprite" type="AnimatedSprite2D" parent="DungeonScroll1" unique_id=1206234348]
 position = Vector2(-52.666668, 24.666668)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_74nq4")
 
-[node name="TorchandShield" type="AnimatedSprite2D" parent="DungeonScroll1"]
+[node name="TorchandShield" type="AnimatedSprite2D" parent="DungeonScroll1" unique_id=757760933]
 position = Vector2(7.333334, 8.666666)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_1jwkt")
 
-[node name="MoneySprite" type="AnimatedSprite2D" parent="DungeonScroll1"]
+[node name="MoneySprite" type="AnimatedSprite2D" parent="DungeonScroll1" unique_id=345076541]
 position = Vector2(-6, 9.333333)
 sprite_frames = SubResource("SpriteFrames_skmwy")
 
-[node name="CatBalloonSprite" type="AnimatedSprite2D" parent="DungeonScroll1"]
+[node name="CatBalloonSprite" type="AnimatedSprite2D" parent="DungeonScroll1" unique_id=1336973762]
 position = Vector2(34.000004, 16.666666)
 sprite_frames = SubResource("SpriteFrames_shnh2")
 
-[node name="brazier" parent="DungeonScroll1" instance=ExtResource("6_byfwu")]
+[node name="brazier" parent="DungeonScroll1" unique_id=1406366833 instance=ExtResource("6_byfwu")]
 unique_name_in_owner = true
 position = Vector2(-2, 8)
 
-[node name="sanctuary_campfire" parent="DungeonScroll1" instance=ExtResource("7_b824t")]
+[node name="sanctuary_campfire" parent="DungeonScroll1" unique_id=393720890 instance=ExtResource("7_b824t")]
 position = Vector2(12.666666, -19.333334)
 
-[node name="wall_interactables" parent="DungeonScroll1" instance=ExtResource("8_y815b")]
+[node name="wall_interactables" parent="DungeonScroll1" unique_id=1189295637 instance=ExtResource("8_y815b")]
 unique_name_in_owner = true
 position = Vector2(-32.666668, -18)
 
-[node name="DungeonScroll2" type="Sprite2D" parent="."]
+[node name="DungeonScroll2" type="Sprite2D" parent="." unique_id=779068210]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 light_mask = 0
@@ -4093,7 +4138,7 @@ position = Vector2(12, 6)
 scale = Vector2(1.5, 1.5)
 texture = SubResource("CompressedTexture2D_anamf")
 
-[node name="FindWayOutText" type="RichTextLabel" parent="DungeonScroll2"]
+[node name="FindWayOutText" type="RichTextLabel" parent="DungeonScroll2" unique_id=1916318525]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4114,7 +4159,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "GAIN XP"
 fit_content = true
 
-[node name="FindWayOutText6" type="RichTextLabel" parent="DungeonScroll2"]
+[node name="FindWayOutText6" type="RichTextLabel" parent="DungeonScroll2" unique_id=968572920]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4135,7 +4180,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "GAIN XP"
 fit_content = true
 
-[node name="FindWayOutText4" type="RichTextLabel" parent="DungeonScroll2"]
+[node name="FindWayOutText4" type="RichTextLabel" parent="DungeonScroll2" unique_id=1619478655]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4156,7 +4201,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "RESURFACE!"
 fit_content = true
 
-[node name="FindWayOutText7" type="RichTextLabel" parent="DungeonScroll2"]
+[node name="FindWayOutText7" type="RichTextLabel" parent="DungeonScroll2" unique_id=901441679]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4177,7 +4222,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "RESURFACE!"
 fit_content = true
 
-[node name="FindWayOutText2" type="RichTextLabel" parent="DungeonScroll2"]
+[node name="FindWayOutText2" type="RichTextLabel" parent="DungeonScroll2" unique_id=1187254002]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4198,7 +4243,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "	 LOOT"
 fit_content = true
 
-[node name="FindWayOutText8" type="RichTextLabel" parent="DungeonScroll2"]
+[node name="FindWayOutText8" type="RichTextLabel" parent="DungeonScroll2" unique_id=1033844024]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4219,7 +4264,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "	 LOOT"
 fit_content = true
 
-[node name="FindWayOutText3" type="RichTextLabel" parent="DungeonScroll2"]
+[node name="FindWayOutText3" type="RichTextLabel" parent="DungeonScroll2" unique_id=1040040614]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4240,7 +4285,7 @@ theme_override_font_sizes/normal_font_size = 18
 text = "SMITE"
 fit_content = true
 
-[node name="FindWayOutText5" type="RichTextLabel" parent="DungeonScroll2"]
+[node name="FindWayOutText5" type="RichTextLabel" parent="DungeonScroll2" unique_id=1509977665]
 z_index = 20
 anchors_preset = 15
 anchor_right = 1.0
@@ -4261,28 +4306,28 @@ theme_override_font_sizes/normal_font_size = 18
 text = "SMITE"
 fit_content = true
 
-[node name="OrbleSprite" type="AnimatedSprite2D" parent="DungeonScroll2"]
+[node name="OrbleSprite" type="AnimatedSprite2D" parent="DungeonScroll2" unique_id=945155205]
 position = Vector2(25.333332, 4.8888893)
 sprite_frames = SubResource("SpriteFrames_tbht1")
 
-[node name="Grass1Sprite" type="AnimatedSprite2D" parent="DungeonScroll2"]
+[node name="Grass1Sprite" type="AnimatedSprite2D" parent="DungeonScroll2" unique_id=90403941]
 position = Vector2(29.999998, -8.666667)
 sprite_frames = SubResource("SpriteFrames_ghbkk")
 
-[node name="Grass2Sprite" type="AnimatedSprite2D" parent="DungeonScroll2"]
+[node name="Grass2Sprite" type="AnimatedSprite2D" parent="DungeonScroll2" unique_id=1565884493]
 position = Vector2(-52.666668, 24.666668)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_fs0pq")
 
-[node name="TorchandShield" type="AnimatedSprite2D" parent="DungeonScroll2"]
+[node name="TorchandShield" type="AnimatedSprite2D" parent="DungeonScroll2" unique_id=676038342]
 position = Vector2(31.111113, -9.333334)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_0kiio")
 
-[node name="MoneySprite" type="AnimatedSprite2D" parent="DungeonScroll2"]
+[node name="MoneySprite" type="AnimatedSprite2D" parent="DungeonScroll2" unique_id=1049744606]
 position = Vector2(-19.555555, 11.111111)
 sprite_frames = SubResource("SpriteFrames_atpu3")
 
-[node name="CatBalloonSprite" type="AnimatedSprite2D" parent="DungeonScroll2"]
+[node name="CatBalloonSprite" type="AnimatedSprite2D" parent="DungeonScroll2" unique_id=31430946]
 position = Vector2(34.000004, 16.666666)
 sprite_frames = SubResource("SpriteFrames_xebem")

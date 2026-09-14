@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://jgdtjlhaudts"]
+[gd_scene format=3 uid="uid://jgdtjlhaudts"]
 
 [ext_resource type="Shader" uid="uid://dcr3k4qwh0dwj" path="res://Shaders/brody.gdshader" id="1_8mio6"]
 [ext_resource type="Script" uid="uid://saapyyqmb64a" path="res://Scripts/travellers_sanctuary/OrbleVillage/orble_overseer.gd" id="1_owve4"]
@@ -57,7 +57,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_owve4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"celebrating",
 "speed": 5.0
 }, {
@@ -68,7 +68,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wfwb2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"moving",
 "speed": 5.0
 }, {
@@ -76,7 +76,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m6mhv")
 }],
-"loop": true,
+"loop": 1,
 "name": &"sleeping",
 "speed": 5.0
 }, {
@@ -87,7 +87,7 @@ animations = [{
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_bkt6a")
 }],
-"loop": true,
+"loop": 1,
 "name": &"stationary",
 "speed": 5.0
 }]
@@ -174,7 +174,7 @@ turbulence_noise_strength = 11.67
 turbulence_noise_scale = 7.508
 turbulence_noise_speed_random = 0.85
 
-[node name="orble_overseer" type="CharacterBody2D"]
+[node name="orble_overseer" type="CharacterBody2D" unique_id=1146836849]
 z_index = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_wfwb2")
@@ -182,19 +182,19 @@ collision_layer = 1073741825
 collision_mask = 1073741825
 script = ExtResource("1_owve4")
 
-[node name="OverseerCollision" type="CollisionShape2D" parent="."]
+[node name="OverseerCollision" type="CollisionShape2D" parent="." unique_id=787800693]
 position = Vector2(-1.0000001, 5.0000005)
 scale = Vector2(0.39221188, 0.39221188)
 shape = SubResource("CircleShape2D_8mio6")
 
-[node name="InteractionArea" type="Area2D" parent="."]
+[node name="InteractionArea" type="Area2D" parent="." unique_id=1733637458]
 
-[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea"]
+[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea" unique_id=128785581]
 position = Vector2(-1, 4.9999995)
 scale = Vector2(0.80793786, 0.80793786)
 shape = SubResource("CircleShape2D_owve4")
 
-[node name="FlameLight" type="PointLight2D" parent="."]
+[node name="FlameLight" type="PointLight2D" parent="." unique_id=1944160871]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-1, 5.0000005)
@@ -204,13 +204,13 @@ energy = 1.2
 texture = SubResource("GradientTexture2D_wfwb2")
 texture_scale = 1.2
 
-[node name="OrbleOverseerSprite" type="AnimatedSprite2D" parent="."]
+[node name="OrbleOverseerSprite" type="AnimatedSprite2D" parent="." unique_id=1195238086]
 unique_name_in_owner = true
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_owve4")
 animation = &"stationary"
 
-[node name="OrbleShadow" type="Sprite2D" parent="OrbleOverseerSprite"]
+[node name="OrbleShadow" type="Sprite2D" parent="OrbleOverseerSprite" unique_id=1033320437]
 modulate = Color(1, 1, 1, 0.44313726)
 z_index = -1
 use_parent_material = true
@@ -218,7 +218,7 @@ position = Vector2(-0.85, 9.5)
 scale = Vector2(0.9813845, 0.34298372)
 texture = SubResource("GradientTexture2D_8mio6")
 
-[node name="FootStepParticlesRight" type="GPUParticles2D" parent="."]
+[node name="FootStepParticlesRight" type="GPUParticles2D" parent="." unique_id=984978893]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -232,7 +232,7 @@ preprocess = 0.2
 explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_38iqe")
 
-[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="."]
+[node name="FootStepParticlesLeft" type="GPUParticles2D" parent="." unique_id=640927382]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.4745098)
 z_index = -1
@@ -245,21 +245,21 @@ preprocess = 0.2
 explosiveness = 0.4
 process_material = SubResource("ParticleProcessMaterial_s14xi")
 
-[node name="DirectionTimer" type="Timer" parent="."]
+[node name="DirectionTimer" type="Timer" parent="." unique_id=1879457271]
 unique_name_in_owner = true
 wait_time = 0.05
 one_shot = true
 autostart = true
 
-[node name="MovementTimeTimer" type="Timer" parent="."]
+[node name="MovementTimeTimer" type="Timer" parent="." unique_id=1274000779]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="ProposeTime" type="Timer" parent="."]
+[node name="ProposeTime" type="Timer" parent="." unique_id=1526623674]
 wait_time = 6.0
 autostart = true
 
-[node name="MissionBoardTime" type="Timer" parent="."]
+[node name="MissionBoardTime" type="Timer" parent="." unique_id=2006853926]
 wait_time = 6.0
 autostart = true
 

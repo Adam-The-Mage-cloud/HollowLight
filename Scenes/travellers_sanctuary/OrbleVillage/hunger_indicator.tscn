@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=4 uid="uid://dd07odgne8inj"]
+[gd_scene format=4 uid="uid://dd07odgne8inj"]
 
 [ext_resource type="Texture2D" uid="uid://ccceiivkxhkok" path="res://Artwork/Sanctuary/Beef_Stew_Bowl_14.png" id="1_kkero"]
 [ext_resource type="Script" uid="uid://rgvuskd1viok" path="res://Scripts/travellers_sanctuary/OrbleVillage/hunger_indicator.gd" id="1_uvnx4"]
@@ -24,7 +24,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qtpy2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -57,7 +57,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uvnx4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"1_4full",
 "speed": 5.0
 }, {
@@ -65,7 +65,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_itrl0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"2_4full",
 "speed": 5.0
 }, {
@@ -73,7 +73,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ujdqy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"3_4full",
 "speed": 5.0
 }, {
@@ -81,7 +81,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xmkt3")
 }],
-"loop": true,
+"loop": 1,
 "name": &"4_4full",
 "speed": 5.0
 }]
@@ -144,7 +144,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vgvwr")
 }],
-"loop": true,
+"loop": 1,
 "name": &"happy",
 "speed": 5.0
 }, {
@@ -152,7 +152,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aii6t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"okay",
 "speed": 5.0
 }, {
@@ -160,7 +160,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cutq6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"sad",
 "speed": 5.0
 }]
@@ -390,6 +390,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -3290,6 +3299,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -6190,6 +6208,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -9126,6 +9153,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -12062,6 +12098,15 @@ style_name = "Regular"
 subpixel_positioning = 0
 msdf_pixel_range = 8
 msdf_size = 128
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 13.0
 cache/0/16/0/descent = 2.0
 cache/0/16/0/underline_position = 0.0
@@ -14812,15 +14857,15 @@ cache/0/36/1/glyphs/20/size = Vector2(24, 32)
 cache/0/36/1/glyphs/20/uv_rect = Rect2(31, 35, 24, 32)
 cache/0/36/1/glyphs/20/texture_idx = 0
 
-[node name="Hunger Indicator" type="Node2D"]
+[node name="Hunger Indicator" type="Node2D" unique_id=1945491403]
 z_index = 80
 texture_filter = 1
 script = ExtResource("1_uvnx4")
 
-[node name="StewLayer" type="CanvasLayer" parent="."]
+[node name="StewLayer" type="CanvasLayer" parent="." unique_id=2085698804]
 unique_name_in_owner = true
 
-[node name="GoblinHead" type="AnimatedSprite2D" parent="StewLayer"]
+[node name="GoblinHead" type="AnimatedSprite2D" parent="StewLayer" unique_id=1795770883]
 unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0.9607843)
@@ -14830,7 +14875,7 @@ position = Vector2(38, 29)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_ptexo")
 
-[node name="StewIndicator" type="AnimatedSprite2D" parent="StewLayer"]
+[node name="StewIndicator" type="AnimatedSprite2D" parent="StewLayer" unique_id=902457766]
 unique_name_in_owner = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_uvnx4")
@@ -14840,7 +14885,7 @@ sprite_frames = SubResource("SpriteFrames_vgvwr")
 animation = &"4_4full"
 autoplay = "4_4full"
 
-[node name="BubbleParticles" type="GPUParticles2D" parent="StewLayer/StewIndicator"]
+[node name="BubbleParticles" type="GPUParticles2D" parent="StewLayer/StewIndicator" unique_id=1661097291]
 unique_name_in_owner = true
 position = Vector2(0, 3)
 emitting = false
@@ -14851,7 +14896,7 @@ speed_scale = 0.4
 randomness = 0.63
 process_material = SubResource("ParticleProcessMaterial_uvnx4")
 
-[node name="PurpleLight" type="PointLight2D" parent="StewLayer/StewIndicator"]
+[node name="PurpleLight" type="PointLight2D" parent="StewLayer/StewIndicator" unique_id=220417862]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-1.5000001, 2.1999998)
@@ -14861,7 +14906,7 @@ energy = 1.6
 texture = SubResource("GradientTexture2D_itrl0")
 texture_scale = 1.2
 
-[node name="OrbleHappinessIndicator" type="AnimatedSprite2D" parent="StewLayer"]
+[node name="OrbleHappinessIndicator" type="AnimatedSprite2D" parent="StewLayer" unique_id=1831168526]
 unique_name_in_owner = true
 texture_filter = 1
 material = SubResource("ShaderMaterial_xmkt3")
@@ -14871,7 +14916,7 @@ sprite_frames = SubResource("SpriteFrames_aii6t")
 animation = &"happy"
 autoplay = "happy"
 
-[node name="GreenLight" type="PointLight2D" parent="StewLayer/OrbleHappinessIndicator"]
+[node name="GreenLight" type="PointLight2D" parent="StewLayer/OrbleHappinessIndicator" unique_id=1247210840]
 unique_name_in_owner = true
 use_parent_material = true
 position = Vector2(-1.9073486e-06, -9.536743e-07)
@@ -14880,7 +14925,7 @@ energy = 0.8
 texture = SubResource("GradientTexture2D_ujdqy")
 texture_scale = 1.2
 
-[node name="FervourProduction" type="RichTextLabel" parent="StewLayer"]
+[node name="FervourProduction" type="RichTextLabel" parent="StewLayer" unique_id=1978121820]
 unique_name_in_owner = true
 z_index = 20
 texture_filter = 1
@@ -14902,7 +14947,7 @@ text = "Fervour
 Production:"
 metadata/_edit_use_anchors_ = true
 
-[node name="FervourLevel" type="RichTextLabel" parent="StewLayer"]
+[node name="FervourLevel" type="RichTextLabel" parent="StewLayer" unique_id=1832956681]
 unique_name_in_owner = true
 z_index = 20
 texture_filter = 1
@@ -14923,7 +14968,7 @@ theme_override_font_sizes/normal_font_size = 36
 text = "High"
 metadata/_edit_use_anchors_ = true
 
-[node name="GoblinRaidRisk" type="RichTextLabel" parent="StewLayer"]
+[node name="GoblinRaidRisk" type="RichTextLabel" parent="StewLayer" unique_id=1048721478]
 unique_name_in_owner = true
 z_index = 20
 texture_filter = 1
@@ -14944,7 +14989,7 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Raid Risk:"
 metadata/_edit_use_anchors_ = true
 
-[node name="RaidRiskLevel" type="RichTextLabel" parent="StewLayer"]
+[node name="RaidRiskLevel" type="RichTextLabel" parent="StewLayer" unique_id=1145145313]
 unique_name_in_owner = true
 z_index = 20
 texture_filter = 1
@@ -14965,13 +15010,13 @@ theme_override_font_sizes/normal_font_size = 36
 text = "Low"
 metadata/_edit_use_anchors_ = true
 
-[node name="FervourCount" type="Sprite2D" parent="StewLayer"]
+[node name="FervourCount" type="Sprite2D" parent="StewLayer" unique_id=427579057]
 texture_filter = 1
 position = Vector2(368, 25)
 scale = Vector2(2, 2)
 texture = ExtResource("11_xmkt3")
 
-[node name="FervourText" type="RichTextLabel" parent="StewLayer/FervourCount"]
+[node name="FervourText" type="RichTextLabel" parent="StewLayer/FervourCount" unique_id=171099526]
 unique_name_in_owner = true
 z_index = 20
 texture_filter = 1
@@ -14991,4 +15036,4 @@ theme_override_font_sizes/normal_font_size = 36
 text = "1"
 metadata/_edit_use_anchors_ = true
 
-[node name="BUYSTARTERPACKBUNDLE" type="Sprite2D" parent="."]
+[node name="BUYSTARTERPACKBUNDLE" type="Sprite2D" parent="." unique_id=1726351300]

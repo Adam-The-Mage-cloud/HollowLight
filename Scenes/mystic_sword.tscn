@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b636m4gfblk32"]
+[gd_scene format=3 uid="uid://b636m4gfblk32"]
 
 [ext_resource type="Script" uid="uid://ldk3xtsxokeu" path="res://Scripts/mystic_sword.gd" id="1_pvwgn"]
 [ext_resource type="Texture2D" uid="uid://bmaekt6roos27" path="res://Artwork/Clive's_Wagon_Flying_Sword_Sprite.png" id="2_pvwgn"]
@@ -80,31 +80,31 @@ height = 96
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="mystic_sword" type="Area2D"]
+[node name="mystic_sword" type="Area2D" unique_id=1728943583]
 z_index = 4
 texture_filter = 1
 rotation = 0.7853982
 script = ExtResource("1_pvwgn")
 
-[node name="SwordCollision" type="CollisionShape2D" parent="."]
+[node name="SwordCollision" type="CollisionShape2D" parent="." unique_id=273876011]
 visible = false
 position = Vector2(4.0000005, 4.0000005)
 rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_pvwgn")
 
-[node name="EnemyRadar" type="Area2D" parent="."]
+[node name="EnemyRadar" type="Area2D" parent="." unique_id=2019055619]
 collision_layer = 33554432
 collision_mask = 33554432
 
-[node name="RadarCollision" type="CollisionShape2D" parent="EnemyRadar"]
+[node name="RadarCollision" type="CollisionShape2D" parent="EnemyRadar" unique_id=523885296]
 scale = Vector2(4.4064755, 4.4064755)
 shape = SubResource("CircleShape2D_pvwgn")
 
-[node name="SwordSprite" type="Sprite2D" parent="."]
+[node name="SwordSprite" type="Sprite2D" parent="." unique_id=839070340]
 texture = ExtResource("2_pvwgn")
 
-[node name="MysticParticles" type="GPUParticles2D" parent="."]
+[node name="MysticParticles" type="GPUParticles2D" parent="." unique_id=229055098]
 unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
@@ -114,7 +114,7 @@ amount = 265
 amount_ratio = 0.24
 process_material = SubResource("ParticleProcessMaterial_dxkh6")
 
-[node name="MysticParticlesSecondary" type="GPUParticles2D" parent="MysticParticles"]
+[node name="MysticParticlesSecondary" type="GPUParticles2D" parent="MysticParticles" unique_id=956861082]
 unique_name_in_owner = true
 z_index = 1
 position = Vector2(-0.8231964, 7.7667465)
@@ -122,7 +122,7 @@ amount = 100
 amount_ratio = 0.24
 process_material = SubResource("ParticleProcessMaterial_qihij")
 
-[node name="SwordLight" type="PointLight2D" parent="."]
+[node name="SwordLight" type="PointLight2D" parent="." unique_id=1068190147]
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-4, -4)

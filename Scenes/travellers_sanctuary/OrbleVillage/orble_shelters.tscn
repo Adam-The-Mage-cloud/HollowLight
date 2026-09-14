@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkfsbfm7um8de"]
+[gd_scene format=3 uid="uid://bkfsbfm7um8de"]
 
 [ext_resource type="Texture2D" uid="uid://cfrrn70qur3ip" path="res://Artwork/Sanctuary/Orble_Structures.png" id="1_ejh5c"]
 
@@ -12,7 +12,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ul1vu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"shelter1",
 "speed": 5.0
 }]
@@ -33,18 +33,18 @@ size = Vector2(36, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ul1vu"]
 size = Vector2(31.249228, 7.2113605)
 
-[node name="orble_shelters" type="CharacterBody2D"]
+[node name="orble_shelters" type="CharacterBody2D" unique_id=1606825359]
 z_index = 1
 texture_filter = 1
 collision_layer = 1073741825
 collision_mask = 1073741825
 
-[node name="OrbleShelterSprite" type="AnimatedSprite2D" parent="."]
+[node name="OrbleShelterSprite" type="AnimatedSprite2D" parent="." unique_id=683812901]
 sprite_frames = SubResource("SpriteFrames_7a0ok")
 animation = &"shelter1"
 autoplay = "shelter1"
 
-[node name="OrbleShadow" type="Sprite2D" parent="."]
+[node name="OrbleShadow" type="Sprite2D" parent="." unique_id=1792412223]
 modulate = Color(1, 1, 1, 0.44313726)
 z_index = -1
 use_parent_material = true
@@ -52,13 +52,13 @@ position = Vector2(8, 6)
 scale = Vector2(6.1326838, -0.58236164)
 texture = SubResource("GradientTexture2D_ejh5c")
 
-[node name="OrbleShelterArea" type="Area2D" parent="."]
+[node name="OrbleShelterArea" type="Area2D" parent="." unique_id=557714198]
 
-[node name="OrbleShelterCollision" type="CollisionShape2D" parent="OrbleShelterArea"]
+[node name="OrbleShelterCollision" type="CollisionShape2D" parent="OrbleShelterArea" unique_id=1304592787]
 position = Vector2(-2, 7)
 shape = SubResource("RectangleShape2D_ejh5c")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=570213908]
 position = Vector2(1.9999996, -4.0000005)
 scale = Vector2(0.8320206, 0.8320206)
 shape = SubResource("RectangleShape2D_ul1vu")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://mpfk56djauqh"]
+[gd_scene format=3 uid="uid://mpfk56djauqh"]
 
 [ext_resource type="Script" uid="uid://bpausvkgxg7kw" path="res://Scripts/fog_cluster.gd" id="1_6tu87"]
 [ext_resource type="Shader" uid="uid://dnw2ps5tvg487" path="res://Shaders/fog_cluster.gdshader" id="2_4t5dn"]
@@ -23,11 +23,11 @@ fill = 1
 fill_from = Vector2(0.48909658, 0.49221185)
 fill_to = Vector2(0.8411215, 0.13707165)
 
-[node name="fog_cluster" type="Node2D"]
+[node name="fog_cluster" type="Node2D" unique_id=2056612853]
 z_index = 5
 script = ExtResource("1_6tu87")
 
-[node name="FogTexture" type="TextureRect" parent="."]
+[node name="FogTexture" type="TextureRect" parent="." unique_id=1263800324]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_4t5dn")
 offset_right = 20.0

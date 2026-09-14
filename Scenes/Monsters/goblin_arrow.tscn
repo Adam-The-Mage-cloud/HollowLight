@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://hld7g4lreyo0"]
+[gd_scene format=3 uid="uid://hld7g4lreyo0"]
 
 [ext_resource type="Script" uid="uid://dyvwhkbeqssmw" path="res://Scripts/goblin_arrow.gd" id="1_0h04t"]
 [ext_resource type="Texture2D" uid="uid://cel72unrveckk" path="res://Artwork/Goblin.png" id="1_07swl"]
@@ -16,25 +16,25 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0h04t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="goblin_arrow" type="Area2D"]
+[node name="goblin_arrow" type="Area2D" unique_id=375853328]
 z_index = 8
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_0h04t")
 
-[node name="ArrowCollision" type="CollisionShape2D" parent="."]
+[node name="ArrowCollision" type="CollisionShape2D" parent="." unique_id=1274503924]
 position = Vector2(5.463997, -0.028606415)
 shape = SubResource("RectangleShape2D_07swl")
 
-[node name="ArrowSprite" type="AnimatedSprite2D" parent="."]
+[node name="ArrowSprite" type="AnimatedSprite2D" parent="." unique_id=676985867]
 sprite_frames = SubResource("SpriteFrames_0h04t")
 
-[node name="DespawnTimer" type="Timer" parent="."]
+[node name="DespawnTimer" type="Timer" parent="." unique_id=1822056672]
 wait_time = 5.5
 one_shot = true
 autostart = true

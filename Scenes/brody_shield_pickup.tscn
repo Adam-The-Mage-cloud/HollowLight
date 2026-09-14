@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c53rlngcbxwev"]
+[gd_scene format=3 uid="uid://c53rlngcbxwev"]
 
 [ext_resource type="Shader" uid="uid://dyganq3oowgr" path="res://Shaders/default_physical_shader.gdshader" id="1_fwony"]
 [ext_resource type="Texture2D" uid="uid://dl3oj1ehj1o4m" path="res://Artwork/Shields.png" id="1_se7qn"]
@@ -19,6 +19,10 @@ shader_parameter/char_width = 0.08
 shader_parameter/char_color = Vector3(0.1, 0.05, 0.02)
 shader_parameter/crumble_strength = 1.0
 shader_parameter/crumble_fade = 0.6
+shader_parameter/cloud_amount = 0.0
+shader_parameter/cloud_speed = 1.0
+shader_parameter/cloud_scale = 3.0
+shader_parameter/cloud_dissolve = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_se7qn"]
 
@@ -32,7 +36,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fwony")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -47,21 +51,21 @@ width = 36
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="brody_shield_pickup" type="Area2D"]
+[node name="brody_shield_pickup" type="Area2D" unique_id=1407527331]
 z_index = 4
 texture_filter = 1
 material = SubResource("ShaderMaterial_ur0cn")
 script = ExtResource("2_ur0cn")
 
-[node name="ShieldPickupCollision" type="CollisionShape2D" parent="."]
+[node name="ShieldPickupCollision" type="CollisionShape2D" parent="." unique_id=1106814926]
 shape = SubResource("CircleShape2D_se7qn")
 
-[node name="ShieldPickupSprite" type="AnimatedSprite2D" parent="."]
+[node name="ShieldPickupSprite" type="AnimatedSprite2D" parent="." unique_id=1767254195]
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_ur0cn")
 autoplay = "default"
 
-[node name="CliveShadow" type="Sprite2D" parent="."]
+[node name="CliveShadow" type="Sprite2D" parent="." unique_id=394440538]
 modulate = Color(1, 1, 1, 0.44313726)
 z_index = -1
 use_parent_material = true
